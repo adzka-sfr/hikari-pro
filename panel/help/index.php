@@ -38,52 +38,38 @@
                 <div class="col-md-12 col-sm-12 ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h3 style="text-align: center;">Profile</h3>
+                            <h3>Help</h3>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="x_content" style="text-align: center;">
+                        <div class="x_content">
 
-                            <img style="border-radius: 50%; margin-bottom: 10px;" src="<?= base_url('_assets/production/images/profile.png') ?>" alt="">
-                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2><b>How to use</b></h2>
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                                </div>
+                            </div>
 
-                            <?php
-                            $sql1 = mysqli_query($connect, "SELECT * from auth where id = '$_SESSION[id]'");
-                            $data1 = mysqli_fetch_array($sql1);
-                            ?>
-                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                            <div class="row">
+                                <div class="col-md-12">
 
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">ID</label>
-                                    <div class="col-md-4 col-sm-4 ">
-                                        <input type="text" class="form-control" value="<?= $data1['id'] ?>" disabled>
-                                    </div>
+                                    <h2><b>How it works</b></h2>
+                                    <ul>
+                                        <li>Department</li>
+                                        <li>Section</li>
+                                        <li>Group</li>
+                                    </ul>
                                 </div>
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Name</label>
-                                    <div class="col-md-4 col-sm-4 ">
-                                        <input type="text" class="form-control" value="<?= $data1['nama'] ?>" disabled>
-                                    </div>
-                                </div>
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Position</label>
-                                    <div class="col-md-4 col-sm-4 ">
-                                        <input type="text" class="form-control" value="<?= $data1['jabatan'] ?>" disabled>
-                                    </div>
-                                </div>
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Department</label>
-                                    <div class="col-md-4 col-sm-4 ">
-                                        <input id="middle-name" class="form-control" value="<?= $data1['dept'] ?>" disabled>
-                                    </div>
-                                </div>
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Gender</label>
-                                    <div class="col-md-4 col-sm-4 ">
-                                        <input id="middle-name" class="form-control" value="<?= $data1['jenkel'] ?>" disabled>
-                                    </div>
-                                </div>
-                            </form>
-                            <br>
+                            </div>
+
                         </div>
                     </div>
                 </div>
