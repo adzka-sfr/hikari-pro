@@ -7,9 +7,9 @@
     <div class="top_nav">
         <div class="nav_menu">
             <div class="nav toggle">
-
-                <h3 style="letter-spacing: 2px; padding-left: 50px;"><u><b>HIKARI</b></u></h3>
-
+                <a href="<?= base_url('dashboard') ?>" style="padding-top: 5px; text-decoration: none; color: inherit;">
+                    <h3 style="letter-spacing: 2px; padding-left: 50px; text-decoration: none;"><u><b>HIKARI</b></u></h3>
+                </a>
             </div>
             <nav class="nav navbar-nav">
                 <ul class=" navbar-right">

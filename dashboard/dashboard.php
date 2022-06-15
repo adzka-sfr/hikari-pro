@@ -47,13 +47,13 @@
             <ul class="bs-glyphicons-list ">
               <!-- isi konten aplikasinya -->
               <?php
-              $q_app_m = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'managerial' ORDER BY c_name");
+              $q_app_m = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'superuser' ORDER BY c_name");
               while ($d_app_m = mysqli_fetch_array($q_app_m)) {
                 $d_dir_m = $d_app_m['c_dir'];
                 $d_name_m = $d_app_m['c_name'];
               ?>
 
-                <a href="<?= base_url('app/managerial/' . $d_dir_m) ?>">
+                <a href="<?= base_url('app/superuser/' . $d_dir_m) ?>">
                   <li class="zoom">
                     <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_dir_m . '.png') ?>" alt="compatibility model" height="50" width="50"></span>
                     <span class="glyphicon-class"><?= $d_name_m ?></span>
