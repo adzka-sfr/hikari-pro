@@ -50,77 +50,42 @@
                             $sql1 = mysqli_query($connect, "SELECT * from auth where id = '$_SESSION[id]'");
                             $data1 = mysqli_fetch_array($sql1);
                             ?>
-                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">ID</label>
-                                    <div class="col-md-4 col-sm-4 ">
-                                        <input type="text" class="form-control" value="<?= $data1['id'] ?>" disabled>
-                                    </div>
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">ID</label>
+                                <div class="col-md-4 col-sm-4 ">
+                                    <input type="text" class="form-control" value="<?= $data1['id'] ?>" disabled>
                                 </div>
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Name</label>
-                                    <div class="col-md-4 col-sm-4 ">
-                                        <input type="text" class="form-control" value="<?= $data1['nama'] ?>" disabled>
-                                    </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Name</label>
+                                <div class="col-md-4 col-sm-4 ">
+                                    <input type="text" class="form-control" value="<?= $data1['nama'] ?>" disabled>
                                 </div>
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Password</label>
-                                    <div class="col-md-4 col-sm-4 ">
-                                        <input id="middle-name" type="password" class="form-control" value="<?= $data1['pass'] ?>" disabled>
-                                    </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Password</label>
+                                <div class="col-md-4 col-sm-4 ">
+                                    <input id="middle-name" type="password" class="form-control" value="<?= $data1['pass'] ?>" disabled>
                                 </div>
+                            </div>
 
-                                <div class="ln_solid"></div>
-                                <div class="item form-group">
-                                    <div class="col-md-6 col-sm-6 offset-md-3">
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            Change Password
+                            <div class="ln_solid"></div>
+                            <div class="item form-group">
+                                <div class="col-md-6 col-sm-6 offset-md-3">
+                                    <!-- Button trigger modal -->
+                                    <a href="change_pass">
+                                        <button type="button" class="btn btn-primary">
+                                            Change password
                                         </button>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form>
-                                                            <div class="mb-3" style="text-align: left;">
-                                                                <label>ID :</label>
-                                                                <input type="text" class="form-control" value="<?= $data1['id'] ?>" disabled />
-                                                            </div>
-                                                            <div class=" mb-3" style="text-align: left;">
-                                                                <label>Old Password :</label>
-                                                                <input type="text" class="form-control" />
-                                                            </div>
-                                                            <div class=" mb-3" style="text-align: left;">
-                                                                <label>New Password :</label>
-                                                                <input type="text" class="form-control" />
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <div class="modal-foote ">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </a>
                                 </div>
-
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
     <!-- /page content -->
-
     <?php include('../../_footer.php'); ?>
