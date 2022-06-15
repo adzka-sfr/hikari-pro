@@ -1,4 +1,4 @@
-<?php include('../_header.php'); ?>
+<?php include('../../_header.php'); ?>
 
 <body class="nav-md footer_fixed" style="background-color: #F7F7F7;">
     <!-- <div class="container body"> -->
@@ -7,9 +7,9 @@
     <div class="top_nav">
         <div class="nav_menu">
             <div class="nav toggle">
-                <a href="<?= base_url('dashboard') ?>" style="padding-top: 5px; text-decoration: none; color: inherit;">
-                    <h3 style="letter-spacing: 2px; padding-left: 50px; text-decoration: none;"><u><b>HIKARI</b></u></h3>
-                </a>
+
+                <h3 style="letter-spacing: 2px; padding-left: 50px;"><u><b>HIKARI</b></u></h3>
+
             </div>
             <nav class="nav navbar-nav">
                 <ul class=" navbar-right">
@@ -18,9 +18,9 @@
                             <img src="<?= base_url('_assets/production/images/profile.png') ?>" alt="profile"><?php echo $_SESSION['nama'] ?>
                         </a>
                         <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="<?= base_url('profile') ?>"> Profile</a>
-                            <a class="dropdown-item" href="#">Settings</a>
-                            <a class="dropdown-item" href="#">Help</a>
+                            <a class="dropdown-item" href="<?= base_url('dashboard') ?>"> Dashboard</a>
+                            <a class="dropdown-item" href="<?= base_url('panel/profile') ?>">Profile</a>
+                            <a class="dropdown-item" href="<?= base_url('panel/settings') ?>">Settings</a>
                             <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                         </div>
                     </li>
@@ -82,37 +82,8 @@
                                         <input id="middle-name" class="form-control" value="<?= $data1['jenkel'] ?>" disabled>
                                     </div>
                                 </div>
-
-                                <div class="ln_solid"></div>
-                                <div class="item form-group">
-                                    <div class="col-md-6 col-sm-6 offset-md-3">
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            Edit
-                                        </button>
-
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        ...
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </form>
+                            <br>
                         </div>
                     </div>
                 </div>
@@ -122,4 +93,4 @@
     </div>
     <!-- /page content -->
 
-    <?php include('../_footer.php'); ?>
+    <?php include('../../_footer.php'); ?>

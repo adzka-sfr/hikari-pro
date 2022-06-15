@@ -18,9 +18,9 @@
               <img src="<?= base_url('_assets/production/images/profile.png') ?>" alt=""><?php echo $_SESSION['nama'] ?>
             </a>
             <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="<?= base_url('profile') ?>"> Profile</a>
-              <a class="dropdown-item" href="#">Settings</a>
-              <a class="dropdown-item" href="#">Help</a>
+              <a class="dropdown-item" href="<?= base_url('panel/profile') ?>"> Profile</a>
+              <a class="dropdown-item" href="<?= base_url('panel/settings') ?>">Settings</a>
+              <a class="dropdown-item" href="<?= base_url('panel/help') ?>">Help</a>
               <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
             </div>
           </li>
