@@ -64,18 +64,17 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">New Password</label>
-                                    <div class="col-md-4 col-sm-4 ">
-                                        <input id="new_pass" name="new_pass" type="password" class="form-control" placeholder="type new password">
-                                    </div>
-                                </div>
-                                <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Old Password</label>
                                     <div class="col-md-4 col-sm-4 ">
                                         <input id="old_pass" name="old_pass" type="password" class="form-control" placeholder="to make sure that's you">
                                     </div>
                                 </div>
-
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">New Password</label>
+                                    <div class="col-md-4 col-sm-4 ">
+                                        <input id="new_pass" name="new_pass" type="password" class="form-control" placeholder="type new password">
+                                    </div>
+                                </div>
                                 <div class="item form-group">
                                     <div class="col-md-6 col-sm-6 offset-md-3">
                                         <!-- Button trigger modal -->
@@ -124,22 +123,22 @@
 
                             Swal.fire({
                                     type: 'success',
-                                    title: 'Login Succsess!',
-                                    text: 'Wait a second',
+                                    title: 'Success!',
+                                    text: 'Password has been change',
                                     timer: 2000,
                                     showCancelButton: false,
                                     showConfirmButton: false
                                 })
                                 .then(function() {
-                                    window.location.href = "index.php";
+                                    window.location.href = "../index.php";
                                 });
 
                         } else {
 
                             Swal.fire({
                                 type: 'error',
-                                title: 'Login Failed!',
-                                text: 'Wrong id or password'
+                                title: 'Failed!',
+                                text: 'Wrong old password'
                             });
 
                         }
