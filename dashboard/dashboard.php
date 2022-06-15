@@ -33,6 +33,46 @@
   <!-- page content -->
   <div class="right_col" role="main">
 
+    <?php
+    if ($_SESSION['id'] == '000') {
+    ?>
+      <div class="dashboard_graph" style="background-color: #F7F7F7;">
+        <div class="row x_title">
+          <div class="col-md-12">
+            <h3>Superuser <small>App</small></h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="bs-glyphicons ">
+            <ul class="bs-glyphicons-list ">
+              <!-- isi konten aplikasinya -->
+              <?php
+              $q_app_m = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'managerial' ORDER BY c_name");
+              while ($d_app_m = mysqli_fetch_array($q_app_m)) {
+                $d_dir_m = $d_app_m['c_dir'];
+                $d_name_m = $d_app_m['c_name'];
+              ?>
+
+                <a href="<?= base_url('app/managerial/' . $d_dir_m) ?>">
+                  <li class="zoom">
+                    <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_dir_m . '.png') ?>" alt="compatibility model" height="50" width="50"></span>
+                    <span class="glyphicon-class"><?= $d_name_m ?></span>
+                  </li>
+                </a>
+
+              <?php
+              }
+              ?>
+
+              <!-- isi konten aplikasinya -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    <?php
+    }
+    ?>
+
     <div class="dashboard_graph" style="background-color: #F7F7F7;">
       <div class="row x_title">
         <div class="col-md-12">
