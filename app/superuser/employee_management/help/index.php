@@ -1,4 +1,4 @@
-<?php include('../../../_header.php'); ?>
+<?php include('../../../../_header.php'); ?>
 
 <body class="nav-md footer_fixed">
   <div class="container body">
@@ -65,10 +65,10 @@
             <a style="color: inherit;" href="<?= base_url('dashboard') ?>" data-toggle="tooltip" data-placement="top" title="Dashboard">
               <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             </a>
-            <a style="color: inherit;" href="profile/" data-toggle="tooltip" data-placement="top" title="Profile">
+            <a style="color: inherit;" href="../profile/" data-toggle="tooltip" data-placement="top" title="Profile">
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             </a>
-            <a style="color: inherit;" href="settings/" data-toggle="tooltip" data-placement="top" title="Settings">
+            <a style="color: inherit;" href="../settings/" data-toggle="tooltip" data-placement="top" title="Settings">
               <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
             </a>
             <a data-toggle="tooltip" data-placement="top" title="Logout" href="<?= base_url('auth/act_logout.php') ?>">
@@ -92,9 +92,9 @@
                   <img src="<?= base_url('_assets/production/images/profile.png') ?>" alt=""><?php echo $_SESSION['nama'] ?>
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="profile/"> Profile</a>
-                  <a class="dropdown-item" href="settings/">Settings</a>
-                  <a class="dropdown-item" href="help/">Help</a>
+                  <a class="dropdown-item" href="../profile/"> Profile</a>
+                  <a class="dropdown-item" href="../settings/">Settings</a>
+                  <a class="dropdown-item" href="">Help</a>
                   <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
@@ -174,14 +174,50 @@
 
       <!-- page content -->
       <div class="right_col" role="main">
-        <div class="">
-          <div class="page-title">
-            <div class="title_left">
-              <h3>Aplikasi</h3>
+        <div class="dashboard_graph" style="background-color: #F7F7F7;">
+
+          <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h3>Help</h3>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h2><b>How to use</b></h2>
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      <h2><b>How it works</b></h2>
+                      <ul>
+                        <li>Department</li>
+                        <li>Section</li>
+                        <li>Group</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <!-- /page content -->
 
-      <?php include('../../../_footer.php'); ?>
+      <?php include('../../../../_footer.php'); ?>

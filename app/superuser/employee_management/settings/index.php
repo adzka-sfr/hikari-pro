@@ -1,4 +1,4 @@
-<?php include('../../../_header.php'); ?>
+<?php include('../../../../_header.php'); ?>
 
 <body class="nav-md footer_fixed">
   <div class="container body">
@@ -65,10 +65,10 @@
             <a style="color: inherit;" href="<?= base_url('dashboard') ?>" data-toggle="tooltip" data-placement="top" title="Dashboard">
               <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             </a>
-            <a style="color: inherit;" href="profile/" data-toggle="tooltip" data-placement="top" title="Profile">
+            <a style="color: inherit;" href="../profile/" data-toggle="tooltip" data-placement="top" title="Profile">
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             </a>
-            <a style="color: inherit;" href="settings/" data-toggle="tooltip" data-placement="top" title="Settings">
+            <a style="color: inherit;" href="" data-toggle="tooltip" data-placement="top" title="Settings">
               <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
             </a>
             <a data-toggle="tooltip" data-placement="top" title="Logout" href="<?= base_url('auth/act_logout.php') ?>">
@@ -92,9 +92,9 @@
                   <img src="<?= base_url('_assets/production/images/profile.png') ?>" alt=""><?php echo $_SESSION['nama'] ?>
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="profile/"> Profile</a>
-                  <a class="dropdown-item" href="settings/">Settings</a>
-                  <a class="dropdown-item" href="help/">Help</a>
+                  <a class="dropdown-item" href="../profile/"> Profile</a>
+                  <a class="dropdown-item" href="">Settings</a>
+                  <a class="dropdown-item" href="../help/">Help</a>
                   <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
@@ -174,14 +174,61 @@
 
       <!-- page content -->
       <div class="right_col" role="main">
-        <div class="">
-          <div class="page-title">
-            <div class="title_left">
-              <h3>Aplikasi</h3>
+        <div class="dashboard_graph" style="background-color: #F7F7F7;">
+
+          <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h3 style="text-align: center;">Settings</h3>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content" style="text-align: center;">
+
+                  <img style="border-radius: 50%; margin-bottom: 10px;" src="<?= base_url('_assets/production/images/profile.png') ?>" alt="">
+                  <br />
+
+                  <?php
+                  $sql1 = mysqli_query($connect, "SELECT * from auth where id = '$_SESSION[id]'");
+                  $data1 = mysqli_fetch_array($sql1);
+                  ?>
+
+                  <div class="item form-group">
+                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">ID</label>
+                    <div class="col-md-4 col-sm-4 ">
+                      <input type="text" class="form-control" value="<?= $data1['id'] ?>" disabled>
+                    </div>
+                  </div>
+                  <div class="item form-group">
+                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Name</label>
+                    <div class="col-md-4 col-sm-4 ">
+                      <input type="text" class="form-control" value="<?= $data1['nama'] ?>" disabled>
+                    </div>
+                  </div>
+                  <div class="item form-group">
+                    <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Password</label>
+                    <div class="col-md-4 col-sm-4 ">
+                      <input id="middle-name" type="password" class="form-control" value="<?= $data1['pass'] ?>" disabled>
+                    </div>
+                  </div>
+
+                  <div class="ln_solid"></div>
+                  <div class="item form-group">
+                    <div class="col-md-6 col-sm-6 offset-md-3">
+                      <!-- Button trigger modal -->
+                      <a href="change_pass">
+                        <button type="button" class="btn btn-primary">
+                          Change password
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <!-- /page content -->
 
-      <?php include('../../../_footer.php'); ?>
+      <?php include('../../../../_footer.php'); ?>
