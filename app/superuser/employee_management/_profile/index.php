@@ -63,7 +63,7 @@ include('../app_name.php') ?>
             <a style="color: inherit;" href="" data-toggle="tooltip" data-placement="top" title="Profile">
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             </a>
-            <a style="color: inherit;" href="../settings/" data-toggle="tooltip" data-placement="top" title="Settings">
+            <a style="color: inherit;" href="../_settings/" data-toggle="tooltip" data-placement="top" title="Settings">
               <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
             </a>
             <a data-toggle="tooltip" data-placement="top" title="Logout" href="<?= base_url('auth/act_logout.php') ?>">
@@ -88,8 +88,8 @@ include('../app_name.php') ?>
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href=""> Profile</a>
-                  <a class="dropdown-item" href="../settings/">Settings</a>
-                  <a class="dropdown-item" href="../help/">Help</a>
+                  <a class="dropdown-item" href="../_settings/">Settings</a>
+                  <a class="dropdown-item" href="../_help/">Help</a>
                   <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>

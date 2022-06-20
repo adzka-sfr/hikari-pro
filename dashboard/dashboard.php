@@ -34,7 +34,8 @@
   <div class="right_col" role="main">
 
     <?php
-    if ($_SESSION['id'] == '000') {
+    // echo $_SESSION
+    if ($_SESSION['role'] == 'superuser') {
     ?>
       <div class="dashboard_graph" style="background-color: #F7F7F7;">
         <div class="row x_title">

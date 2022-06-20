@@ -60,7 +60,7 @@ include('../app_name.php') ?>
             <a style="color: inherit;" href="<?= base_url('dashboard') ?>" data-toggle="tooltip" data-placement="top" title="Dashboard">
               <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             </a>
-            <a style="color: inherit;" href="../profile/" data-toggle="tooltip" data-placement="top" title="Profile">
+            <a style="color: inherit;" href="../_profile/" data-toggle="tooltip" data-placement="top" title="Profile">
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             </a>
             <a style="color: inherit;" href="" data-toggle="tooltip" data-placement="top" title="Settings">
@@ -87,9 +87,9 @@ include('../app_name.php') ?>
                   <img src="<?= base_url('_assets/production/images/profile.png') ?>" alt=""><?php echo $_SESSION['nama'] ?>
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="../profile/"> Profile</a>
+                  <a class="dropdown-item" href="../_profile/"> Profile</a>
                   <a class="dropdown-item" href="">Settings</a>
-                  <a class="dropdown-item" href="../help/">Help</a>
+                  <a class="dropdown-item" href="../_help/">Help</a>
                   <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>

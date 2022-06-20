@@ -36,6 +36,7 @@ if (isset($_POST['login'])) {
   if (mysqli_num_rows($sql_login) > 0) {
     $_SESSION['id'] = $id;
     $_SESSION['nama'] = $cek_nama['nama'];
+    $_SESSION['role'] = strtolower($cek_nama['jabatan']);
     echo "<script>window.location='" . base_url() . "';</script>";
   } else { ?>
     <div class="row">

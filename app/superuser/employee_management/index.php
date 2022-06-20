@@ -37,21 +37,11 @@ include('app_name.php') ?>
               <ul class="nav side-menu">
                 <li class="active"><a><i class="fa fa-desktop"></i> Dashboard</a>
                 </li>
-                <!-- contoh jika menambah sub menu -->
-                <!-- <li><a><i class="fa fa-edit"></i> Data Input <span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu">
-                    <li><a href="<?= base_url('data_input/total_time/data_kelompok.php') ?>">Total Time</a></li>
-                    <li><a href="<?= base_url('data_input/total_input/data.php') ?>">Total Input</a></li>
-                  </ul>
-                </li>
-                <li><a href="<?= base_url('history') ?>"><i class="fa fa-history"></i> History</a>
-                </li> -->
-                <!-- contoh jika menambah sub menu -->
               </ul>
             </div>
 
             <div class="menu_section">
-              <h3>Another Sub Menu</h3>
+              <h3>Employee</h3>
               <ul class="nav side-menu">
                 <li><a><i class="fa fa-gears"></i> Settings <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
@@ -70,10 +60,10 @@ include('app_name.php') ?>
             <a style="color: inherit;" href="<?= base_url('dashboard') ?>" data-toggle="tooltip" data-placement="top" title="Dashboard">
               <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             </a>
-            <a style="color: inherit;" href="profile/" data-toggle="tooltip" data-placement="top" title="Profile">
+            <a style="color: inherit;" href="_profile/" data-toggle="tooltip" data-placement="top" title="Profile">
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             </a>
-            <a style="color: inherit;" href="settings/" data-toggle="tooltip" data-placement="top" title="Settings">
+            <a style="color: inherit;" href="_settings/" data-toggle="tooltip" data-placement="top" title="Settings">
               <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
             </a>
             <a data-toggle="tooltip" data-placement="top" title="Logout" href="<?= base_url('auth/act_logout.php') ?>">
@@ -99,80 +89,12 @@ include('app_name.php') ?>
                   <img src="<?= base_url('_assets/production/images/profile.png') ?>" alt=""><?php echo $_SESSION['nama'] ?>
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="profile/"> Profile</a>
-                  <a class="dropdown-item" href="settings/">Settings</a>
-                  <a class="dropdown-item" href="help/">Help</a>
+                  <a class="dropdown-item" href="_profile/"> Profile</a>
+                  <a class="dropdown-item" href="_settings/">Settings</a>
+                  <a class="dropdown-item" href="_help/">Help</a>
                   <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
-
-              <!-- jika ingin menggunakan notifikasi -->
-              <!-- <li role="presentation" class="nav-item dropdown open">
-                <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-envelope-o"></i>
-                  <span class="badge bg-green">6</span>
-                </a>
-                <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <div class="text-center">
-                      <a class="dropdown-item">
-                        <strong>See All Alerts</strong>
-                        <i class="fa fa-angle-right"></i>
-                      </a>
-                    </div>
-                  </li>
-                </ul>
-              </li> -->
-              <!-- jika ingin menggunakan notifikasi -->
-
             </ul>
           </nav>
         </div>
