@@ -196,19 +196,34 @@
                   <div class="item form-group">
                     <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">ID</label>
                     <div class="col-md-4 col-sm-4 ">
-                      <input type="text" class="form-control" value="<?= $data1['id'] ?>" disabled>
+                      <input type="text" class="form-control" value="<?= $data1['id'] ?>" readonly>
                     </div>
                   </div>
                   <div class="item form-group">
                     <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Name</label>
                     <div class="col-md-4 col-sm-4 ">
-                      <input type="text" class="form-control" value="<?= $data1['nama'] ?>" disabled>
+                      <input type="text" class="form-control" value="<?= $data1['nama'] ?>" readonly>
                     </div>
                   </div>
                   <div class="item form-group">
                     <label class="col-form-label col-md-4 col-sm-4 label-align" style="padding-top: 10px;">Password</label>
                     <div class="col-md-4 col-sm-4 ">
-                      <input id="middle-name" type="password" class="form-control" value="<?= $data1['pass'] ?>" disabled>
+                      <?php
+                      $length_pass = strlen($data1['pass']);
+
+                      function generatestar($len)
+                      {
+                        $shw = "";
+                        for ($j = 0; $j < $len; $j++) {
+                          $shw = "*" . $shw;
+                        }
+                        return $shw;
+                      }
+                      $show_star = generatestar($length_pass);
+
+
+                      ?>
+                      <input id="middle-name" type="password" class="form-control" value="<?= $show_star ?>" readonly>
                     </div>
                   </div>
 
@@ -224,11 +239,11 @@
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
       <!-- /page content -->
-
       <?php include('../../../../_footer.php'); ?>
