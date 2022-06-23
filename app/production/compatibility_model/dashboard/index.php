@@ -17,7 +17,7 @@
               <img src="<?= base_url('_assets/production/images/profile.png') ?>" alt=""><?php echo $_SESSION['nama'] ?>
             </a>
             <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="index2.php"> Fixing Frame</a>
+              <a class="dropdown-item" href="index2.php" style="background-color: #DEEDFF;"> Fixing Frame</a>
               <a class="dropdown-item" href="<?= base_url('dashboard/') ?>"> Dashboard</a>
               <a class="dropdown-item" href="<?= base_url('panel/profile') ?>"> Profile</a>
               <a class="dropdown-item" href="<?= base_url('panel/settings') ?>">Settings</a>
