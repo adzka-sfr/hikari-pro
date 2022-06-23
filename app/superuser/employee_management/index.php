@@ -28,10 +28,7 @@ include('app_name.php') ?>
 
           <!-- sidebar menu -->
           <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-            <div class="menu_section">
-              <h3><?= $app_name ?></h3>
-              <hr>
-            </div>
+
             <div class="menu_section">
               <h3>General</h3>
               <ul class="nav side-menu">
@@ -103,10 +100,27 @@ include('app_name.php') ?>
 
       <!-- page content -->
       <div class="right_col" role="main">
+        
+        <div class="dashboard_graph" style="padding-bottom: 0px; padding-left: 0px; padding-right: 0px; margin-left: 0px; background-color: #F7F7F7;">
+          <div class="row">
+            <div class="col-md-7">
+              <h3 style="font-weight: bold;  margin-top: 0px; font-size: 18px; "><?= strtoupper($app_name) ?></h3>
+            </div>
+            <div class="col-md-5">
+              <span style="text-align: right ; margin-top: 0px;">
+
+                <body onload="tampilkanwaktu();setInterval('tampilkanwaktu()', 1000);">
+                  <h2 style="color: #2A3F54; margin-top: 0px;"><?= $hari . ", " . $tanggal . " " . $bulan . " " . $tahun ?> <span style="font-weight: bold; color: #2A3F54;" id="clock"></span> WIB</h2>
+              </span>
+            </div>
+          </div>
+          <hr style="margin: 0px;">
+        </div>
+
         <div class="">
           <div class="page-title">
             <div class="title_left">
-              <h3>Aplikasi</h3>
+              <h3>isi</h3>
             </div>
           </div>
         </div>

@@ -101,8 +101,24 @@ include('../../app_name.php') ?>
 
             <!-- page content -->
             <div class="right_col" role="main">
-                <div class="dashboard_graph" style="background-color: #F7F7F7;">
 
+                <div class="dashboard_graph" style="padding-bottom: 0px; padding-left: 0px; padding-right: 0px; margin-left: 0px; background-color: #F7F7F7;">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h3 style="font-weight: bold;  margin-top: 0px; font-size: 18px; "><?= strtoupper($app_name) ?></h3>
+                        </div>
+                        <div class="col-md-5">
+                            <span style="text-align: right ; margin-top: 0px;">
+
+                                <body onload="tampilkanwaktu();setInterval('tampilkanwaktu()', 1000);">
+                                    <h2 style="color: #2A3F54; margin-top: 0px;"><?= $hari . ", " . $tanggal . " " . $bulan . " " . $tahun ?> <span style="font-weight: bold; color: #2A3F54;" id="clock"></span> WIB</h2>
+                            </span>
+                        </div>
+                    </div>
+                    <hr style="margin: 0px;">
+                </div>
+
+                <div class="dashboard_graph" style="background-color: #F7F7F7;">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
