@@ -33,6 +33,7 @@
   <!-- page content -->
   <div class="right_col" role="main">
 
+    <!-- <div class="dashboard_graph" style="padding-bottom: 0px;"> -->
     <div class="row">
       <div class="col-md-9">
         <h2 style="font-weight: bold; padding-left: 10px; margin-top: 0px; font-size: 23px; color: #212529;">COMPATIBILITY MODEL - FIXING FRAME |<u><span style="color: #0DA90D;" id="hmbfixing"></span> <span style="color: #0DA90D;">Unit</span></u>|</h2>
@@ -44,9 +45,10 @@
             <h2 style="color: #2A3F54; padding-right: 10px;"><?= $hari . ", " . $tanggal . " " . $bulan . " " . $tahun . " " ?><span style="font-weight: bold; color: #2A3F54;" id="clock"></span> WIB</h2>
         </span>
       </div>
-      <hr>
     </div>
+    <!-- </div> -->
 
+    <!-- <div class="dashboard_graph" style="padding-top: 0px;"> -->
     <div class="row">
       <div class="col-6">
         <div class="card w-100">
@@ -81,13 +83,11 @@
           </div>
         </div>
       </div>
-
-
-
-
     </div>
+    <!-- </div> -->
 
   </div>
+
   <!-- /page content -->
 
   <?php
