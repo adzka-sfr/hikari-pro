@@ -33,58 +33,58 @@
   <!-- page content -->
   <div class="right_col" role="main">
 
-    <!-- <div class="dashboard_graph" style="padding-bottom: 0px;"> -->
-    <div class="row">
-      <div class="col-md-9">
-        <h2 style="font-weight: bold; padding-left: 10px; margin-top: 0px; font-size: 23px; color: #212529;">COMPATIBILITY MODEL - FIXING FRAME |<u><span style="color: #0DA90D;" id="hmbfixing"></span> <span style="color: #0DA90D;">Unit</span></u>|</h2>
-      </div>
-      <div class="col-md-3">
-        <span style="text-align: right ; margin-top: 0px;">
+    <div class="dashboard_graph" style="padding-bottom: 0px;">
+      <div class="row">
+        <div class="col-md-9">
+          <h2 style="font-weight: bold; padding-left: 10px; margin-top: 0px; font-size: 23px; color: #212529;">COMPATIBILITY MODEL - FIXING FRAME |<u><span style="color: #0DA90D;" id="hmbfixing"></span> <span style="color: #0DA90D;">Unit</span></u>|</h2>
+        </div>
+        <div class="col-md-3">
+          <span style="text-align: right ; margin-top: 0px;">
 
-          <body onload="tampilkanwaktu();setInterval('tampilkanwaktu()', 1000);">
-            <h2 style="color: #2A3F54; padding-right: 10px;"><?= $hari . ", " . $tanggal . " " . $bulan . " " . $tahun . " " ?><span style="font-weight: bold; color: #2A3F54;" id="clock"></span> WIB</h2>
-        </span>
+            <body onload="tampilkanwaktu();setInterval('tampilkanwaktu()', 1000);">
+              <h2 style="color: #2A3F54; padding-right: 10px;"><?= $hari . ", " . $tanggal . " " . $bulan . " " . $tahun . " " ?><span style="font-weight: bold; color: #2A3F54;" id="clock"></span> WIB</h2>
+          </span>
+        </div>
       </div>
     </div>
-    <!-- </div> -->
 
-    <!-- <div class="dashboard_graph" style="padding-top: 0px;"> -->
-    <div class="row">
-      <div class="col-6">
-        <div class="card w-100">
-          <div class="d-md-flex testimony-29101">
-            <div class="card-body">
-              <table class="table " style="font-size: 35px;">
-                <thead style="font-size: 35px; padding-top: 5px; padding-bottom: 5px; background-color: #DEEDFF; ">
-                  <th style="text-align: left;">Model </th>
-                  <th style="text-align: center;">Qty </th>
-                </thead>
-                <tbody id="fx1">
-                </tbody>
-              </table>
+    <div class="dashboard_graph" style="padding-top: 0px;">
+      <div class="row">
+        <div class="col-6">
+          <div class="card w-100">
+            <div class="d-md-flex testimony-29101">
+              <div class="card-body">
+                <table class="table " style="font-size: 35px;">
+                  <thead style="font-size: 35px; padding-top: 5px; padding-bottom: 5px; background-color: #DEEDFF; ">
+                    <th style="text-align: left;">Model </th>
+                    <th style="text-align: center;">Qty </th>
+                  </thead>
+                  <tbody id="fx1">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="card w-100">
+            <div class="d-md-flex testimony-29101">
+              <div class="card-body">
+                <table class="table " style="font-size: 35px;">
+                  <thead style="font-size: 35px; padding-top: 5px; padding-bottom: 5px; background-color: #DEEDFF; ">
+                    <th style="text-align: left;">Model </th>
+                    <th style="text-align: center;">Qty </th>
+                  </thead>
+                  <tbody id="fx2">
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="col-6">
-        <div class="card w-100">
-          <div class="d-md-flex testimony-29101">
-            <div class="card-body">
-              <table class="table " style="font-size: 35px;">
-                <thead style="font-size: 35px; padding-top: 5px; padding-bottom: 5px; background-color: #DEEDFF; ">
-                  <th style="text-align: left;">Model </th>
-                  <th style="text-align: center;">Qty </th>
-                </thead>
-                <tbody id="fx2">
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-    <!-- </div> -->
 
   </div>
 
