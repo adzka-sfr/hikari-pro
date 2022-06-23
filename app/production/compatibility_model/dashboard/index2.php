@@ -17,6 +17,8 @@
               <img src="<?= base_url('_assets/production/images/profile.png') ?>" alt=""><?php echo $_SESSION['nama'] ?>
             </a>
             <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="index.php"> Stringing UP</a>
+              <a class="dropdown-item" href="<?= base_url('dashboard/') ?>"> Dashboard</a>
               <a class="dropdown-item" href="<?= base_url('panel/profile') ?>"> Profile</a>
               <a class="dropdown-item" href="<?= base_url('panel/settings') ?>">Settings</a>
               <a class="dropdown-item" href="<?= base_url('panel/help') ?>">Help</a>
@@ -33,7 +35,7 @@
 
     <div class="row">
       <div class="col-md-9">
-        <h2 style="font-weight: bold; padding-left: 10px; margin-top: 0px; font-size: 23px;">COMPATIBILITY MODEL - STRINGING UP |<u><span style="color: #0DA90D;" id="hmbstring"></span> <span style="color: #0DA90D;">Unit</span></u>|</h2>
+        <h2 style="font-weight: bold; padding-left: 10px; margin-top: 0px; font-size: 23px; color: #212529;">COMPATIBILITY MODEL - FIXING FRAME |<u><span style="color: #0DA90D;" id="hmbfixing"></span> <span style="color: #0DA90D;">Unit</span></u>|</h2>
       </div>
       <div class="col-md-3">
         <span style="text-align: right ; margin-top: 0px;">
@@ -51,104 +53,43 @@
           <div class="d-md-flex testimony-29101">
             <div class="card-body">
               <table class="table " style="font-size: 35px;">
-                <thead style="font-size: 35px; padding-top: 5px; padding-bottom: 5px; background-color: #FFA696; ">
-                  <th style="text-align: center;">Model </th>
+                <thead style="font-size: 35px; padding-top: 5px; padding-bottom: 5px; background-color: #DEEDFF; ">
+                  <th style="text-align: left;">Model </th>
                   <th style="text-align: center;">Qty </th>
                 </thead>
-                <tbody id="myTable">
-                  <tr>
-                    <td style="font-weight: bold;">B1 PE</td>
-                    <td style="text-align: center;">
-                      <h1 style="background-color: #FFA696; border-radius: 25px; font-weight: bold;">4</h1>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="font-weight: bold;">B2 PE</td>
-                    <td style="text-align: center;">
-                      <h1 style="background-color: #FFA696; border-radius: 25px; font-weight: bold;">4</h1>
-                    </td>
-                  </tr>
+                <tbody id="fx1">
                 </tbody>
               </table>
             </div>
-
           </div>
         </div>
       </div>
-
 
       <div class="col-6">
         <div class="card w-100">
           <div class="d-md-flex testimony-29101">
             <div class="card-body">
-              <table class="table" style="font-size: 35px;">
-                <thead style="font-size: 35px; padding-top: 5px; padding-bottom: 5px; background-color: #FFA696;">
-                  <th>Model </th>
-                  <th>Qty </th>
+              <table class="table " style="font-size: 35px;">
+                <thead style="font-size: 35px; padding-top: 5px; padding-bottom: 5px; background-color: #DEEDFF; ">
+                  <th style="text-align: left;">Model </th>
+                  <th style="text-align: center;">Qty </th>
                 </thead>
-                <tbody id="myTable2">
-                  <tr>
-                  </tr>
+                <tbody id="fx2">
                 </tbody>
-
               </table>
             </div>
           </div>
         </div>
       </div>
 
+
+
+
     </div>
 
   </div>
   <!-- /page content -->
-  <script src="js/jquery-3.5.1.js"></script>
-  <script>
-    $(document).ready(function() {
-      selesai();
-    });
 
-    function selesai() {
-      setTimeout(function() {
-        // update();
-        totalstringing();
-        // totalfixing();
-        selesai();
-      }, 200);
-    }
-
-    function totalstringing() {
-      $.getJSON("data/total_stringing.php", function(data) {
-        $("#hmbstring").empty();
-        var no = 1;
-
-        $.each(data.result, function() {
-          $("#hmbstring").append(this['jumlah']);
-        });
-      });
-    }
-
-    // function totalfixing() {
-    //   $.getJSON("data/total_fixing.php", function(data) {
-    //     $("#totngenfix").empty();
-    //     var no = 1;
-
-    //     $.each(data.result, function() {
-    //       $("#totngenfix").append(this['jumlah']);
-    //     });
-    //   });
-    // }
-
-    // function update() {
-    //     $.getJSON("data.php", function(data) {
-    //         $("#myTable").empty();
-    //         var no = 1;
-
-    //         $.each(data.result, function() {
-    //             $("#myTable").append("<tr style ='padding-bottom : 0px;'><td style='padding-right:10px; width: 450px; '><b>" + this['nama_item'] + "</b></td><td ><h1 style='border-radius: 20px; background-color: #FFA696; text-align: center; '>" + this['qty'] + "</h1></td></tr>");
-    //         });
-    //     });
-    // }
-  </script>
-
-
-  <?php include('../../../../_footer.php'); ?>
+  <?php
+  include('_footer_local.php');
+  include('../../../../_footer.php'); ?>
