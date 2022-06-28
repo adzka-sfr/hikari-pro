@@ -1,5 +1,5 @@
 <?php
-require '../../../../../_config/koneksi.php';
+require '../../../../../../_config/koneksi.php';
 
 $old_pass = $_POST['old_pass'];
 $new_pass = $_POST['new_pass'];
