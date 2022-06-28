@@ -45,46 +45,39 @@
 
     </div>
 
-    <?php
-    // echo $_SESSION
-    if ($_SESSION['role'] == 'superuser') {
-    ?>
-      <div class="dashboard_graph" style="background-color: #F7F7F7;">
-        <div class="row x_title">
-          <div class="col-md-12">
-            <h3>Superuser <small>App</small></h3>
-          </div>
-        </div>
-        <div class="row">
-          <div class="bs-glyphicons ">
-            <ul class="bs-glyphicons-list ">
-              <!-- isi konten aplikasinya -->
-              <?php
-              $q_app_s = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'superuser' ORDER BY c_name");
-              while ($d_app_s = mysqli_fetch_array($q_app_s)) {
-                $d_dir_s = $d_app_s['c_dir'];
-                $d_name_s = $d_app_s['c_name'];
-              ?>
-
-                <a href="<?= base_url('app/superuser/' . $d_dir_s) ?>">
-                  <li class="zoom">
-                    <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_dir_s . '.png') ?>" alt="<?= $d_name_s ?>" height="50" width="50"></span>
-                    <span class="glyphicon-class"><?= $d_name_s ?></span>
-                  </li>
-                </a>
-
-              <?php
-              }
-              ?>
-
-              <!-- isi konten aplikasinya -->
-            </ul>
-          </div>
+    <div class="dashboard_graph" style="background-color: #F7F7F7;">
+      <div class="row x_title">
+        <div class="col-md-12">
+          <h3>Previlege <small>App</small></h3>
         </div>
       </div>
-    <?php
-    }
-    ?>
+      <div class="row">
+        <div class="bs-glyphicons ">
+          <ul class="bs-glyphicons-list ">
+            <!-- isi konten aplikasinya -->
+            <?php
+            $q_app_p = mysqli_query($connect, "SELECT * from t_previlege WHERE c_id = '$_SESSION[id]' ORDER BY c_name");
+            while ($d_app_p = mysqli_fetch_array($q_app_p)) {
+              $d_dir_p = $d_app_p['c_dir'];
+              $d_name_p = $d_app_p['c_name'];
+              $d_img_p = $d_app_p['c_img'];
+            ?>
+
+              <a href="<?= base_url('app/' . $d_dir_p) ?>">
+                <li class="zoom">
+                  <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>" alt="<?= $d_name_p ?>" height="50" width="50"></span>
+                  <span class="glyphicon-class"><?= $d_name_p ?></span>
+                </li>
+              </a>
+
+            <?php
+            }
+            ?>
+            <!-- isi konten aplikasinya -->
+          </ul>
+        </div>
+      </div>
+    </div>
 
     <div class="dashboard_graph" style="background-color: #F7F7F7;">
       <div class="row x_title">
