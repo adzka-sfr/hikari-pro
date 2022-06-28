@@ -9,9 +9,6 @@ $query  = "SELECT * FROM auth WHERE id='$id' AND pass='$pass'";
 $result     = mysqli_query($connect, $query);
 $row         = mysqli_fetch_array($result);
 
-
-
-
 if (!empty($row)) {
     $_SESSION['id'] = $row['id'];
     $_SESSION['nama'] = $row['nama'];
