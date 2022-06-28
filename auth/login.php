@@ -38,16 +38,16 @@ if (isset($_SESSION['id'])) {
             <div class="login_wrapper">
                 <div class="animate form login_form">
                     <section class="login_content">
-                        <form method="POST" class="navbar-form">
+                        <form>
                             <h1>HIKARI</h1>
                             <div>
-                                <input type="text" id="id" name="id" class="form-control" placeholder="Employee id" required autofocus />
+                                <input type="text" id="id" name="id" class="form-control" placeholder="Employee id" />
                             </div>
                             <div>
-                                <input type="password" id="pass" name="pass" class="form-control" placeholder="Password" required />
+                                <input type="password" id="pass" name="pass" class="form-control" placeholder="Password" />
                             </div>
                             <div>
-                                <button class="btn btn-secondary" style="background-color: #F7F7F7; color: #73879C; border-color: #4B1E78;" type="submit" name="login">Log in</button>
+                                <button class="btn btn-secondary" style="background-color: #F7F7F7; color: #73879C; border-color: #4B1E78;" type="button" id="login" name="login">Log in</button>
                             </div>
                             <div class="clearfix"></div>
                             <div class="separator">
@@ -64,6 +64,77 @@ if (isset($_SESSION['id'])) {
             </div>
         </div>
     </body>
+    <!-- login and sweetalert -->
+    <script src="../_assets/src/add/jquery.min.js"></script>
+    <script src="../_assets/src/add/bootstrap.min.js"></script>
+    <script src="../_assets/src/add/sweetalert2.all.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#id').focus();
+            $('#id').keypress(function(e) {
+                if (e.which == 13) {
+                    $('#pass').focus();
+                }
+            });
+            $('#pass').keypress(function(e) {
+                if (e.which == 13) {
+                    $('#login').click();
+                }
+            });
+            $('#login').click(function() {
+                var id = $('#id').val();
+                var pass = $('#pass').val();
+                if (id == '') {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Employee id can not be empty!',
+                        type: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    $('#id').focus();
+                } else if (pass == '') {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Password can not be empty!',
+                        type: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    $('#pass').focus();
+                } else {
+                    $.ajax({
+                        url: 'authen.php',
+                        type: 'POST',
+                        data: {
+                            "id": id,
+                            "pass": pass
+                        },
+                        success: function(response) {
+                            if (response == 'oke') {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Login success!',
+                                    type: 'success',
+                                    timer: 2000,
+                                    showCancelButton: false,
+                                    showConfirmButton: false
+                                }).then(function() {
+                                    window.location = '../index.php';
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Login failed!',
+                                    type: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 
     </html>
 <?php
