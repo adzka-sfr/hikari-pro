@@ -58,6 +58,7 @@
             // cek previlege user
             $q_app_pc = mysqli_query($connect, "SELECT * from t_previlege WHERE c_id = '$_SESSION[id]'");
             $r_app_pc = mysqli_fetch_row($q_app_pc);
+
             if (!empty($r_app_pc)) {
               // ambil semua data previlege
               $q_app_p = mysqli_query($connect, "SELECT * from t_previlege WHERE c_id = '$_SESSION[id]' ORDER BY c_name");
@@ -66,7 +67,6 @@
                 $d_name_p = $d_app_p['c_name'];
                 $d_img_p = $d_app_p['c_img'];
             ?>
-
                 <a href="<?= base_url('app/' . $d_dir_p) ?>">
                   <li class="zoom">
                     <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>" alt="<?= $d_name_p ?>" height="50" width="50"></span>
