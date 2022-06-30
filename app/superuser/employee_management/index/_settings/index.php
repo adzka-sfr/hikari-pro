@@ -1,5 +1,5 @@
-<?php include('../../../../_header.php');
-include('../app_name.php') ?>
+<?php include('../../../../../_header.php');
+include('../../app_name.php') ?>
 
 <body class="nav-md footer_fixed">
   <div class="container body">
@@ -32,7 +32,7 @@ include('../app_name.php') ?>
             <div class="menu_section">
               <h3>General</h3>
               <ul class="nav side-menu">
-                <li class="active"><a><i class="fa fa-desktop"></i> Dashboard</a>
+                <li><a href="../"><i class="fa fa-desktop"></i> Dashboard</a>
                 </li>
               </ul>
             </div>
@@ -115,7 +115,7 @@ include('../app_name.php') ?>
           <hr style="margin: 0px;">
         </div>
 
-        <div class="dashboard_graph" style="background-color: #F7F7F7;">
+        <div class="dashboard_graph" style="background-color: #F7F7F7; padding-bottom: 40px;">
           <div class="row">
             <div class="col-md-12 col-sm-12 ">
               <div class="x_panel">
@@ -186,4 +186,4 @@ include('../app_name.php') ?>
         </div>
       </div>
       <!-- /page content -->
-      <?php include('../../../../_footer.php'); ?>
+      <?php include('../../../../../_footer.php'); ?>

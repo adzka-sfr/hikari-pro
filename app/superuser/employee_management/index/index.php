@@ -32,23 +32,16 @@ include('../app_name.php') ?>
             <div class="menu_section">
               <h3>General</h3>
               <ul class="nav side-menu">
-                <li class="active"><a><i class="fa fa-desktop"></i> Dashboard</a>
+                <li><a href="<?= base_url('app/superuser/employee_management/index/index.php') ?>"><i class="fa fa-desktop"></i> Dashboard</a>
                 </li>
-              </ul>
-            </div>
-
-            <div class="menu_section">
-              <h3>Another Sub Menu</h3>
-              <ul class="nav side-menu">
-                <li><a><i class="fa fa-gears"></i> Settings <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-user"></i> Employee <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="#">Setting 1</a></li>
-                    <li><a href="#l">Setting 2</a></li>
+                    <li><a href="<?= base_url('app/superuser/employee_management/index/employee/add/index.php') ?>">Add Employee</a></li>
+                    <li><a href="<?= base_url('app/superuser/employee_management/index/employee/edit') ?>">Edit Employee</a></li>
                   </ul>
                 </li>
               </ul>
             </div>
-
           </div>
           <!-- /sidebar menu -->
 
@@ -57,10 +50,10 @@ include('../app_name.php') ?>
             <a style="color: inherit;" href="<?= base_url('dashboard') ?>" data-toggle="tooltip" data-placement="top" title="Dashboard">
               <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             </a>
-            <a style="color: inherit;" href="../_profile/" data-toggle="tooltip" data-placement="top" title="Profile">
+            <a style="color: inherit;" href="_profile/" data-toggle="tooltip" data-placement="top" title="Profile">
               <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             </a>
-            <a style="color: inherit;" href="../_settings/" data-toggle="tooltip" data-placement="top" title="Settings">
+            <a style="color: inherit;" href="_settings/" data-toggle="tooltip" data-placement="top" title="Settings">
               <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
             </a>
             <a data-toggle="tooltip" data-placement="top" title="Logout" href="<?= base_url('auth/act_logout.php') ?>">
@@ -84,9 +77,9 @@ include('../app_name.php') ?>
                   <img src="<?= base_url('_assets/production/images/profile.png') ?>" alt=""><?php echo $_SESSION['nama'] ?>
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="../_profile/"> Profile</a>
-                  <a class="dropdown-item" href="../_settings/">Settings</a>
-                  <a class="dropdown-item" href="">Help</a>
+                  <a class="dropdown-item" href="_profile/"> Profile</a>
+                  <a class="dropdown-item" href="_settings/">Settings</a>
+                  <a class="dropdown-item" href="_help/">Help</a>
                   <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
@@ -115,46 +108,10 @@ include('../app_name.php') ?>
           <hr style="margin: 0px;">
         </div>
 
-        <div class="dashboard_graph" style="background-color: #F7F7F7;">
-
+        <div class="dashboard_graph" style="padding-bottom: 0px; padding-left: 0px; padding-right: 0px; margin-left: 0px; background-color: #F7F7F7;">
           <div class="row">
-            <div class="col-md-12 col-sm-12 ">
-              <div class="x_panel">
-                <div class="x_title">
-                  <h3>Help</h3>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
+            <div class="col-md-12">
 
-                  <div class="row">
-                    <div class="col-md-12">
-                      <h2><b>How to use</b></h2>
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-12">
-
-                      <h2><b>How it works</b></h2>
-                      <ul>
-                        <li>Department</li>
-                        <li>Section</li>
-                        <li>Group</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
             </div>
           </div>
         </div>
