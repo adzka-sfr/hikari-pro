@@ -42,7 +42,6 @@
         </span>
         <hr style="margin: 0px;">
       </div>
-
     </div>
 
     <div class="dashboard_graph" style="background-color: #F7F7F7;">
@@ -56,20 +55,34 @@
           <ul class="bs-glyphicons-list ">
             <!-- isi konten aplikasinya -->
             <?php
-            $q_app_p = mysqli_query($connect, "SELECT * from t_previlege WHERE c_id = '$_SESSION[id]' ORDER BY c_name");
-            while ($d_app_p = mysqli_fetch_array($q_app_p)) {
-              $d_dir_p = $d_app_p['c_dir'];
-              $d_name_p = $d_app_p['c_name'];
-              $d_img_p = $d_app_p['c_img'];
+            $q_app_pc = mysqli_query($connect, "SELECT * from t_previlege WHERE c_id = '$_SESSION[id]'");
+            $r_app_pc = mysqli_fetch_row($q_app_pc);
+            if (!empty($r_app_pc)) {
+              $q_app_p = mysqli_query($connect, "SELECT * from t_previlege WHERE c_id = '$_SESSION[id]' ORDER BY c_name");
+              while ($d_app_p = mysqli_fetch_array($q_app_p)) {
+                $d_dir_p = $d_app_p['c_dir'];
+                $d_name_p = $d_app_p['c_name'];
+                $d_img_p = $d_app_p['c_img'];
             ?>
 
-              <a href="<?= base_url('app/' . $d_dir_p) ?>">
-                <li class="zoom">
-                  <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>" alt="<?= $d_name_p ?>" height="50" width="50"></span>
-                  <span class="glyphicon-class"><?= $d_name_p ?></span>
-                </li>
-              </a>
+                <a href="<?= base_url('app/' . $d_dir_p) ?>">
+                  <li class="zoom">
+                    <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>" alt="<?= $d_name_p ?>" height="50" width="50"></span>
+                    <span class="glyphicon-class"><?= $d_name_p ?></span>
+                  </li>
+                </a>
 
+              <?php
+              }
+            } else {
+              ?>
+              <div class="row">
+                <div class="col-md-12" style="text-align: center;">
+                  <span>
+                    <strong>Oops!</strong> You don't have any previlege yet.
+                  </span>
+                </div>
+              </div>
             <?php
             }
             ?>
