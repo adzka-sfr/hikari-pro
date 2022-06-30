@@ -55,9 +55,11 @@
           <ul class="bs-glyphicons-list ">
             <!-- isi konten aplikasinya -->
             <?php
+            // cek previlege user
             $q_app_pc = mysqli_query($connect, "SELECT * from t_previlege WHERE c_id = '$_SESSION[id]'");
             $r_app_pc = mysqli_fetch_row($q_app_pc);
             if (!empty($r_app_pc)) {
+              // ambil semua data previlege
               $q_app_p = mysqli_query($connect, "SELECT * from t_previlege WHERE c_id = '$_SESSION[id]' ORDER BY c_name");
               while ($d_app_p = mysqli_fetch_array($q_app_p)) {
                 $d_dir_p = $d_app_p['c_dir'];
@@ -75,6 +77,7 @@
               <?php
               }
             } else {
+              // jika tidak ada previlege
               ?>
               <div class="row">
                 <div class="col-md-12" style="text-align: center;">
