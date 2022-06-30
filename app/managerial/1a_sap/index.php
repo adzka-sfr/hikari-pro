@@ -1,7 +1,7 @@
 <?php
 include_once '../../../_config/koneksi.php';
 // ubah c_dir sesuai dengan nama folder
-$cek = mysqli_query($connect, "SELECT c_status, c_name, c_dir, c_group from t_app where c_dir = 'agreement'");
+$cek = mysqli_query($connect, "SELECT c_status, c_name, c_dir, c_group from t_app where c_dir = '1a_sap'");
 $data = mysqli_fetch_array($cek);
 
 if ($data['c_status'] == 'develop') {

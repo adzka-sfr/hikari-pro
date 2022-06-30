@@ -106,7 +106,7 @@
           <ul class="bs-glyphicons-list ">
             <!-- isi konten aplikasinya -->
             <?php
-            $q_app_m = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'managerial' ORDER BY c_name");
+            $q_app_m = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'managerial' ORDER BY c_dir");
             while ($d_app_m = mysqli_fetch_array($q_app_m)) {
               $d_dir_m = $d_app_m['c_dir'];
               $d_name_m = $d_app_m['c_name'];
