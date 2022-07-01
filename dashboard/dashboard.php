@@ -61,16 +61,16 @@
 
             if (!empty($r_app_pc)) {
               // ambil semua data previlege
-              $q_app_p = mysqli_query($connect, "SELECT * from t_previlege WHERE c_id = '$_SESSION[id]' ORDER BY c_name");
-              while ($d_app_p = mysqli_fetch_array($q_app_p)) {
-                $d_dir_p = $d_app_p['c_dir'];
-                $d_name_p = $d_app_p['c_name'];
-                $d_img_p = $d_app_p['c_img'];
+              $q_app_pre = mysqli_query($connect, "SELECT * from t_previlege WHERE c_id = '$_SESSION[id]' ORDER BY c_name");
+              while ($d_app_pre = mysqli_fetch_array($q_app_pre)) {
+                $d_dir_pre = $d_app_pre['c_dir'];
+                $d_name_pre = $d_app_pre['c_name'];
+                $d_img_pre = $d_app_pre['c_img'];
             ?>
-                <a href="<?= base_url('app/' . $d_dir_p) ?>">
+                <a href="<?= base_url('app/' . $d_dir_pre) ?>">
                   <li class="zoom">
-                    <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>" alt="<?= $d_name_p ?>" height="50" width="50"></span>
-                    <span class="glyphicon-class"><?= $d_name_p ?></span>
+                    <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_pre . '.png') ?>" alt="<?= $d_name_pre ?>" height="50" width="50"></span>
+                    <span class="glyphicon-class"><?= $d_name_pre ?></span>
                   </li>
                 </a>
 
@@ -110,11 +110,12 @@
             while ($d_app_m = mysqli_fetch_array($q_app_m)) {
               $d_dir_m = $d_app_m['c_dir'];
               $d_name_m = $d_app_m['c_name'];
+              $d_img_m = $d_app_m['c_img'];
             ?>
 
               <a href="<?= base_url('app/managerial/' . $d_dir_m) ?>">
                 <li class="zoom">
-                  <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_dir_m . '.png') ?>" alt="<?= $d_name_m ?>" height="50" width="50"></span>
+                  <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_m . '.png') ?>" alt="<?= $d_name_m ?>" height="50" width="50"></span>
                   <span class="glyphicon-class"><?= $d_name_m ?></span>
                 </li>
               </a>
@@ -129,7 +130,7 @@
       </div>
     </div>
 
-    <div class="dashboard_graph" style="background-color: #F7F7F7;">
+    <div class="dashboard_graph" style="background-color: #F7F7F7; margin-bottom: 50px;">
       <div class="row x_title">
         <div class="col-md-12">
           <h3>Production <small>App</small></h3>
@@ -144,11 +145,12 @@
             while ($d_app_p = mysqli_fetch_array($q_app_p)) {
               $d_dir_p = $d_app_p['c_dir'];
               $d_name_p = $d_app_p['c_name'];
+              $d_img_p = $d_app_p['c_img'];
             ?>
 
               <a href="<?= base_url('app/production/' . $d_dir_p) ?>">
                 <li class="zoom">
-                  <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_dir_p . '.png') ?>" alt="<?= $d_name_p ?>" height="50" width="50"></span>
+                  <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>" alt="<?= $d_name_p ?>" height="50" width="50"></span>
                   <span class="glyphicon-class"><?= $d_name_p ?></span>
                 </li>
               </a>
