@@ -144,7 +144,13 @@ include('../../../app_name.php') ?>
                     <div class="row">
                       <div class="col-md-6">
                         <label for="fullname">Status * :</label>
-                        <input type="text" id="name" class="form-control" name="name" required />
+                        <select class="form-control">
+                          <option>Choose option</option>
+                          <option>Option one</option>
+                          <option>Option two</option>
+                          <option>Option three</option>
+                          <option>Option four</option>
+                        </select>
                       </div>
                       <div class="col-md-6">
                         <label for="fullname">Position * :</label>
