@@ -16,6 +16,11 @@ if (!empty($row)) {
     echo "public - make u mine";
     echo "the walters - i love u so";
     echo "Cigarettes after sex - apocalypse";
+    echo "arditho pramono - i just couldn't save you tonight";
+    echo "conan gray - heather";
+    echo "";
+    echo "";
+    echo "";
     mysqli_query($connect, "UPDATE auth set pass = '$new_pass' where id = '$_SESSION[id]'");
 } else {
 

@@ -20,9 +20,8 @@ include('../app_name.php'); ?>
                             <a class="dropdown-item" href="<?= base_url('dashboard/') ?>">Hikari</a>
                             <a class="dropdown-item" href="index.php">Dashboard</a>
                             <span style="padding-left: 20px; font-weight: bold;">Priority by Destination</span>
-                            <a style="padding-left: 30px;" class="dropdown-item" href="p-g130.php">G130</a>
-                            <a style="padding-left: 30px;" class="dropdown-item" href="p-g150.php">G150</a>
-                            <a style="padding-left: 30px;" class="dropdown-item" href="p-g200.php">G200</a>
+                            <a style="padding-left: 30px;" class="dropdown-item" href="panel.php">Panel</a>
+                            <a style="padding-left: 30px;" class="dropdown-item" href="small.php">Small</a>
                             <a class="dropdown-item" href="_help/">Help</a>
                             <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                         </div>
@@ -38,7 +37,7 @@ include('../app_name.php'); ?>
         <div class="dashboard_graph" style="padding-bottom: 0px;">
             <div class="row">
                 <div class="col-md-9">
-                    <h2 style="font-weight: bold; padding-left: 10px; margin-top: 0px; font-size: 23px; color: #212529;"><?= strtoupper($app_name) ?> - PRIORITY OF G200</h2>
+                    <h2 style="font-weight: bold; padding-left: 10px; margin-top: 0px; font-size: 23px; color: #212529;"><?= strtoupper($app_name) ?> - PRIORITY OF SMALL CABINET</h2>
                 </div>
                 <div class="col-md-3">
                     <span style="text-align: right ; margin-top: 0px;">
@@ -55,7 +54,7 @@ include('../app_name.php'); ?>
             <div class="row">
                 <div class="col-12">
                     <table class="table " style="font-size: 35px;">
-                        <thead style="font-size: 35px; padding-top: 5px; padding-bottom: 5px; background-color: #F28997; ">
+                        <thead style="font-size: 35px; padding-top: 5px; padding-bottom: 5px; background-color: #F9C8A0; ">
                             <tr>
                                 <th style="text-align: center;">No</th>
                                 <th style="text-align: center;">Cabinet</th>
@@ -63,7 +62,7 @@ include('../app_name.php'); ?>
                                 <th style="text-align: center;">Qty</th>
                             </tr>
                         </thead>
-                        <tbody id="g200">
+                        <tbody id="small">
                         </tbody>
                     </table>
                 </div>
@@ -88,11 +87,11 @@ include('../app_name.php'); ?>
         }
 
         function update() {
-            $.getJSON("G2.php", function(data) {
-                $("#g200").empty();
+            $.getJSON("small_data.php", function(data) {
+                $("#small").empty();
                 var no = 1;
                 $.each(data.result, function() {
-                    $("#g200").append("<tr><td style='text-align: center;'>" + (no++) + "</td><td>" + this['name_ori_cabinet'] + "</td><td style='text-align:center'>" + this['name_piano'] + "</td><td style='text-align: center'><h1 style='border-radius: 0.25rem; background-color: #F28997; text-align: center;'>" + this['pcs_prioritas'] + "</h1></td></tr>");
+                    $("#small").append("<tr><td style='text-align: center;'>" + (no++) + "</td><td>" + this['nama_kabinet'] + "</td><td style='text-align:center'>" + this['model'] + "</td><td style='text-align: center'><h1 style='border-radius: 0.25rem; background-color: #F9C8A0; text-align: center;'>" + this['qty'] + "</h1></td></tr>");
                 });
             });
         }

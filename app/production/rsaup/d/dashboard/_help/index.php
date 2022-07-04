@@ -20,9 +20,8 @@ include('../../app_name.php'); ?>
                             <a class="dropdown-item" href="<?= base_url('dashboard/') ?>">Hikari</a>
                             <a class="dropdown-item" href="../index.php">Dashboard</a>
                             <span style="padding-left: 20px; font-weight: bold;">Priority by Destination</span>
-                            <a style="padding-left: 30px;" class="dropdown-item" href="../p-g130.php">G130</a>
-                            <a style="padding-left: 30px;" class="dropdown-item" href="../p-g150.php">G150</a>
-                            <a style="padding-left: 30px;" class="dropdown-item" href="../p-g200.php">G200</a>
+                            <a style="padding-left: 30px;" class="dropdown-item" href="../panel.php">Panel</a>
+                            <a style="padding-left: 30px;" class="dropdown-item" href="../small.php">Small</a>
                             <a class="dropdown-item" href="">Help</a>
                             <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                         </div>
