@@ -13,7 +13,9 @@ if (!empty($row)) {
     $_SESSION['id'] = $row['id'];
     $_SESSION['nama'] = $row['nama'];
     $_SESSION['pass'] = $row['pass'];
-    $_SESSION['role'] = strtolower($row['jabatan']);
+    $_SESSION['role'] = strtolower($row['role']);
+    $_SESSION['dept'] = $row['dept'];
+    $_SESSION['jabatan'] = $row['jabatan'];
     echo "oke";
 } else {
 
