@@ -1,5 +1,5 @@
 <?php
 require_once "../_config/koneksi.php";
 
-unset($_SESSION['id']);
+session_destroy();
 echo "<script>window.location='" . base_url('auth') . "';</script>";
