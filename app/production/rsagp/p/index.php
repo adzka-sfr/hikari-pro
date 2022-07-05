@@ -25,7 +25,7 @@ if (empty($row_prev)) {
         if ($_SESSION['role'] == 'managerial' and strtolower($_SESSION['dept']) == 'assembly gp') {
             echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/dashboard/managerial/dashboard') . "';</script>";
         } elseif ($_SESSION['role'] == 'pic' and strtolower($_SESSION['dept']) == 'assembly gp') {
-            echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/dashboard/staff/dashboard') . "';</script>";
+            echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/dashboard/staff/input_data/data.php') . "';</script>";
         }
     }
 }

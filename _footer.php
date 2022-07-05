@@ -11,14 +11,22 @@
 <!-- </div> -->
 <!-- </div> -->
 
-<!-- script tambahan -->
+<!-- SRIPT TAMBAHAN -->
+
+<!-- untuk fulscreen -->
 <script>
     var goFS = document.getElementById("goFS");
     goFS.addEventListener("click", function() {
         document.body.requestFullscreen();
     }, false);
 </script>
-<!-- script tambahan -->
+
+<!-- untuk dropdown search -->
+<script>
+    $('#cari').select2();
+</script>
+
+<!-- SRIPT TAMBAHAN -->
 
 <!-- jQuery -->
 <script src="<?= base_url('_assets/vendors/jquery/dist/jquery.min.js') ?>"></script>
@@ -65,6 +73,9 @@
 
 <!-- Custom Theme Scripts -->
 <script src="<?= base_url('_assets/build/js/custom.min.js') ?>"></script>
+
+<!-- Tambahan -->
+
 
 </body>
 

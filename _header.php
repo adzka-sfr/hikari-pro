@@ -45,6 +45,14 @@ if (!isset($_SESSION['id'])) {
   <!-- Custom Theme Style -->
   <link href="<?= base_url('_assets/build/css/custom.min.css') ?>" rel="stylesheet">
 
+  <!-- TAMBAHAN -->
+
+  <!-- untuk dropdown search -->
+  <link href="<?= base_url('_assets/src/add/dropdown_search/select2.min.css') ?>" rel="stylesheet" />
+  <script src="<?= base_url('_assets/src/add/dropdown_search/jquery-3.4.1.js') ?>" crossorigin="anonymous"></script>
+  <script src="<?= base_url('_assets/src/add/dropdown_search/select2.min.js') ?>"></script>
+
+  <!-- TAMBAHAN -->
   <style>
     .zoom {
       transition: transform 1s;
