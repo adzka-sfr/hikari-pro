@@ -115,7 +115,7 @@ if (isset($_SESSION['id'])) {
                                     title: 'Success!',
                                     text: 'Login success!',
                                     type: 'success',
-                                    timer: 2000,
+                                    timer: 1000,
                                     showCancelButton: false,
                                     showConfirmButton: false
                                 }).then(function() {

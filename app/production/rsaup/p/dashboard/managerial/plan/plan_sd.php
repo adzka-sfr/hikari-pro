@@ -1,7 +1,7 @@
 <?php
 include('../../../../../../../_header.php');
 include('../../../app_name.php');
-include('../../pro_koneksi.php');
+include('../../_config/pro_koneksi.php');
 
 unset($_SESSION["piano_name"]);
 unset($_SESSION['search_tanggal']);
@@ -16,7 +16,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                 <div class="col-md-3 left_col">
                     <div class="left_col scroll-view">
                         <div class="navbar nav_title" style="border: 0;">
-                            <a href="#" class="site_title" style="padding-left: 15px;"><img src="<?= base_url('_assets/production/images/emblem.png') ?>" alt="logo" style="width: 40px;"> <span><img src="<?= base_url('_assets/production/images/original-text.png') ?>" alt="piano" style="width: 110px;"></span></a>
+                            <a href="<?= base_url('dashboard/') ?>" class="site_title" style="padding-left: 15px;"><img src="<?= base_url('_assets/production/images/emblem.png') ?>" alt="logo" style="width: 40px;"> <span><img src="<?= base_url('_assets/production/images/original-text.png') ?>" alt="piano" style="width: 110px;"></span></a>
                         </div>
                         <div class="clearfix"></div>
                         <!-- menu profile quick info -->
@@ -35,17 +35,10 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                             <div class="menu_section">
                                 <ul class="nav side-menu">
                                     <li class="dashboard"><a href="../dashboard/dashboard.php"><i class="fa fa-desktop"></i> Ratio Set</a></li>
-                                    <li><a><i class="fa fa-edit"></i> Entry Data <span class="fa fa-chevron-down"></span></a>
+                                    <li><a><i class="fa fa-edit"></i> Entry Plan <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <!-- <li class=""><a> <i class="fa fa-cubes"></i> Inventory<span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li class=""><a href="<?= base_url('input_data/data.php') ?>">Daily</a></li>
-                                <li class=""><a href="<?= base_url('input_data/dataacc.php') ?>">Accumulation</a></li>
-                            </ul>
-                        </li> -->
-                                            <!-- <li class=""><a href="<?= base_url('ng/data.php') ?>"><i class="fa fa-recycle"></i> No Good Cabinet</a></li> -->
-                                            <li class="active"><a href="../plan/plan.php"><i class=" fa fa-calendar-plus-o"></i> Plan</a></li>
-                                            <!-- <li class=""><a href="<?= base_url('checkout/checkout.php') ?>"><i class="fa fa-shopping-cart"></i> Checkout</a></li> -->
+                                            <li class="active"><a href="<?= base_url('app/production/rsaup/p/dashboard/managerial/plan/plan_cs.php') ?>"><i class=" fa fa-calendar-plus-o"></i> Case</a></li>
+                                            <li class="active"><a href="<?= base_url('app/production/rsaup/p/dashboard/managerial/plan/plan_sd.php') ?>"><i class=" fa fa-calendar-plus-o"></i> Side</a></li>
                                         </ul>
                                     </li>
                                     <li class=""><a href="../priority/priority.php"><i class='fa fa-signal'></i> Priority</a></li>
