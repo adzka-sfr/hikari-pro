@@ -94,6 +94,8 @@ if (!isset($_SESSION['id'])) {
     }
   </style>
   <!-- style untuk zoom h-over -->
+
+  <!-- untuk fix header -->
   <style>
     .tableFixHead {
       width: auto;
@@ -105,10 +107,14 @@ if (!isset($_SESSION['id'])) {
       display: block;
       width: 100%;
       overflow: auto;
-      height: 200px;
+      height: 300px;
     }
 
     .tableFixHead thead tr {
+      display: block;
+    }
+
+    .tableFixHead tfoot tr {
       display: block;
     }
 

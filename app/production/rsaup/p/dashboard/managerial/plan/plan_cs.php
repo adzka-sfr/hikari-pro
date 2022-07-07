@@ -77,7 +77,6 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                     </a>
                                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="<?= base_url('dashboard/') ?>"><i class="fa fa-home pull-right"></i>Hikari</a>
-
                                         <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                     </div>
                                 </li>
@@ -195,10 +194,10 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                                     },
                                                     datalabels: {
                                                         font: {
-                                                            weight: "bold"
+                                                            weight: "bold",
                                                         },
                                                         color: "#fff"
-                                                    },
+                                                    }
                                                 },
                                                 scales: {
                                                     yAxes: [{
@@ -219,7 +218,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                 </div>
                             </div>
 
-                            <hr>
+                            <hr style="margin-bottom: 5px ;">
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -258,8 +257,8 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                                                         <thead>
                                                                             <tr>
                                                                                 <th scope="col">Model</th>
-                                                                                <th scope="col" style="text-align: center;">Plan</th>
-                                                                                <th scope="col">Achieved</th>
+                                                                                <th scope="col" style="text-align: right;">Plan</th>
+                                                                                <th scope="col" style="text-align: right;">Achvd</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -272,13 +271,18 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                                             <?php
                                                             } else {
                                                             ?>
-                                                                <div class="modal-body tableFixHead">
+                                                                <div class="modal-body tableFixHead" style="padding-top: 0px; padding-bottom: 0px;">
                                                                     <table class="table table-hover ">
                                                                         <thead>
+                                                                            <!-- <tr>
+                                                                                <th scope="col">Total</th>
+                                                                                <th scope="col" style="text-align: right;">200</th>
+                                                                                <th scope="col" style="text-align: right;">100</th>
+                                                                            </tr> -->
                                                                             <tr>
                                                                                 <th scope="col">Model</th>
-                                                                                <th scope="col" style="text-align: center;">Plan</th>
-                                                                                <th scope="col">Achieved</th>
+                                                                                <th scope="col" style="text-align: right; ">Plan</th>
+                                                                                <th scope="col" style="text-align: right;">Achvd</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -293,13 +297,31 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                                                                     }
                                                                                     ?>>
                                                                                     <td><?= $data_dp['model'] ?></td>
-                                                                                    <td style="text-align: center;"><?= $data_dp['plan'] ?></td>
-                                                                                    <td style="text-align: center;"><?= $data_dp['acvd'] ?></td>
+                                                                                    <td style="text-align: right;"><?= $data_dp['plan'] ?></td>
+                                                                                    <td style="text-align: right;"><?= $data_dp['acvd'] ?></td>
                                                                                 </tr>
                                                                             <?php
                                                                             }
                                                                             ?>
                                                                         </tbody>
+                                                                        <tfoot>
+                                                                            <tr>
+                                                                                <th scope="col">Total</th>
+                                                                                <th scope="col" style="text-align: right;">
+                                                                                    <?php
+                                                                                    $sql_tplan = mysqli_query($conn, "SELECT SUM(qty) as total_plan FROM plan WHERE tanggal = '$sel'");
+                                                                                    $data_tplan = mysqli_fetch_array($sql_tplan);
+                                                                                    echo $data_tplan['total_plan'];
+                                                                                    ?>
+                                                                                    unit</th>
+                                                                                <th scope="col" style="text-align: right;">
+                                                                                    <?php
+                                                                                    $sql_tachvd = mysqli_query($conn, "SELECT SUM(qty) as total_acvd FROM achieved WHERE tanggal = '$sel'");
+                                                                                    $data_tachvd = mysqli_fetch_array($sql_tachvd);
+                                                                                    echo $data_tachvd['total_acvd'];
+                                                                                    ?> unit</th>
+                                                                            </tr>
+                                                                        </tfoot>
                                                                     </table>
                                                                 </div>
                                                             <?php
@@ -321,7 +343,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                 </div>
                             </div>
 
-                            <hr>
+                            <hr style="margin-top: 0px;">
 
 
                     </center>
