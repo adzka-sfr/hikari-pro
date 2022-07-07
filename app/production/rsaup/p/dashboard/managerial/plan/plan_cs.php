@@ -92,7 +92,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                 <div class="dashboard_graph" style="padding-bottom: 0px; padding-left: 0px; padding-right: 0px; margin-left: 0px; background-color: #F7F7F7;">
                     <div class="row">
                         <div class="col-md-7">
-                            <h3 style="font-weight: bold;  margin-top: 0px; font-size: 18px; "><?= strtoupper($app_name) ?></h3>
+                            <h3 style="font-weight: bold;  margin-top: 0px; font-size: 18px; "><?= strtoupper($app_name) ?> - Set Plan Case</h3>
                         </div>
                         <div class="col-md-5">
                             <span style="text-align: right ; margin-top: 0px;">
@@ -110,7 +110,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                 <!-- ============================ START FORM ============================ -->
                 <div class="row ">
                     <center>
-                        <div class="col-12 p-4" style="text-align: left;  border-radius: 0.25rem; background-color: white; box-shadow:0px 1px 5px rgba(0,0,0,0.8);">
+                        <div class="col-12 p-4" style="text-align: left; margin-bottom: 50px;  border-radius: 0.25rem; background-color: white; box-shadow:0px 1px 5px rgba(0,0,0,0.8);">
                             <div class="row">
                                 <div class="col-12" style="text-align: left;">
                                     <div class="btn-group">
@@ -145,84 +145,185 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row" style="font-size: 16px">
-                                <!-- <div class="card">
-                                    <div class="card-body"> -->
-                                <div class="row">
-                                    <div class="col-12">
-                                        <!-- ratio set -->
-                                        <canvas id="myChart" height="70px"></canvas>
-                                        <script src="../../js/cdnchart.min.js"></script>
-                                        <script src="../../js/plugindatalabels.js"></script>
-                                        <script>
-                                            Chart.register(ChartDataLabels);
-                                            const labels = [
-                                                <?php
-                                                $sql = mysqli_query($conn, "SELECT * FROM piano_bd pb JOIN cab_stock cs ON pb.gmc_kabinet = cs.gmc_kabinet WHERE pb.nama_piano = '$_SESSION[model_piano]' order by cs.nama_tampil asc");
-                                                while ($data = mysqli_fetch_array($sql)) {
-                                                    echo "'" . $data['nama_tampil'] . "',";
-                                                }
-                                                ?>
-                                            ];
-                                            const data = {
-                                                labels: labels,
-                                                datasets: [{
-                                                    label: 'Kabinet',
-                                                    color: '#fff',
-                                                    backgroundColor: ['rgb(54,162,235,0.50)'],
-                                                    borderColor: 'rgb(255,255,255)',
-                                                    borderWidth: 1,
-                                                    data: [
-                                                        <?php
-                                                        $sql = mysqli_query($conn, "SELECT * FROM piano_bd pb JOIN cab_stock cs ON pb.gmc_kabinet = cs.gmc_kabinet WHERE pb.nama_piano = '$_SESSION[model_piano]' order by cs.nama_tampil asc");
-                                                        while ($data = mysqli_fetch_array($sql)) {
-                                                            echo $data['qty'] . ",";
-                                                        }
-                                                        ?>
-                                                    ],
-                                                }, ]
-                                            };
-                                            const config = {
-                                                type: 'bar',
-                                                data: data,
-                                                options: {
-                                                    responsive: true,
-                                                    interaction: {
-                                                        mode: 'index',
-                                                        intersect: false,
-                                                    },
-                                                    plugins: {
-                                                        legend: {
-                                                            display: false,
-                                                        },
-                                                        datalabels: {
-                                                            font: {
-                                                                weight: "bold"
-                                                            },
-                                                            color: "#fff"
-                                                        },
-                                                    },
-                                                    scales: {
-                                                        yAxes: [{
-                                                            ticks: {
-                                                                min: 0
-                                                            }
-                                                        }]
+                                <div class="col-12">
+                                    <!-- ratio set -->
+                                    <canvas id="myChart" height="70px"></canvas>
+                                    <script src="../../js/cdnchart.min.js"></script>
+                                    <script src="../../js/plugindatalabels.js"></script>
+                                    <script>
+                                        Chart.register(ChartDataLabels);
+                                        const labels = [
+                                            <?php
+                                            $sql = mysqli_query($conn, "SELECT * FROM piano_bd pb JOIN cab_stock cs ON pb.gmc_kabinet = cs.gmc_kabinet WHERE pb.nama_piano = '$_SESSION[model_piano]' order by cs.nama_tampil asc");
+                                            while ($data = mysqli_fetch_array($sql)) {
+                                                echo "'" . $data['nama_tampil'] . "',";
+                                            }
+                                            ?>
+                                        ];
+                                        const data = {
+                                            labels: labels,
+                                            datasets: [{
+                                                label: 'Kabinet',
+                                                color: '#fff',
+                                                backgroundColor: ['rgb(54,162,235,0.50)'],
+                                                borderColor: 'rgb(255,255,255)',
+                                                borderWidth: 1,
+                                                data: [
+                                                    <?php
+                                                    $sql = mysqli_query($conn, "SELECT * FROM piano_bd pb JOIN cab_stock cs ON pb.gmc_kabinet = cs.gmc_kabinet WHERE pb.nama_piano = '$_SESSION[model_piano]' order by cs.nama_tampil asc");
+                                                    while ($data = mysqli_fetch_array($sql)) {
+                                                        echo $data['qty'] . ",";
                                                     }
+                                                    ?>
+                                                ],
+                                            }, ]
+                                        };
+                                        const config = {
+                                            type: 'bar',
+                                            data: data,
+                                            options: {
+                                                responsive: true,
+                                                interaction: {
+                                                    mode: 'index',
+                                                    intersect: false,
                                                 },
-                                            };
-                                        </script>
-                                        <script>
-                                            const myChart = new Chart(
-                                                document.getElementById('myChart'),
-                                                config
-                                            );
-                                        </script>
-                                    </div>
+                                                plugins: {
+                                                    legend: {
+                                                        display: false,
+                                                    },
+                                                    datalabels: {
+                                                        font: {
+                                                            weight: "bold"
+                                                        },
+                                                        color: "#fff"
+                                                    },
+                                                },
+                                                scales: {
+                                                    yAxes: [{
+                                                        ticks: {
+                                                            min: 0
+                                                        }
+                                                    }]
+                                                }
+                                            },
+                                        };
+                                    </script>
+                                    <script>
+                                        const myChart = new Chart(
+                                            document.getElementById('myChart'),
+                                            config
+                                        );
+                                    </script>
                                 </div>
-                                <!-- </div>
-                                </div> -->
                             </div>
+
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <center>
+                                        <div class="pagination">
+                                            <?php
+                                            $k1 = date('d F', strtotime('-' . 4 . ' days'));
+                                            for ($k = 0; $k < 7; $k++) {
+                                                $k1 = date('d F', strtotime('+' . 1 . ' days', strtotime($k1)));
+                                            ?>
+                                                <a href="#" <?php
+                                                            $now = date('d F');
+                                                            if ($k1 == $now) {
+                                                                echo 'class="active"';
+                                                            }
+                                                            ?> data-toggle="modal" data-target="#his<?= $k ?>"><?= $k1 ?></a>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="his<?= $k ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLongTitle">Plan of <?= date('l, d F Y', strtotime($k1)) ?></h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <?php
+                                                            $sel = date('Y-m-d', strtotime($k1));
+                                                            // cek apakah data plan tersedia atau tidak
+                                                            $sql_ck = mysqli_query($conn, "SELECT * FROM plan WHERE tanggal = '$sel'");
+                                                            $data_ck = mysqli_fetch_array($sql_ck);
+                                                            if (empty($data_ck)) {
+                                                            ?>
+                                                                <div class="modal-body">
+                                                                    <table class="table table-hover ">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">Model</th>
+                                                                                <th scope="col" style="text-align: center;">Plan</th>
+                                                                                <th scope="col">Achieved</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td colspan="4" style="text-align: center;">Data not found</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            <?php
+                                                            } else {
+                                                            ?>
+                                                                <div class="modal-body tableFixHead">
+                                                                    <table class="table table-hover ">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">Model</th>
+                                                                                <th scope="col" style="text-align: center;">Plan</th>
+                                                                                <th scope="col">Achieved</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <?php
+                                                                            // menampilkan data plan berdasarkan tanggal yang ditekan
+                                                                            $sql_dp = mysqli_query($conn, "SELECT p.nama_piano as model, p.qty as plan, a.qty as acvd FROM plan p JOIN achieved a ON p.keytag = a.keytag where p.tanggal = '$sel'");
+                                                                            while ($data_dp = mysqli_fetch_array($sql_dp)) {
+                                                                            ?>
+                                                                                <tr <?php
+                                                                                    if ($_SESSION['model_piano'] == $data_dp['model']) {
+                                                                                        echo ' style="font-weight: bold; font-size: 16px;"';
+                                                                                    }
+                                                                                    ?>>
+                                                                                    <td><?= $data_dp['model'] ?></td>
+                                                                                    <td style="text-align: center;"><?= $data_dp['plan'] ?></td>
+                                                                                    <td style="text-align: center;"><?= $data_dp['acvd'] ?></td>
+                                                                                </tr>
+                                                                            <?php
+                                                                            }
+                                                                            ?>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+
+
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+
+                            <hr>
+
+
                     </center>
                 </div>
             </div>

@@ -53,6 +53,36 @@ if (!isset($_SESSION['id'])) {
   <script src="<?= base_url('_assets/src/add/dropdown_search/select2.min.js') ?>"></script>
 
   <!-- TAMBAHAN -->
+
+  <!-- Tambahan -->
+
+  <!-- untuk pagination display -->
+  <style>
+    .pagination {
+      display: inline-block;
+    }
+
+    .pagination a {
+      color: black;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+
+    .pagination a.active {
+      background-color: #2A3F54;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .pagination a:hover:not(.active) {
+      background-color: #ddd;
+      border-radius: 5px;
+    }
+  </style>
+  <!-- untuk pagination display -->
+
+  <!-- style untuk zoom h-over -->
   <style>
     .zoom {
       transition: transform 1s;
@@ -63,6 +93,37 @@ if (!isset($_SESSION['id'])) {
       cursor: pointer;
     }
   </style>
+  <!-- style untuk zoom h-over -->
+  <style>
+    .tableFixHead {
+      width: auto;
+      table-layout: fixed;
+      border-collapse: collapse;
+    }
+
+    .tableFixHead tbody {
+      display: block;
+      width: 100%;
+      overflow: auto;
+      height: 200px;
+    }
+
+    .tableFixHead thead tr {
+      display: block;
+    }
+
+    .tableFixHead th,
+    .tableFixHead td {
+      padding: 5px 10px;
+      width: 200px;
+    }
+
+    th {
+      background: #ABDD93;
+    }
+  </style>
+  <!-- untuk fix header -->
+
   <!-- script untuk jam  -->
   <script type="text/javascript">
     function tampilkanwaktu() { //fungsi ini akan dipanggil di bodyOnLoad dieksekusi tiap 1000ms = 1detik
@@ -81,4 +142,5 @@ if (!isset($_SESSION['id'])) {
   ?>
   <!-- script untuk jam  -->
 
+  <!-- Tambahan -->
 </head>
