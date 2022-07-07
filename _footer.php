@@ -7,9 +7,6 @@
     </div>
     <div class="clearfix"></div>
 </footer>
-<!-- /footer content -->
-<!-- </div> -->
-<!-- </div> -->
 
 <!-- SRIPT TAMBAHAN -->
 
@@ -26,6 +23,24 @@
     $('#cari').select2();
 </script>
 
+<!-- untuk disable tanggal kemarin -->
+<script type="text/javascript">
+    var date = new Date();
+    var day = date.getDate()
+    var month = date.getMonth() + 1
+    var year = date.getFullYear()
+    if (day < 10) {
+        day = '0' + day
+    }
+    if (month < 10) {
+        month = '0' + month
+    }
+
+
+    var minDate = year + '-' + month + '-' + day
+    document.getElementById('tanggal_kemarin').setAttribute("min", minDate);
+</script>
+<!-- untuk disable tanggal kemarin -->
 
 <!-- SRIPT TAMBAHAN -->
 

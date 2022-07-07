@@ -111,6 +111,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                     <center>
                         <div class="col-12 p-4" style="text-align: left; margin-bottom: 50px;  border-radius: 0.25rem; background-color: white; box-shadow:0px 1px 5px rgba(0,0,0,0.8);">
                             <div class="row">
+                                <!-- content dropdown -->
                                 <div class="col-12" style="text-align: left;">
                                     <div class="btn-group">
                                         <?php
@@ -146,6 +147,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                             </div>
 
                             <div class="row" style="font-size: 16px">
+                                <!-- content diagram -->
                                 <div class="col-12">
                                     <!-- ratio set -->
                                     <canvas id="myChart" height="70px"></canvas>
@@ -221,6 +223,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                             <hr style="margin-bottom: 5px ;">
 
                             <div class="row">
+                                <!-- Content pagination -->
                                 <div class="col-md-12">
                                     <center>
                                         <div class="pagination">
@@ -345,6 +348,34 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
 
                             <hr style="margin-top: 0px;">
 
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label>Date</label>
+                                                    <input type="date" name="p_date" class="form-control" id="tanggal_kemarin">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Model</label>
+                                                    <input type="text" name="p_model" disabled class="form-control" value="<?= $_SESSION['model_piano'] ?>" placeholder="<?= $_SESSION['model_piano'] ?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Qty</label>
+                                                    <input type="text" name="p_qty" class="form-control" placeholder="Qty" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+                                                </div>
+                                                <div style="text-align: right;">
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                </div>
+                            </div>
 
                     </center>
                 </div>
