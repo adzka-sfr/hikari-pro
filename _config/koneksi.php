@@ -18,6 +18,7 @@ if ($connect->connect_error) {
 }
 
 //fungsi base_url
+$_SESSION['base_url'] = "http://localhost/training/hikari";
 function base_url($url = null)
 {
   $base_url = "http://localhost/training/hikari";

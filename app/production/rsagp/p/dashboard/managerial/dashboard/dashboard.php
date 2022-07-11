@@ -35,15 +35,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                     <li class="active"><a><i class="fa fa-desktop"></i> Ratio Set</a></li>
                                     <li><a><i class="fa fa-edit"></i> Entry Data<span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <!-- <li class=""><a> <i class="fa fa-cubes"></i> Inventory<span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li class=""><a href="<?= base_url('input_data/data.php') ?>">Daily</a></li>
-                                <li class=""><a href="<?= base_url('input_data/dataacc.php') ?>">Accumulation</a></li>
-                            </ul>
-                        </li> -->
-                                            <!-- <li class=""><a href="<?= base_url('ng/data.php') ?>"><i class="fa fa-recycle"></i> No Good Cabinet</a></li> -->
                                             <li class=""><a href="../plan/plan.php"><i class="fa fa-calendar-plus-o"></i> Plan</a></li>
-                                            <!-- <li class=""><a href="<?= base_url('checkout/checkout.php') ?>"><i class="fa fa-shopping-cart"></i> Checkout</a></li> -->
                                         </ul>
                                     </li>
                                     <li class=""><a href="../priority/priority.php"><i class='fa fa-signal'></i> Priority</a></li>
@@ -295,8 +287,8 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                                                                                     <h5 style="color: black; text-align: center">
                                                                                                         Destination G 130 - G 150 - G 200 <?php echo $ambilloop['name_piano'] ?>
                                                                                                     </h5>
-                                                                                                    <div style="overflow-y: scroll; height: 300px; display: block">
-                                                                                                        <table style="font-size : 16px; border-radius: 0.25rem; border: 1px solid #ddd" id="myTable" class="table tableFixHead">
+                                                                                                    <div style="overflow-y: scroll; height: 300px; display: block ">
+                                                                                                        <table style="font-size : 16px; border-radius: 0.25rem; border: 1px solid #ddd" id="myTable" class="table">
                                                                                                             <thead style="background-color: #f1f1f1; text-align: center">
                                                                                                                 <tr>
                                                                                                                     <th>No</th>

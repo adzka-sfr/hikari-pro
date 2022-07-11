@@ -126,16 +126,7 @@ include('../../../app_name.php') ?>
 
                   <div class="row">
                     <div class="col-md-12">
-                      <h2><b>How to use</b></h2>
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor quia at eaque officiis nobis. Minus veniam saepe, tempora quam quis dolores dolore dolorem numquam porro reiciendis perferendis odio esse assumenda.
+                      <object data="guide.pdf" type="application/pdf" width="100%" height="800"></object>
                     </div>
                   </div>
 
