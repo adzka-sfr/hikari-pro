@@ -371,7 +371,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                         <div class="col-md-6">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <h2 style="font-weight: bold;">Remaining</h2>
+                                                    <h2 style="font-weight: bold;">Yesterday Remaining</h2>
                                                     <hr style="margin: 0px ;">
                                                 </div>
                                             </div>
@@ -393,7 +393,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                         <div class="col-md-6">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <h2 style="font-weight: bold;">Stock</h2>
+                                                    <h2 style="font-weight: bold;">Yesterday Stock</h2>
                                                     <hr style="margin: 0px ;">
                                                 </div>
                                             </div>

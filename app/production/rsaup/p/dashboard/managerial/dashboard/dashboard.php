@@ -34,7 +34,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                             <div class="menu_section">
                                 <ul class="nav side-menu">
-                                    <li class="dashboard"><a href="../dashboard/dashboard.php"><i class="fa fa-desktop"></i> Ratio Set</a></li>
+                                    <li class="dashboard"><a href="../dashboard/dashboard.php"><i class="fa fa-desktop"></i> Dashboard</a></li>
                                     <li><a><i class="fa fa-pencil"></i> Entry Plan <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href="<?= base_url('app/production/rsaup/p/dashboard/managerial/plan/plan_cs.php') ?>"><i class=" fa fa-calendar-plus-o"></i> Case</a></li>
@@ -119,301 +119,158 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                     <center>
                         <div class="col-12 p-4" style="text-align: left; margin-bottom: 50px;  border-radius: 0.25rem; background-color: white; box-shadow:0px 1px 5px rgba(0,0,0,0.8);">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <h2 style="font-weight: bold;">Today's plan</h2>
-                                            <hr style="margin: 0px ;">
+                                        <div class="col-md-12" style="text-align: right; padding-right: 45px;">
+                                            <i class="fa fa-refresh fa-lg" data-bs-toggle="tooltip" title="Refresh Chart" style="cursor: pointer;" onclick="location.reload(true)"></i>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12 tableFixHead-2">
-                                            <table class="table table-bordered" style="margin: 0;">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col" style="text-align: center;">Model</th>
-                                                        <th scope="col" style="text-align: center;">Plan</th>
-                                                        <th scope="col" style="text-align: center;">Achvd</th>
-                                                        <th scope="col" style="text-align: center;">Type</th>
-                                                        <th colspan="2" scope="col" style="text-align: center;">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    $today = date("Y-m-d");
+                                        <div class="col-md-12">
+                                            <canvas id="dailyprogress" height="90px"></canvas>
+                                            <script>
+                                                const labels = [<?php
+                                                                $yesterday = date('Y-m-d', strtotime('-5 days'));
+                                                                $today = date('Y-m-d');
+                                                                for ($i = 7; $i >= 0; $i--) {
+                                                                    $date = date('l, d', strtotime('-' . $i . ' days'));
+                                                                    $skip = date('Y-m-d', strtotime('-' . $i . ' days'));
+                                                                    if (date('l', strtotime($skip)) != "Saturday" && date('l', strtotime($skip)) != "Sunday") {
+                                                                        echo "'" . $date . "',";
+                                                                    }
+                                                                }
+                                                                ?>];
 
-                                                    $avail_sql = mysqli_query($conn, "SELECT * FROM plan where tanggal = '$today' and jenis = '$_SESSION[jenis]'");
-                                                    $avail_row = mysqli_num_rows($avail_sql);
-
-                                                    if ($avail_row > 0) {
-
-                                                        $td_sql = mysqli_query($conn, "SELECT p.tanggal as tanggal, p.nama_piano, p.qty as plan, a.qty as achvd, p.jenis FROM plan p JOIN achieved a ON p.keytag = a.keytag where p.jenis = '$_SESSION[jenis]' and p.tanggal = '$today' order by p.nama_piano asc");
-                                                        $id = 0;
-                                                        while ($td_data = mysqli_fetch_array($td_sql)) {
-                                                            $id++;
-                                                    ?>
-                                                            <tr>
-                                                                <!-- untuk verifikasi delete -->
-                                                                <input type="hidden" id="model<?= $id ?>" value="<?= $td_data['nama_piano'] ?>">
-                                                                <input type="hidden" id="tanggal<?= $id ?>" value="<?= $td_data['tanggal'] ?>">
-                                                                <input type="hidden" id="plan<?= $id ?>" value="<?= $td_data['plan'] ?>">
-                                                                <input type="hidden" id="achvd<?= $id ?>" value="<?= $td_data['achvd'] ?>">
-                                                                <input type="hidden" id="keytag<?= $id ?>" value="<?= $td_data['tanggal'] . "|" . $td_data['nama_piano'] . "|" . $_SESSION['jenis'] ?>">
-                                                                <!-- untuk verifikasi delete -->
-
-                                                                <td style="text-align: left;"><?= $td_data['nama_piano'] ?></td>
-                                                                <td style="text-align: right;"><?= $td_data['plan'] ?></td>
-                                                                <td style="text-align: right;"><?= $td_data['achvd'] ?></td>
-                                                                <td style="text-align: center;"><?= $td_data['jenis'] ?></td>
-                                                                <td style="text-align: center;">
-                                                                    <i style="cursor: pointer;" class="fa fa-edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop<?= $id ?>"></i>
-                                                                </td>
-                                                                <td style="text-align: center;">
-                                                                    <i style="cursor: pointer;" class="fa fa-trash" id="td_delete<?= $id ?>"></i>
-                                                                </td>
-                                                                <!-- Modal -->
-                                                                <div class="modal fade" id="staticBackdrop<?= $id ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog">
-                                                                        <form method="POST">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title" id="staticBackdropLabel">Customize Plan - Today's</h5>
-                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <div class="row">
-                                                                                        <div class="col-md-11">
-                                                                                            <span style="font-size: 15px ;">Description Plan</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <br>
-                                                                                    <div class="row">
-                                                                                        <div class="col-12">
-                                                                                            <div class="mb-3 row">
-                                                                                                <label class="col-sm-2 col-form-label">Model</label>
-                                                                                                <div class="col-sm-5">
-                                                                                                    <input style="border-radius: 3px;" type="text" name="model" class="form-control" value="<?= $td_data['nama_piano'] ?>" readonly>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="mb-3 row">
-                                                                                                <label class="col-sm-2 col-form-label">Date</label>
-                                                                                                <div class="col-sm-5">
-                                                                                                    <input style="border-radius: 3px;" type="text" name="tanggal" class="form-control" value="<?= date('d-m-Y') ?>" readonly>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="mb-3 row">
-                                                                                                <label class="col-sm-2 col-form-label">Plan now</label>
-                                                                                                <div class="col-sm-2">
-                                                                                                    <input style="text-align: center; border-radius: 3px;" type="text" name="plan_now" class="form-control" value="<?= $td_data['plan'] ?>" readonly>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="mb-3 row">
-                                                                                                <label class="col-sm-2 col-form-label">Adjust</label>
-                                                                                                <div class="col-sm-2">
-                                                                                                    <input style="text-align: center; border-radius: 3px;" type="text" name="plan" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                                    <button type="submit" name="save" value="save" class="btn btn-primary">Save</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </form>
-                                                                        <?php
-                                                                        if (isset($_POST['save'])) {
-                                                                            $plan = $_POST['plan'];
-                                                                            $model = $_POST['model'];
-                                                                            $tanggal = date('Y-m-d', strtotime($_POST['tanggal']));
-                                                                            $sql = mysqli_query($conn, "UPDATE plan SET qty = $plan WHERE nama_piano = '$model' and tanggal = '$tanggal' and jenis = '$_SESSION[jenis]'");
-                                                                            if ($sql) {
-                                                                        ?>
-
-                                                                                <script>
-                                                                                    $(document).ready(function() {
-                                                                                        Swal.fire({
-                                                                                            title: 'Success',
-                                                                                            text: 'Plan has been changed!',
-                                                                                            type: 'success',
-                                                                                            confirmButtonText: 'OK'
-                                                                                        }).then(function() {
-                                                                                            window.location = 'cust_cs.php';
-                                                                                        });
-                                                                                    });
-                                                                                </script>
-                                                                            <?php
-                                                                            } else {
-                                                                            ?>
-                                                                                <script>
-                                                                                    $(document).ready(function() {
-                                                                                        Swal.fire({
-                                                                                            title: 'Error',
-                                                                                            text: 'Plan not changed!',
-                                                                                            type: 'error',
-                                                                                            confirmButtonText: 'OK'
-                                                                                        }).then(function() {
-                                                                                            window.location = 'cust_cs.php';
-                                                                                        });
-                                                                                    });
-                                                                                </script>
-                                                                        <?php
-                                                                            }
-                                                                        } else if (isset($_POST['delete'])) {
-                                                                            $plan = $_POST['plan'];
-                                                                            $model = $_POST['model'];
-                                                                            $tanggal = date('Y-m-d', strtotime($_POST['tanggal']));
-                                                                            $sql = mysqli_query($conn, "DELETE FROM plan WHERE nama_piano = '$model' and tanggal = '$tanggal' and jenis = '$_SESSION[jenis]'");
+                                                const data = {
+                                                    labels: labels,
+                                                    datasets: [{
+                                                            label: 'Plan',
+                                                            backgroundColor: '#FF6384',
+                                                            borderColor: '#FF6384',
+                                                            data: [<?php
+                                                                    for ($p = 7; $p >= 0; $p--) {
+                                                                        $date = date('Y-m-d', strtotime('-' . $p . ' days'));
+                                                                        $sql = mysqli_query($conn, "SELECT SUM(qty) as qty from plan where tanggal = '$date' ");
+                                                                        $result = mysqli_fetch_array($sql);
+                                                                        if (date('l', strtotime($date)) != "Saturday" && date('l', strtotime($date)) != "Sunday") {
+                                                                            echo $result['qty'] . ",";
                                                                         }
-                                                                        ?>
-                                                                    </div>
-                                                                </div>
-                                                                <script type='text/javascript'>
-                                                                    $(document).ready(function() {
-                                                                        $("#td_delete<?= $id ?>").click(function() {
-                                                                            var model = $('#model<?= $id ?>').val();
-                                                                            var tanggal = $('#tanggal<?= $id ?>').val();
-                                                                            var plan = $('#plan<?= $id ?>').val();
-                                                                            var achvd = $('#achvd<?= $id ?>').val();
-                                                                            var type = "<?= $_SESSION['jenis'] ?>";
-                                                                            var keytag = $('#keytag<?= $id ?>').val();
-
-                                                                            if (achvd > 0) {
-                                                                                Swal.fire({
-                                                                                    title: 'Error',
-                                                                                    text: 'You can not delete this data!',
-                                                                                    type: 'error',
-                                                                                    confirmButtonText: 'OK'
-                                                                                });
-                                                                            } else {
-                                                                                Swal.fire({
-                                                                                    type: 'question',
-                                                                                    title: 'Are you sure to delete this plan?',
-                                                                                    html: '<table class="table table-bordered">' +
-                                                                                        '<tr> <th style=" width:400px">Model </th> <th style=" width:400px">Tanggal </th> <th style=" width:50px">Qty </th> </tr> ' +
-                                                                                        '<tr> <td>' + model + ' </td> <td>' + tanggal + ' <td>' + plan + ' </td> </td> </tr>' +
-                                                                                        '</table>',
-                                                                                    showCloseButton: true,
-                                                                                    showCancelButton: true,
-                                                                                    cancelButtonText: 'Cancel',
-                                                                                    confirmButtonColor: '#BD2231',
-                                                                                    confirmButtonText: 'Delete',
-                                                                                }).then((result) => {
-                                                                                    if (result.value) {
-                                                                                        $.ajax({
-                                                                                            url: "delete.php",
-                                                                                            type: "POST",
-                                                                                            data: {
-                                                                                                model: model,
-                                                                                                tanggal: tanggal,
-                                                                                                plan: plan,
-                                                                                                type: type,
-                                                                                                keytag: keytag
-                                                                                            },
-                                                                                            success: function(data) {
-                                                                                                var data = JSON.parse(data);
-                                                                                                if (data.statusCode == 111) {
-                                                                                                    Swal.fire({
-                                                                                                        title: 'Success',
-                                                                                                        text: 'Plan has been deleted!',
-                                                                                                        type: 'success',
-                                                                                                        confirmButtonText: 'OK'
-                                                                                                    }).then(function() {
-                                                                                                        window.location = 'cust_cs.php';
-                                                                                                    });
-                                                                                                } else if (data.statusCode == 222) {
-                                                                                                    Swal.fire({
-                                                                                                        title: 'Error',
-                                                                                                        text: 'Plan not deleted!',
-                                                                                                        type: 'error',
-                                                                                                        confirmButtonText: 'OK'
-                                                                                                    }).then(function() {
-                                                                                                        window.location = 'cust_cs.php';
-                                                                                                    });
-                                                                                                }
-                                                                                            }
-                                                                                        })
-                                                                                    }
-                                                                                });
-                                                                            }
-                                                                        });
-                                                                    });
-                                                                </script>
-                                                            </tr>
-                                                    <?php
+                                                                    }
+                                                                    ?>],
+                                                            yAxisID: 'y',
+                                                            tension: 0.3,
+                                                        },
+                                                        {
+                                                            label: 'Actual',
+                                                            backgroundColor: '#36A2EB',
+                                                            borderColor: '#36A2EB',
+                                                            data: [<?php
+                                                                    for ($p = 7; $p >= 0; $p--) {
+                                                                        $date = date('Y-m-d', strtotime('-' . $p . ' days'));
+                                                                        $sql = mysqli_query($conn, "SELECT SUM(qty) as qty from achieved where tanggal = '$date'");
+                                                                        $result = mysqli_fetch_array($sql);
+                                                                        if (date('l', strtotime($date)) != "Saturday" && date('l', strtotime($date)) != "Sunday") {
+                                                                            echo $result['qty'] . ",";
+                                                                        }
+                                                                    }
+                                                                    ?>],
+                                                            // yAxisID: 'y1',
+                                                            tension: 0.3,
                                                         }
-                                                    } else {
-                                                        echo "<tr><td colspan='6' align='center'>No data found</td></tr>";
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                                <!-- <tfoot>
-                                                    <tr>
-                                                        <?php
-                                                        $t_ptd = mysqli_query($conn, "SELECT SUM(p.qty) as tplan, SUM(a.qty) as tachvd from plan p join achieved a on p.keytag = a.keytag where p.tanggal = '$today' and p.jenis = '$_SESSION[jenis]'");
-                                                        $t_ptd_data = mysqli_fetch_array($t_ptd);
+                                                    ]
+                                                };
 
-                                                        ?>
-                                                        <th style="text-align: center;">Total</th>
-                                                        <th style="text-align: right;"><?= $t_ptd_data['tplan'] ?> unit</th>
-                                                        <th style="text-align: right;"><?= $t_ptd_data['tachvd'] ?> unit</th>
-                                                        <th colspan="3" style="text-align: center; background-color: #A5CDE8;"><?= round((($t_ptd_data['tachvd'] / $t_ptd_data['tplan']) * 100), 2) ?>%</th>
-                                                    </tr>
-                                                </tfoot> -->
+                                                const config = {
+                                                    type: 'line',
+                                                    data: data,
+                                                    options: {
+                                                        responsive: true,
+                                                        interaction: {
+                                                            mode: 'index',
+                                                            intersect: false,
+                                                        },
+                                                        stacked: false,
+                                                        plugins: {
+                                                            title: {
+                                                                display: true,
+                                                                text: 'Daily Progress'
+                                                            }
+                                                        },
+                                                        scales: {
+                                                            y: {
+                                                                type: 'linear',
+                                                                display: true,
+                                                                position: 'left',
+                                                            },
+                                                            y1: {
+                                                                type: 'linear',
+                                                                display: false,
+                                                                position: 'right',
+
+                                                                // grid line settings
+                                                                grid: {
+                                                                    drawOnChartArea: false, // only want the grid lines for one axis to show up
+                                                                },
+                                                            },
+                                                        }
+                                                    },
+                                                };
+                                            </script>
+                                            <script>
+                                                const myChart = new Chart(
+                                                    document.getElementById('dailyprogress'),
+                                                    config
+                                                );
+                                            </script>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h2>Side, <?= date('l') ?></h2>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered">
+                                                <?php
+                                                // total side hari ini
+                                                $sqltplansd = mysqli_query($conn, "SELECT SUM(qty) as qty from plan where tanggal = '$today' and jenis = 'side'");
+                                                $resulttplansd = mysqli_fetch_array($sqltplansd);
+                                                $sqltachvdsd = mysqli_query($conn, "SELECT SUM(qty) as qty from achieved where tanggal = '$today' and jenis = 'side'");
+                                                $resulttachvdsd = mysqli_fetch_array($sqltachvdsd);
+                                                $persensd = ($resulttachvdsd['qty'] / $resulttplansd['qty']) * 100;
+                                                ?>
+                                                <th style="text-align: center; font-size: larger; width: 25%; color: #FF6384;"><?= $resulttplansd['qty'] ?></th>
+                                                <th style="text-align: center; font-size: larger; width: 25%; color: #36A2EB;"><?= $resulttachvdsd['qty'] ?></th>
+                                                <th style="text-align: center; font-size: larger; width: 50%;"><?= round($persensd, 2) ?>%</th>
                                             </table>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h2 style="font-weight: bold;">Remaining</h2>
-                                                    <hr style="margin: 0px ;">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12 tableFixHead-2">
-                                                    <table class="table table-bordered table-danger">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Model</th>
-                                                                <th>Qty</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="rem">
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h2 style="font-weight: bold;">Stock</h2>
-                                                    <hr style="margin: 0px ;">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12 tableFixHead-2">
-                                                    <table class="table table-bordered table-success">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Model</th>
-                                                                <th>Qty</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="stck">
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                        <div class="col-md-12">
+                                            <h2>Case, <?= date('l') ?></h2>
                                         </div>
                                     </div>
-
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered">
+                                                <?php
+                                                // total case hari ini
+                                                $sqltplancs = mysqli_query($conn, "SELECT SUM(qty) as qty from plan where tanggal = '$today' and jenis = 'case'");
+                                                $resulttplancs = mysqli_fetch_array($sqltplancs);
+                                                $sqltachvdcs = mysqli_query($conn, "SELECT SUM(qty) as qty from achieved where tanggal = '$today' and jenis = 'case'");
+                                                $resulttachvdcs = mysqli_fetch_array($sqltachvdcs);
+                                                $persencs = ($resulttachvdcs['qty'] / $resulttplancs['qty']) * 100;
+                                                ?>
+                                                <th style="text-align: center; font-size: larger; width: 25%; color: #FF6384;"><?= $resulttplancs['qty'] ?></th>
+                                                <th style="text-align: center; font-size: larger; width: 25%; color: #36A2EB;"><?= $resulttachvdcs['qty'] ?></th>
+                                                <th style="text-align: center; font-size: larger; width: 50%;"><?= round($persencs, 2) ?>%</th>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

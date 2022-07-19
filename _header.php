@@ -52,6 +52,10 @@ if (!isset($_SESSION['id'])) {
   <script src="<?= base_url('_assets/src/add/dropdown_search/jquery-3.4.1.js') ?>" crossorigin="anonymous"></script>
   <script src="<?= base_url('_assets/src/add/dropdown_search/select2.min.js') ?>"></script>
 
+  <!-- untuk grafik chart JS -->
+  <script src="<?= base_url('_assets/src/add/chartJS/chart.js') ?>"></script>
+
+
   <!-- TAMBAHAN -->
 
   <!-- Tambahan -->
