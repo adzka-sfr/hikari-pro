@@ -292,7 +292,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                                                                     type: 'question',
                                                                                     title: 'Are you sure to delete this plan?',
                                                                                     html: '<table class="table table-bordered">' +
-                                                                                        '<tr> <th style=" width:400px">Model </th> <th style=" width:400px">Tanggal </th> <th style=" width:50px">Qty </th> </tr> ' +
+                                                                                        '<tr> <th style=" width:400px">Model </th> <th style=" width:400px">Date </th> <th style=" width:50px">Qty </th> </tr> ' +
                                                                                         '<tr> <td>' + model + ' </td> <td>' + tanggal + ' <td>' + plan + ' </td> </td> </tr>' +
                                                                                         '</table>',
                                                                                     showCloseButton: true,
@@ -429,7 +429,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 tableFixHead-2">
-                                            <table class="table">
+                                            <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col" style="text-align: center;">Model</th>
@@ -593,7 +593,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                                                                     type: 'question',
                                                                                     title: 'Are you sure to delete this plan?',
                                                                                     html: '<table class="table table-bordered">' +
-                                                                                        '<tr> <th style=" width:400px">Model </th> <th style=" width:400px">Tanggal </th> <th style=" width:50px">Qty </th> </tr> ' +
+                                                                                        '<tr> <th style=" width:400px">Model </th> <th style=" width:400px">Date </th> <th style=" width:50px">Qty </th> </tr> ' +
                                                                                         '<tr> <td>' + model + ' </td> <td>' + tanggal + ' <td>' + plan + ' </td> </td> </tr>' +
                                                                                         '</table>',
                                                                                     showCloseButton: true,
@@ -663,7 +663,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 tableFixHead-2">
-                                            <table class="table">
+                                            <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col" style="text-align: center;">Model</th>
@@ -822,7 +822,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                                                                     type: 'question',
                                                                                     title: 'Are you sure to delete this plan?',
                                                                                     html: '<table class="table table-bordered">' +
-                                                                                        '<tr> <th style=" width:400px">Model </th> <th style=" width:400px">Tanggal </th> <th style=" width:50px">Qty </th> </tr> ' +
+                                                                                        '<tr> <th style=" width:400px">Model </th> <th style=" width:400px">Date </th> <th style=" width:50px">Qty </th> </tr> ' +
                                                                                         '<tr> <td>' + model + ' </td> <td>' + tanggal + ' <td>' + plan + ' </td> </td> </tr>' +
                                                                                         '</table>',
                                                                                     showCloseButton: true,
