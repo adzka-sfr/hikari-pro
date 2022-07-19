@@ -95,41 +95,6 @@ if (!isset($_SESSION['id'])) {
   </style>
   <!-- style untuk zoom h-over -->
 
-  <!-- untuk fix header -->
-  <style>
-    .tableFixHead {
-      width: auto;
-      table-layout: fixed;
-      border-collapse: collapse;
-    }
-
-    .tableFixHead tbody {
-      display: block;
-      width: 100%;
-      overflow: auto;
-      height: 300px;
-    }
-
-    .tableFixHead thead tr {
-      display: block;
-    }
-
-    .tableFixHead tfoot tr {
-      display: block;
-    }
-
-    .tableFixHead th,
-    .tableFixHead td {
-      padding: 5px 10px;
-      width: 200px;
-    }
-
-    th {
-      background: #ABDD93;
-    }
-  </style>
-  <!-- untuk fix header -->
-
   <!-- script untuk jam  -->
   <script type="text/javascript">
     function tampilkanwaktu() { //fungsi ini akan dipanggil di bodyOnLoad dieksekusi tiap 1000ms = 1detik
@@ -148,5 +113,47 @@ if (!isset($_SESSION['id'])) {
   ?>
   <!-- script untuk jam  -->
 
+  <!-- untuk garis vertical -->
+  <style>
+    .vl {
+      border-right: 2px solid #E9ECEF;
+      height: 100%;
+    }
+  </style>
+  <!-- untuk garis vertical -->
+
+  <!-- untuk table fix header v2 -->
+  <style type="text/css">
+    .tableFixHead-2 {
+      overflow: auto;
+      max-height: 200px;
+    }
+
+    .tableFixHead-2 thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background-color: #fff;
+    }
+
+    .tableFixHead-2 tfoot th {
+      position: sticky;
+      bottom: 0;
+      z-index: 1;
+      background-color: #fff;
+    }
+
+    .tableFixHead-3 {
+      overflow: auto;
+      max-height: 300px;
+    }
+
+    .tableFixHead-3 thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background-color: #fff;
+    }
+  </style>
   <!-- Tambahan -->
 </head>
