@@ -109,6 +109,9 @@
                                 }
                             }
                         }
+                        if ($plb45 == 1) {
+                            $plb45 = 0;
+                        }
                         $b45_kplan[$index] = $plb45;
 
                         // mengambil plan b440 dan u200 //
@@ -118,9 +121,7 @@
                         $plb44u20 = $datap44200['plan_qty'];
 
 
-                        // if ($plb45 == 1) {
-                        //     $plb45 = "no plan yet";
-                        // }
+
                         // mengambil plan //
 
 
