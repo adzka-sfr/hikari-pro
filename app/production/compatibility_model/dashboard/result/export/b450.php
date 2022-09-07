@@ -94,14 +94,23 @@ $sheet->setCellValue('F5', 'Status(+/-)');
 $sheet->setCellValue('G4', 'Total Plan');
 $sheet->setCellValue('G5', $totpla);
 
-// isi tanggal dengan maksimal hari pada bulan terkait
+// isi
 for ($j = 1; $j <= $jumhar; $j++) {
+    // KOLOM DATE (A)
     $bar = $j + 5; // untuk baris, dimulai dari 6
     $sheet->setCellValue('A' . $bar, $j);
 
+    // KOLOM DAY (B)
     $har = date('Y-m') . "-" . $j;
     $hari = date('l', strtotime($har));
     $sheet->setCellValue('B' . $bar, $hari);
+
+    // KOLOM OVER TIME (C)
+
+    // KOLOM PLAN (D)
+    $sql2 = mysqli_query($connect_cm, "SELECT COUNT(common) as plan from plan where tanggal = '$har'");
+    $data2 = mysqli_fetch_array($sql2);
+    $sheet->setCellValue('D' . $bar, $data2['plan']);
 }
 
 // merge kolom
