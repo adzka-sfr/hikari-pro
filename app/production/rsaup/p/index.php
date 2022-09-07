@@ -24,10 +24,10 @@ if (empty($row_prev)) {
         $_SESSION['app_error'] = $data['c_name'];
         echo "<script>window.location='" . base_url('_error') . "';</script>";
     } elseif ($data['c_status'] == 'deploy') {
-        if ($_SESSION['role'] == 'managerial' and strtolower($_SESSION['dept']) == $app_dept) {
+        if ($_SESSION['role'] == 'managerial' and $_SESSION['dept'] == 'Assembly UP' and strtolower($_SESSION['dept']) == $app_dept) {
             echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/dashboard/managerial/plan/') . "';</script>";
-        } elseif ($_SESSION['role'] == 'pic' and strtolower($_SESSION['dept']) == $app_dept) {
-            echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/dashboard/pic/dashboard') . "';</script>";
+        } elseif ($_SESSION['role'] == 'managerial' and $_SESSION['dept'] == 'Painting') {
+            echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/dashboard/painting/dashboard') . "';</script>";
         }
     }
 }

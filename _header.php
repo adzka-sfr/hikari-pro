@@ -55,10 +55,44 @@ if (!isset($_SESSION['id'])) {
   <!-- untuk grafik chart JS -->
   <script src="<?= base_url('_assets/src/add/chartJS/chart.js') ?>"></script>
 
+  <!-- untuk grafik E Chart -->
+  <script src="<?= base_url('_assets/src/add/EChart/echarts.js') ?>"></script>
+
+
 
   <!-- TAMBAHAN -->
 
   <!-- Tambahan -->
+
+  <!-- untuk mendapatkan nomor minggu dalam sebulan -->
+  <?php
+  function weekOfMonth($date)
+  {
+    //Get the first day of the month.
+    $firstOfMonth = strtotime(date("Y-m-01", $date));
+    //Apply above formula.
+    return weekOfYear($date) - weekOfYear($firstOfMonth) + 1;
+  }
+
+  function weekOfYear($date)
+  {
+    $weekOfYear = intval(date("W", $date));
+    if (date('n', $date) == "1" && $weekOfYear > 51) {
+      // It's the last week of the previos year.
+      return 0;
+    } else if (date('n', $date) == "12" && $weekOfYear == 1) {
+      // It's the first week of the next year.
+      return 53;
+    } else {
+      // It's a "normal" week.
+      return $weekOfYear;
+    }
+  }
+
+  // A few test cases.
+  // echo weekOfMonth(strtotime("2022-07-2")) . " ";
+  ?>
+  <!-- untuk mendapatkan nomor minggu dalam sebulan -->
 
   <!-- untuk pagination display -->
   <style>
@@ -158,6 +192,19 @@ if (!isset($_SESSION['id'])) {
       z-index: 1;
       background-color: #fff;
     }
+
+    .tableFixHead-4 {
+      overflow: auto;
+      max-height: 400px;
+    }
+
+    .tableFixHead-4 thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background-color: #fff;
+    }
   </style>
+
   <!-- Tambahan -->
 </head>
