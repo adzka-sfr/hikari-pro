@@ -87,7 +87,7 @@ $sheet->setCellValue('A2', $judul . 'Production Schedule / Result For Assembly U
 $sheet->setCellValue('A4', 'Date');
 $sheet->setCellValue('B4', 'Day');
 $sheet->setCellValue('C4', 'Over Time');
-$sheet->setCellValue('D4', 'U200');
+$sheet->setCellValue('D4', 'B450');
 $sheet->setCellValue('D5', 'Plan');
 $sheet->setCellValue('E5', 'Actual');
 $sheet->setCellValue('F5', 'Status(+/-)');
@@ -108,9 +108,39 @@ for ($j = 1; $j <= $jumhar; $j++) {
     // KOLOM OVER TIME (C)
 
     // KOLOM PLAN (D)
-    $sql2 = mysqli_query($connect_cm, "SELECT COUNT(common) as plan from plan where tanggal = '$har'");
-    $data2 = mysqli_fetch_array($sql2);
-    $sheet->setCellValue('D' . $bar, $data2['plan']);
+    $maks_sql = mysqli_query($connect_cm, "SELECT MAX(tanggal) as maks from plan");
+    $maks = mysqli_fetch_array($maks_sql);
+
+    if ($hari == "Saturday" or $hari == "Sunday") {
+        $plan = 0;
+    } else {
+        $har = date('Y-m-d', strtotime("+1day", strtotime($har)));
+        $plan = 0;
+        $sql2 = mysqli_query($connect_cm, "SELECT COUNT(common) as plan from plan where tanggal = '$har'");
+        $data2 = mysqli_fetch_array($sql2);
+        $plan = $data2['plan'];
+
+        if ($har > $maks['maks']) {
+            $plan = 1;
+        }
+        if ($plan == 0) {
+            while ($plan == 0) {
+                $har = date('Y-m-d', strtotime("+1day", strtotime($har)));
+                $sql2a = mysqli_query($connect_cm, "SELECT COUNT(common) as plan from plan where tanggal = '$har'");
+                $data2a = mysqli_fetch_array($sql2a);
+                if ($data2a['plan'] != 0) {
+                    $plan = $data2a['plan'];
+                } else {
+                    $plan = 0;
+                }
+            }
+        }
+    }
+
+    if ($plan == 1) {
+        $plan = 0;
+    }
+    $sheet->setCellValue('D' . $bar, $plan);
 }
 
 // merge kolom
