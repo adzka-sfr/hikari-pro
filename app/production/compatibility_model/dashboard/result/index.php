@@ -174,10 +174,14 @@
                 </div>
                 <div class="col-5 ">
                     <div class="row">
-                        <div class="col-12">
-                            <a href="#" style="margin-left: 10px; "><i class="fa fa-file-excel-o " style="font-size: 30px;"></i></a>
+                        <div class="col-6">
+                            <h2>Data Schedule / Actual B450</h2>
+                        </div>
+                        <div class="col-6" style="text-align: right;">
+                            <a href="#" style="margin-left: 10px; ">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px; margin-right: 15px;"></i></a>
                         </div>
                     </div>
+                    <hr style="margin-top: 0px; margin-bottom: 10px;">
                     <div class="row">
                         <div class="col-12 tableFixHead-4">
                             <table class="table table-bordered">
@@ -240,52 +244,65 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-5 tableFixHead-4">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr style="background-color: #1890ff;">
-                                <th>Date</th>
-                                <th>Day</th>
-                                <th>Plan</th>
-                                <th>Actual</th>
-                                <th>Status(+/-)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $index = 0;
-                            $i = $listofdate;
-                            while ($i > 0) {
-                            ?>
-                                <tr>
-                                    <td style="width: 20%; text-align: center;"><?php echo $k_date[$index] ?></td>
-                                    <td style="width: 20%;"><?php echo $k_day[$index] ?></td>
-                                    <td style="text-align: center; width: 15%;"><?php echo $b44u20_kplan[$index] ?></td>
-                                    <td style="text-align: center; width: 15%;"><?php echo $b44_kactual[$index] ?></td>
-                                    <td style="text-align: center; width: 15%; background-color:  <?php
-                                                                                                    if ($b44_kstatus[$index] > 0) {
-                                                                                                        echo "#ea7e53";
-                                                                                                    } elseif ($b44_kstatus[$index] < 0) {
-                                                                                                        echo "#eedd78";
-                                                                                                    } else {
-                                                                                                        echo "#91ca8c";
-                                                                                                    } ?>;"><?php
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-6">
+                            <h2>Data Schedule / Actual B440</h2>
+                        </div>
+                        <div class="col-6" style="text-align: right;">
+                            <a href="#" style="margin-left: 10px; ">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px; margin-right: 15px;"></i></a>
+                        </div>
+                    </div>
+                    <hr style="margin-top: 0px; margin-bottom: 10px;">
+                    <div class="row">
+                        <div class="col-12 tableFixHead-4">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr style="background-color: #1890ff;">
+                                        <th>Date</th>
+                                        <th>Day</th>
+                                        <th>Plan</th>
+                                        <th>Actual</th>
+                                        <th>Status(+/-)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $index = 0;
+                                    $i = $listofdate;
+                                    while ($i > 0) {
+                                    ?>
+                                        <tr>
+                                            <td style="width: 20%; text-align: center;"><?php echo $k_date[$index] ?></td>
+                                            <td style="width: 20%;"><?php echo $k_day[$index] ?></td>
+                                            <td style="text-align: center; width: 15%;"><?php echo $b44u20_kplan[$index] ?></td>
+                                            <td style="text-align: center; width: 15%;"><?php echo $b44_kactual[$index] ?></td>
+                                            <td style="text-align: center; width: 15%; background-color:  <?php
                                                                                                             if ($b44_kstatus[$index] > 0) {
-                                                                                                                echo "+" . $b44_kstatus[$index];
+                                                                                                                echo "#ea7e53";
                                                                                                             } elseif ($b44_kstatus[$index] < 0) {
-                                                                                                                echo $b44_kstatus[$index];
+                                                                                                                echo "#eedd78";
                                                                                                             } else {
-                                                                                                                echo $b44_kstatus[$index];
-                                                                                                            }
-                                                                                                            ?></td>
-                                </tr>
-                            <?php
-                                $i--;
-                                $index++;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                                                                                                echo "#91ca8c";
+                                                                                                            } ?>;"><?php
+                                                                                                                    if ($b44_kstatus[$index] > 0) {
+                                                                                                                        echo "+" . $b44_kstatus[$index];
+                                                                                                                    } elseif ($b44_kstatus[$index] < 0) {
+                                                                                                                        echo $b44_kstatus[$index];
+                                                                                                                    } else {
+                                                                                                                        echo $b44_kstatus[$index];
+                                                                                                                    }
+                                                                                                                    ?></td>
+                                        </tr>
+                                    <?php
+                                        $i--;
+                                        $index++;
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -301,50 +318,62 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-5 tableFixHead-4">
-                    <table class="table table-bordered">
-                        <thead>
-                            <th>Date</th>
-                            <th>Day</th>
-                            <th>Plan</th>
-                            <th>Actual</th>
-                            <th>Status(+/-)</th>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $index = 0;
-                            $i = $listofdate;
-                            while ($i > 0) {
-                            ?>
-                                <tr>
-                                    <td style="width: 20%; text-align: center;"><?php echo $k_date[$index] ?></td>
-                                    <td style="width: 20%;"><?php echo $k_day[$index] ?></td>
-                                    <td style="text-align: center; width: 15%;"><?php echo $b44u20_kplan[$index] ?></td>
-                                    <td style="text-align: center; width: 15%;"><?php echo $u20_kactual[$index] ?></td>
-                                    <td style="text-align: center; width: 15%; background-color:  <?php
-                                                                                                    if ($u20_kstatus[$index] > 0) {
-                                                                                                        echo "#ea7e53";
-                                                                                                    } elseif ($u20_kstatus[$index] < 0) {
-                                                                                                        echo "#eedd78";
-                                                                                                    } else {
-                                                                                                        echo "#91ca8c";
-                                                                                                    } ?>;"><?php
+                <div class="col-5 ">
+                    <div class="row">
+                        <div class="col-6">
+                            <h2>Data Schedule / Actual U200</h2>
+                        </div>
+                        <div class="col-6" style="text-align: right;">
+                            <a href="#" style="margin-left: 10px; ">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px; margin-right: 15px;"></i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 tableFixHead-4">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <th>Date</th>
+                                    <th>Day</th>
+                                    <th>Plan</th>
+                                    <th>Actual</th>
+                                    <th>Status(+/-)</th>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $index = 0;
+                                    $i = $listofdate;
+                                    while ($i > 0) {
+                                    ?>
+                                        <tr>
+                                            <td style="width: 20%; text-align: center;"><?php echo $k_date[$index] ?></td>
+                                            <td style="width: 20%;"><?php echo $k_day[$index] ?></td>
+                                            <td style="text-align: center; width: 15%;"><?php echo $b44u20_kplan[$index] ?></td>
+                                            <td style="text-align: center; width: 15%;"><?php echo $u20_kactual[$index] ?></td>
+                                            <td style="text-align: center; width: 15%; background-color:  <?php
                                                                                                             if ($u20_kstatus[$index] > 0) {
-                                                                                                                echo "+" . $u20_kstatus[$index];
+                                                                                                                echo "#ea7e53";
                                                                                                             } elseif ($u20_kstatus[$index] < 0) {
-                                                                                                                echo $u20_kstatus[$index];
+                                                                                                                echo "#eedd78";
                                                                                                             } else {
-                                                                                                                echo $u20_kstatus[$index];
-                                                                                                            }
-                                                                                                            ?></td>
-                                </tr>
-                            <?php
-                                $i--;
-                                $index++;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                                                                                                echo "#91ca8c";
+                                                                                                            } ?>;"><?php
+                                                                                                                    if ($u20_kstatus[$index] > 0) {
+                                                                                                                        echo "+" . $u20_kstatus[$index];
+                                                                                                                    } elseif ($u20_kstatus[$index] < 0) {
+                                                                                                                        echo $u20_kstatus[$index];
+                                                                                                                    } else {
+                                                                                                                        echo $u20_kstatus[$index];
+                                                                                                                    }
+                                                                                                                    ?></td>
+                                        </tr>
+                                    <?php
+                                        $i--;
+                                        $index++;
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="separator" style="margin-top: 50px;"></div>
