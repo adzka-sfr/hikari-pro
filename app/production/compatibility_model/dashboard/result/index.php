@@ -47,7 +47,7 @@
                     </span>
                 </div>
             </div>
-            <div class="separator"></div>
+            <div class="separator" style="margin-bottom: 10px;"></div>
         </div>
         <div class="dashboard_graph" style="padding-top: 0px;">
             <div class="row">
@@ -179,7 +179,20 @@
                             <h2>Data Schedule / Actual B450</h2>
                         </div>
                         <div class="col-6" style="text-align: right;">
-                            <a href="#" style="margin-left: 10px; ">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px; margin-right: 15px;"></i></a>
+                            <!-- <a href="#" style="margin-left: 10px;" onclick="B45o()">Export to kntol Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px; margin-right: 15px;"></i></a> -->
+                            <button type="button" class="btn btn-outline-success btn-sm" onclick="B45o()">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px;"></i></button>
+                            <script>
+                                var myWindow;
+
+                                function B45o() {
+                                    myWindow = window.open("export/trial.php", "_blank");
+                                    setTimeout(B45c, 2000)
+                                }
+
+                                function B45c() {
+                                    myWindow.close();
+                                }
+                            </script>
                         </div>
                     </div>
                     <hr style="margin-top: 0px; margin-bottom: 10px;">
@@ -233,14 +246,14 @@
                 </div>
             </div>
 
-            <div class="separator"></div>
+            <div class="separator" style="margin-bottom: 20px;"></div>
 
             <div class="row">
                 <div class="col-7">
                     <div class="card w-100">
                         <div class="d-md-flex testimony-29101">
                             <div class="card-body">
-                                <div id="main44" style="height:367px;"></div>
+                                <div id="main44" style="height:420px;"></div>
                             </div>
                         </div>
                     </div>
@@ -251,7 +264,20 @@
                             <h2>Data Schedule / Actual B440</h2>
                         </div>
                         <div class="col-6" style="text-align: right;">
-                            <a href="#" style="margin-left: 10px; ">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px; margin-right: 15px;"></i></a>
+                            <!-- <a href="#" style="margin-left: 10px;" onclick="B44o()">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px; margin-right: 15px;"></i></a> -->
+                            <button type="button" class="btn btn-outline-success btn-sm" onclick="B44o()">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px;"></i></button>
+                            <script>
+                                var myWindow;
+
+                                function B44o() {
+                                    myWindow = window.open("export/trial.php", "_blank");
+                                    setTimeout(B44c, 2000)
+                                }
+
+                                function B44c() {
+                                    myWindow.close();
+                                }
+                            </script>
                         </div>
                     </div>
                     <hr style="margin-top: 0px; margin-bottom: 10px;">
@@ -307,14 +333,14 @@
                 </div>
             </div>
 
-            <div class="separator"></div>
+            <div class="separator" style="margin-bottom: 20px;"></div>
 
             <div class="row">
                 <div class="col-7">
                     <div class="card w-100">
                         <div class="d-md-flex testimony-29101">
                             <div class="card-body">
-                                <div id="main20" style="height:367px;"></div>
+                                <div id="main20" style="height:420px;"></div>
                             </div>
                         </div>
                     </div>
@@ -325,9 +351,23 @@
                             <h2>Data Schedule / Actual U200</h2>
                         </div>
                         <div class="col-6" style="text-align: right;">
-                            <a href="#" style="margin-left: 10px; ">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px; margin-right: 15px;"></i></a>
+                            <!-- <a href="#" style="margin-left: 10px;" onclick="U20o()">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px; margin-right: 15px;"></i></a> -->
+                            <button type="button" class="btn btn-outline-success btn-sm" onclick="U20o()">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px;"></i></button>
+                            <script>
+                                var myWindow;
+
+                                function U20o() {
+                                    myWindow = window.open("export/trial.php", "_blank");
+                                    setTimeout(U20c, 2000)
+                                }
+
+                                function U20c() {
+                                    myWindow.close();
+                                }
+                            </script>
                         </div>
                     </div>
+                    <hr style="margin-top: 0px; margin-bottom: 10px;">
                     <div class="row">
                         <div class="col-12 tableFixHead-4">
                             <table class="table table-bordered">
