@@ -96,8 +96,12 @@ $sheet->setCellValue('G5', $totpla);
 
 // isi tanggal dengan maksimal hari pada bulan terkait
 for ($j = 1; $j <= $jumhar; $j++) {
-    $bar = $j + 5;
+    $bar = $j + 5; // untuk baris, dimulai dari 6
     $sheet->setCellValue('A' . $bar, $j);
+
+    $har = date('Y-m') . "-" . $j;
+    $hari = date('l', strtotime($har));
+    $sheet->setCellValue('B' . $bar, $hari);
 }
 
 // merge kolom
