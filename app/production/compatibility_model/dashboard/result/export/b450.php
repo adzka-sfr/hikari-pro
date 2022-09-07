@@ -65,7 +65,14 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // =================START=================== //
-// $sql1 = mysqli_query($connect_cm, "")
+// mendapatkan total plan (G5)
+$month = date('Y-m');
+$sql1 = mysqli_query($connect_cm, "select COUNT(common) as total from plan where tanggal like '$month%';");
+$data1 = mysqli_fetch_array($sql1);
+$totpla = $data1['total'] * (-1);
+
+// mengisi tanggal (A6-A36)
+$jumhar = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
 // =================END===================== //
 
 // membuat spread sheet baru
@@ -84,8 +91,14 @@ $sheet->setCellValue('D4', 'U200');
 $sheet->setCellValue('D5', 'Plan');
 $sheet->setCellValue('E5', 'Actual');
 $sheet->setCellValue('F5', 'Status(+/-)');
-$sheet->setCellValue('G4', 'Progress');
-$sheet->setCellValue('G5', '-1154');
+$sheet->setCellValue('G4', 'Total Plan');
+$sheet->setCellValue('G5', $totpla);
+
+// isi tanggal dengan maksimal hari pada bulan terkait
+for ($j = 1; $j <= $jumhar; $j++) {
+    $bar = $j + 5;
+    $sheet->setCellValue('A' . $bar, $j);
+}
 
 // merge kolom
 $spreadsheet->setActiveSheetIndex(0);
