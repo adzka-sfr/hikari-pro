@@ -170,12 +170,11 @@ for ($j = 1; $j <= $jumhar; $j++) {
     $sheet->setCellValue('E' . $bar, $actual);
 
     // KOLOM STATUS (F)
-    $status = $actual - $plan;
-    $sheet->setCellValue('F' . $bar, $status);
+    $sheet->setCellValue('F' . $bar, '=E' . $bar . '-' . 'D' . $bar);
 
     // KOLOM PROGRESS (G)
-    $totpla = $totpla + $actual;
-    $sheet->setCellValue('G' . $bar, $totpla);
+    $progress = $bar - 1;
+    $sheet->setCellValue('G' . $bar, '=G' . $progress . '+E' . $bar);
 }
 
 // total tiap kolom
