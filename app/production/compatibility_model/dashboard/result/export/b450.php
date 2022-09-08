@@ -107,16 +107,6 @@ for ($j = 1; $j <= $jumhar; $j++) {
     $bar = $j + 5; // untuk baris, dimulai dari 6
     $sheet->setCellValue('A' . $bar, $j);
 
-    // memberi warna background
-    if ($bar == 10) {
-        $spreadsheet->getActiveSheet()->getStyle('A' . $bar)
-            ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID); // setup untuk melakukan pengisian warna kolom
-        $spreadsheet->getActiveSheet()->getStyle('A' . $bar)
-            ->getFill()->getStartColor()->setARGB('70AD47'); // deklarasi warna
-    }
-
-
-
     // KOLOM DAY (B)
     $har = date('Y-m') . "-" . $j;
     $hari = date('l', strtotime($har));
@@ -127,6 +117,10 @@ for ($j = 1; $j <= $jumhar; $j++) {
     // KOLOM PLAN (D)
     if ($hari == "Saturday" or $hari == "Sunday") {
         $plan = 0;
+        $spreadsheet->setActiveSheetIndexByName('Report B450')->getStyle('A' . $bar . ':G' . $bar)
+            ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
+        $spreadsheet->getActiveSheet()->getStyle('A' . $bar . ':G' . $bar)
+            ->getFill()->getStartColor()->setARGB('FF0000');
     } else {
         $haru = date('Y-m-d', strtotime("+1day", strtotime($har)));
         $plan = 0;

@@ -186,7 +186,7 @@
 
                                 function B45o() {
                                     myWindow = window.open("export/b450.php", "_blank");
-                                    setTimeout(B45c, 2000)
+                                    setTimeout(B45c, 20000)
                                 }
 
                                 function B45c() {
@@ -270,7 +270,7 @@
                                 var myWindow;
 
                                 function B44o() {
-                                    myWindow = window.open("export/trial.php", "_blank");
+                                    myWindow = window.open("export/b440.php", "_blank");
                                     setTimeout(B44c, 2000)
                                 }
 
