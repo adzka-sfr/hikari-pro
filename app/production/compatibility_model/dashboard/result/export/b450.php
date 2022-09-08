@@ -96,6 +96,7 @@ $sheet->setCellValue('E5', 'Actual');
 $sheet->setCellValue('F5', 'Status(+/-)');
 $sheet->setCellValue('G4', 'Progress');
 $sheet->setCellValue('G5', $totpla);
+$sheet->setCellValue('A37', 'Total');
 
 // isi
 $totale_plan = 0;
@@ -106,6 +107,16 @@ for ($j = 1; $j <= $jumhar; $j++) {
     $bar = $j + 5; // untuk baris, dimulai dari 6
     $sheet->setCellValue('A' . $bar, $j);
 
+    // memberi warna background
+    if ($bar == 10) {
+        $spreadsheet->getActiveSheet()->getStyle('A' . $bar)
+            ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID); // setup untuk melakukan pengisian warna kolom
+        $spreadsheet->getActiveSheet()->getStyle('A' . $bar)
+            ->getFill()->getStartColor()->setARGB('70AD47'); // deklarasi warna
+    }
+
+
+
     // KOLOM DAY (B)
     $har = date('Y-m') . "-" . $j;
     $hari = date('l', strtotime($har));
@@ -114,8 +125,6 @@ for ($j = 1; $j <= $jumhar; $j++) {
     // KOLOM OVER TIME (C)
 
     // KOLOM PLAN (D)
-
-
     if ($hari == "Saturday" or $hari == "Sunday") {
         $plan = 0;
     } else {
@@ -177,7 +186,6 @@ $sheet->setCellValue('F37', $totale_status);
 $totale_progress = $totplamo + $totale_actual;
 $sheet->setCellValue('G37', $totale_progress);
 
-
 // merge kolom
 $spreadsheet->setActiveSheetIndex(0);
 $sheet = $spreadsheet->getActiveSheet()->mergeCells('A2:J2'); // judul
@@ -215,6 +223,8 @@ $spreadsheet->getActiveSheet()->getStyle('A2:F5')
     ->getAlignment()->setHorizontal('center');
 $spreadsheet->getActiveSheet()->getStyle('G4')
     ->getAlignment()->setHorizontal('center');
+$spreadsheet->getActiveSheet()->getStyle('A37')
+    ->getAlignment()->setHorizontal('right');
 
 // memberi warna background
 $spreadsheet->getActiveSheet()->getStyle('A2')
