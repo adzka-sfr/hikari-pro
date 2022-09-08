@@ -357,7 +357,7 @@
                                 var myWindow;
 
                                 function U20o() {
-                                    myWindow = window.open("export/trial.php", "_blank");
+                                    myWindow = window.open("export/u200.php", "_blank");
                                     setTimeout(U20c, 2000)
                                 }
 
