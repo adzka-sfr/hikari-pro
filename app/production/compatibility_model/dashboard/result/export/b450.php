@@ -67,9 +67,12 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 // =================START=================== //
 // mendapatkan total plan (G5)
 $month = date('Y-m');
-$sql1 = mysqli_query($connect_cm, "select COUNT(common) as total from plan where tanggal like '$month%';");
+$maks_sql = mysqli_query($connect_cm, "SELECT MAX(tanggal) as maks from plan where tanggal like '$month%'");
+$maks = mysqli_fetch_array($maks_sql);
+$sql1 = mysqli_query($connect_cm, "select COUNT(common) as total from plan where tanggal like '$month%' and tanggal < '$maks[maks]';");
 $data1 = mysqli_fetch_array($sql1);
 $totpla = $data1['total'] * (-1);
+$totplamo = $totpla;
 
 // mengisi tanggal (A6-A36)
 $jumhar = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
@@ -91,10 +94,13 @@ $sheet->setCellValue('D4', 'B450');
 $sheet->setCellValue('D5', 'Plan');
 $sheet->setCellValue('E5', 'Actual');
 $sheet->setCellValue('F5', 'Status(+/-)');
-$sheet->setCellValue('G4', 'Total Plan');
+$sheet->setCellValue('G4', 'Progress');
 $sheet->setCellValue('G5', $totpla);
 
 // isi
+$totale_plan = 0;
+$totale_actual = 0;
+$totale_status = 0;
 for ($j = 1; $j <= $jumhar; $j++) {
     // KOLOM DATE (A)
     $bar = $j + 5; // untuk baris, dimulai dari 6
@@ -108,25 +114,24 @@ for ($j = 1; $j <= $jumhar; $j++) {
     // KOLOM OVER TIME (C)
 
     // KOLOM PLAN (D)
-    $maks_sql = mysqli_query($connect_cm, "SELECT MAX(tanggal) as maks from plan");
-    $maks = mysqli_fetch_array($maks_sql);
+
 
     if ($hari == "Saturday" or $hari == "Sunday") {
         $plan = 0;
     } else {
-        $har = date('Y-m-d', strtotime("+1day", strtotime($har)));
+        $haru = date('Y-m-d', strtotime("+1day", strtotime($har)));
         $plan = 0;
-        $sql2 = mysqli_query($connect_cm, "SELECT COUNT(common) as plan from plan where tanggal = '$har'");
+        $sql2 = mysqli_query($connect_cm, "SELECT COUNT(common) as plan from plan where tanggal = '$haru'");
         $data2 = mysqli_fetch_array($sql2);
         $plan = $data2['plan'];
 
-        if ($har > $maks['maks']) {
+        if ($haru > $maks['maks']) {
             $plan = 1;
         }
         if ($plan == 0) {
             while ($plan == 0) {
-                $har = date('Y-m-d', strtotime("+1day", strtotime($har)));
-                $sql2a = mysqli_query($connect_cm, "SELECT COUNT(common) as plan from plan where tanggal = '$har'");
+                $haru = date('Y-m-d', strtotime("+1day", strtotime($haru)));
+                $sql2a = mysqli_query($connect_cm, "SELECT COUNT(common) as plan from plan where tanggal = '$haru'");
                 $data2a = mysqli_fetch_array($sql2a);
                 if ($data2a['plan'] != 0) {
                     $plan = $data2a['plan'];
@@ -140,8 +145,38 @@ for ($j = 1; $j <= $jumhar; $j++) {
     if ($plan == 1) {
         $plan = 0;
     }
+    $totale_plan = $totale_plan + $plan;
     $sheet->setCellValue('D' . $bar, $plan);
+
+    // KOLOM ACTUAL (E)
+    $sql3 = mysqli_query($connect_cm, "SELECT b450 from hasil where tanggal = '$har'");
+    $data3 = mysqli_fetch_array($sql3);
+    if (empty($data3['b450'])) {
+        $actual = 0;
+    } else {
+        $actual = $data3['b450'];
+    }
+    $totale_actual = $totale_actual + $actual;
+    $sheet->setCellValue('E' . $bar, $actual);
+
+    // KOLOM STATUS (F)
+    $status = $actual - $plan;
+    $totale_status = $totale_status + $status;
+    $sheet->setCellValue('F' . $bar, $status);
+
+    // KOLOM PROGRESS (G)
+    $totpla = $totpla + $actual;
+    $sheet->setCellValue('G' . $bar, $totpla);
 }
+
+// total tiap kolom
+$sheet->setCellValue('D37', $totale_plan);
+$sheet->setCellValue('E37', $totale_actual);
+$sheet->setCellValue('F37', $totale_status);
+
+$totale_progress = $totplamo + $totale_actual;
+$sheet->setCellValue('G37', $totale_progress);
+
 
 // merge kolom
 $spreadsheet->setActiveSheetIndex(0);
@@ -150,6 +185,7 @@ $sheet = $spreadsheet->getActiveSheet()->mergeCells('A4:A5'); // Date
 $sheet = $spreadsheet->getActiveSheet()->mergeCells('B4:B5'); // Day
 $sheet = $spreadsheet->getActiveSheet()->mergeCells('C4:C5'); // Over Time
 $sheet = $spreadsheet->getActiveSheet()->mergeCells('D4:F4'); // U200
+$sheet = $spreadsheet->getActiveSheet()->mergeCells('A37:B37'); // Total
 
 // mengatur lebar dari kolom
 $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(55, 'px');
@@ -170,6 +206,8 @@ $spreadsheet->getActiveSheet()->getStyle('A2')
 
 // font bold
 $spreadsheet->getActiveSheet()->getStyle('A2:G5')
+    ->getFont()->setBold(true);
+$spreadsheet->getActiveSheet()->getStyle('A37:G37')
     ->getFont()->setBold(true);
 
 // rata tengah
