@@ -99,9 +99,6 @@ $sheet->setCellValue('G5', $totpla);
 $sheet->setCellValue('A37', 'Total');
 
 // isi
-$totale_plan = 0;
-$totale_actual = 0;
-$totale_status = 0;
 for ($j = 1; $j <= $jumhar; $j++) {
     // CUSTOMIZE
     $bar = $j + 5; // untuk baris, dimulai dari 6
@@ -160,7 +157,6 @@ for ($j = 1; $j <= $jumhar; $j++) {
     if ($plan == 1) {
         $plan = 0;
     }
-    $totale_plan = $totale_plan + $plan;
     $sheet->setCellValue('D' . $bar, $plan);
 
     // KOLOM ACTUAL (E)
@@ -171,12 +167,10 @@ for ($j = 1; $j <= $jumhar; $j++) {
     } else {
         $actual = $data3['b450'];
     }
-    $totale_actual = $totale_actual + $actual;
     $sheet->setCellValue('E' . $bar, $actual);
 
     // KOLOM STATUS (F)
     $status = $actual - $plan;
-    $totale_status = $totale_status + $status;
     $sheet->setCellValue('F' . $bar, $status);
 
     // KOLOM PROGRESS (G)
@@ -185,12 +179,11 @@ for ($j = 1; $j <= $jumhar; $j++) {
 }
 
 // total tiap kolom
-$sheet->setCellValue('D37', $totale_plan);
-$sheet->setCellValue('E37', $totale_actual);
-$sheet->setCellValue('F37', $totale_status);
+$sheet->setCellValue('D37', '=SUM(D6:D36)');
+$sheet->setCellValue('E37', '=SUM(E6:E36)');
+$sheet->setCellValue('F37', '=SUM(F6:F36)');
 
-$totale_progress = $totplamo + $totale_actual;
-$sheet->setCellValue('G37', $totale_progress);
+$sheet->setCellValue('G37', '=E37-D37');
 
 // merge kolom
 $spreadsheet->setActiveSheetIndex(0);
