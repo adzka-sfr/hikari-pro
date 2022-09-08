@@ -103,12 +103,23 @@ $totale_plan = 0;
 $totale_actual = 0;
 $totale_status = 0;
 for ($j = 1; $j <= $jumhar; $j++) {
-    // KOLOM DATE (A)
+    // CUSTOMIZE
     $bar = $j + 5; // untuk baris, dimulai dari 6
+    $har = date('Y-m') . "-" . $j;
+    $tude = date('d');
+    $listtude = date('d', strtotime($har));
+    if ($listtude <= $tude) {
+        // Memeberi warna merah ketika sabtu dan minggu
+        $spreadsheet->setActiveSheetIndexByName('Report B450')->getStyle('A' . $bar)
+            ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
+        $spreadsheet->getActiveSheet()->getStyle('A' . $bar)
+            ->getFill()->getStartColor()->setARGB('00B0F0');
+    }
+
+    // KOLOM DATE (A)
     $sheet->setCellValue('A' . $bar, $j);
 
     // KOLOM DAY (B)
-    $har = date('Y-m') . "-" . $j;
     $hari = date('l', strtotime($har));
     $sheet->setCellValue('B' . $bar, $hari);
 
@@ -117,6 +128,7 @@ for ($j = 1; $j <= $jumhar; $j++) {
     // KOLOM PLAN (D)
     if ($hari == "Saturday" or $hari == "Sunday") {
         $plan = 0;
+        // Memeberi warna merah ketika sabtu dan minggu
         $spreadsheet->setActiveSheetIndexByName('Report B450')->getStyle('A' . $bar . ':G' . $bar)
             ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
         $spreadsheet->getActiveSheet()->getStyle('A' . $bar . ':G' . $bar)
@@ -216,6 +228,8 @@ $spreadsheet->getActiveSheet()->getStyle('A37:G37')
 $spreadsheet->getActiveSheet()->getStyle('A2:F5')
     ->getAlignment()->setHorizontal('center');
 $spreadsheet->getActiveSheet()->getStyle('G4')
+    ->getAlignment()->setHorizontal('center');
+$spreadsheet->getActiveSheet()->getStyle('A6:A36')
     ->getAlignment()->setHorizontal('center');
 $spreadsheet->getActiveSheet()->getStyle('A37')
     ->getAlignment()->setHorizontal('right');
