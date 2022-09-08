@@ -165,12 +165,12 @@ for ($j = 1; $j <= $jumhar; $j++) {
 }
 
 // total tiap kolom
-$sheet->setCellValue('D37', $totale_plan);
-$sheet->setCellValue('E37', $totale_actual);
-$sheet->setCellValue('F37', $totale_status);
+$sheet->setCellValue('D37', '=SUM(D6:D36)');
+$sheet->setCellValue('E37', '=SUM(E6:E36)');
+$sheet->setCellValue('F37', '=SUM(F6:F36)');
 
 $totale_progress = $totplamo + $totale_actual;
-$sheet->setCellValue('G37', $totale_progress);
+$sheet->setCellValue('G37', '=E37-D37');
 
 // merge kolom
 $spreadsheet->setActiveSheetIndex(0);
