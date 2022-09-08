@@ -235,9 +235,16 @@ $spreadsheet->getActiveSheet()->getStyle('A37')
     ->getAlignment()->setHorizontal('right');
 
 // memberi warna background
+// judul
 $spreadsheet->getActiveSheet()->getStyle('A2')
     ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID); // setup untuk melakukan pengisian warna kolom
 $spreadsheet->getActiveSheet()->getStyle('A2')
+    ->getFill()->getStartColor()->setARGB('70AD47'); // deklarasi warna
+
+// workcenter
+$spreadsheet->getActiveSheet()->getStyle('D4')
+    ->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID); // setup untuk melakukan pengisian warna kolom
+$spreadsheet->getActiveSheet()->getStyle('D4')
     ->getFill()->getStartColor()->setARGB('70AD47'); // deklarasi warna
 
 // memberi warna merah pada font
