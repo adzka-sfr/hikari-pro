@@ -1,3 +1,3 @@
 <?php
-$app_name = "Employee Management";
-$app_dir = "employee_management";
+$app_name = "Register User";
+$app_dir = "register_user";
