@@ -45,7 +45,7 @@ if (!isset($_SESSION['id'])) {
   <!-- Custom Theme Style -->
   <link href="<?= base_url('_assets/build/css/custom.min.css') ?>" rel="stylesheet">
 
-  <!-- TAMBAHAN -->
+  <!-- TAMBAHAN lib -->
 
   <!-- untuk dropdown search -->
   <link href="<?= base_url('_assets/src/add/dropdown_search/select2.min.css') ?>" rel="stylesheet" />
@@ -60,7 +60,7 @@ if (!isset($_SESSION['id'])) {
 
 
 
-  <!-- TAMBAHAN -->
+  <!-- TAMBAHAN lib-->
 
   <!-- Tambahan -->
 
