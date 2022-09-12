@@ -74,7 +74,7 @@
         $.getJSON("data/total_fixing.php", function(data) {
             $("#hmbfixing").empty();
             $.each(data.result, function() {
-                $("#hmbfixing").append(this['jumlah']);
+                $("#hmbfixing").append(this['actual'] + "/" + this['plan']);
             });
         });
     }
@@ -83,7 +83,7 @@
         $.getJSON("data/total_stringing.php", function(data) {
             $("#hmbstring").empty();
             $.each(data.result, function() {
-                $("#hmbstring").append(this['jumlah']);
+                $("#hmbstring").append(this['actual'] + "/" + this['plan']);
             });
         });
     }

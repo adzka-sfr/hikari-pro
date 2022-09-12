@@ -52,7 +52,7 @@
             <div class="row">
                 <div class="col-6">
                     <div class="card w-100" style="background-color: #263238;">
-                        <h1 style="font-weight: bold; padding-left: 20px; margin-top: 10px; margin-bottom: 0px; font-size: 30px; color: #FFFFFF;">FIXING FRAME RESULT |<u><span style="color: #FFFFFF;" id="hmbfixing"></span> <span style="color: #FFFFFF;">Unit</span></u>|</h1>
+                        <h1 style="font-weight: bold; padding-left: 20px; margin-top: 10px; margin-bottom: 0px; font-size: 30px; color: #FFFFFF;">FIXING FRAME RESULT |<u><span style="color: #FFFFFF;" id="hmbfixing"></span><span style="color: #FFFFFF;"></span></u>|</h1>
                         <div class="d-md-flex testimony-29101">
                             <div class="card-body">
                                 <table class="table" style="font-size: 35px; background-color: #263238; color: #FFFF;">
@@ -71,7 +71,7 @@
 
                 <div class="col-6">
                     <div class="card w-100" style="background-color: #263238;">
-                        <h1 style="font-weight: bold; padding-left: 20px; margin-top: 10px; margin-bottom: 0px; font-size: 30px; color: #FFFFFF;">STRINGING RESULT |<u><span style="color: #FFFFFF;" id="hmbstring"></span> <span style="color: #FFFFFF;">Unit</span></u>|</h1>
+                        <h1 style="font-weight: bold; padding-left: 20px; margin-top: 10px; margin-bottom: 0px; font-size: 30px; color: #FFFFFF;">STRINGING RESULT |<u><span style="color: #FFFFFF;" id="hmbstring"></span><span style="color: #FFFFFF;"></span></u>|</h1>
                         <div class="d-md-flex testimony-29101">
                             <div class="card-body">
                                 <table class="table " style="font-size: 35px; background-color: #263238; color: #FFFF;">
