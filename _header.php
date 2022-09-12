@@ -170,14 +170,14 @@ if (!isset($_SESSION['id'])) {
     .tableFixHead-2 thead th {
       position: sticky;
       top: 0;
-      z-index: 1;
+      z-index: 0;
       background-color: #fff;
     }
 
     .tableFixHead-2 tfoot th {
       position: sticky;
       bottom: 0;
-      z-index: 1;
+      z-index: 0;
       background-color: #fff;
     }
 
@@ -189,7 +189,7 @@ if (!isset($_SESSION['id'])) {
     .tableFixHead-3 thead th {
       position: sticky;
       top: 0;
-      z-index: 1;
+      z-index: 0;
       background-color: #fff;
     }
 
@@ -201,7 +201,7 @@ if (!isset($_SESSION['id'])) {
     .tableFixHead-4 thead th {
       position: sticky;
       top: 0;
-      z-index: 1;
+      z-index: 0;
       background-color: #fff;
     }
   </style>

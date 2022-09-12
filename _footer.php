@@ -1,6 +1,6 @@
 <!-- footer content -->
 <!-- z-index untuk mengatur susunan tumpang tindih -->
-<footer style="background-color: #EDEDED; z-index: 1;">
+<footer style="background-color: #EDEDED; z-index: 0;">
     <div class="pull-right">
         <!-- Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a> -->
         ©2022 All Rights Reserved. Yamaha Indonesia . <a href="#">Privacy and Terms</a>
