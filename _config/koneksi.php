@@ -16,12 +16,12 @@ $connect = new mysqli($servername, $username, $password, $db);
 if ($connect->connect_error) {
   die("Connection failed: " . $connect->connect_error);
 }
-
+// jangan lupa mengganti base url
 //fungsi base_url
-$_SESSION['base_url'] = "http://localhost/training/hikari";
+$_SESSION['base_url'] = "http://localhost/hikari";
 function base_url($url = null)
 {
-  $base_url = "http://localhost/training/hikari";
+  $base_url = "http://localhost/hikari";
   if ($url != null) {
     return $base_url . "/" . $url;
   } else {
