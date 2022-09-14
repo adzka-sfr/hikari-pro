@@ -205,6 +205,43 @@ if (!isset($_SESSION['id'])) {
       background-color: #fff;
     }
   </style>
+  <!-- untuk table fix header v2 -->
+
+  <!-- style untuk koordinat -->
+  <style>
+    /* Container diperlukan untuk memosisikan tombol. Sesuaikan lebarnya sesuai dengan kebutuhan*/
+    .containere {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* Buat gambar menjadi responsif */
+    .containere img {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Style tombol dan letakkan di tengah container / gambar */
+    .containere .bton {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      background-color: #0000FF;
+      color: white;
+      font-size: 12px;
+      /* padding: 12px 24px; */
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .container .btn:hover {
+      background-color: black;
+    }
+  </style>
+  <!-- style untuk koordinat -->
 
   <!-- Tambahan -->
 </head>

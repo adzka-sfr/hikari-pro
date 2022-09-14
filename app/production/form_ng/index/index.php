@@ -114,10 +114,15 @@ include('../app_name.php') ?>
           <hr style="margin: 0px;">
         </div>
 
-        <div class="">
-          <div class="page-title">
-            <div class="title_left">
-              <h3>isi</h3>
+        <div class="dashboard_graph" style="padding-top: 0px;">
+          <div class="row">
+            <div class="col-12">
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <img src="image/topboard_outside.jpg" alt="topboard">
             </div>
           </div>
         </div>
