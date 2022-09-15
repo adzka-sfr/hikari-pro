@@ -1,4 +1,4 @@
-<?php include('../../../../_header.php');
+<?php include('../../../../../_header.php');
 include('../app_name.php');
 include('koneksi.php');
 ?>
@@ -138,7 +138,8 @@ include('koneksi.php');
 
         </div>
 
-        <div class="dashboard_graph" style="margin-top: 10px; padding-bottom: 70px;">
+        <!-- isi hasil scan slip number -->
+        <div class="dashboard_graph" style="margin-top: 10px; padding-bottom: 50px;">
 
           <div class="row">
             <div class="col-12">
@@ -164,7 +165,7 @@ include('koneksi.php');
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-12">
+                    <div class="col-12" style="padding-bottom: 5%;">
                       <!-- gambar -->
                       <center>
                         <div class="containere">
@@ -190,7 +191,7 @@ include('koneksi.php');
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-12">
+                    <div class="col-12" style="padding-bottom: 5%;">
                       <!-- gambar -->
                       <center>
                         <div class="containere">
@@ -216,7 +217,7 @@ include('koneksi.php');
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-12">
+                    <div class="col-12" style="padding-bottom: 5%;">
                       <!-- gambar -->
                       <center>
                         <div class="containere">
@@ -242,7 +243,7 @@ include('koneksi.php');
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-12">
+                    <div class="col-12" style="padding-bottom: 5%;">
                       <!-- gambar -->
                       <center>
                         <div class="containere">
@@ -306,6 +307,7 @@ include('koneksi.php');
             </div>
           </div>
         </div>
+        <!-- isi hasil scan slip number -->
 
       </div>
       <!-- /page content -->
