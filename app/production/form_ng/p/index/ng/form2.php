@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-md-6">
             <!-- isi gambar -->
-
+            <!-- cek -->
             <!-- gambar 1 -->
             <div class="row">
                 <div class="col-md-12">
