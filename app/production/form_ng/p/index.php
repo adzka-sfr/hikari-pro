@@ -28,6 +28,9 @@ if (empty($row_prev)) {
             echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/index') . "';</script>";
         } elseif ($_SESSION['role'] == 'managerial' and $_SESSION['dept'] == 'Painting') {
             echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/dashboard/painting/dashboard') . "';</script>";
+        } else {
+            // jika role dan departemen tidak sesuai namun masih ada pada tabel pevilege
+            echo "<script>window.location='../';</script>";
         }
     }
 }
