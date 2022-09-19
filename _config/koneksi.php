@@ -11,7 +11,7 @@ $db = "hikari";
 // Create connection
 $connect = new mysqli($servername, $username, $password, $db);
 
-
+// cek
 // Check connection
 if ($connect->connect_error) {
   die("Connection failed: " . $connect->connect_error);
