@@ -11,17 +11,16 @@ $db = "hikari";
 // Create connection
 $connect = new mysqli($servername, $username, $password, $db);
 
-// cek
 // Check connection
 if ($connect->connect_error) {
   die("Connection failed: " . $connect->connect_error);
 }
 // jangan lupa mengganti base url
 //fungsi base_url
-$_SESSION['base_url'] = "http://localhost/hikari-local";
+$_SESSION['base_url'] = "http://localhost/hikari";
 function base_url($url = null)
 {
-  $base_url = "http://localhost/hikari-local";
+  $base_url = "http://localhost/hikari";
   if ($url != null) {
     return $base_url . "/" . $url;
   } else {
