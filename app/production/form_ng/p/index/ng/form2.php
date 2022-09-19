@@ -20,7 +20,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-12">
-                            <h2><u>Topboard Outside</u></h2>
+                            <h2><u>Frontboard</u></h2>
                         </div>
                     </div>
                     <div class="row">
@@ -28,7 +28,7 @@
                             <!-- gambar -->
                             <center>
                                 <div class="containere">
-                                    <img src="../image/topboard_outside.jpg" style="width:100%">
+                                    <img src="../image/frontboard.jpg" style="width:100%">
                                     <button class="bton" style="top: 14%; left: 10%; background-color: #B92C3A;">NG</button>
                                     <button class="bton" style="top: 65%; left: 50%; background-color: #B92C3A;">NG</button>
                                     <button class="bton" style="top: 14%; left: 90%; background-color: #157347;">OK</button>
@@ -46,7 +46,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-12">
-                            <h2><u>Topboard Inside</u></h2>
+                            <h2><u>Topboard Outside</u></h2>
                         </div>
                     </div>
                     <div class="row">
@@ -54,7 +54,7 @@
                             <!-- gambar -->
                             <center>
                                 <div class="containere">
-                                    <img src="../image/topboard_inside.jpg" style="width:100%">
+                                    <img src="../image/topboard_outside.jpg" style="width:100%">
                                     <button class="bton" style="top: 14%; left: 10%; background-color: #B92C3A;">NG</button>
                                     <button class="bton" style="top: 65%; left: 50%; background-color: #B92C3A;">NG</button>
                                     <button class="bton" style="top: 14%; left: 90%; background-color: #157347;">OK</button>
