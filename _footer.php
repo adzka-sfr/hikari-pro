@@ -21,6 +21,9 @@
 
 <!-- untuk dropdown search -->
 <script>
+    $('.cari_slip').select2({
+        placeholder: "Slip Number",
+    });
     $('#cari').select2();
     $('#kon').select2();
 </script>

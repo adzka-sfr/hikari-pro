@@ -136,11 +136,19 @@ include('../koneksi.php');
           <div class="row">
             <div class="col-md-10">
               <div class="row">
-                <div class="col-md-4 col-sm-4  form-group has-feedback">
+                <div class="col-md-12 col-sm-12  form-group has-feedback">
                   <form method="POST">
-                    <input type="text" name="slip_number" class="form-control has-feedback-left" placeholder="Input Slip" autofocus>
+                    <select class="cari_slip" name="slip_number" style="width: 250px; padding-left: 100px;" onchange="this.form.submit();">
+                      <option value="" selected disabled>Select Slip Number</option>
+                      <?php
+                      $sql_list = mysqli_query($connect_p, "SELECT DISTINCT c_no_slip, c_piano from on_progress");
+                      ?>
+                      <?php while ($data_list = mysqli_fetch_array($sql_list)) {
+                        echo '<option value="' . $data_list['c_no_slip'] . '">' . $data_list['c_no_slip'] . ' - ' . $data_list['c_piano'] . '</option>';
+                      } ?>
+                    </select>
                   </form>
-                  <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
+                  <!-- <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span> -->
                 </div>
               </div>
             </div>
