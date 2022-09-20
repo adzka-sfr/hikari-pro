@@ -1,8 +1,16 @@
 <?php include('../../../../../../_header.php');
 include('../../app_name.php');
 include('../koneksi.php');
-?>
 
+?>
+<script>
+  var el = document.getElementById('overlayBtn');
+  if (el) {
+    el.addEventListener('click', swapper, false);
+  }
+</script>
+
+<script src="<?= base_url('_assets/src/add/sweetalert2.all.min.js') ?>"></script>
 
 <body class="nav-md footer_fixed">
   <div class="container body">
@@ -126,21 +134,80 @@ include('../koneksi.php');
           </div>
 
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
               <div class="row">
                 <div class="col-md-4 col-sm-4  form-group has-feedback">
-                  <input type="text" class="form-control has-feedback-left" placeholder="Slip Number" autofocus>
+                  <form method="POST">
+                    <input type="text" name="slip_number" class="form-control has-feedback-left" placeholder="Input Slip" autofocus>
+                  </form>
                   <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
                 </div>
               </div>
             </div>
+            <div class="col-md-2" style="text-align: right;">
+              <div class="row">
+                <div class="col-md-12 col-sm-12  form-group has-feedback">
+                  <form method="POST">
+                    <button class="btn btn-danger" type="submit" name="reset">Clear</button>
+                  </form>
+                  <?php
+                  if (isset($_POST['reset'])) {
+                    unset($_SESSION['no_slip']);
+                  }
+                  ?>
+                </div>
+              </div>
+            </div>
           </div>
-
         </div>
+
+        <?php
+        // create session
+        if (isset($_POST['slip_number'])) {
+          $_SESSION['no_slip'] = $_POST['slip_number'];
+        }
+        ?>
+
 
         <!-- isi hasil scan slip number -->
         <?php
-        include('form1.php');
+        // selama session masih kosong include no form
+        if (empty($_SESSION['no_slip'])) {
+          include('noform.php');
+        } else {
+          // cek apakah slip terdaftar atau tidak
+          $sql1 = mysqli_query($connect_p, "SELECT c_no_slip from on_progress where c_no_slip = '$_SESSION[no_slip]'");
+          $data1 = mysqli_fetch_row($sql1);
+
+          if ($data1 == 0) {
+            // jika tidak ada data muncul alert dan unset session
+            unset($_SESSION['no_slip']);
+        ?>
+            <script>
+              $(document).ready(function() {
+                Swal.fire({
+                  title: 'Data Not Found',
+                  text: 'Slip number unregistered!',
+                  type: 'warning',
+                  confirmButtonText: 'OK'
+                }).then(function() {
+                  window.location = 'index.php';
+                });
+              });
+            </script>
+        <?php
+          } else {
+            $sql2 = mysqli_query($connect_p, "SELECT distinct op.c_piano as c_piano, gp.c_jenis as c_jenis from on_progress op join group_piano gp on op.c_piano = gp.c_piano where op.c_no_slip = '$_SESSION[no_slip]'");
+            $data2 = mysqli_fetch_array($sql2);
+            if ($data2['c_jenis'] == "J1") {
+              include('form1.php');
+            } elseif ($data2['c_jenis'] == "J2") {
+              include('form2.php');
+            }
+          }
+        }
+
+
         ?>
         <!-- isi hasil scan slip number -->
 

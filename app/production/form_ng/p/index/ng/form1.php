@@ -4,17 +4,15 @@
     <div class="row">
         <div class="col-11">
             <?php
-            $sql = mysqli_query($connect_p, "SELECT * from piano limit 1");
+            $sql = mysqli_query($connect_p, "SELECT distinct c_piano from on_progress where c_no_slip = '$_SESSION[no_slip]' ");
             $data = mysqli_fetch_array($sql);
-            // menyimpan no slip
-            $_SESSION['no_slip'] = $data['no_slip'];
             ?>
-            <h3><?= $data['no_slip'] ?> - <?= $data['piano_name'] ?> <?= $data['warna'] ?></h3>
+            <h3><?= $_SESSION['no_slip'] ?> - <?= $data['c_piano'] ?></h3>
 
         </div>
 
         <div class="col-1" style="text-align: right;">
-            <i>J1</i>
+            <i>T1</i>
         </div>
         <div class="separator"></div>
     </div>
@@ -22,7 +20,7 @@
     <div class="row">
         <div class="col-md-6">
             <!-- isi gambar -->
-            <script src="<?= base_url('_assets/src/add/sweetalert2.all.min.js') ?>"></script>
+
             <!-- gambar 1 -->
             <div class="row">
                 <div class="col-md-12">
@@ -157,7 +155,7 @@
                                                                 title: 'Success',
                                                                 text: 'Section Updated!',
                                                                 type: 'success',
-                                                                confirmButtonText: 'PASS'
+                                                                confirmButtonText: 'OK'
                                                             }).then(function() {
                                                                 window.location = 'index.php';
                                                             });
@@ -285,7 +283,7 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql2 = mysqli_query($connect_p, "SELECT * from on_progress");
+                                    $sql2 = mysqli_query($connect_p, "SELECT * from on_progress where c_no_slip = '$_SESSION[no_slip]'");
                                     while ($data2 = mysqli_fetch_array($sql2)) {
                                     ?>
                                         <tr>

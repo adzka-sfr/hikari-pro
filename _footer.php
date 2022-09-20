@@ -12,12 +12,12 @@
 <!-- SRIPT TAMBAHAN -->
 
 <!-- untuk fulscreen -->
-<script>
+<!-- <script>
     var goFS = document.getElementById("goFS");
     goFS.addEventListener("click", function() {
         document.body.requestFullscreen();
     }, false);
-</script>
+</script> -->
 
 <!-- untuk dropdown search -->
 <script>
@@ -26,7 +26,7 @@
 </script>
 
 <!-- untuk disable tanggal kemarin -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     var date = new Date();
     var day = date.getDate()
     var month = date.getMonth() + 1
@@ -41,7 +41,7 @@
 
     var minDate = year + '-' + month + '-' + day
     document.getElementById('tanggal_kemarin').setAttribute("min", minDate);
-</script>
+</script> -->
 <!-- untuk disable tanggal kemarin -->
 
 
