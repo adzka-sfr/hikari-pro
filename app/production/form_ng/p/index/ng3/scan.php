@@ -1,7 +1,18 @@
-<?php include('../../../../_header.php');
-include('../app_name.php') ?>
+<?php include('../../../../../../_header.php');
+include('../../app_name.php');
+include('../koneksi.php');
 
-<body class="nav-md footer_fixed" style="background-color: #F7F7F7;">
+?>
+<script>
+  var el = document.getElementById('overlayBtn');
+  if (el) {
+    el.addEventListener('click', swapper, false);
+  }
+</script>
+
+<script src="<?= base_url('_assets/src/add/sweetalert2.all.min.js') ?>"></script>
+
+<body class="nav-md footer_fixed">
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -111,22 +122,130 @@ include('../app_name.php') ?>
               </span>
             </div>
           </div>
-          <hr style="margin: 0px;">
+          <hr style="margin: 5px;">
         </div>
 
-        <div class="">
-          <div class="page-title">
-            <div class="title_left">
-              <h3>isi</h3>
-              <button class="btn btn-primary">oke</button>
+        <div class="dashboard_graph" style="padding-top: 10px;">
+          <div class="row">
+            <div class="col-12">
+              <h3>Scan Slip Number</h3>
+              <div class="separator"></div>
+            </div>
+          </div>
 
+          <script src="barcode/jquery.min.js"></script>
+          <script src="barcode/html5-qrcode.min.js"></script>
+          <div class="row">
+            <div class="col-2">
+              <a href="index.php"><button class="btn btn-danger">Cancel</button></a>
+            </div>
+            <div class="col-8">
+              <center>
+                <div id="reader" style=" max-width: 500px;"></div>
+              </center>
+
+              <script>
+                // tempat untuk setup library nya
+                // setup bisa dilihat di 
+                let config = {
+                  qrbox: {
+                    width: 400,
+                    height: 150
+                  },
+                  supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
+                };
+                var html5QrcodeScanner = new Html5QrcodeScanner(
+                  // variabel config(setup library) disisipkan
+                  "reader", config, {
+                    fps: 10,
+                    rememberLastUsedCamera: true,
+                  });
+
+                var hasil = 0;
+
+                function onScanSuccess(decodedText, decodedResult) {
+                  // Handle on success condition with the decoded text or result.
+                  hasil = decodedText;
+                  console.log(`Scan result: ${decodedText}`, decodedResult);
+                  $.ajax({
+                    url: "caa.php",
+                    type: "POST",
+                    data: {
+                      hasil: hasil
+                    },
+                    cache: false,
+                    success: function(datares) {
+                      window.location = 'index.php';
+                    }
+                  });
+                  // alert(hasil);
+
+                  // ...
+                  html5QrcodeScanner.clear();
+                  // ^ this will stop the scanner (video feed) and clear the scan area.
+                }
+
+                html5QrcodeScanner.render(onScanSuccess);
+              </script>
+
+            </div>
+            <div class="col-2" style="text-align: right;">
+              <button onclick="window.location.reload()" class="btn btn-primary">Refresh</button>
             </div>
           </div>
         </div>
+
+        <?php
+        // create session
+        if (isset($_POST['slip_number'])) {
+          $_SESSION['no_slip'] = $_POST['slip_number'];
+        }
+        ?>
+
+
+        <!-- isi hasil scan slip number -->
+        <?php
+        // selama session masih kosong include no form
+        if (empty($_SESSION['no_slip'])) {
+          include('noform.php');
+        } else {
+          // cek apakah slip terdaftar atau tidak
+          $sql1 = mysqli_query($connect_p, "SELECT c_no_slip from on_progress where c_no_slip = '$_SESSION[no_slip]'");
+          $data1 = mysqli_fetch_row($sql1);
+
+          if ($data1 == 0) {
+            // jika tidak ada data muncul alert dan unset session
+            unset($_SESSION['no_slip']);
+        ?>
+            <script>
+              $(document).ready(function() {
+                Swal.fire({
+                  title: 'Data Not Found',
+                  text: 'Slip number unregistered!',
+                  type: 'warning',
+                  confirmButtonText: 'OK'
+                }).then(function() {
+                  window.location = 'index.php';
+                });
+              });
+            </script>
+        <?php
+          } else {
+            $sql2 = mysqli_query($connect_p, "SELECT distinct op.c_piano as c_piano, gp.c_jenis as c_jenis from on_progress op join group_piano gp on op.c_piano = gp.c_piano where op.c_no_slip = '$_SESSION[no_slip]'");
+            $data2 = mysqli_fetch_array($sql2);
+            if ($data2['c_jenis'] == "J1") {
+              include('form1.php');
+            } elseif ($data2['c_jenis'] == "J2") {
+              include('form2.php');
+            }
+          }
+        }
+
+
+        ?>
+        <!-- isi hasil scan slip number -->
+
       </div>
       <!-- /page content -->
 
-    </div>
-  </div>
-
-  <?php include('../../../../_footer.php'); ?>
+      <?php include('../../../../../../_footer.php'); ?>

@@ -50,6 +50,7 @@
       <div class="row">
         <div class="col-12">
           <h3>Content</h3>
+          <button class="btn btn-primary">oke</button>
         </div>
       </div>
     </div>

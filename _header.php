@@ -236,10 +236,6 @@ if (!isset($_SESSION['id'])) {
       border-radius: 5px;
       text-align: center;
     }
-
-    .container .btn:hover {
-      background-color: black;
-    }
   </style>
   <!-- style untuk koordinat -->
 

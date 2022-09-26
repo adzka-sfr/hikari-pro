@@ -1,3 +1,3 @@
 <script>
-  window.location = "ng2";
+  window.location = "ng3";
 </script>
