@@ -37,7 +37,7 @@ if ((!isset($_SESSION['id'])) && ($_SESSION['role'] !== "managerial")) {
                                     <li class="dashboard"><a href="../dashboard/dashboard.php"><i class="fa fa-desktop"></i> Ratio Set</a></li>
                                     <li><a><i class="fa fa-edit"></i> Entry Plan <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li class="active"><a href="<?= base_url('app/production/rsaup/p/dashboard/managerial/plan/plan_cs.php') ?>"><i class=" fa fa-calendar-plus-o"></i> Case</a></li>
+                                            <li><a href="<?= base_url('app/production/rsaup/p/dashboard/managerial/plan/plan_cs.php') ?>"><i class=" fa fa-calendar-plus-o"></i> Case</a></li>
                                             <li class="active"><a href="<?= base_url('app/production/rsaup/p/dashboard/managerial/plan/plan_sd.php') ?>"><i class=" fa fa-calendar-plus-o"></i> Side</a></li>
                                         </ul>
                                     </li>
