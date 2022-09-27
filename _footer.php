@@ -24,6 +24,7 @@
     $('.cari_slip').select2({
         placeholder: "Slip Number",
     });
+    $('.cari_user').select2();
     $('#cari').select2();
     $('#kon').select2();
 </script>

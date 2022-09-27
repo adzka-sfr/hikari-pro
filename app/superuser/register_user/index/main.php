@@ -59,7 +59,7 @@ if ($_SESSION['id'] != "24891") { // super user
                                         echo 'class="active"';
                                     }
                                     ?>>
-                                    <a href="main.php?p=edit"><i class="fa fa-trash"></i> Edit Employee</a>
+                                    <a href="main.php?p=edit"><i class="fa fa-users"></i> Edit Employee</a>
                                 </li>
                             </ul>
                         </div>
@@ -130,7 +130,7 @@ if ($_SESSION['id'] != "24891") { // super user
                 </div>
 
                 <div class="dashboard_graph" style="padding-top: 10px; margin-top: 10px">
-
+                    <script src="<?= base_url('_assets/src/add/EChart/echarts.js') ?>"></script>
                     <?php
                     include "content.php";
                     ?>
