@@ -31,6 +31,11 @@ include 'data/backend.php';
                                             <p> <?= "<script>document.getElementById('op_p').innerHTML</script>" ?></p>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-12">
+
+                                        </div>
+                                    </div>
                                     <div class="separator" style="margin-top: 0px;"></div>
 
                                     <h2 class="card-text">Panel</h2>
@@ -108,11 +113,35 @@ include 'data/backend.php';
                                                                                                             ?>" role="progressbar" aria-label="Animated striped example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:<?= $op_ss_persen ?>%"><?= $op_ss_act ?></div>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="container" style="padding-left: 10px; padding-right: 10px;">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr style="text-align: center;">
+                                                            <th>KATEGORI</th>
+                                                            <th>TARGET</th>
+                                                            <th>ACTUAL</th>
+                                                            <th>+/-</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><h6>Panel</h6></td>
+                                                            <td>pcs</td>
+                                                            <td>pcs</td>
+                                                            <td>pcs</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <!-- Card Finish -->
