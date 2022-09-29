@@ -239,5 +239,37 @@ if (!isset($_SESSION['id'])) {
   </style>
   <!-- style untuk koordinat -->
 
+  <!-- style untuk bar step (progress bar) -->
+  <style>
+    .bar-step {
+      position: absolute;
+      margin-top: -10px;
+      z-index: 1;
+      font-size: 12px;
+      margin-left: -3%;
+      padding-left: 20px;
+    }
+
+    .label-txt {
+      float: left;
+
+    }
+
+    .label-line {
+      float: left;
+      background: #000;
+      height: 26px;
+      width: 2px;
+      margin-left: 0px;
+    }
+
+    .label-percent {
+      float: right;
+      margin-left: 2px;
+      margin-top: -3px;
+    }
+  </style>
+  <!-- style untuk bar step (progress bar) -->
+
   <!-- Tambahan -->
 </head>
