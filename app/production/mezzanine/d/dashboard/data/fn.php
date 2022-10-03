@@ -1,4 +1,5 @@
 <?php
+// DATA UNTUK INFORMASI PADA AREA PROGRESS BAR FINISH
 $fn1 = mysqli_query($con_pro, "SELECT * FROM TARGETAN WHERE KODE = 'fn'");
 $fn1d = mysqli_fetch_array($fn1);
 

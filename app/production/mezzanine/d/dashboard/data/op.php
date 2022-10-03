@@ -1,4 +1,5 @@
 <?php
+// DATA UNTUK INFORMASI PADA AREA PROGRESS BAR ON PROCESS
 $op1 = mysqli_query($con_pro, "SELECT * FROM TARGETAN WHERE KODE = 'op'");
 $op1d = mysqli_fetch_array($op1);
 
