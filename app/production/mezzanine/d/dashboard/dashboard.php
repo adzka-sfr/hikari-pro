@@ -167,8 +167,8 @@ include 'data/backend.php';
                                                         <tr style="font-weight: bold;">
                                                             <td style="font-weight: bold; text-align: right;">TOTAL</td>
                                                             <td style="text-align: right;"><?= $op_p_bb + $op_sl_bb + $op_ss_bb ?> pcs</td>
-                                                            <td style="text-align: right;"><?= $op_ss_act ?> pcs</td>
-                                                            <td style="text-align: right;"><?= $op_ss_act - $op_ss_bb ?> pcs</td>
+                                                            <td style="text-align: right;"><?= $op_p_act + $op_sl_act + $op_ss_act ?> pcs</td>
+                                                            <td style="text-align: right;"><?= ($op_p_act - $op_p_bb) + ($op_sl_act - $op_sl_bb) + ($op_ss_act - $op_ss_bb) ?> pcs</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -327,8 +327,8 @@ include 'data/backend.php';
                                                         <tr style="font-weight: bold;">
                                                             <td style="font-weight: bold; text-align: right;">TOTAL</td>
                                                             <td style="text-align: right;"><?= $fn_p_bb + $fn_sl_bb + $fn_ss_bb ?> pcs</td>
-                                                            <td style="text-align: right;"><?= $fn_ss_act ?> pcs</td>
-                                                            <td style="text-align: right;"><?= $fn_ss_act - $op_ss_bb ?> pcs</td>
+                                                            <td style="text-align: right;"><?= $fn_p_act + $fn_sl_act + $fn_ss_act?> pcs</td>
+                                                            <td style="text-align: right;"><?= ($fn_p_act - $fn_p_bb) + ($fn_sl_act - $fn_sl_bb) + ($fn_ss_act - $fn_ss_bb) ?> pcs</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
