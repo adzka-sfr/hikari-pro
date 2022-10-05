@@ -57,8 +57,8 @@
 <?php
 date_default_timezone_set('Asia/Jakarta');
 $judul = date('F Y');
-
-require 'vendor/autoload.php';
+require '../../../../../../_assets/src/add/export_excel/vendor/autoload.php';
+// require 'vendor/autoload.php';
 include '../../koneksi.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;

@@ -1,4 +1,21 @@
 <div class="row">
+    <div class="col-12">
+        <button type="button" class="btn btn-outline-success btn-sm" onclick="all2o()">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px;"></i></button>
+        <script>
+            var myWindow;
+
+            function all2o() {
+                myWindow = window.open("export/b450.php", "_blank");
+                setTimeout(all2c, 2000)
+            }
+
+            function all2c() {
+                myWindow.close();
+            }
+        </script>
+    </div>
+</div>
+<div class="row">
     <div class="col-12 tableFixHead-2">
         <table class=" table table-bordered">
             <thead>
