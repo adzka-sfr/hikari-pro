@@ -1,6 +1,5 @@
 <?php
 // DATA UNTUK MENAMPILKAN INFORMASI PADA AREA DOUGHNUT CHART - 2 HOURS
-$now = date('Y-m-d H:i:s');
 $day3 = date('Y-m-d H:i:s', strtotime('-3 days'));
 
 

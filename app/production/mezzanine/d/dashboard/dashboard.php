@@ -343,6 +343,7 @@ include 'data/backend.php';
 
             </div>
 
+            <!-- Dashboard 2 Jam -->
             <div class="row" style="margin-top: 10px;">
                 <div class="col-12">
                     <div class="card">
@@ -520,6 +521,7 @@ include 'data/backend.php';
                 </div>
             </div>
 
+            <!-- Dashboard 16 Jam -->
             <div class="row" style="margin-top: 10px;">
                 <div class="col-12">
                     <div class="card">
@@ -719,8 +721,220 @@ include 'data/backend.php';
         </div>
 
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
-            booth letterpress, commodo enim craft beer mlkshk aliquip
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body" style="padding: 10px;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6><b>Summary All - <?= $sumol ?></b></h6>
+                                </div>
+                            </div>
+                            <div class="separator" style="margin-top: 0px;"></div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="accordion accordion-flush" id="accord1">
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="allcab">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#all_cab2" aria-expanded="false" aria-controls="all_cab2">
+                                                    <span style="font-weight: bold;  text-align: right; width: 73px;"><?= $tsb ?> pcs </span> - Seasoning 2 Hours
+                                                </button>
+                                            </h2>
+                                            <div id="all_cab2" class="accordion-collapse collapse" aria-labelledby="allcab" data-bs-parent="#accord1">
+                                                <div class="accordion-body">
+
+                                                    <?php
+                                                    include 'table/t_hour2.php';
+                                                    ?>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="allcab">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#all_cab16" aria-expanded="false" aria-controls="all_cab16">
+                                                    <span style="font-weight: bold;  text-align: right; width: 73px;"><?= $tsa ?> pcs </span> - Seasoning 16 Hours
+                                                </button>
+                                            </h2>
+                                            <div id="all_cab16" class="accordion-collapse collapse" aria-labelledby="allcab" data-bs-parent="#accord1">
+                                                <div class="accordion-body">
+
+                                                    <?php
+                                                    include 'table/t_hour16.php';
+                                                    ?>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body" style="padding: 10px;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6><b>by Category</b></h6>
+                                </div>
+                            </div>
+                            <div class="separator" style="margin-top: 0px;"></div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="accordion accordion-flush" id="accord2">
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="allcab">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat_1" aria-expanded="false" aria-controls="cat_1">
+                                                    <span style="font-weight: bold;  text-align: right; width: 73px;"><?= $tcp ?> pcs </span> - Panel
+                                                </button>
+                                            </h2>
+                                            <div id="cat_1" class="accordion-collapse collapse" aria-labelledby="allcab" data-bs-parent="#accord2">
+                                                <div class="accordion-body">
+
+                                                    <?php
+                                                    include 'table/t_cpanel.php';
+                                                    ?>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="allcab">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat_2" aria-expanded="false" aria-controls="cat_2">
+                                                    <span style="font-weight: bold;  text-align: right; width: 73px;"><?= $tcss ?> pcs </span> - Small Short
+                                                </button>
+                                            </h2>
+                                            <div id="cat_2" class="accordion-collapse collapse" aria-labelledby="allcab" data-bs-parent="#accord2">
+                                                <div class="accordion-body">
+
+                                                    <?php
+                                                    include 'table/t_csmallshort.php';
+                                                    ?>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="allcab">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cat_3" aria-expanded="false" aria-controls="cat_3">
+                                                    <span style="font-weight: bold;  text-align: right; width: 73px;"><?= $tcsl ?> pcs </span> - Small Long
+                                                </button>
+                                            </h2>
+                                            <div id="cat_3" class="accordion-collapse collapse" aria-labelledby="allcab" data-bs-parent="#accord2">
+                                                <div class="accordion-body">
+
+                                                    <?php
+                                                    include 'table/t_csmalllong.php';
+                                                    ?>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 10px ;">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body" style="padding: 10px;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6><b>by On Process / Finish</b></h6>
+                                </div>
+                            </div>
+                            <div class="separator" style="margin-top: 0px;"></div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="accordion accordion-flush" id="accord3">
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="of">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#of_1" aria-expanded="false" aria-controls="of_1">
+                                                    <span style="font-weight: bold;  text-align: right; width: 73px;"><?= $topp ?> pcs </span> - On Process
+                                                </button>
+                                            </h2>
+                                            <div id="of_1" class="accordion-collapse collapse" aria-labelledby="of" data-bs-parent="#accord3">
+                                                <div class="accordion-body">
+
+                                                    <?php
+                                                    include 'table/t_opfp.php';
+                                                    ?>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="of">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#of_2" aria-expanded="false" aria-controls="of_2">
+                                                    <span style="font-weight: bold;  text-align: right; width: 73px;"><?= $tff ?> pcs </span> - Finish
+                                                </button>
+                                            </h2>
+                                            <div id="of_2" class="accordion-collapse collapse" aria-labelledby="of" data-bs-parent="#accord3">
+                                                <div class="accordion-body">
+
+                                                    <?php
+                                                    include 'table/t_opff.php';
+                                                    ?>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 10px ;">
+                <div class="col-12">
+
+                    <div class="card">
+                        <div class="card-body" style="padding: 10px;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6><b>by Model</b></h6>
+                                </div>
+                            </div>
+                            <div class="separator" style="margin-top: 0px;"></div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="accordion accordion-flush" id="accord4">
+
+                                        <?php
+                                        include 'table/t_model.php';
+                                        ?>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
     </div>

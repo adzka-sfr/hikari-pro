@@ -2,7 +2,6 @@
 // DATA UNTUK MENAMPILKAN INFORMASI PADA AREA DOUGHNUT CHART - 2 HOURS
 
 // PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL - PANEL
-$now = date('Y-m-d H:i:s');
 
 // menghitung semua
 $all_p = mysqli_query($con_pro, "SELECT SUM(qty) as total from to_ongoing_slip where kategori = 'PANEL'");
