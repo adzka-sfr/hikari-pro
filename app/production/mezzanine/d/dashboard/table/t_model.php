@@ -22,7 +22,7 @@ while ($data_model = mysqli_fetch_array($sql_model)) {
         <div id="m_<?= $urut ?>" class="accordion-collapse collapse" aria-labelledby="model" data-bs-parent="#accord4">
             <div class="accordion-body">
                 <div class="row">
-                    <div class="col-12 tableFixHead-2">
+                    <div class="col-12 tableFixHead-3">
 
                         <table class="table table-bordered">
                             <thead>

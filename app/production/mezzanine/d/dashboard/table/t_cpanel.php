@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-12 tableFixHead-2">
+    <div class="col-12 tableFixHead-3">
         <table class="table table-bordered">
             <thead>
                 <tr style="text-align: center;">
