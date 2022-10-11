@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-12 tableFixHead-2">
+    <div class="col-12 tableFixHead-3">
         <table class=" table table-bordered">
             <thead>
                 <tr style="text-align: center;">
@@ -20,19 +20,21 @@
                     $akhir = new DateTime($now);
                     $diff = $awal->diff($akhir);
                     if ($dsa1['time_out'] >= $now) {
-                        $warna = '#ee6666';
+                        $warna = '#9C0006';
+                        $bg = '#FFC7CE';
                         $info = 'NOT READY';
                     } elseif ($dsa1['time_out'] < $now && $diff->d < 3) {
-                        $warna = '#5DC87A';
+                        $warna = '#006100';
+                        $bg = '#C6EFCE';
                         $info = 'READY';
                     } else {
-                        $warna = '#FAA545';
+                        $warna = '#9C5700';
+                        $bg = '#FFEB9C';
                         $info = 'READY';
                     }
-                    $color = '#FAA545';
                 ?>
                     <tr>
-                        <td style="text-align: center; color: <?= $warna ?>; font-weight: bold;"><?= $dsa1['slip'] ?></td>
+                        <td style="text-align: center; color: <?= $warna ?>; background-color: <?= $bg ?>; font-weight: bold;"><?= $dsa1['slip'] ?></td>
                         <td style="text-align: center;"><?= $dsa1['kode'] ?></td>
                         <td><?= $dsa1['nama_kabinet'] ?></td>
                         <td style="text-align: center;"><?= $dsa1['muka'] ?></td>
@@ -45,7 +47,7 @@
                             echo $diff->i . ' menit ';
                             ?>
                         </td>
-                        <td style="text-align: center; color: <?= $warna ?>; font-weight: bold;"><?= $info ?></td>
+                        <td style="text-align: center; color: <?= $warna ?>;  background-color: <?= $bg ?>; font-weight: bold;"><?= $info ?></td>
                     </tr>
                 <?php
                 }

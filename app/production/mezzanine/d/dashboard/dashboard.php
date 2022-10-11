@@ -327,7 +327,7 @@ include 'data/backend.php';
                                                         <tr style="font-weight: bold;">
                                                             <td style="font-weight: bold; text-align: right;">TOTAL</td>
                                                             <td style="text-align: right;"><?= $fn_p_bb + $fn_sl_bb + $fn_ss_bb ?> pcs</td>
-                                                            <td style="text-align: right;"><?= $fn_p_act + $fn_sl_act + $fn_ss_act?> pcs</td>
+                                                            <td style="text-align: right;"><?= $fn_p_act + $fn_sl_act + $fn_ss_act ?> pcs</td>
                                                             <td style="text-align: right;"><?= ($fn_p_act - $fn_p_bb) + ($fn_sl_act - $fn_sl_bb) + ($fn_ss_act - $fn_ss_bb) ?> pcs</td>
                                                         </tr>
                                                     </tbody>
@@ -727,8 +727,23 @@ include 'data/backend.php';
                     <div class="card">
                         <div class="card-body" style="padding: 10px;">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <h6><b>Summary All - <?= $sumol ?></b></h6>
+                                </div>
+                                <div class="col-6" style="text-align: right;">
+                                    <button type="button" class="btn btn-outline-success btn-sm" onclick="all2o()">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px;"></i></button>
+                                    <script>
+                                        var myWindow;
+
+                                        function all2o() {
+                                            myWindow = window.open("export/e_hourall.php", "_blank");
+                                            setTimeout(all2c, 2000)
+                                        }
+
+                                        function all2c() {
+                                            myWindow.close();
+                                        }
+                                    </script>
                                 </div>
                             </div>
                             <div class="separator" style="margin-top: 0px;"></div>

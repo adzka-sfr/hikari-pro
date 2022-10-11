@@ -44,19 +44,21 @@ while ($data_model = mysqli_fetch_array($sql_model)) {
                                     $akhir = new DateTime($now);
                                     $diff = $awal->diff($akhir);
                                     if ($isi_m['time_out'] >= $now) {
-                                        $warna = '#ee6666';
+                                        $warna = '#9C0006';
+                                        $bg = '#FFC7CE';
                                         $info = 'NOT READY';
                                     } elseif ($isi_m['time_out'] < $now && $diff->d < 3) {
-                                        $warna = '#5DC87A';
+                                        $warna = '#006100';
+                                        $bg = '#C6EFCE';
                                         $info = 'READY';
                                     } else {
-                                        $warna = '#FAA545';
+                                        $warna = '#9C5700';
+                                        $bg = '#FFEB9C';
                                         $info = 'READY';
                                     }
-                                    $color = '#FAA545';
                                 ?>
                                     <tr>
-                                        <td style="text-align: center; color: <?= $warna ?>; font-weight: bold;"><?= $isi_m['slip'] ?></td>
+                                        <td style="text-align: center; color: <?= $warna ?>; background-color: <?= $bg ?>; font-weight: bold;"><?= $isi_m['slip'] ?></td>
                                         <td style="text-align: center;"><?= $isi_m['kode'] ?></td>
                                         <td><?= $isi_m['nama_kabinet'] ?></td>
                                         <td style="text-align: center;"><?= $isi_m['muka'] ?></td>
@@ -69,7 +71,7 @@ while ($data_model = mysqli_fetch_array($sql_model)) {
                                             echo $diff->i . ' menit ';
                                             ?>
                                         </td>
-                                        <td style="text-align: center; color: <?= $warna ?>; font-weight: bold;"><?= $info ?></td>
+                                        <td style="text-align: center; color: <?= $warna ?>; background-color: <?= $bg ?>; font-weight: bold;"><?= $info ?></td>
                                     </tr>
                                 <?php
                                 }

@@ -20,19 +20,21 @@
                     $akhir = new DateTime($now);
                     $diff = $awal->diff($akhir);
                     if ($cp['time_out'] >= $now) {
-                        $warna = '#ee6666';
+                        $warna = '#9C0006';
+                        $bg = '#FFC7CE';
                         $info = 'NOT READY';
                     } elseif ($cp['time_out'] < $now && $diff->d < 3) {
-                        $warna = '#5DC87A';
+                        $warna = '#006100';
+                        $bg = '#C6EFCE';
                         $info = 'READY';
                     } else {
-                        $warna = '#FAA545';
+                        $warna = '#9C5700';
+                        $bg = '#FFEB9C';
                         $info = 'READY';
                     }
-                    $color = '#FAA545';
                 ?>
                     <tr>
-                        <td style="text-align: center; color: <?= $warna ?>; font-weight: bold;"><?= $cp['slip'] ?></td>
+                        <td style="text-align: center; color: <?= $warna ?>; background-color: <?= $bg ?>; font-weight: bold;"><?= $cp['slip'] ?></td>
                         <td style="text-align: center;"><?= $cp['kode'] ?></td>
                         <td><?= $cp['nama_kabinet'] ?></td>
                         <td style="text-align: center;"><?= $cp['muka'] ?></td>
@@ -45,7 +47,7 @@
                             echo $diff->i . ' menit ';
                             ?>
                         </td>
-                        <td style="text-align: center; color: <?= $warna ?>; font-weight: bold;"><?= $info ?></td>
+                        <td style="text-align: center; color: <?= $warna ?>; background-color: <?= $bg ?>; font-weight: bold;"><?= $info ?></td>
                     </tr>
                 <?php
                 }

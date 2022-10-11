@@ -1,22 +1,5 @@
-<!-- <div class="row">
-    <div class="col-12">
-        <button type="button" class="btn btn-outline-success btn-sm" onclick="all2o()">Export to Excel<i class="fa fa-file-excel-o" style="font-size: 25px; margin-left: 5px;"></i></button>
-        <script>
-            var myWindow;
-
-            function all2o() {
-                myWindow = window.open("export/b450.php", "_blank");
-                setTimeout(all2c, 2000)
-            }
-
-            function all2c() {
-                myWindow.close();
-            }
-        </script>
-    </div>
-</div> -->
 <div class="row">
-    <div class="col-12 tableFixHead-2">
+    <div class="col-12 tableFixHead-3">
         <table class=" table table-bordered">
             <thead>
                 <tr style="text-align: center;">
@@ -37,19 +20,21 @@
                     $akhir = new DateTime($now);
                     $diff = $awal->diff($akhir);
                     if ($dsb1['time_out'] >= $now) {
-                        $warna = '#ee6666';
+                        $warna = '#9C0006';
+                        $bg = '#FFC7CE';
                         $info = 'NOT READY';
                     } elseif ($dsb1['time_out'] < $now && $diff->d < 1) {
-                        $warna = '#5DC87A';
+                        $warna = '#006100';
+                        $bg = '#C6EFCE';
                         $info = 'READY';
                     } else {
-                        $warna = '#FAA545';
+                        $warna = '#9C5700';
+                        $bg = '#FFEB9C';
                         $info = 'READY';
                     }
-                    $color = '#FAA545';
                 ?>
                     <tr>
-                        <td style="text-align: center; color: <?= $warna ?>; font-weight: bold;"><?= $dsb1['slip'] ?></td>
+                        <td style="text-align: center; color: <?= $warna ?>; background-color: <?= $bg ?>; font-weight: bold;"><?= $dsb1['slip'] ?></td>
                         <td style="text-align: center;"><?= $dsb1['kode'] ?></td>
                         <td><?= $dsb1['nama_kabinet'] ?></td>
                         <td style="text-align: center;"><?= $dsb1['muka'] ?></td>
@@ -62,7 +47,7 @@
                             echo $diff->i . ' menit ';
                             ?>
                         </td>
-                        <td style="text-align: center; color: <?= $warna ?>; font-weight: bold;"><?= $info ?></td>
+                        <td style="text-align: center; color: <?= $warna ?>; background-color: <?= $bg ?>; font-weight: bold;"><?= $info ?></td>
                     </tr>
                 <?php
                 }
