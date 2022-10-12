@@ -42,6 +42,16 @@ if (!isset($_SESSION['id'])) {
   <!-- bootstrap-daterangepicker -->
   <link href="<?= base_url('_assets/vendors/bootstrap-daterangepicker/daterangepicker.css') ?>" rel="stylesheet">
 
+  <!-- untuk datatables -->
+  <link href="<?= base_url('_assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') ?>" rel="stylesheet">
+  <link href="<?= base_url('_assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') ?>" rel="stylesheet">
+  <link href="<?= base_url('_assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') ?>" rel="stylesheet">
+  <link href="<?= base_url('_assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') ?>" rel="stylesheet">
+  <link href="<?= base_url('_assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') ?>" rel="stylesheet">
+
+  <!-- <link rel="stylesheet" type="text/css" href="_assets/src/add/datatables_bootstrap5/datatables.css">
+  <script type="text/javascript" charset="utf8" src="_assets/src/add/datatables_bootstrap5/datatables.js"></script> -->
+
   <!-- Custom Theme Style -->
   <link href="<?= base_url('_assets/build/css/custom.min.css') ?>" rel="stylesheet">
 

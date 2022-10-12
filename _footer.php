@@ -29,6 +29,22 @@
     $('#kon').select2();
 </script>
 
+<!-- untuk datatables -->
+<script>
+    $(document).ready(function() {
+        $('#table_id').DataTable();
+
+    });
+
+    $(document).ready(function() {
+        $('#example').DataTable({
+            scrollY: '300px',
+            scrollCollapse: true,
+            paging: false,
+        });
+    });
+</script>
+
 <!-- untuk disable tanggal kemarin -->
 <!-- <script type="text/javascript">
     var date = new Date();
