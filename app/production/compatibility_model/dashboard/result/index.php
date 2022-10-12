@@ -211,28 +211,30 @@
                                     $index = 0;
                                     $i = $listofdate;
                                     while ($i > 0) {
-                                    ?>
+                                        if ($b45_kstatus[$index] > 0) {
+                                            $warna = '#9C5700';
+                                            $bg = '#FFEB9C';
+                                        } elseif ($b45_kstatus[$index] < 0) {
+                                            $warna = '#9C0006';
+                                            $bg = '#FFC7CE';
+                                        } else {
+                                            $warna = '#006100';
+                                            $bg = '#C6EFCE';
+                                        } ?>
                                         <tr>
                                             <td style="width: 20%; text-align: center;"><?php echo $k_date[$index] ?></td>
                                             <td style="width: 20%;"><?php echo $k_day[$index] ?></td>
                                             <td style="text-align: center; width: 15%;"><?php echo $b45_kplan[$index] ?></td>
                                             <td style="text-align: center; width: 15%;"><?php echo $b45_kactual[$index] ?></td>
-                                            <td style="text-align: center; width: 15%; background-color:  <?php
-                                                                                                            if ($b45_kstatus[$index] > 0) {
-                                                                                                                echo "#ea7e53";
-                                                                                                            } elseif ($b45_kstatus[$index] < 0) {
-                                                                                                                echo "#eedd78";
-                                                                                                            } else {
-                                                                                                                echo "#91ca8c";
-                                                                                                            } ?>;"><?php
-                                                                                                                    if ($b45_kstatus[$index] > 0) {
-                                                                                                                        echo "+" . $b45_kstatus[$index];
-                                                                                                                    } elseif ($b45_kstatus[$index] < 0) {
-                                                                                                                        echo $b45_kstatus[$index];
-                                                                                                                    } else {
-                                                                                                                        echo $b45_kstatus[$index];
-                                                                                                                    }
-                                                                                                                    ?></td>
+                                            <td style="text-align: center; width: 15%; font-weight: bold; background-color: <?= $bg ?>; color: <?= $warna ?>;"><?php
+                                                                                                                                                                if ($b45_kstatus[$index] > 0) {
+                                                                                                                                                                    echo "+" . $b45_kstatus[$index];
+                                                                                                                                                                } elseif ($b45_kstatus[$index] < 0) {
+                                                                                                                                                                    echo $b45_kstatus[$index];
+                                                                                                                                                                } else {
+                                                                                                                                                                    echo $b45_kstatus[$index];
+                                                                                                                                                                }
+                                                                                                                                                                ?></td>
                                         </tr>
                                     <?php
                                         $i--;
@@ -298,28 +300,31 @@
                                     $index = 0;
                                     $i = $listofdate;
                                     while ($i > 0) {
+                                        if ($b44_kstatus[$index] > 0) {
+                                            $warna = '#9C5700';
+                                            $bg = '#FFEB9C';
+                                        } elseif ($b44_kstatus[$index] < 0) {
+                                            $warna = '#9C0006';
+                                            $bg = '#FFC7CE';
+                                        } else {
+                                            $warna = '#006100';
+                                            $bg = '#C6EFCE';
+                                        }
                                     ?>
                                         <tr>
                                             <td style="width: 20%; text-align: center;"><?php echo $k_date[$index] ?></td>
                                             <td style="width: 20%;"><?php echo $k_day[$index] ?></td>
                                             <td style="text-align: center; width: 15%;"><?php echo $b44u20_kplan[$index] ?></td>
                                             <td style="text-align: center; width: 15%;"><?php echo $b44_kactual[$index] ?></td>
-                                            <td style="text-align: center; width: 15%; background-color:  <?php
-                                                                                                            if ($b44_kstatus[$index] > 0) {
-                                                                                                                echo "#ea7e53";
-                                                                                                            } elseif ($b44_kstatus[$index] < 0) {
-                                                                                                                echo "#eedd78";
-                                                                                                            } else {
-                                                                                                                echo "#91ca8c";
-                                                                                                            } ?>;"><?php
-                                                                                                                    if ($b44_kstatus[$index] > 0) {
-                                                                                                                        echo "+" . $b44_kstatus[$index];
-                                                                                                                    } elseif ($b44_kstatus[$index] < 0) {
-                                                                                                                        echo $b44_kstatus[$index];
-                                                                                                                    } else {
-                                                                                                                        echo $b44_kstatus[$index];
-                                                                                                                    }
-                                                                                                                    ?></td>
+                                            <td style="text-align: center; width: 15%; font-weight: bold; background-color: <?= $bg ?>; color: <?= $warna ?>;"><?php
+                                                                                                                                                                if ($b44_kstatus[$index] > 0) {
+                                                                                                                                                                    echo "+" . $b44_kstatus[$index];
+                                                                                                                                                                } elseif ($b44_kstatus[$index] < 0) {
+                                                                                                                                                                    echo $b44_kstatus[$index];
+                                                                                                                                                                } else {
+                                                                                                                                                                    echo $b44_kstatus[$index];
+                                                                                                                                                                }
+                                                                                                                                                                ?></td>
                                         </tr>
                                     <?php
                                         $i--;
@@ -383,28 +388,31 @@
                                     $index = 0;
                                     $i = $listofdate;
                                     while ($i > 0) {
+                                        if ($u20_kstatus[$index] > 0) {
+                                            $warna = '#9C5700';
+                                            $bg = '#FFEB9C';
+                                        } elseif ($u20_kstatus[$index] < 0) {
+                                            $warna = '#9C0006';
+                                            $bg = '#FFC7CE';
+                                        } else {
+                                            $warna = '#006100';
+                                            $bg = '#C6EFCE';
+                                        }
                                     ?>
                                         <tr>
                                             <td style="width: 20%; text-align: center;"><?php echo $k_date[$index] ?></td>
                                             <td style="width: 20%;"><?php echo $k_day[$index] ?></td>
                                             <td style="text-align: center; width: 15%;"><?php echo $b44u20_kplan[$index] ?></td>
                                             <td style="text-align: center; width: 15%;"><?php echo $u20_kactual[$index] ?></td>
-                                            <td style="text-align: center; width: 15%; background-color:  <?php
-                                                                                                            if ($u20_kstatus[$index] > 0) {
-                                                                                                                echo "#ea7e53";
-                                                                                                            } elseif ($u20_kstatus[$index] < 0) {
-                                                                                                                echo "#eedd78";
-                                                                                                            } else {
-                                                                                                                echo "#91ca8c";
-                                                                                                            } ?>;"><?php
-                                                                                                                    if ($u20_kstatus[$index] > 0) {
-                                                                                                                        echo "+" . $u20_kstatus[$index];
-                                                                                                                    } elseif ($u20_kstatus[$index] < 0) {
-                                                                                                                        echo $u20_kstatus[$index];
-                                                                                                                    } else {
-                                                                                                                        echo $u20_kstatus[$index];
-                                                                                                                    }
-                                                                                                                    ?></td>
+                                            <td style="text-align: center; font-weight: bold; width: 15%; background-color:  <?= $bg ?>; color: <?= $warna ?>;"><?php
+                                                                                                                                                                if ($u20_kstatus[$index] > 0) {
+                                                                                                                                                                    echo "+" . $u20_kstatus[$index];
+                                                                                                                                                                } elseif ($u20_kstatus[$index] < 0) {
+                                                                                                                                                                    echo $u20_kstatus[$index];
+                                                                                                                                                                } else {
+                                                                                                                                                                    echo $u20_kstatus[$index];
+                                                                                                                                                                }
+                                                                                                                                                                ?></td>
                                         </tr>
                                     <?php
                                         $i--;
