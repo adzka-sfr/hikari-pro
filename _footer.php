@@ -37,7 +37,7 @@
     });
 
     $(document).ready(function() {
-        $('#example').DataTable({
+        $('#kontol').DataTable({
             scrollY: '300px',
             scrollCollapse: true,
             paging: false,

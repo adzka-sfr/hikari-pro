@@ -59,18 +59,6 @@ include('koneksi.php');
                                 </li>
                             </ul>
                         </div>
-
-                        <div class="menu_section">
-                            <h3>Employee</h3>
-                            <ul class="nav side-menu">
-                                <li><a><i class="fa fa-gears"></i> Settings <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="#">Setting 1</a></li>
-                                        <li><a href="#l">Setting 2</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                     <!-- /sidebar menu -->
 
@@ -137,7 +125,7 @@ include('koneksi.php');
                     <hr style="margin: 5px;">
                 </div>
 
-                <div class="dashboard_graph" style="padding-top: 10px;">
+                <div class="dashboard_graph" style="padding-top: 10px; padding-bottom: 50px;">
                     <?php
                     if (empty($_GET['p'])) {
                         $_GET['p'] = "dash";
