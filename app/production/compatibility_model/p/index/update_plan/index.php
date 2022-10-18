@@ -140,9 +140,9 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <div class="separator"></div>
-<div class="row">
-    <div class="col-12 tableFixHead-2">
-        <!-- <table class="table table-bordered">
+<!-- <div class="row">
+    <div class="col-12 tableFixHead-3">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>plan Number</th>
@@ -170,144 +170,93 @@ if (isset($_POST['submit'])) {
                 }
                 ?>
             </tbody>
-        </table> -->
+        </table>
     </div>
-</div>
+</div> -->
 
 <div class="row">
     <div class="col-12">
-        <div id="panel2" style="height:400px; padding-top: 0px;"></div>
-        <?php
-        $sql5 = mysqli_query($con_pro, "SELECT distinct tanggal from plan order by tanggal asc");
-        $tanggal = array();
-        $plan = array();
-        $act = array();
-        $i = 0;
-        while ($data5 = mysqli_fetch_array($sql5)) {
-            // mencari plan perhari
-            $sql6 = mysqli_query($con_pro, "SELECT COUNT(tanggal) as jumpln from plan where tanggal = '$data5[tanggal]'");
-            $data6 = mysqli_fetch_array($sql6);
+        <div class="x_content">
+            <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Summary</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Detail</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active tableFixHead-3" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-            // mencari aktual perhari
-            $sql7 = mysqli_query($con_pro, "SELECT u200 from hasil where tanggal = '$data5[tanggal]'");
-            $data7 = mysqli_fetch_array($sql7);
-            if (empty($data7)) {
-                $aktual[$i] = 0;
-            } else {
-                $aktual[$i] = $data7['u200'];
-            }
-
-            $s_tgl = date('d', strtotime($data5['tanggal']));
-            $bulan = date('F', strtotime($data5['tanggal']));
-
-            $plan[$i] = $data6['jumpln'];
-
-            $tanggal[$i] = $s_tgl;
-            $i++;
-            $bulan = date('F', strtotime($data5['tanggal']));
-        }
-        ?>
-        <script type="text/javascript">
-            var chartDom = document.getElementById('panel2');
-            var myChart = echarts.init(chartDom);
-            var option;
-
-            option = {
-                title: {
-                    text: 'Data Progress of Side Glue - <?= $bulan ?>',
-                    subtext: 'Data from: Taking result U200'
-                },
-                grid: {
-                    // untuk mengatur posisi chart
-                    top: '20%',
-                    left: '5%',
-                    right: '5%'
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        crossStyle: {
-                            color: '#999'
-                        }
-                    }
-                },
-                toolbox: {
-                    feature: {
-                        saveAsImage: {
-                            show: true
-                        },
-                        dataView: {
-                            readOnly: true
-                        },
-                    }
-                },
-                legend: {
-                    data: ['Plan', 'Actual']
-                },
-                xAxis: [{
-                    type: 'category',
-                    name: 'Date',
-                    data: [
-                        <?php
-                        $tgl_count = count($tanggal);
-                        for ($t = 0; $t < $tgl_count; $t++) {
-                            echo "'" . $tanggal[$t] . "',";
-                        }
-                        ?>
-                    ],
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                }],
-                yAxis: [{
-                    type: 'value',
-                    name: 'Unit',
-                    // min: -50,
-                    // max: 200,
-                    interval: 20,
-                    axisLabel: {
-                        formatter: '{value}'
-                    }
-                }],
-                series: [{
-                        name: 'Plan',
-                        type: 'line',
-                        tooltip: {
-                            valueFormatter: function(value) {
-                                return value + ' unit';
-                            }
-                        },
-                        data: [
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr style="text-align: center ;">
+                                <th style="width: 30%; ;">Date</th>
+                                <th style="width: 30%;">Plan</th>
+                                <th style="width: 30%;">Countdown Plan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <?php
-                            $plan_count = count($plan);
-                            for ($p = 0; $p < $plan_count; $p++) {
-                                echo $plan[$p] . ",";
+                            // menghitung all plan
+                            $sql7 = mysqli_query($con_pro, "SELECT count(tanggal) as semuaplan from plan");
+                            $data7 = mysqli_fetch_array($sql7);
+                            $semua = $data7['semuaplan'];
+
+                            $sql5 = mysqli_query($con_pro, " SELECT distinct tanggal from plan order by tanggal asc");
+                            while ($data5 = mysqli_fetch_array($sql5)) {
+                                $sql6 = mysqli_query($con_pro, "SELECT count(tanggal) as toplan from plan where tanggal = '$data5[tanggal]'");
+                                $data6 = mysqli_fetch_array($sql6);
+                            ?>
+                                <tr>
+                                    <td><?= $data5['tanggal'] ?></td>
+                                    <td style="text-align: center ;"><?= $data6['toplan'] ?></td>
+                                    <td style="text-align: center;"><?= $semua ?></td>
+                                </tr>
+                            <?php
+                                $semua = $semua - $data6['toplan'];
                             }
                             ?>
-                        ]
-                    },
-                    {
-                        name: 'Actual',
-                        type: 'bar',
-                        tooltip: {
-                            valueFormatter: function(value) {
-                                return value + ' unit';
-                            }
-                        },
-                        data: [
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="tab-pane fade tableFixHead-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>plan Number</th>
+                                <th>FG Code</th>
+                                <th>Model</th>
+                                <th>Color</th>
+                                <th>Destination</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <?php
-                            $aktual_count = count($aktual);
-                            for ($a = 0; $a < $aktual_count; $a++) {
-                                echo $aktual[$a] . ",";
+                            $sql = mysqli_query($con_pro, "SELECT * from plan order by tanggal asc");
+                            while ($data = mysqli_fetch_array($sql)) {
+                            ?>
+                                <tr>
+                                    <td><?= $data['pln_no'] ?></td>
+                                    <td><?= $data['fg_code'] ?></td>
+                                    <td><?= $data['model'] ?></td>
+                                    <td><?= $data['color'] ?></td>
+                                    <td><?= $data['destin'] ?></td>
+                                    <td><?= $data['tanggal'] ?></td>
+                                </tr>
+                            <?php
                             }
                             ?>
-                        ]
-                    }
-                ]
-            };
+                        </tbody>
+                    </table>
 
-            option && myChart.setOption(option);
-        </script>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>

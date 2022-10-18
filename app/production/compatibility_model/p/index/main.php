@@ -53,9 +53,9 @@ include('koneksi.php');
                         <div class="menu_section">
                             <h3>Plan</h3>
                             <ul class="nav side-menu">
-                                <li <?php if ($_GET['p'] == "help") {
+                                <li <?php if ($_GET['p'] == "update") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=help"><i class="fa fa-pencil"></i> Update Plan</a>
+                                    } ?>><a href="main.php?p=update"><i class="fa fa-pencil"></i> Update Plan</a>
                                 </li>
                             </ul>
                         </div>
