@@ -1,16 +1,17 @@
 <?php
 date_default_timezone_set('Asia/Jakarta');
+$now = date('Y-m-d H:i:s');
 
 $servername = "localhost";
 $username = "root";
 $password = "";
-$db = "hikari_p_form_ng";
+$db = "mezzanine";
 
 
 // Create connection
-$connect_p = new mysqli($servername, $username, $password, $db);
+$con_pro = new mysqli($servername, $username, $password, $db);
 
 // Check connection
-if ($connect_p->connect_error) {
-    die("Connection failed: " . $connect_p->connect_error);
+if ($con_pro->connect_error) {
+    die("Connection failed: " . $con_pro->connect_error);
 }

@@ -45,6 +45,11 @@
     });
 </script>
 
+<script>
+    function refresh() {
+        window.location.reload("Refresh")
+    }
+</script>
 <!-- untuk disable tanggal kemarin -->
 <!-- <script type="text/javascript">
     var date = new Date();
