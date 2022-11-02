@@ -17,10 +17,10 @@ if ($connect->connect_error) {
 }
 // jangan lupa mengganti base url
 //fungsi base_url
-$_SESSION['base_url'] = "http://localhost:8080/hikari";
+$_SESSION['base_url'] = "https://hikari.local/hikari";
 function base_url($url = null)
 {
-  $base_url = "http://localhost:8080/hikari";
+  $base_url = "https://hikari.local/hikari";
   if ($url != null) {
     return $base_url . "/" . $url;
   } else {
