@@ -20,7 +20,7 @@ if ($tanggal == $data_date['maks']) {
 // cek jika hari besoknya ternyata data masih kosong
 if ($num == 0) {
     while ($num == 0) {
-        $tanggal = date('Y-m-d', strtotime($tanggal));
+        $tanggal = date('Y-m-d', strtotime('+1days', strtotime($tanggal)));
         $cek_plan2 = mysqli_query($connect_cm, "SELECT count(common) as total from plan where tanggal = '$tanggal'");
         $cek_plan_d2 = mysqli_fetch_array($cek_plan2);
         if ($cek_plan_d2['total'] != 0) {
