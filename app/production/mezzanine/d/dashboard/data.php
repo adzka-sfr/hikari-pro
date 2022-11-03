@@ -8,25 +8,61 @@ $dataget = explode("+", $_GET['model']);
 $dat_status = $dataget[0];
 $dat_series = $dataget[1];
 
-if ($dat_status == "> 2 hours") {
-    $taser = "<u>More</u> than 2 hours";
-    $dat_waktu = date('Y-m-d H:i:s', strtotime('-2 hours'));
-    $warna = '#006100';
-    $bg = '#C6EFCE';
-    $status = "READY";
+switch ($dat_status) {
+    case "< 2 hours":
+        $taser = "<u>Less</u> than 2 hours";
+        $warna = '#9C0006';
+        $bg = '#FFC7CE';
+        $status = "NOT READY";
 
-    $dat_qc = mysqli_query($con_pro, "SELECT * from to_ongoing_slip where kategori = '$dat_series' and time_in < '$dat_waktu'");
-    $dat_q = mysqli_query($con_pro, "SELECT * from to_ongoing_slip where kategori = '$dat_series' and time_in < '$dat_waktu'");
-} elseif ($dat_status == "< 2 hours") {
-    $taser = "<u>Less</u> than 2 hours";
-    $warna = '#9C0006';
-    $bg = '#FFC7CE';
-    $status = "NOT READY";
+        $dat_qc = mysqli_query($con_pro, "SELECT * from to_ongoing_slip where kategori = '$dat_series' and time_out >= '$now'");
+        $dat_q = mysqli_query($con_pro, "SELECT * from to_ongoing_slip where kategori = '$dat_series' and time_out >= '$now'");
+        break;
 
-    $dat_qc = mysqli_query($con_pro, "SELECT * from to_ongoing_slip where kategori = '$dat_series' and time_out >= '$now'");
-    $dat_q = mysqli_query($con_pro, "SELECT * from to_ongoing_slip where kategori = '$dat_series' and time_out >= '$now'");
+    case "> 2 hours":
+        $taser = "<u>More</u> than 2 hours";
+        $dat_waktu = date('Y-m-d H:i:s', strtotime('-2 hours'));
+        $warna = '#006100';
+        $bg = '#C6EFCE';
+        $status = "READY";
+
+        $dat_qc = mysqli_query($con_pro, "SELECT * from to_ongoing_slip where kategori = '$dat_series' and time_in < '$dat_waktu'");
+        $dat_q = mysqli_query($con_pro, "SELECT * from to_ongoing_slip where kategori = '$dat_series' and time_in < '$dat_waktu'");
+        break;
+
+    case "< 16 hours":
+        $taser = "<u>Less</u> than 16 hours";
+        $warna = '#9C0006';
+        $bg = '#FFC7CE';
+        $status = "NOT READY";
+
+        $dat_qc = mysqli_query($con_pro, "SELECT * from ongoing_slip where kategori = '$dat_series' and time_out >= '$now'");
+        $dat_q = mysqli_query($con_pro, "SELECT * from ongoing_slip where kategori = '$dat_series' and time_out >= '$now'");
+        break;
+
+    case "> 16 hours & < 3 days":
+        $taser = "<u>More</u> than 16 hours & <u>Less</u> 3 days";
+        $dat_waktu = date('Y-m-d H:i:s', strtotime('-16 hours'));
+        $dat_waktu2 = date('Y-m-d H:i:s', strtotime('-3 days'));
+        $warna = '#006100';
+        $bg = '#C6EFCE';
+        $status = "READY";
+
+        $dat_qc = mysqli_query($con_pro, "SELECT * from ongoing_slip where kategori = '$dat_series' and time_in < '$dat_waktu' and time_in > '$dat_waktu2'");
+        $dat_q = mysqli_query($con_pro, "SELECT * from ongoing_slip where kategori = '$dat_series' and time_in < '$dat_waktu' and time_in > '$dat_waktu2'");
+        break;
+
+    case "> 3 days":
+        $taser = "<u>More</u> than 3 days";
+        $dat_waktu2 = date('Y-m-d H:i:s', strtotime('-3 days'));
+        $warna = '#9C5700';
+        $bg = '#FFEB9C';
+        $status = "READY";
+
+        $dat_qc = mysqli_query($con_pro, "SELECT * from ongoing_slip where kategori = '$dat_series' and time_in < '$dat_waktu2'");
+        $dat_q = mysqli_query($con_pro, "SELECT * from ongoing_slip where kategori = '$dat_series' and time_in < '$dat_waktu2'");
+        break;
 }
-
 ?>
 
 <body class="nav-md footer_fixed" style="background-color: #F7F7F7;">
