@@ -34,7 +34,7 @@
         </div>
         <div class="col-2" style="text-align: center ;">
             <button onclick="refresh(this)" class="btn btn-primary" style="width: 100%;">Refresh</button>
-            <button class="btn btn-success" style="width: 100%;">Add Slip</button>
+            <a href="main.php?p=csn"><button class="btn btn-success" style="width: 100%;">Add Slip</button></a>
         </div>
     </div>
 
