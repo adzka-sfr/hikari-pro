@@ -22,7 +22,7 @@
         },
         series: [{
             center: ['50%', '65%'],
-            name: 'Qty of',
+            name: 'Panel',
             type: 'pie',
             radius: ['25%', '60%'],
             avoidLabelOverlap: false,
@@ -46,4 +46,15 @@
     };
 
     option && myChart.setOption(option);
+
+    myChart.on('click', function(params) {
+
+        var model = params.name;
+        var seri = params.seriesName;
+        var ser = model + "+" + seri;
+
+        window.open(
+            'data.php?model=' + encodeURIComponent(ser)
+        );
+    });
 </script>
