@@ -16,9 +16,14 @@ if (!empty($row)) {
     $_SESSION['role'] = strtolower($row['role']);
     $_SESSION['dept'] = $row['dept'];
     $_SESSION['jabatan'] = $row['jabatan'];
+
+    // log create token
+    $tok_date = strtotime(date('YmdHis'));
+    $_SESSION['token'] = bin2hex(random_bytes(10) . $tok_date);
     echo "oke";
 
-    // log activity
+    // log activity record  
+    $token = $_SESSION['token'];
     $l_t = $now;
     $sy_n = "Hikari";
     $p_n = "Login";
@@ -30,6 +35,7 @@ if (!empty($row)) {
     $s_n = $_SERVER['SCRIPT_NAME'];
     $h = $_SERVER['HTTP_HOST'];
     mysqli_query($connect_log, "INSERT INTO activity_log set
+                                    token = '$token',
                                     log_time = '$l_t',
                                     system_name = '$sy_n',
                                     process_name = '$p_n',
