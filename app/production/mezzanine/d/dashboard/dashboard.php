@@ -64,7 +64,6 @@ include 'data/backend.php';
                                     </div>
 
                                     <h2 class="card-text">Small Long</h2>
-
                                     <!-- batas bawah -->
                                     <div class="bar-step" style="padding-left: 56%; margin-left: -20px">
                                         <div class="label-percent"><?= $op_sl_bb ?></div>
