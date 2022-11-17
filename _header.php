@@ -57,6 +57,9 @@ if (!isset($_SESSION['id'])) {
 
   <!-- TAMBAHAN lib -->
 
+  <!-- untuk field berdasarkan dropdown -->
+  <script src="<?= base_url('_assets/src/add/field_by_radio/jquery.min.js') ?>"></script>
+  
   <!-- untuk dropdown search -->
   <link href="<?= base_url('_assets/src/add/dropdown_search/select2.min.css') ?>" rel="stylesheet" />
   <script src="<?= base_url('_assets/src/add/dropdown_search/jquery-3.4.1.js') ?>" crossorigin="anonymous"></script>
