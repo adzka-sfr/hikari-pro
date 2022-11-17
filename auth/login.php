@@ -51,6 +51,11 @@ if (isset($_SESSION['id'])) {
                             </div>
                             <div class="clearfix"></div>
                             <div class="separator">
+                                <p class="change_link">New to site?
+                                    <a href="../board/"> Go to dashboard </a>
+
+                                <div class="clearfix"></div>
+                                <br />
                                 <div>
                                     <h1>
                                         <img src="<?= base_url('_assets/production/images/yamaha_purple_left.png') ?>" alt="logo-yamaha" style="width: 130px;">
