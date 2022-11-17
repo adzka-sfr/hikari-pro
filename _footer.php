@@ -21,6 +21,15 @@
 
 <!-- untuk dropdown search -->
 <script>
+    // untuk aktivasi dropdown berdasarkan radio button
+    $('.radionya').change(function() {
+        $('.duar').prop('disabled', !$(this).is('.other'));
+        $(document).ready(function() {
+            $('.duar').select2();
+        });
+    });
+    $('.duar').select2(); // untuk  dropdown dengan radio button
+
     $('.cari_slip').select2({
         placeholder: "Slip Number",
     });
@@ -135,6 +144,7 @@
 <script src="<?= base_url('_assets/build/js/custom.min.js') ?>"></script>
 
 <!-- Tambahan -->
+
 
 </body>
 
