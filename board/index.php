@@ -1,7 +1,7 @@
 <?php
 include('header.php');
 // $now = date('Y-m-d');
-$now = '2022-11-09';
+$now = '2022-11-10';
 ?>
 
 <body class="nav-md footer_fixed" style="background-color: #F7F7F7;">
@@ -53,55 +53,50 @@ $now = '2022-11-09';
                                             </div>
 
                                             <?php
-                                            $qp = mysqli_query($connect_pro, "SELECT * from master_workcenter where dept = 'woodworking'");
-                                            while ($dp = mysqli_fetch_array($qp)) {
-                                                $wc = $dp['work_center'];
-                                                $nm = $dp['work_center_name'];
+                                            $result = $connect_pro->query("SELECT workcenter, nama_workcenter, total_plan, total_result, on_time_rate from manufacturing_progress where dept = 'woodworking'");
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    // persentase
+                                                    if ($row['total_plan'] == 0) {
+                                                        $prog = 0;
+                                                    } else {
+                                                        $prog = ($row['on_time_rate'] / $row['total_plan']) * 100;
+                                                        $prog = number_format($prog, '2', '.', '');
+                                                    }
 
-                                                $qp2 = mysqli_query($connect_pro, "SELECT SUM(planqty) as plan FROM production_plan WHERE plandt = '$now' and makeprocecd = '$dp[work_center]' ");
-                                                $dp2 = mysqli_fetch_array($qp2);
 
-                                                $qp3 = mysqli_query($connect_pro, "SELECT SUM(actualqty) as hasil FROM production_result WHERE instdt LIKE '$now%' and makektcd = '$dp[work_center]' ");
-                                                $dp3 = mysqli_fetch_array($qp3);
-
-                                                if(empty($dp2['plan'])){
-                                                    $prog = ($dp3['hasil'] / 1) * 100;
-                                                }else{
-                                                    $prog = ($dp3['hasil'] / $dp2['plan']) * 100;
-                                                }
-                                                $prog = number_format($prog, '2', '.', '');
-
-                                                // warna progress bar
-                                                if ($prog <= 50) {
-                                                    $bg = 'bg-danger';
-                                                    $setup = 'font-weight: 1000;';
-                                                } elseif ($prog > 50 && $prog <= 110) {
-                                                    $bg = 'bg-success';
-                                                    $setup = 'font-weight: 1000;';
-                                                } elseif ($prog > 110) {
-                                                    $bg = 'bg-warning';
-                                                    $setup = 'font-weight: 1000; text-align: left;  padding-left: 40%;';
-                                                }
+                                                    // warna progress bar
+                                                    if ($prog <= 75) {
+                                                        $bg = 'bg-danger';
+                                                        $setup = 'font-weight: 1000;';
+                                                    } elseif ($prog > 75 && $prog <= 110) {
+                                                        $bg = 'bg-success';
+                                                        $setup = 'font-weight: 1000;';
+                                                    } elseif ($prog > 110) {
+                                                        $bg = 'bg-warning';
+                                                        $setup = 'font-weight: 1000; text-align: left;  padding-left: 40%;';
+                                                    }
                                             ?>
-                                                <div class="row">
-                                                    <div class="col-12" style="padding-bottom: 0px;">
+                                                    <div class="row">
+                                                        <div class="col-12" style="padding-bottom: 0px;">
 
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <span style="font-weight: 1000; margin-bottom: 0px; color: #5C7186;">(<?= $wc ?>) <?= strtoupper($nm) ?></span>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <span style="font-weight: 1000; margin-bottom: 0px; color: #5C7186;">(<?= $row['workcenter'] ?>) <?= strtoupper($row['nama_workcenter']) ?></span>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <div class="progress" style="border-radius: 4px; margin-bottom: 10px;">
-                                                                    <div class="progress-bar progress-bar-striped progress-bar-animated <?= $bg ?>" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="<?= $setup ?>  width: <?= $prog ?>%;"><?= $prog ?>%</div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="progress" style="border-radius: 4px; margin-bottom: 10px;">
+                                                                        <div class="progress-bar progress-bar-striped progress-bar-animated <?= $bg ?>" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="<?= $setup ?>  width: <?= $prog ?>%;"><?= $prog ?>%</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                             <?php
+                                                }
                                             }
                                             ?>
                                         </div>
@@ -125,55 +120,50 @@ $now = '2022-11-09';
                                             </div>
 
                                             <?php
-                                            $qp = mysqli_query($connect_pro, "SELECT * from master_workcenter where dept = 'painting'");
-                                            while ($dp = mysqli_fetch_array($qp)) {
-                                                $wc = $dp['work_center'];
-                                                $nm = $dp['work_center_name'];
+                                            $result = $connect_pro->query("SELECT workcenter, nama_workcenter, total_plan, total_result, on_time_rate from manufacturing_progress where dept = 'painting'");
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    // persentase
+                                                    if ($row['total_plan'] == 0) {
+                                                        $prog = 0;
+                                                    } else {
+                                                        $prog = ($row['on_time_rate'] / $row['total_plan']) * 100;
+                                                        $prog = number_format($prog, '2', '.', '');
+                                                    }
 
-                                                $qp2 = mysqli_query($connect_pro, "SELECT SUM(planqty) as plan FROM production_plan WHERE plandt = '$now' and makeprocecd = '$dp[work_center]' ");
-                                                $dp2 = mysqli_fetch_array($qp2);
 
-                                                $qp3 = mysqli_query($connect_pro, "SELECT SUM(actualqty) as hasil FROM production_result WHERE instdt LIKE '$now%' and makektcd = '$dp[work_center]' ");
-                                                $dp3 = mysqli_fetch_array($qp3);
-
-                                                if(empty($dp2['plan'])){
-                                                    $prog = ($dp3['hasil'] / 1) * 100;
-                                                }else{
-                                                    $prog = ($dp3['hasil'] / $dp2['plan']) * 100;
-                                                }
-                                                $prog = number_format($prog, '2', '.', '');
-
-                                                // warna progress bar
-                                                if ($prog <= 50) {
-                                                    $bg = 'bg-danger';
-                                                    $setup = 'font-weight: 1000;';
-                                                } elseif ($prog > 50 && $prog <= 110) {
-                                                    $bg = 'bg-success';
-                                                    $setup = 'font-weight: 1000;';
-                                                } elseif ($prog > 110) {
-                                                    $bg = 'bg-warning';
-                                                    $setup = 'font-weight: 1000; text-align: left;  padding-left: 40%;';
-                                                }
+                                                    // warna progress bar
+                                                    if ($prog <= 75) {
+                                                        $bg = 'bg-danger';
+                                                        $setup = 'font-weight: 1000;';
+                                                    } elseif ($prog > 75 && $prog <= 110) {
+                                                        $bg = 'bg-success';
+                                                        $setup = 'font-weight: 1000;';
+                                                    } elseif ($prog > 110) {
+                                                        $bg = 'bg-warning';
+                                                        $setup = 'font-weight: 1000; text-align: left;  padding-left: 40%;';
+                                                    }
                                             ?>
-                                                <div class="row">
-                                                    <div class="col-12" style="padding-bottom: 0px;">
+                                                    <div class="row">
+                                                        <div class="col-12" style="padding-bottom: 0px;">
 
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <span style="font-weight: 1000; margin-bottom: 0px; color: #5C7186;">(<?= $wc ?>) <?= strtoupper($nm) ?></span>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <span style="font-weight: 1000; margin-bottom: 0px; color: #5C7186;">(<?= $row['workcenter'] ?>) <?= strtoupper($row['nama_workcenter']) ?></span>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <div class="progress" style="border-radius: 4px; margin-bottom: 10px;">
-                                                                    <div class="progress-bar progress-bar-striped progress-bar-animated <?= $bg ?>" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="<?= $setup ?>width: <?= $prog ?>%"><?= $prog ?>%</div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="progress" style="border-radius: 4px; margin-bottom: 10px;">
+                                                                        <div class="progress-bar progress-bar-striped progress-bar-animated <?= $bg ?>" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="<?= $setup ?>  width: <?= $prog ?>%;"><?= $prog ?>%</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                             <?php
+                                                }
                                             }
                                             ?>
 
@@ -198,55 +188,49 @@ $now = '2022-11-09';
                                             </div>
 
                                             <?php
-                                            $qp = mysqli_query($connect_pro, "SELECT * from master_workcenter where dept = 'up assy'");
-                                            while ($dp = mysqli_fetch_array($qp)) {
-                                                $wc = $dp['work_center'];
-                                                $nm = $dp['work_center_name'];
+                                            $result = $connect_pro->query("SELECT workcenter, nama_workcenter, total_plan, total_result, on_time_rate from manufacturing_progress where dept = 'up assy'");
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    // persentase
+                                                    if ($row['total_plan'] == 0) {
+                                                        $prog = 0;
+                                                    } else {
+                                                        $prog = ($row['on_time_rate'] / $row['total_plan']) * 100;
+                                                        $prog = number_format($prog, '2', '.', '');
+                                                    }
 
-                                                $qp2 = mysqli_query($connect_pro, "SELECT SUM(planqty) as plan FROM production_plan WHERE plandt = '$now' and makeprocecd = '$dp[work_center]' ");
-                                                $dp2 = mysqli_fetch_array($qp2);
-
-                                                $qp3 = mysqli_query($connect_pro, "SELECT SUM(actualqty) as hasil FROM production_result WHERE instdt LIKE '$now%' and makektcd = '$dp[work_center]' ");
-                                                $dp3 = mysqli_fetch_array($qp3);
-
-                                                if(empty($dp2['plan'])){
-                                                    $prog = ($dp3['hasil'] / 1) * 100;
-                                                }else{
-                                                    $prog = ($dp3['hasil'] / $dp2['plan']) * 100;
-                                                }
-                                                $prog = number_format($prog, '2', '.', '');
-
-                                                // warna progress bar
-                                                if ($prog <= 50) {
-                                                    $bg = 'bg-danger';
-                                                    $setup = 'font-weight: 1000;';
-                                                } elseif ($prog > 50 && $prog <= 110) {
-                                                    $bg = 'bg-success';
-                                                    $setup = 'font-weight: 1000;';
-                                                } elseif ($prog > 110) {
-                                                    $bg = 'bg-warning';
-                                                    $setup = 'font-weight: 1000; text-align: left;  padding-left: 40%;';
-                                                }
+                                                    // warna progress bar
+                                                    if ($prog <= 75) {
+                                                        $bg = 'bg-danger';
+                                                        $setup = 'font-weight: 1000;';
+                                                    } elseif ($prog > 75 && $prog <= 110) {
+                                                        $bg = 'bg-success';
+                                                        $setup = 'font-weight: 1000;';
+                                                    } elseif ($prog > 110) {
+                                                        $bg = 'bg-warning';
+                                                        $setup = 'font-weight: 1000; text-align: left;  padding-left: 40%;';
+                                                    }
                                             ?>
-                                                <div class="row">
-                                                    <div class="col-12" style="padding-bottom: 0px;">
+                                                    <div class="row">
+                                                        <div class="col-12" style="padding-bottom: 0px;">
 
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <span style="font-weight: 1000; margin-bottom: 0px; color: #5C7186;">(<?= $wc ?>) <?= strtoupper($nm) ?></span>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <span style="font-weight: 1000; margin-bottom: 0px; color: #5C7186;">(<?= $row['workcenter'] ?>) <?= strtoupper($row['nama_workcenter']) ?></span>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <div class="progress" style="border-radius: 4px; margin-bottom: 10px;">
-                                                                    <div class="progress-bar progress-bar-striped progress-bar-animated <?= $bg ?>" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="<?= $setup ?>width: <?= $prog ?>%"><?= $prog ?>%</div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="progress" style="border-radius: 4px; margin-bottom: 10px;">
+                                                                        <div class="progress-bar progress-bar-striped progress-bar-animated <?= $bg ?>" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="<?= $setup ?>  width: <?= $prog ?>%;"><?= $prog ?>%</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                             <?php
+                                                }
                                             }
                                             ?>
                                         </div>
@@ -270,55 +254,49 @@ $now = '2022-11-09';
                                             </div>
 
                                             <?php
-                                            $qp = mysqli_query($connect_pro, "SELECT * from master_workcenter where dept = 'gp assy'");
-                                            while ($dp = mysqli_fetch_array($qp)) {
-                                                $wc = $dp['work_center'];
-                                                $nm = $dp['work_center_name'];
+                                            $result = $connect_pro->query("SELECT workcenter, nama_workcenter, total_plan, total_result, on_time_rate from manufacturing_progress where dept = 'gp assy'");
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    // persentase
+                                                    if ($row['total_plan'] == 0) {
+                                                        $prog = 0;
+                                                    } else {
+                                                        $prog = ($row['on_time_rate'] / $row['total_plan']) * 100;
+                                                        $prog = number_format($prog, '2', '.', '');
+                                                    }
 
-                                                $qp2 = mysqli_query($connect_pro, "SELECT SUM(planqty) as plan FROM production_plan WHERE plandt = '$now' and makeprocecd = '$dp[work_center]' ");
-                                                $dp2 = mysqli_fetch_array($qp2);
-
-                                                $qp3 = mysqli_query($connect_pro, "SELECT SUM(actualqty) as hasil FROM production_result WHERE instdt LIKE '$now%' and makektcd = '$dp[work_center]' ");
-                                                $dp3 = mysqli_fetch_array($qp3);
-
-                                                if(empty($dp2['plan'])){
-                                                    $prog = ($dp3['hasil'] / 1) * 100;
-                                                }else{
-                                                    $prog = ($dp3['hasil'] / $dp2['plan']) * 100;
-                                                }
-                                                $prog = number_format($prog, '2', '.', '');
-
-                                                // warna progress bar
-                                                if ($prog <= 50) {
-                                                    $bg = 'bg-danger';
-                                                    $setup = 'font-weight: 1000;';
-                                                } elseif ($prog > 50 && $prog <= 110) {
-                                                    $bg = 'bg-success';
-                                                    $setup = 'font-weight: 1000;';
-                                                } elseif ($prog > 110) {
-                                                    $bg = 'bg-warning';
-                                                    $setup = 'font-weight: 1000; text-align: left;  padding-left: 40%;';
-                                                }
+                                                    // warna progress bar
+                                                    if ($prog <= 75) {
+                                                        $bg = 'bg-danger';
+                                                        $setup = 'font-weight: 1000;';
+                                                    } elseif ($prog > 75 && $prog <= 110) {
+                                                        $bg = 'bg-success';
+                                                        $setup = 'font-weight: 1000;';
+                                                    } elseif ($prog > 110) {
+                                                        $bg = 'bg-warning';
+                                                        $setup = 'font-weight: 1000; text-align: left;  padding-left: 40%;';
+                                                    }
                                             ?>
-                                                <div class="row">
-                                                    <div class="col-12" style="padding-bottom: 0px;">
+                                                    <div class="row">
+                                                        <div class="col-12" style="padding-bottom: 0px;">
 
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <span style="font-weight: 1000; margin-bottom: 0px; color: #5C7186;">(<?= $wc ?>) <?= strtoupper($nm) ?></span>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <span style="font-weight: 1000; margin-bottom: 0px; color: #5C7186;">(<?= $row['workcenter'] ?>) <?= strtoupper($row['nama_workcenter']) ?></span>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <div class="progress" style="border-radius: 4px; margin-bottom: 10px;">
-                                                                    <div class="progress-bar progress-bar-striped progress-bar-animated <?= $bg ?>" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="<?= $setup ?>width: <?= $prog ?>%"><?= $prog ?>%</div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="progress" style="border-radius: 4px; margin-bottom: 10px;">
+                                                                        <div class="progress-bar progress-bar-striped progress-bar-animated <?= $bg ?>" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="<?= $setup ?>  width: <?= $prog ?>%;"><?= $prog ?>%</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                             <?php
+                                                }
                                             }
                                             ?>
                                         </div>
@@ -342,55 +320,50 @@ $now = '2022-11-09';
                                             </div>
 
                                             <?php
-                                            $qp = mysqli_query($connect_pro, "SELECT * from master_workcenter where dept = 'kd part'");
-                                            while ($dp = mysqli_fetch_array($qp)) {
-                                                $wc = $dp['work_center'];
-                                                $nm = $dp['work_center_name'];
+                                            $result = $connect_pro->query("SELECT workcenter, nama_workcenter, total_plan, total_result, on_time_rate from manufacturing_progress where dept = 'kd part'");
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    // persentase
+                                                    if ($row['total_plan'] == 0) {
+                                                        $prog = 0;
+                                                    } else {
+                                                        $prog = ($row['on_time_rate'] / $row['total_plan']) * 100;
+                                                        $prog = number_format($prog, '2', '.', '');
+                                                    }
 
-                                                $qp2 = mysqli_query($connect_pro, "SELECT SUM(planqty) as plan FROM production_plan WHERE plandt = '$now' and makeprocecd = '$dp[work_center]' ");
-                                                $dp2 = mysqli_fetch_array($qp2);
 
-                                                $qp3 = mysqli_query($connect_pro, "SELECT SUM(actualqty) as hasil FROM production_result WHERE instdt LIKE '$now%' and makektcd = '$dp[work_center]' ");
-                                                $dp3 = mysqli_fetch_array($qp3);
-
-                                                if(empty($dp2['plan'])){
-                                                    $prog = ($dp3['hasil'] / 1) * 100;
-                                                }else{
-                                                    $prog = ($dp3['hasil'] / $dp2['plan']) * 100;
-                                                }
-                                                $prog = number_format($prog, '2', '.', '');
-
-                                                // warna progress bar
-                                                if ($prog <= 50) {
-                                                    $bg = 'bg-danger';
-                                                    $setup = 'font-weight: 1000;';
-                                                } elseif ($prog > 50 && $prog <= 110) {
-                                                    $bg = 'bg-success';
-                                                    $setup = 'font-weight: 1000;';
-                                                } elseif ($prog > 110) {
-                                                    $bg = 'bg-warning';
-                                                    $setup = 'font-weight: 1000; text-align: left;  padding-left: 40%;';
-                                                }
+                                                    // warna progress bar
+                                                    if ($prog <= 75) {
+                                                        $bg = 'bg-danger';
+                                                        $setup = 'font-weight: 1000;';
+                                                    } elseif ($prog > 75 && $prog <= 110) {
+                                                        $bg = 'bg-success';
+                                                        $setup = 'font-weight: 1000;';
+                                                    } elseif ($prog > 110) {
+                                                        $bg = 'bg-warning';
+                                                        $setup = 'font-weight: 1000; text-align: left;  padding-left: 40%;';
+                                                    }
                                             ?>
-                                                <div class="row">
-                                                    <div class="col-12" style="padding-bottom: 0px;">
+                                                    <div class="row">
+                                                        <div class="col-12" style="padding-bottom: 0px;">
 
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <span style="font-weight: 1000; margin-bottom: 0px; color: #5C7186;">(<?= $wc ?>) <?= strtoupper($nm) ?></span>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <span style="font-weight: 1000; margin-bottom: 0px; color: #5C7186;">(<?= $row['workcenter'] ?>) <?= strtoupper($row['nama_workcenter']) ?></span>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <div class="progress" style="border-radius: 4px; margin-bottom: 10px;">
-                                                                    <div class="progress-bar progress-bar-striped progress-bar-animated <?= $bg ?>" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="<?= $setup ?>width: <?= $prog ?>%"><?= $prog ?>%</div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="progress" style="border-radius: 4px; margin-bottom: 10px;">
+                                                                        <div class="progress-bar progress-bar-striped progress-bar-animated <?= $bg ?>" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="<?= $setup ?>  width: <?= $prog ?>%;"><?= $prog ?>%</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                             <?php
+                                                }
                                             }
                                             ?>
                                         </div>
@@ -405,11 +378,11 @@ $now = '2022-11-09';
             </div>
         </div>
         <?php
-        include 'planacc/woodworking.php';
-        include 'planacc/painting.php';
-        include 'planacc/upassy.php';
-        include 'planacc/gpassy.php';
-        include 'planacc/kdpart.php';
+        include 'planacc_v2/woodworking.php';
+        include 'planacc_v2/painting.php';
+        include 'planacc_v2/upassy.php';
+        include 'planacc_v2/gpassy.php';
+        include 'planacc_v2/kdpart.php';
         ?>
     </div>
     <?php

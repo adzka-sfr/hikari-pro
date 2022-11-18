@@ -1,7 +1,7 @@
 <?php
 require '../_config/koneksi.php';
 $page = $_SERVER['PHP_SELF'];
-$sec = "300";
+$sec = "300"; // detik
 ?>
 
 <!DOCTYPE html>
