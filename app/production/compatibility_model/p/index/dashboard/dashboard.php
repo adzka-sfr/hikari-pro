@@ -61,7 +61,7 @@ if (empty($data12)) {
     $all_daily = $data12['all_daily'];
 }
 
-// PAST
+// PAST -> untuk mengetahui barang apa saja dari plan lampau yang baru di kerjakan pada tanggal hari ini
 $sql13 = mysqli_query($con_pro, "SELECT COUNT(plan_number) as PAST from daily_result where plan_date < '$togel2'");
 $data13 = mysqli_fetch_array($sql13);
 if (empty($data13)) {
@@ -71,7 +71,7 @@ if (empty($data13)) {
 }
 $per_past = ($past / $all_daily) * 100;
 
-// TODAY
+// TODAY -> untuk mengetahui barang apa saja yang tanggal hasilnya sama dengan tanggal plan
 $sql14 = mysqli_query($con_pro, "SELECT COUNT(plan_number) as TODAY from daily_result where plan_date = '$togel2'");
 $data14 = mysqli_fetch_array($sql14);
 if (empty($data14)) {
@@ -81,7 +81,7 @@ if (empty($data14)) {
 }
 $per_today = ($today / $all_daily) * 100;
 
-// TOGO
+// TOGO -> untuk mengetahui barang apa saja yang proses pengerjaannya pada hari ini namun pada dasarnya plan masih di hari yang akan datang
 $sql15 = mysqli_query($con_pro, "SELECT COUNT(plan_number) as TOGO from daily_result where plan_date > '$togel2'");
 $data15 = mysqli_fetch_array($sql15);
 if (empty($data15)) {

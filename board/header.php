@@ -12,7 +12,7 @@ $sec = "300"; // detik
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
-    <meta http-equiv="refresh" content="<?php echo $sec ?>;URL='<?php echo $page ?>'">
+    <!-- <meta http-equiv="refresh" content="<?php echo $sec ?>;URL='<?php echo $page ?>'"> --> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="<?= base_url('_assets/production/images/logo_icon.png') ?>">
 

@@ -59,7 +59,8 @@ if (!isset($_SESSION['id'])) {
 
   <!-- untuk field berdasarkan dropdown -->
   <script src="<?= base_url('_assets/src/add/field_by_radio/jquery.min.js') ?>"></script>
-  
+  <script src="<?= base_url('_assets/src/add/qrcode/qrcode.js') ?>"></script>
+
   <!-- untuk dropdown search -->
   <link href="<?= base_url('_assets/src/add/dropdown_search/select2.min.css') ?>" rel="stylesheet" />
   <script src="<?= base_url('_assets/src/add/dropdown_search/jquery-3.4.1.js') ?>" crossorigin="anonymous"></script>
@@ -283,6 +284,45 @@ if (!isset($_SESSION['id'])) {
     }
   </style>
   <!-- style untuk bar step (progress bar) -->
+
+  <!-- untuk teks blink -->
+  <style>
+    blink {
+      -webkit-animation: 1s linear infinite kedip;
+      /* for Safari 4.0 - 8.0 */
+      animation: 1s linear infinite kedip;
+    }
+
+    /* for Safari 4.0 - 8.0 */
+    @-webkit-keyframes kedip {
+      0% {
+        visibility: hidden;
+      }
+
+      50% {
+        visibility: hidden;
+      }
+
+      100% {
+        visibility: visible;
+      }
+    }
+
+    @keyframes kedip {
+      0% {
+        visibility: hidden;
+      }
+
+      50% {
+        visibility: hidden;
+      }
+
+      100% {
+        visibility: visible;
+      }
+    }
+  </style>
+  <!-- untuk teks blink -->
 
   <!-- Tambahan -->
 </head>

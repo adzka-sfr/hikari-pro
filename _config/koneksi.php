@@ -27,8 +27,10 @@ if ($connect->connect_error) {
 // jangan lupa mengganti base url
 //fungsi base_url
 $_SESSION['base_url'] = "https://hikari.local/hikari";
+// $_SESSION['base_url'] = "https://172.17.192.242/hikari";
 function base_url($url = null)
 {
+  // $base_url = "https://172.17.192.242/hikari";
   $base_url = "https://hikari.local/hikari";
   if ($url != null) {
     return $base_url . "/" . $url;

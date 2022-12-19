@@ -76,13 +76,14 @@ if (isset($_POST['submit'])) {
     foreach ($Reader as $Key => $Row) {
         // import data excel mulai baris ke-2 (karena ada header pada baris 1)
         if ($Key < 1) continue;
-        // isi common
+        // isi common (u700 merupakan kode untuk finish good)
         $sql4 = mysqli_query($con_pro, "SELECT phb from antar_wc where u700 = '" . $Row[2] . "'");
+
         $data4 = mysqli_fetch_array($sql4);
         $query = mysqli_query($con_pro, "INSERT INTO plan VALUES ('" . $Row[0] . "', '" . $Row[1] . "','" . $Row[2] . "','" . $Row[3] . "','" . $Row[4] . "','" . $Row[5] . "','$data4[phb]')");
     }
     if ($query) {
-        // input pengupdate
+        // input pengupdate dan waktu update
         $sql2 = mysqli_query($con_pro, "SELECT * from updated_plan");
         $data2 = mysqli_fetch_array($sql2);
 
@@ -90,6 +91,20 @@ if (isset($_POST['submit'])) {
             mysqli_query($con_pro, "INSERT INTO updated_plan set id = '$_SESSION[id]', nama = '$_SESSION[nama]', tanggal = '$now'");
         } else {
             mysqli_query($con_pro, "UPDATE updated_plan set tanggal = '$now' where id = '$_SESSION[id]'");
+        }
+
+        // hitung plan perhari nya
+        $sql8 = mysqli_query($con_pro, "SELECT tanggal, COUNT(pln_no) as pln from plan GROUP BY tanggal");
+        $connect_project = new mysqli("localhost", "root", "", "hikari_project");
+
+        while ($data8 = mysqli_fetch_array($sql8)) {
+            $sql9 = mysqli_query($connect_project, "SELECT * FROM resume_plan_mainbody where c_date = '$data8[tanggal]' and c_work_center ='U200'");
+
+            if (mysqli_fetch_row($sql9) < 1) {
+                mysqli_query($connect_project, "INSERT INTO resume_plan_mainbody set c_date = '$data8[tanggal]', c_qty = $data8[pln], c_work_center = 'U200' ");
+            } else {
+                mysqli_query($connect_project, "UPDATE resume_plan_mainbody set c_qty = $data8[pln] where c_date = '$data8[tanggal]' and c_work_center = 'U200'");
+            }
         }
 
 
@@ -102,7 +117,7 @@ if (isset($_POST['submit'])) {
                     type: 'success',
                     confirmButtonText: 'OK'
                 }).then(function() {
-                    window.location = 'main.php?p=help';
+                    window.location = 'main.php?p=update';
                 });
             });
         </script>
@@ -117,7 +132,7 @@ if (isset($_POST['submit'])) {
                     type: 'danger',
                     confirmButtonText: 'OK'
                 }).then(function() {
-                    window.location = 'main.php?p=help';
+                    window.location = 'main.php?p=update';
                 });
             });
         </script>
@@ -155,7 +170,8 @@ if (isset($_POST['submit'])) {
             </thead>
             <tbody>
                 <?php
-                $sql = mysqli_query($con_pro, "SELECT * from plan order by tanggal asc");
+                $now1 = date('Y-m');
+                $sql = mysqli_query($con_pro, "SELECT * from plan where tanggal like '$now1%' order by tanggal asc");
                 while ($data = mysqli_fetch_array($sql)) {
                 ?>
                     <tr>

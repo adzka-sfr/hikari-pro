@@ -1,5 +1,8 @@
 <?php
 require_once "../_config/koneksi.php";
+// create session untuk dashboard
+$_SESSION['antrian'] = "1";
+
 if (isset($_SESSION['id'])) {
     echo "<script>window.location='" . base_url() . "';</script>";
 } else {
@@ -39,7 +42,7 @@ if (isset($_SESSION['id'])) {
                 <div class="animate form login_form">
                     <section class="login_content">
                         <form>
-                            <h1>HIKARI</h1>
+                            <h1><img src="<?= base_url('_assets/production/images/hikari_purple.png') ?>" alt="logo_hikari" height="30"></h1>
                             <div>
                                 <input type="text" id="id" name="id" class="form-control" placeholder="Employee id" />
                             </div>

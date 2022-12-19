@@ -18,7 +18,7 @@ include('../koneksi.php');
       <div class="col-md-3 left_col menu_fixed">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="<?= base_url('dashboard') ?>" class="site_title" style="padding-left: 15px;"><img src="<?= base_url('_assets/production/images/emblem.png') ?>" alt="logo" style="width: 40px;"> <span><img src="<?= base_url('_assets/production/images/original-text.png') ?>" alt="piano" style="width: 110px;"></span></a>
+            <a href="<?= base_url('dashboard') ?>" class="site_title" style="padding-left: 15px;"><img src="<?= base_url('_assets/production/images/emblem_hikari_white.png') ?>" alt="logo" style="width: 40px;"> <span><img src="<?= base_url('_assets/production/images/hikari_text_white.png') ?>" alt="piano" style="width: 110px;"></span></a>
           </div>
 
           <div class="clearfix"></div>
@@ -210,6 +210,290 @@ include('../koneksi.php');
 
         ?>
         <!-- isi hasil scan slip number -->
+
+        <!-- PERCOBAAN -->
+
+        <!-- TAKE A PICTURE -->
+        <div class="dashboard_graph" style="padding-top: 10px; margin-top: 10px;">
+          <div class="row">
+            <div class="col-12">
+
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Take Picture
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <center>
+                        <!-- CAMERA AND PICTURE -->
+
+                        <div id="results" style="margin-bottom: 10px;">Your captured image will appear here...</div>
+                        <div id="my_camera" style="margin-bottom: 10px;"></div>
+
+                        <!-- CAMERA AND PICTURE -->
+
+                        <!-- BUTTON ACTION -->
+                        <form>
+
+                          <!-- BEFORE CAPTURE -->
+                          <div id="pre_take_buttons">
+                            <input type="button" class="btn btn-success" value="Access Camera" onClick="setup(); $(this).hide().next().show();">
+                            <input type=button class="btn btn-primary" value="Take Snapshot" onClick="preview_snapshot()" style="display:none">
+                          </div>
+                          <!-- BEFORE CAPTURE -->
+
+                          <!-- RETAKE -->
+                          <div id="take_again" style="display:none">
+                            <input type="button" class="btn btn-primary" value="Retake" onClick="take_again()">
+                          </div>
+                          <!-- RETAKE -->
+
+                          <!-- SAVE PHOTO -->
+                          <div id="post_take_buttons" style="display:none">
+                            <input type=button class="btn btn-primary" style="width: 100px; text-align: center; margin-right: 30px;" value="Retake" onClick="cancel_preview()">
+                            <input type=button class="btn btn-success" style="width: 100px; text-align: center; margin-left: 30px;" value="Save" onClick="save_photo()">
+                          </div>
+                          <!-- SAVE PHOTO -->
+
+                        </form>
+                        <!-- BUTTON FUNCTION -->
+                      </center>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- First, include the Webcam.js JavaScript Library -->
+              <script type="text/javascript" src="<?= base_url('_assets/src/add/camera_photo/webcam.js') ?>"></script>
+
+              <!-- Configure a few settings and attach camera -->
+              <script language="JavaScript">
+                Webcam.set({
+
+                  /* 
+                  kalau di hp (tested in ip 11 pro) :
+                  width: 1280
+                  height: 1024
+
+                  kalau di laptop :
+                  width: 1280
+                  height: 720
+
+                  dest_width: 1280
+                  dest_height: 720
+
+                  percobaan:
+                  width: 600
+                  height: 400
+                  dest_width: 600
+                  dest_height: 400
+
+                  constraints: {
+                    width: {
+                      exact: 1024
+                    },
+                    height: {
+                      exact: 720
+                    }
+                  }
+
+                  */
+
+                  width: 600,
+                  height: 400,
+                  image_format: 'jpeg',
+                  jpeg_quality: 100,
+                  dest_width: 600,
+                  dest_height: 400,
+                });
+              </script>
+
+              <!-- Code to handle taking the snapshot and displaying it locally -->
+              <script language="JavaScript">
+                // first setup
+                function setup() {
+                  Webcam.reset();
+                  Webcam.attach('#my_camera');
+                }
+
+                function preview_snapshot() {
+                  // freeze camera so user can preview pic
+                  Webcam.freeze();
+
+                  // swap button sets
+                  document.getElementById('pre_take_buttons').style.display = 'none';
+                  document.getElementById('post_take_buttons').style.display = '';
+                }
+
+                function cancel_preview() {
+                  // cancel preview freeze and return to live camera feed
+                  Webcam.unfreeze();
+
+                  // swap buttons back
+                  document.getElementById('pre_take_buttons').style.display = '';
+                  document.getElementById('post_take_buttons').style.display = 'none';
+                }
+
+                function save_photo() {
+                  // actually snap photo (from preview freeze) and display it
+                  Webcam.snap(function(data_uri) {
+
+                    // display results in page
+                    Webcam.upload(data_uri, 'saveimage.php', function(code, text) {
+                      document.getElementById('results').innerHTML =
+                        '<h2>Here is your image:</h2>' +
+                        '<img src="' + text + '"/>';
+                    });
+
+                    // swap buttons back
+                    Webcam.reset();
+                    document.getElementById('pre_take_buttons').style.display = 'none';
+                    document.getElementById('post_take_buttons').style.display = 'none';
+                    document.getElementById('take_again').style.display = '';
+                    document.getElementById('my_camera').style.display = 'none';
+                    document.getElementById('results').style.display = '';
+                  });
+                }
+
+                function take_again() {
+                  // swap button back
+                  document.getElementById('pre_take_buttons').style.display = '';
+                  document.getElementById('post_take_buttons').style.display = 'none';
+                  document.getElementById('take_again').style.display = 'none';
+                  document.getElementById('results').style.display = 'none';
+                  document.getElementById('my_camera').style.display = '';
+
+                  // shutdown camera after capture
+                  Webcam.attach('#my_camera');
+                }
+              </script>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- FIELD ACTIVE BY RADIO BUTTON -->
+        <div class="dashboard_graph" style="padding-top: 10px; margin-top: 10px;">
+          <div class="row">
+            <div class="col-12">
+
+              <form action="hasil_field.php" method="post">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input radionya" type="radio" name="status" id="inlineRadio1" value="OK" required>
+                  <label class="form-check-label" for="inlineRadio1">OK</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input radionya other" type="radio" name="status" id="inlineRadio2" value="NG">
+                  <label class="form-check-label" for="inlineRadio2">NG</label>
+                </div>
+                <br>
+                <select class="duar" disabled required name="jenis_ng" style="width: 250px; padding-left: 100px;">
+                  <option value="" selected disabled>Kind of NG</option>
+                  <!-- <option></option> -->
+                  <option value="Dekok">Dekok</option>
+                  <option value="Muke">Muke</option>
+                  <option value="Baret">Baret</option>
+                  <option value="Semut">Semut</option>
+                  <option value="Nyamuk">Nyamuk</option>
+                  <option value="Patah">Patah</option>
+                  <option value="Kate">Kate</option>
+                </select>
+                <button class="btn btn-success" type="submit">Save</button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- QRCODE  -->
+        <div class="dashboard_graph" style="padding-top: 10px; margin-top: 10px;">
+          <div class="row">
+            <div class="col-12">
+
+              <table class="table table-bordered">
+                <thead>
+                  <tr style="text-align: center;">
+                    <th>Serial Number</th>
+                    <th>Piano</th>
+                    <th>Komponen NG</th>
+                    <th>Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $i = 0;
+                  $sql = mysqli_query($connect_p, "SELECT distinct c_no_slip FROM on_progress");
+                  while ($data = mysqli_fetch_array($sql)) {
+                    $i++;
+                    $pass = array();
+                    $p = 0;
+                    $sql1 = mysqli_query($connect_p, "SELECT * FROM on_progress where c_no_slip = '$data[c_no_slip]'");
+                    while ($data1 = mysqli_fetch_array($sql1)) {
+
+                      // untuk mendapatkan komponen dengan status PASS 
+                      if ($data1['c_status'] == 'NG') {
+                        $pass[$p] = $data1['c_komponen'] . " (" . $data1['c_bagian'] . ")";
+                        $piano = $data1['c_piano'];
+                        $p++;
+                      }
+                    }
+                  ?>
+                    <tr>
+
+                      <td style="text-align: center; width: 16%; transform: translate(0,30%);">
+                        <center>
+                          <!-- untuk menampilkan qrcode -->
+                          <div id="qrcode<?= $i ?>"></div>
+                        </center>
+                        <b><?= $data['c_no_slip'] ?></b>
+                      </td>
+
+                      <td style="text-align:center ; transform: translate(0,40%); width: 28%;"><?= $piano ?></td>
+                      <td style="width: 28%;">
+                        <?php
+                        for ($l = 0; $l < count($pass); $l++) {
+                          echo $pass[$l] . "</br>";
+                        }
+                        ?>
+                      </td>
+                      <td style="width: 28%;"></td>
+                    </tr>
+
+                    <!-- untuk mengenerate qrcode -->
+                    <script type="text/javascript">
+                      var qrcode = new QRCode(document.getElementById("qrcode<?= $i ?>"), {
+                        width: 70,
+                        height: 70,
+                        // colorDark: "#000000",
+                        // colorLight: "#ffffff",
+                        // correctLevel: QRCode.CorrectLevel.H
+                      });
+
+                      qrcode.makeCode("<?= $data['c_no_slip'] ?>");
+                    </script>
+
+                  <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        <!-- PERCOBAAN -->
 
       </div>
       <!-- /page content -->

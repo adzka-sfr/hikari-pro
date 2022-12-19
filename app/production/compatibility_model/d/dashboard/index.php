@@ -20,9 +20,9 @@
                             <!-- <a class="dropdown-item" href="index2.php" style="background-color: #DEEDFF;"> Fixing Frame</a> -->
                             <a class="dropdown-item" href="<?= base_url('dashboard/') ?>"> Dashboard</a>
                             <a class="dropdown-item" href="result/"> Result</a>
-                            <a class="dropdown-item" href="<?= base_url('panel/profile') ?>"> Profile</a>
-                            <a class="dropdown-item" href="<?= base_url('panel/settings') ?>">Settings</a>
-                            <a class="dropdown-item" href="<?= base_url('panel/help') ?>">Help</a>
+                            <a class="dropdown-item" href="_profile/"> Profile</a>
+                            <a class="dropdown-item" href="_settings/">Settings</a>
+                            <a class="dropdown-item" href="_help/">Help</a>
                             <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                         </div>
                     </li>
@@ -93,6 +93,39 @@
 
     </div>
     <!-- /page content -->
+
+    <?php
+    //================== ACTIVITY LOG START ==================//
+
+    // log activity record  
+    $now = date('Y-m-d H:i:s');
+    $token = $_SESSION['token'];
+
+    $l_t = $now;
+    $sy_n = "Compatibility Model"; // Nama Sistem
+    $p_n = "halaman utama (dark)"; // Nama Proses
+    $q = "read"; // Query
+    $e_n = $_SESSION['nama']; // Nama Karyawan
+    $e_i = $_SESSION['id']; // ID Karyawan
+    $c_i = $_SERVER['REMOTE_ADDR'];
+    $c_n = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+    $s_n = $_SERVER['SCRIPT_NAME'];
+    $h = $_SERVER['HTTP_HOST'];
+    mysqli_query($connect_log, "INSERT INTO activity_log set
+                                    token = '$token',
+                                    log_time = '$l_t',
+                                    system_name = '$sy_n',
+                                    process_name = '$p_n',
+                                    query = '$q',
+                                    employee_name = '$e_n',
+                                    employee_id = '$e_i',
+                                    computer_ip = '$c_i',
+                                    computer_name = '$c_n',
+                                    script_name = '$s_n',
+                                    host = '$h'");
+
+    //================== ACTIVITY LOG FINISH ==================//
+    ?>
 
     <?php
     include('_footer_local.php');
