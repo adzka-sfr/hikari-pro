@@ -136,10 +136,9 @@ include('../koneksi.php');
           <div class="row">
             <div class="col-md-10">
               <div class="row">
-
-                <div class="col-md-4 col-sm-4  form-group has-feedback">
+                <div class="col-md-12 col-sm-12  form-group has-feedback">
                   <form method="POST">
-                    <select class="cari_slip" style="width: 100%;" name="slip_number" onchange="this.form.submit();">
+                    <select class="cari_slip" name="slip_number" style="width: 250px; padding-left: 100px;" onchange="this.form.submit();">
                       <option value="" selected disabled>Select Slip Number</option>
                       <?php
                       $sql_list = mysqli_query($connect_p, "SELECT DISTINCT c_no_slip, c_piano from on_progress");
@@ -149,21 +148,8 @@ include('../koneksi.php');
                       } ?>
                     </select>
                   </form>
+                  <!-- <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span> -->
                 </div>
-
-                <div class="col-md-1 col-sm-1  form-group has-feedback">
-                  <a href="scan.php" style="text-decoration: none;"><button onmouseover="mouseOver()" onmouseout="mouseOut()" class="btn btn-outline-secondary" style="padding: 5px;"><img src="barcode.png" id="barcode" width="25px" height="25px" /></button></a>
-                  <script type="text/javascript">
-                    function mouseOver() {
-                      document.getElementById("barcode").src = "barcode-w.png";
-                    }
-
-                    function mouseOut() {
-                      document.getElementById("barcode").src = "barcode.png"
-                    }
-                  </script>
-                </div>
-
               </div>
             </div>
             <div class="col-md-2" style="text-align: right;">

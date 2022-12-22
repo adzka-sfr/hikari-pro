@@ -66,6 +66,8 @@ if (!isset($_SESSION['id'])) {
   <script src="<?= base_url('_assets/src/add/dropdown_search/jquery-3.4.1.js') ?>" crossorigin="anonymous"></script>
   <script src="<?= base_url('_assets/src/add/dropdown_search/select2.min.js') ?>"></script>
 
+
+
   <!-- untuk grafik chart JS -->
   <script src="<?= base_url('_assets/src/add/chartJS/chart.js') ?>"></script>
 
@@ -324,5 +326,16 @@ if (!isset($_SESSION['id'])) {
   </style>
   <!-- untuk teks blink -->
 
+  <!-- untuk z-index select2 (monanges nyari ni masalah) -->
+  <style>
+    .select2-dropdown {
+      z-index: 9099;
+    }
+  </style>
+  <!-- untuk z-index select2 (monanges nyari ni masalah) -->
+
   <!-- Tambahan -->
+
+
+
 </head>
