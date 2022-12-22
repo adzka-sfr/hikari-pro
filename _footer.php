@@ -34,11 +34,17 @@
         placeholder: "Slip Number",
     });
     $('.cari_nosearch').select2({
-        placeholder: "Select from below",
+        // placeholder: "Selects from below",
     });
     $('.cari_user').select2();
     $('#cari').select2();
     $('#kon').select2();
+
+    $('.halodeck').select2({
+        placeholder: "Choose NG",
+        allowClear: true,
+        language: "id"
+    });
 </script>
 
 <!-- untuk datatables -->

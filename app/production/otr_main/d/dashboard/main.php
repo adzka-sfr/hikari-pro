@@ -123,6 +123,17 @@ include('koneksi.php');
 
         <div class="dashboard_graph">
             <script src="js/jquery-3.5.1.js"></script>
+            <!-- <div class="row">
+                <div class="col-md-12">
+                    <form method="POST">
+                        <select class="cari_nosearch" style="width: 100%;" name="slip_number" onchange="this.form.submit();">
+                            <option value="" selected disabled>Select Slip Number</option>
+                            <option value="Up Spray Satin">Up Spray Satin</option>
+                            <option value="Up Finish Buff">Up Finish Buff</option>
+                        </select>
+                    </form>
+                </div>
+            </div> -->
             <div class="row">
                 <div class="col-12">
 
