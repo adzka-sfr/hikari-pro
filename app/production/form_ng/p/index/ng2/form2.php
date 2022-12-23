@@ -75,7 +75,7 @@
                     <a><button <?= $dis_b ?> name="b" class="btn btn-secondary" style="<?= $btn_b ?> font-weight: bold; width: 130px; height: 30px; padding-top: 2px; padding-bottom: 2px; border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-right-radius:15px;border-bottom-left-radius:15px; ">B</button></a>
                     <a><button <?= $dis_bb ?> name="bb" class="btn btn-secondary" style="<?= $btn_bb ?> font-weight: bold; width: 130px; height: 30px; padding-top: 2px; padding-bottom: 2px; border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-right-radius:15px;border-bottom-left-radius:15px; ">BB</button></a>
                 </form>
-                
+
             </div>
 
         </div>

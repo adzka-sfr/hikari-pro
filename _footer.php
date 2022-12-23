@@ -36,6 +36,9 @@
     $('.cari_nosearch').select2({
         // placeholder: "Selects from below",
     });
+    $('#refres').select2({
+        // placeholder: "Selects from below",
+    });
     $('.cari_user').select2();
     $('#cari').select2();
     $('#kon').select2();

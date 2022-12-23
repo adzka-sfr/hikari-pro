@@ -29,8 +29,6 @@ if (($tod_dino == 'Sat') or ($tod_dino == 'Sun')) {
         // hitung persentase on time rate berdasarkan plan recovery
         $at_assyup = ($d_tau['c_otr_qty'] / $d_tau1['c_qty']) * 100;
         $at_assyup = round($at_assyup);
-        // target bulan ini
-        $tt_assyup = $d_tau1['c_target_otr'];
     }
 
     // target

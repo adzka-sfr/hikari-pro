@@ -1,9 +1,54 @@
+<div id="bar1a" style="height:300px; width: 100%; padding-top: 10px; padding-bottom: 0px; padding-right: 0px; padding-left: 0px; "></div>
+
 <?php
-// $now = '2022-11-04';
+// $now = '2022-12-23';
 // $month_umpama = date('Y-m', strtotime($now));
 // $connect_pro = new mysqli("localhost", "root", "", "hikari_project");
 // $work_center = 'P550';
-$work_center = $_SESSION['ww_otr1'];
+if (empty($_POST['isia'])) {
+    $list = 'W130';
+} else {
+    $list = $_POST['isia'];
+}
+// =============================================== CONNECTION
+date_default_timezone_set('Asia/Jakarta');
+$now = date('Y-m-d H:i:s');
+// session_start();
+
+// setting default timezone
+date_default_timezone_set('Asia/Jakarta');
+$now = date('Y-m-d H:i:s');
+$now = date('Y-m-d', strtotime($now));
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+
+// database
+$db1 = "hikari";
+$db2 = "hikari_project";
+$db3 = "hikari_log";
+
+// Create connection for main database (hikari)
+$connect = new mysqli($servername, $username, $password, $db1);
+// Create connection for project database (hikari_project)
+$connect_pro = new mysqli($servername, $username, $password, $db2);
+// Create connection for log database (hikari_log)
+$connect_log = new mysqli($servername, $username, $password, $db3);
+
+// $now = date('Y-m-d');
+// $now = '2022-12-13';
+$month_umpama = date('Y-m', strtotime($now));
+$month_judul = date('F', strtotime($now));
+
+// untuk mendapatakan jumlah hari pada satu bulan
+$kalenderMasehi = CAL_GREGORIAN;
+$bulanSutena = date('m', strtotime($now));
+$tahunGajah = date('Y', strtotime($now));
+$sumOfDay = cal_days_in_month($kalenderMasehi, $bulanSutena, $tahunGajah);
+// =============================================== CONNECTION
+// =========================================================== LOGIC
+$work_center = $list;
 $otras = array();
 $accas = array();
 $z = 0;
@@ -14,22 +59,20 @@ $namaup = mysqli_fetch_array($namaup_sql);
 
 $barqas = mysqli_query($connect_pro, "SELECT * from otr_history where c_date like '$month_umpama%' and c_work_center = '$work_center' order by c_date asc");
 while ($bardas = mysqli_fetch_array($barqas)) {
-    // jumlahin dulu untuk plan pada satu hari full
-    $barqas1 = mysqli_query($connect_pro, "SELECT * from production_plan where plandt = '$bardas[c_date]' and makeprocecd = '$work_center'");
-    // $bardas1 = mysqli_fetch_array($barqas1);
 
-    // if (empty(mysqli_fetch_array($barqas1))) {
-    //     // echo "koosong";
-    //     $tot_plandaily = 0;
-    // } else {
-    // ambil daily
-    $sup1 = mysqli_query($connect_pro, "SELECT SUM(planqty) as totplan_daily from production_plan where plandt = '$bardas[c_date]' and makeprocecd = '$work_center'");
-    $bardas1 = mysqli_fetch_array($sup1);
-    $tot_plandaily = $bardas1['totplan_daily'];
+    $sup1 = mysqli_query($connect_pro, "SELECT c_qty from resume_plan_mainbody where c_date = '$bardas[c_date]' and c_work_center = '$work_center'");
+    if (empty(mysqli_fetch_array($sup1))) {
+        $tot_plandaily = 0;
+    } else {
+        $sup1 = mysqli_query($connect_pro, "SELECT c_qty from resume_plan_mainbody where c_date = '$bardas[c_date]' and c_work_center = '$work_center'");
+        $bardas1 = mysqli_fetch_array($sup1);
+        $tot_plandaily = $bardas1['c_qty'];
+    }
+
     // }
 
     // ambil akumulasi
-    $barqas2 = mysqli_query($connect_pro, "SELECT SUM(planqty) as totplan from production_plan WHERE plandt LIKE '$month_umpama%' and plandt <= '$bardas[c_date]' and makeprocecd = '$work_center'");
+    $barqas2 = mysqli_query($connect_pro, "SELECT SUM(c_qty) as totplan from resume_plan_mainbody WHERE c_date LIKE '$month_umpama%' and c_date <= '$bardas[c_date]' and c_work_center = '$work_center'");
     $bardas2 = mysqli_fetch_array($barqas2);
     $tot_acc = $bardas2['totplan'];
 
@@ -46,10 +89,6 @@ while ($bardas = mysqli_fetch_array($barqas)) {
         $poc = ($bardas['c_otr_acc'] / $tot_acc) * 100;
         $poc = round($poc);
     }
-
-
-
-
 
     // echo
     // echo 'tanggal: ' . $bardas['c_date'];
@@ -84,6 +123,7 @@ $bardas2 = mysqli_fetch_array($barqas3);
 $baruptarget = $bardas2['c_target'];
 
 $namagraf = $namaup['work_center_name'];
+// =========================================================== LOGIC
 ?>
 <script>
     var chartDom = document.getElementById('bar1a');
@@ -151,8 +191,8 @@ $namagraf = $namaup['work_center_name'];
         yAxis: [{
             type: 'value',
             min: 0,
-            max: 80,
-            interval: 10,
+            max: 100,
+            interval: 20,
             axisLabel: {
                 formatter: '{value} %'
             },

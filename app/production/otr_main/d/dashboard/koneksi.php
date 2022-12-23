@@ -25,7 +25,7 @@ $connect_pro = new mysqli($servername, $username, $password, $db2);
 $connect_log = new mysqli($servername, $username, $password, $db3);
 
 // $now = date('Y-m-d');
-$now = '2022-11-11';
+$now = '2022-12-13';
 $month_umpama = date('Y-m', strtotime($now));
 $month_judul = date('F', strtotime($now));
 

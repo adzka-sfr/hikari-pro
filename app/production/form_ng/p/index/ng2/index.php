@@ -133,7 +133,7 @@ include('../koneksi.php');
                             <div class="separator"></div>
                         </div>
                     </div>
-                    
+
 
                     <div class="row">
                         <div class="col-md-10">
@@ -229,6 +229,9 @@ include('../koneksi.php');
                             include('form1.php');
                         } elseif ($data2['c_jenis'] == "J2") {
                             include('form2.php');
+                            if (empty($_SESSION['queue'])) {
+                                $_SESSION['queue'] = 'tbo';
+                            }
                         }
                     }
                 }
