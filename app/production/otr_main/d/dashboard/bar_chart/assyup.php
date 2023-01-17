@@ -10,25 +10,27 @@ $barqas = mysqli_query($connect_pro, "SELECT * from otr_history where c_date lik
 
 while ($bardas = mysqli_fetch_array($barqas)) {
     $barqas1 = mysqli_query($connect_pro, "SELECT * from resume_plan_mainbody where c_date = '$bardas[c_date]' and c_work_center = '$work_center'");
-    // $bardas1 = mysqli_fetch_array($barqas1);
 
     if (empty(mysqli_fetch_array($barqas1))) {
-        // echo "koosong";
+        $pot = 0;
+        $poc = 0;
+        $otras[$z] = $pot;
+        $accas[$z] = $poc;
     } else {
         $sup1 = mysqli_query($connect_pro, "SELECT * from resume_plan_mainbody where c_date = '$bardas[c_date]' and c_work_center = '$work_center'");
         $bardas1 = mysqli_fetch_array($sup1);
-    }
 
-    $barqas2 = mysqli_query($connect_pro, "SELECT SUM(c_qty) as totplan from resume_plan_mainbody WHERE c_date LIKE '$month_umpama%' and c_date <= '$bardas1[c_date]' and c_work_center = '$work_center'");
-    $bardas2 = mysqli_fetch_array($barqas2);
+        $barqas2 = mysqli_query($connect_pro, "SELECT SUM(c_qty) as totplan from resume_plan_mainbody WHERE c_date LIKE '$month_umpama%' and c_date <= '$bardas[c_date]' and c_work_center = '$work_center'");
+        $bardas2 = mysqli_fetch_array($barqas2);
 
-    $pot = ($bardas['c_otr_qty'] / $bardas1['c_qty']) * 100;
+        $pot = ($bardas['c_otr_qty'] / $bardas1['c_qty']) * 100;
     $pot = round($pot);
     $poc = ($bardas['c_otr_acc'] / $bardas2['totplan']) * 100;
     $poc = round($poc);
 
     $otras[$z] = $pot;
     $accas[$z] = $poc;
+    }
     $z++;
 }
 
@@ -106,8 +108,8 @@ $baruptarget = $bardas2['c_target'];
         yAxis: [{
             type: 'value',
             min: 0,
-            max: 80,
-            interval: 10,
+            max: 100,
+            interval: 20,
             axisLabel: {
                 formatter: '{value} %'
             },

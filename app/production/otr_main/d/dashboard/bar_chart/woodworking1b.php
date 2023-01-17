@@ -131,7 +131,7 @@ $namagraf = $namaup['work_center_name'];
     var option;
 
     option = {
-        color: ['#7D7CE0', '#FF7400'],
+        color: ['#AD8467', '#FF7400'],
         title: {
             text: 'OTR History of <?= $namagraf  ?> (<?= $work_center ?>)-<?= $month_judul ?>',
         },

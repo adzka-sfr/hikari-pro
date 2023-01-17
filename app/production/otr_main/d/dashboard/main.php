@@ -47,11 +47,16 @@ include('koneksi.php');
                         $href_a = '';
                         $href_p = 'href="main.php?p=paint"';
                         $href_w = 'href="main.php?p=ww"';
+                        $href_rpw = 'href="main.php?p=rpw"';
+                        $href_rug = 'href="main.php?p=rug"';
+
 
                         // style
                         $dis_assy = 'disabled';
                         $dis_paint = '';
                         $dis_ww = '';
+                        $dis_rpw = '';
+                        $dis_rug = '';
                     } elseif ($_GET['p'] == 'paint') {
                         $_SESSION['otr_bag'] = 'painting';
 
@@ -59,11 +64,15 @@ include('koneksi.php');
                         $href_a = 'href="main.php?p=assy"';
                         $href_p = '';
                         $href_w = 'href="main.php?p=ww"';
+                        $href_rpw = 'href="main.php?p=rpw"';
+                        $href_rug = 'href="main.php?p=rug"';
 
                         // style
                         $dis_assy = '';
                         $dis_paint = 'disabled';
                         $dis_ww = '';
+                        $dis_rpw = '';
+                        $dis_rug = '';
                     } elseif ($_GET['p'] == 'paint1') {
                         $_SESSION['otr_bag'] = 'painting';
                     } elseif ($_GET['p'] == 'ww') {
@@ -73,11 +82,47 @@ include('koneksi.php');
                         $href_a = 'href="main.php?p=assy"';
                         $href_p = 'href="main.php?p=paint"';
                         $href_w = '';
+                        $href_rpw = 'href="main.php?p=rpw"';
+                        $href_rug = 'href="main.php?p=rug"';
 
                         // style
                         $dis_assy = '';
                         $dis_paint = '';
                         $dis_ww = 'disabled';
+                        $dis_rpw = '';
+                        $dis_rug = '';
+                    } elseif ($_GET['p'] == 'rpw') {
+                        $_SESSION['otr_bag'] = 'resume painting & woodworking';
+
+                        // link
+                        $href_a = 'href="main.php?p=assy"';
+                        $href_p = 'href="main.php?p=paint"';
+                        $href_w = 'href="main.php?p=ww"';
+                        $href_rpw = '';
+                        $href_rug = 'href="main.php?p=rug"';
+
+                        // style
+                        $dis_assy = '';
+                        $dis_paint = '';
+                        $dis_ww = '';
+                        $dis_rpw = 'disabled';
+                        $dis_rug = '';
+                    } elseif ($_GET['p'] == 'rug') {
+                        $_SESSION['otr_bag'] = 'resume assembly UP & GP';
+
+                        // link
+                        $href_a = 'href="main.php?p=assy"';
+                        $href_p = 'href="main.php?p=paint"';
+                        $href_w = 'href="main.php?p=ww"';
+                        $href_rpw = 'href="main.php?p=rpw"';
+                        $href_rug = '';
+
+                        // style
+                        $dis_assy = '';
+                        $dis_paint = '';
+                        $dis_ww = '';
+                        $dis_rpw = '';
+                        $dis_rug = 'disabled';
                     } else {
                         $_SESSION['otr_bag'] = 'help';
 
@@ -85,11 +130,15 @@ include('koneksi.php');
                         $href_a = 'href="main.php?p=assy"';
                         $href_p = 'href="main.php?p=paint"';
                         $href_w = 'href="main.php?p=ww"';
+                        $href_rpw = 'href="main.php?p=rpw"';
+                        $href_rug = 'href="main.php?p=rug"';
 
                         // style
                         $dis_assy = '';
                         $dis_paint = '';
                         $dis_ww = '';
+                        $dis_rpw = '';
+                        $dis_rug = '';
                     }
 
                     ?>
@@ -109,10 +158,14 @@ include('koneksi.php');
             ?>
 
                 <div class="row" style="padding: 0px;">
-                    <div class="col-12" style="padding: 0px; text-align: right; padding-right: 50px;">
+                    <div class="col-6" style="padding: 0px; text-align: left; padding-left: 50px;">
                         <a <?= $href_a ?>><button class="btn btn-secondary" <?= $dis_assy ?> style="background-color: #7D7CE0; border-color: #7D7CE0; width: 130px; height: 30px; padding-top: 2px; padding-bottom: 2px; border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-right-radius:15px;border-bottom-left-radius:15px; "> Assembly</button></a>
                         <a <?= $href_p ?>><button class="btn btn-secondary" <?= $dis_paint ?> style="background-color: #BC5672; border-color: #BC5672; width: 130px; height: 30px; padding-top: 2px; padding-bottom: 2px; border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-right-radius:15px;border-bottom-left-radius:15px; ">Painting</button></a>
                         <a <?= $href_w ?>><button class="btn btn-secondary" <?= $dis_ww ?> style="background-color: #AD8467; border-color: #AD8467; width: 130px; height: 30px; padding-top: 2px; padding-bottom: 2px; border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-right-radius:15px;border-bottom-left-radius:15px; ">Woodworking</button></a>
+                    </div>
+                    <div class="col-6" style="padding: 0px; text-align: right; padding-right: 50px;">
+                        <a <?= $href_rug ?>><button class="btn btn-secondary" <?= $dis_rug ?> style="background-color: #5470C6; border-color: #5470C6; line-height: 17px; width: 200px; height: 40px; padding-top: 0px; padding-bottom: 2px; padding-left: 0px; padding-right: 0px; border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-right-radius:15px;border-bottom-left-radius:15px; ">Resume (All TR) </br> Assembly UP & GP</button></a>
+                        <a <?= $href_rpw ?>><button class="btn btn-secondary" <?= $dis_rpw ?> style="background-color: #5470C6; border-color: #5470C6; line-height: 17px; width: 200px; height: 40px; padding-top: 0px; padding-bottom: 2px; padding-left: 0px; padding-right: 0px; border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-right-radius:15px;border-bottom-left-radius:15px; ">Resume (All TR) </br> Painting & Woodworking</button></a>
                     </div>
                 </div>
 

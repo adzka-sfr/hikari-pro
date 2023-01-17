@@ -9,8 +9,13 @@ if (empty($row_prev)) {
     $data = mysqli_fetch_array($cek);
 
     if ($data['c_status'] == 'develop') {
-        $_SESSION['app_error'] = $data['c_name'];
-        echo "<script>window.location='" . base_url('_error') . "';</script>";
+        if($_SESSION['dept'] == 'ICTM'){
+            $_SESSION['manual'] = $data['c_manual'];
+        echo "<script>window.location='" . base_url('app/production/' . $data['c_dir'] . '/dashboard') . "';</script>";
+        }else{
+            $_SESSION['app_error'] = $data['c_name'];
+            echo "<script>window.location='" . base_url('_error') . "';</script>";
+        }
     } elseif ($data['c_status'] == 'deploy') {
         $_SESSION['manual'] = $data['c_manual'];
         echo "<script>window.location='" . base_url('app/production/' . $data['c_dir'] . '/dashboard') . "';</script>";

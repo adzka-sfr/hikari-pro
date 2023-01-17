@@ -21,7 +21,19 @@ if (!isset($_SESSION['id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="<?= base_url('_assets/production/images/logo_icon.png') ?>">
 
-  <title>Yamaha Indonesia</title>
+  <!-- untuk mematikan tombol back -->
+  <script type="text/javascript">
+    // function preventBack() {
+    //   window.history.forward();
+    // }
+    // setTimeout("preventBack()", 0);
+    // window.onunload = function() {
+    //   null
+    // };
+  </script>
+  <!-- untuk mematikan tombol back -->
+
+  <!-- <title>Yamaha Indonesia</title> -->
 
   <!-- Bootstrap -->
   <link href="<?= base_url('_assets/vendors/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
@@ -331,8 +343,86 @@ if (!isset($_SESSION['id'])) {
     .select2-dropdown {
       z-index: 9099;
     }
+
+    .select2-drop-active {
+      margin-top: -25px;
+    }
   </style>
   <!-- untuk z-index select2 (monanges nyari ni masalah) -->
+
+  <!-- untuk loader halaman -->
+  <style>
+    .loading {
+      position: fixed;
+      display: block;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      text-align: center;
+      opacity: 0.7;
+      background-color: #fff;
+      z-index: 99;
+    }
+
+    .loading-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 100;
+    }
+
+    .lds-hourglass {
+      display: inline-block;
+      position: relative;
+      width: 10px;
+      height: 10px;
+    }
+
+    .lds-hourglass:after {
+      content: " ";
+      display: block;
+      border-radius: 50%;
+      width: 0;
+      height: 0;
+      margin: 8px;
+      box-sizing: border-box;
+      border: 32px solid #dfc;
+      border-color: #dfc transparent #dfc transparent;
+      animation: lds-hourglass 2.2s infinite;
+    }
+
+    @keyframes lds-hourglass {
+      0% {
+        transform: rotate(0);
+        animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      }
+
+      50% {
+        transform: rotate(900deg);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+
+      100% {
+        transform: rotate(1800deg);
+      }
+    }
+  </style>
+  <!-- untuk loader halaman -->
+
+  <!-- untuk font rebel -->
+  <style>
+    @font-face {
+      font-family: "retro";
+      src: url("<?= base_url('_assets/src/add/font_tambahan/retro.ttf') ?>");
+    }
+
+    .retro {
+      font-family: "retro";
+    }
+  </style>
+  <!-- untuk font rebel -->
+
 
   <!-- Tambahan -->
 

@@ -1,6 +1,8 @@
 <?php include('../_header.php'); ?>
 
 <body class="nav-md footer_fixed" style="background-color: #F7F7F7;">
+  <title>Yamaha Indonesia</title>
+
   <!-- <div class="container body"> -->
   <!-- <div class="main_container"> -->
   <!-- top navigation -->
@@ -45,7 +47,7 @@
     <div class="dashboard_graph" style="background-color: #F7F7F7;">
       <div class="row x_title">
         <div class="col-md-12">
-          <h3>Previlege <small>App</small></h3>
+          <h3>Previlege <small style="font-size: 15px;">Apps</small></h3>
         </div>
       </div>
       <div class="row">
@@ -108,7 +110,7 @@
     <div class="dashboard_graph" style="background-color: #F7F7F7;">
       <div class="row x_title">
         <div class="col-md-12">
-          <h3>Managerial <small>App</small></h3>
+          <h3>Managerial <small style="font-size: 15px;">Apps</small></h3>
         </div>
       </div>
       <div class="row">
@@ -124,7 +126,7 @@
               $d_img_m = $d_app_m['c_img'];
             ?>
 
-              <a href="<?= base_url('app/managerial/' . $d_dir_m) ?>">
+              <a target="_blank" rel="noopener noreferrer" href="<?= base_url('app/managerial/' . $d_dir_m) ?>">
                 <li class="zoom" onmouseover="mouseOver<?= $manag ?>()" onmouseout="mouseOut<?= $manag ?>()">
                   <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_m . '.png') ?>" id="manag<?= $manag ?>" alt="<?= $d_name_m ?>" height="50" width="50"></span>
                   <span class="glyphicon-class"><?= $d_name_m ?></span>
@@ -154,7 +156,12 @@
     <div class="dashboard_graph" style="background-color: #F7F7F7; margin-bottom: 50px;">
       <div class="row x_title">
         <div class="col-md-12">
-          <h3>Production <small>App</small></h3>
+          <h3>Production <small style="font-size: 15px;">Apps</small></h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h5 style="padding-left: 20px;"><u>Production Progress Info</u></h5>
         </div>
       </div>
       <div class="row">
@@ -162,32 +169,75 @@
           <ul class="bs-glyphicons-list ">
             <!-- isi konten aplikasinya -->
             <?php
-            $q_app_p = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'production' ORDER BY c_name");
-            $prod = 500;
+            $q_app_p = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'production' AND c_subgroup = 'painting' ORDER BY c_name");
+            $sub1 = 500;
             while ($d_app_p = mysqli_fetch_array($q_app_p)) {
               $d_dir_p = $d_app_p['c_dir'];
               $d_name_p = $d_app_p['c_name'];
               $d_img_p = $d_app_p['c_img'];
             ?>
 
-              <a href="<?= base_url('app/production/' . $d_dir_p) ?>">
-                <li class="zoom" onmouseover="mouseOver<?= $prod ?>()" onmouseout="mouseOut<?= $prod ?>()">
-                  <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>" id="prod<?= $prod ?>" alt="<?= $d_name_p ?>" height="50" width="50"></span>
+              <a target="_blank" rel="noopener noreferrer" href="<?= base_url('app/production/' . $d_dir_p) ?>">
+                <li class="zoom" onmouseover="mouseOver<?= $sub1 ?>()" onmouseout="mouseOut<?= $sub1 ?>()">
+                  <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>" id="sub1<?= $sub1 ?>" alt="<?= $d_name_p ?>" height="50" width="50"></span>
                   <span class="glyphicon-class"><?= $d_name_p ?></span>
                 </li>
                 <script type="text/javascript">
-                  function mouseOver<?= $prod ?>() {
-                    document.getElementById("prod<?= $prod ?>").src = "<?= base_url('_assets/production/icons/projects/' . $d_img_p . '_w.png') ?>";
+                  function mouseOver<?= $sub1 ?>() {
+                    document.getElementById("sub1<?= $sub1 ?>").src = "<?= base_url('_assets/production/icons/projects/' . $d_img_p . '_w.png') ?>";
                   }
 
-                  function mouseOut<?= $prod ?>() {
-                    document.getElementById("prod<?= $prod ?>").src = "<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>"
+                  function mouseOut<?= $sub1 ?>() {
+                    document.getElementById("sub1<?= $sub1 ?>").src = "<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>"
                   }
                 </script>
               </a>
 
             <?php
-              $prod++;
+              $sub1++;
+            }
+            ?>
+
+            <!-- isi konten aplikasinya -->
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h5 style="padding-left: 20px;"><u>Finish Good Delivery Info</u></h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="bs-glyphicons ">
+          <ul class="bs-glyphicons-list ">
+            <!-- isi konten aplikasinya -->
+            <?php
+            $q_app_p = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'production' AND c_subgroup = 'assembly' ORDER BY c_name");
+            $sub2 = 800;
+            while ($d_app_p = mysqli_fetch_array($q_app_p)) {
+              $d_dir_p = $d_app_p['c_dir'];
+              $d_name_p = $d_app_p['c_name'];
+              $d_img_p = $d_app_p['c_img'];
+            ?>
+
+              <a target="_blank" rel="noopener noreferrer" href="<?= base_url('app/production/' . $d_dir_p) ?>">
+                <li class="zoom" onmouseover="mouseOver<?= $sub2 ?>()" onmouseout="mouseOut<?= $sub2 ?>()">
+                  <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>" id="sub2<?= $sub2 ?>" alt="<?= $d_name_p ?>" height="50" width="50"></span>
+                  <span class="glyphicon-class"><?= $d_name_p ?></span>
+                </li>
+                <script type="text/javascript">
+                  function mouseOver<?= $sub2 ?>() {
+                    document.getElementById("sub2<?= $sub2 ?>").src = "<?= base_url('_assets/production/icons/projects/' . $d_img_p . '_w.png') ?>";
+                  }
+
+                  function mouseOut<?= $sub2 ?>() {
+                    document.getElementById("sub2<?= $sub2 ?>").src = "<?= base_url('_assets/production/icons/projects/' . $d_img_p . '.png') ?>"
+                  }
+                </script>
+              </a>
+
+            <?php
+              $sub2++;
             }
             ?>
 

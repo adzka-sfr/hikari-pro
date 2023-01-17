@@ -11,6 +11,10 @@ if ($_GET['p'] == 'assy') {
     include "woodworking1.php";
 } elseif ($_GET['p'] == 'ww1') {
     include "woodworking.php";
+} elseif ($_GET['p'] == 'rpw') {
+    include "resumepnww.php";
+} elseif ($_GET['p'] == 'rug') {
+    include "resumeupgp.php";
 } elseif ($_GET['p'] == 'help') {
     include "_help/index.php";
 } else {

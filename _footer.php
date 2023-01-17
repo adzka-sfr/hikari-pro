@@ -11,6 +11,14 @@
 
 <!-- SRIPT TAMBAHAN -->
 
+<!-- untuk loading page -->
+<script>
+    $(window).on('load', function() {
+        $('.loading').hide();
+    })
+</script>
+<!-- untuk loading page -->
+
 <!-- untuk fulscreen -->
 <!-- <script>
     var goFS = document.getElementById("goFS");
@@ -25,10 +33,14 @@
     $('.radionya').change(function() {
         $('.duar').prop('disabled', !$(this).is('.other'));
         $(document).ready(function() {
-            $('.duar').select2();
+            $('.duar').select2({
+                placeholder: "Choose NG"
+            });
         });
     });
-    $('.duar').select2(); // untuk  dropdown dengan radio button
+    $('.duar').select2({
+        placeholder: "Choose NG"
+    }); // untuk  dropdown dengan radio button
 
     $('.cari_slip').select2({
         placeholder: "Slip Number",
@@ -47,6 +59,16 @@
         placeholder: "Choose NG",
         allowClear: true,
         language: "id"
+    });
+
+    $('.halodecktot').select2({
+        placeholder: "Choose NG",
+        language: "id"
+    });
+
+    $('.halocab').select2({
+        placeholder: "Select cabinet",
+        allowClear: true,
     });
 </script>
 

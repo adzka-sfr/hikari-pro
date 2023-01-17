@@ -1,5 +1,5 @@
 <?php
 session_start();
-$asu =  $_POST['hasil'];
+$cardno =  $_POST['hasil'];
 
-$_SESSION['no_slip'] = $asu;
+$_SESSION['cardnumber_outside1'] = $cardno;

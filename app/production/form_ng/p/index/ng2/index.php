@@ -14,6 +14,9 @@ include('../koneksi.php');
 <!-- <title>Form NG</title> -->
 
 <body class="nav-md footer_fixed">
+    <div class="loading" style="background-color:#263238 ;">
+        <div style="margin-top: 200px; margin-right: 70px; color: #dfc; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; " class="lds-hourglass"><span style="padding-left: 19px;">Loading</span></div>
+    </div>
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col menu_fixed">
@@ -129,7 +132,7 @@ include('../koneksi.php');
                 <div class="dashboard_graph" style="padding-top: 10px;">
                     <div class="row">
                         <div class="col-12">
-                            <h3>Input Slip Number</h3>
+                            <h3>Outside Check <span style="font-size: 10px;">(Checker now : <?= $_SESSION['nama'] ?>)</span> </h3>
                             <div class="separator"></div>
                         </div>
                     </div>
@@ -141,15 +144,8 @@ include('../koneksi.php');
 
                                 <div class="col-md-4 col-sm-4  form-group has-feedback">
                                     <form method="POST">
-                                        <select class="cari_slip" style="width: 100%;" name="slip_number" onchange="this.form.submit();">
-                                            <option value="" selected disabled>Select Slip Number</option>
-                                            <?php
-                                            $sql_list = mysqli_query($connect_p, "SELECT DISTINCT c_no_slip, c_piano from on_progress");
-                                            ?>
-                                            <?php while ($data_list = mysqli_fetch_array($sql_list)) {
-                                                echo '<option value="' . $data_list['c_no_slip'] . '">' . $data_list['c_no_slip'] . ' - ' . $data_list['c_piano'] . '</option>';
-                                            } ?>
-                                        </select>
+                                        <input type="text" name="acard" class="form-control has-feedback-left" placeholder="Serial No">
+                                        <span class="fa fa-qrcode form-control-feedback left"></span>
                                     </form>
                                 </div>
 
@@ -176,7 +172,7 @@ include('../koneksi.php');
                                     </form>
                                     <?php
                                     if (isset($_POST['reset'])) {
-                                        unset($_SESSION['no_slip']);
+                                        unset($_SESSION['cardnumber_outside1']);
                                     }
                                     ?>
                                 </div>
@@ -187,30 +183,30 @@ include('../koneksi.php');
 
                 <?php
                 // create session
-                if (isset($_POST['slip_number'])) {
-                    $_SESSION['no_slip'] = $_POST['slip_number'];
+                if (isset($_POST['acard'])) {
+                    $_SESSION['cardnumber_outside1'] = $_POST['acard'];
                 }
                 ?>
 
                 <!-- isi hasil scan slip number -->
                 <?php
                 // selama session masih kosong include no form
-                if (empty($_SESSION['no_slip'])) {
+                if (empty($_SESSION['cardnumber_outside1'])) {
                     include('noform.php');
                 } else {
                     // cek apakah slip terdaftar atau tidak
-                    $sql1 = mysqli_query($connect_p, "SELECT c_no_slip from on_progress where c_no_slip = '$_SESSION[no_slip]'");
+                    $sql1 = mysqli_query($connect_pro, "SELECT id FROM formng_register where c_serialnumber = '$_SESSION[cardnumber_outside1]'");
                     $data1 = mysqli_fetch_row($sql1);
 
                     if ($data1 == 0) {
                         // jika tidak ada data muncul alert dan unset session
-                        unset($_SESSION['no_slip']);
+                        unset($_SESSION['cardnumber_outside1']);
                 ?>
                         <script>
                             $(document).ready(function() {
                                 Swal.fire({
-                                    title: 'Data Not Found',
-                                    text: 'Slip number unregistered!',
+                                    title: 'Data tidak ditemukan',
+                                    text: 'No serial tidak terdaftar!',
                                     type: 'warning',
                                     confirmButtonText: 'OK'
                                 }).then(function() {
@@ -218,25 +214,192 @@ include('../koneksi.php');
                                 });
                             });
                         </script>
-                <?php
+                        <?php
                     } else {
-                        $sql2 = mysqli_query($connect_p, "SELECT distinct op.c_piano as c_piano, gp.c_jenis as c_jenis from on_progress op join group_piano gp on op.c_piano = gp.c_piano where op.c_no_slip = '$_SESSION[no_slip]'");
-                        $data2 = mysqli_fetch_array($sql2);
-                        if ($data2['c_jenis'] == "J1") {
+
+                        $sql1 = mysqli_query($connect_pro, "SELECT * FROM formng_register WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                        $data1 = mysqli_fetch_array($sql1);
+
+                        if (empty($data1['c_finishincheck'])) {
+                            unset($_SESSION['cardnumber_outside1']);
+                        ?>
+                            <script>
+                                $(document).ready(function() {
+                                    Swal.fire({
+                                        title: 'Data ditemukan',
+                                        text: 'No serial belum selesai pada proses sebelumnya!',
+                                        type: 'info',
+                                        confirmButtonText: 'OK'
+                                    }).then(function() {
+                                        window.location = 'index.php';
+                                    });
+                                });
+                            </script>
+                            <?php
+                        } elseif (empty($data1['c_finishcomplete1'])) {
+                            $sql1 = mysqli_query($connect_pro, "SELECT r.c_serialnumber, r.c_pianoname, c.c_category2 FROM formng_register r JOIN formng_category c ON r.c_gmc = c.c_gmc WHERE r.c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                            $data1 = mysqli_fetch_array($sql1);
+
+                            $_SESSION['serialnumber_outside1'] = $data1['c_serialnumber'];
+                            $_SESSION['pianoname_outside1'] = $data1['c_pianoname'];
+                            $_SESSION['complete_outside1'] = $data1['c_category2'];
+
+                            include 'formcomplete.php';
+                        } else {
+
+                            $sql1 = mysqli_query($connect_pro, "SELECT * FROM formng_register WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                            $data1 = mysqli_fetch_array($sql1);
+
+                            $_SESSION['serialnumber_outside1'] = $data1['c_serialnumber'];
+                            $_SESSION['pianoname_outside1'] = $data1['c_pianoname'];
                             if (empty($_SESSION['queue'])) {
                                 $_SESSION['queue'] = 'tbo';
                             }
-                            include('form1.php');
-                        } elseif ($data2['c_jenis'] == "J2") {
-                            include('form2.php');
-                            if (empty($_SESSION['queue'])) {
-                                $_SESSION['queue'] = 'tbo';
+
+                            $sql2 = mysqli_query($connect_pro, "SELECT c_category FROM formng_category WHERE c_gmc = '$data1[c_gmc]' ");
+                            $data2 = mysqli_fetch_array($sql2);
+                            if (!empty($data2)) {
+                                $sql2 = mysqli_query($connect_pro, "SELECT c_category FROM formng_category WHERE c_gmc = '$data1[c_gmc]' ");
+                                $data2 = mysqli_fetch_array($sql2);
+
+                                if ($data2['c_category'] == 'p') {
+                                    $sql3 = mysqli_query($connect_pro, "SELECT c_checker1 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                    $data3 = mysqli_fetch_array($sql3);
+                                    if (!empty($data3)) {
+                                        $sql3 = mysqli_query($connect_pro, "SELECT c_checker1 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                        $data3 = mysqli_fetch_array($sql3);
+
+                                        if ($data3['c_checker1'] == $_SESSION['nama']) {
+                                            // cek jika sudah ada isi
+                                            $sql4 = mysqli_query($connect_pro, "SELECT c_finishoutcheck1 FROM formng_register WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                            $data4 = mysqli_fetch_array($sql4);
+
+                                            if (empty($data4['c_finishoutcheck1'])) {
+                                                $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                                $data5 = mysqli_fetch_array($sql5);
+
+                                                if (empty($data5)) {
+                                                    include('form1.php');
+                                                } else {
+                                                    include('form1ver.php');
+                                                }
+                                            } else {
+                                                include('form1ver.php');
+                                            }
+                                        } else {
+                                            unset($_SESSION['cardnumber_outside1']);
+                            ?>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    Swal.fire({
+                                                        title: 'Piano sudah pernah di cek!',
+                                                        html: 'Silahkan menghubungi checker sebelumnya<br><b><?= $data3['c_checker1'] ?></b>',
+                                                        type: 'info',
+                                                        confirmButtonText: 'OK'
+                                                    }).then(function() {
+                                                        window.location = 'index.php';
+                                                    });
+                                                });
+                                            </script>
+                                        <?php
+                                        }
+                                    } else {
+                                        // cek jika sudah ada isi
+                                        $sql4 = mysqli_query($connect_pro, "SELECT c_finishoutcheck1 FROM formng_register WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                        $data4 = mysqli_fetch_array($sql4);
+
+                                        if (empty($data4['c_finishoutcheck1'])) {
+                                            $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                            $data5 = mysqli_fetch_array($sql5);
+
+                                            if (empty($data5)) {
+                                                include('form1.php');
+                                            } else {
+                                                include('form1ver.php');
+                                            }
+                                        } else {
+                                            include('form1ver.php');
+                                        }
+                                    }
+                                } elseif ($data2['c_category'] == 'f') {
+                                    $sql3 = mysqli_query($connect_pro, "SELECT c_checker1 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                    $data3 = mysqli_fetch_array($sql3);
+                                    if (!empty($data3)) {
+                                        $sql3 = mysqli_query($connect_pro, "SELECT c_checker1 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                        $data3 = mysqli_fetch_array($sql3);
+                                        if ($data3['c_checker1'] == $_SESSION['nama']) {
+                                            // cek jika sudah ada isi
+                                            $sql4 = mysqli_query($connect_pro, "SELECT c_finishoutcheck1 FROM formng_register WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                            $data4 = mysqli_fetch_array($sql4);
+
+                                            if (empty($data4['c_finishoutcheck1'])) {
+                                                $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                                $data5 = mysqli_fetch_array($sql5);
+
+                                                if (empty($data5)) {
+                                                    include('form2.php');
+                                                } else {
+                                                    include('form2ver.php');
+                                                }
+                                            } else {
+                                                include('form2ver.php');
+                                            }
+                                        } else {
+                                            unset($_SESSION['cardnumber_outside1']);
+                                        ?>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    Swal.fire({
+                                                        title: 'Piano sudah pernah di cek!',
+                                                        html: 'Silahkan menghubungi checker sebelumnya<br><b><?= $data3['c_checker1'] ?></b>',
+                                                        type: 'info',
+                                                        confirmButtonText: 'OK'
+                                                    }).then(function() {
+                                                        window.location = 'index.php';
+                                                    });
+                                                });
+                                            </script>
+                                <?php
+                                        }
+                                    } else {
+                                        // cek jika sudah ada isi
+                                        $sql4 = mysqli_query($connect_pro, "SELECT c_finishoutcheck1 FROM formng_register WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                        $data4 = mysqli_fetch_array($sql4);
+
+                                        if (empty($data4['c_finishoutcheck1'])) {
+                                            $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside1]'");
+                                            $data5 = mysqli_fetch_array($sql5);
+
+                                            if (empty($data5)) {
+                                                include('form2.php');
+                                            } else {
+                                                include('form2ver.php');
+                                            }
+                                        } else {
+                                            include('form2ver.php');
+                                        }
+                                    }
+                                }
+                            } else {
+                                unset($_SESSION['cardnumber_outside1']);
+                                ?>
+                                <script>
+                                    $(document).ready(function() {
+                                        Swal.fire({
+                                            title: 'Kode GMC tidak ditemukan',
+                                            text: 'Silahkan menghubungi management!',
+                                            type: 'info',
+                                            confirmButtonText: 'OK'
+                                        }).then(function() {
+                                            window.location = 'index.php';
+                                        });
+                                    });
+                                </script>
+                <?php
                             }
                         }
                     }
                 }
-
-
                 ?>
                 <!-- isi hasil scan slip number -->
 
