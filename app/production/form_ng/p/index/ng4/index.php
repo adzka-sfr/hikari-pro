@@ -2,6 +2,9 @@
 include('../../app_name.php');
 include('../koneksi.php');
 
+if ($_SESSION['role'] != 'pic out check3') {
+    echo "<script>window.location='" . base_url('dashboard/') . "';</script>";
+}
 ?>
 <script>
     var el = document.getElementById('overlayBtn');

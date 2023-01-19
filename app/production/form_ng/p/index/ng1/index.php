@@ -2,6 +2,10 @@
 include('../../app_name.php');
 include('../koneksi.php');
 include('config.php');
+
+if ($_SESSION['role'] != 'pic in check') {
+    echo "<script>window.location='" . base_url('dashboard/') . "';</script>";
+}
 ?>
 <script>
     var el = document.getElementById('overlayBtn');
@@ -209,6 +213,7 @@ include('config.php');
                     if ($ptng == 'U' or $ptng == 'u') {
                         // == CEK PADA K-Staff == //
                         $acard = $_SESSION['cardnumber'];
+                        $acard = strtoupper($acard);
                         $sql1 =
                             "SELECT B_ACTY.D0610.PLNNO 
                                 , B_ACTY.D0610.ACARDNO 

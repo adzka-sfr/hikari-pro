@@ -7,7 +7,7 @@ $pass = $_POST['pass'];
 //query
 $query  = "SELECT * FROM auth WHERE id='$id' AND pass='$pass'";
 $result     = mysqli_query($connect, $query);
-$row         = mysqli_fetch_array($result);
+$row   = mysqli_fetch_array($result);
 
 if (!empty($row)) {
     $_SESSION['id'] = $row['id'];
