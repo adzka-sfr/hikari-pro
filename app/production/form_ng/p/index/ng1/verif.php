@@ -320,7 +320,7 @@
         ?>
             <div class="row">
                 <div class="col-12">
-                    <input required name="agree" value="agree" type="checkbox"> Saya yakin piano <b><?= $_SESSION['pianoname_inside'] ?></b> sudah dilakukan repair dengan semestinya
+                    <input <?= $send_dis ?> required name="agree" value="agree" type="checkbox"> Saya yakin piano <b><?= $_SESSION['pianoname_inside'] ?></b> sudah dilakukan repair dengan semestinya
                 </div>
             </div>
             <br>

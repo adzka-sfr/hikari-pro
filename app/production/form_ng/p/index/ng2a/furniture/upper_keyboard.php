@@ -248,7 +248,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-12 tableFixHead-3">
+    <div class="col-12">
         <table class="table table-striped table-bordered">
             <thead style="text-align: center;">
                 <th style="width: 10%;">No</th>

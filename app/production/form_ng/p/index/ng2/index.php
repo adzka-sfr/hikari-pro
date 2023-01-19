@@ -132,7 +132,7 @@ include('../koneksi.php');
                 <div class="dashboard_graph" style="padding-top: 10px;">
                     <div class="row">
                         <div class="col-12">
-                            <h3>Outside Check <span style="font-size: 10px;">(Checker now : <?= $_SESSION['nama'] ?>)</span> </h3>
+                            <h3>Outside Check 1 <span style="font-size: 10px;">(Checker now : <?= $_SESSION['nama'] ?>)</span> </h3>
                             <div class="separator"></div>
                         </div>
                     </div>

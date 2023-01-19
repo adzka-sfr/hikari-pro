@@ -96,7 +96,7 @@
                             // pemberian warna background tr
                             $i++;
                             if ($i % 2 == 0) {
-                                $br = 'style = "background-color: #F2F2F2;"';
+                                $br = '';
                             } else {
                                 $br = '';
                             }
@@ -107,13 +107,19 @@
 
                             if ($data2['c_status'] == 'NG') {
                                 $ng++;
+
+                                if ($data2['c_repair'] == '') {
+                                    $fixed = '#B50303';
+                                } else {
+                                    $fixed = '#4A9422';
+                                }
                         ?>
 
                                 <!-- baris n -->
                                 <tr <?= $br ?>>
                                     <td style="text-align: center;" rowspan="2"><?= $i ?></td>
                                     <td rowspan="2"><?= $data3['c_item'] ?></td>
-                                    <td colspan="2" style="text-align: center;"><?= $data2['c_detail'] ?></td>
+                                    <td colspan="2" style="text-align: center; font-weight: bold; color: #fff; background-color: <?= $fixed ?>;"><?= $data2['c_detail'] ?></td>
                                 </tr>
                                 <tr <?= $br ?>>
 

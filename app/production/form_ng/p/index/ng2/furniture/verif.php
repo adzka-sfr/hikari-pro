@@ -374,13 +374,37 @@ if (isset($_POST['str'])) {
                     });
                 });
             </script>
-<?php
+        <?php
         }
     } else {
         $drn = date('Y-m-d H:i:s', strtotime($now));
         $sql1 = mysqli_query($connect_pro, "SELECT c_gmc FROM formng_register WHERE c_serialnumber = '$serial_number'");
         $data1 = mysqli_fetch_array($sql1);
-        mysqli_query($connect_pro, "INSERT INTO formng_resultro SET c_serialnumber = '$serial_number', c_pianoname = '$piano_name',c_gmc = '$data1[c_gmc]', c_inspectiondate = '$drn', c_checker = '$_SESSION[nama]', c_process = 'oc1'");
+        $ppp1 = mysqli_query($connect_pro, "INSERT INTO formng_resultro SET c_serialnumber = '$serial_number', c_pianoname = '$piano_name',c_gmc = '$data1[c_gmc]', c_inspectiondate = '$drn', c_checker = '$_SESSION[nama]', c_process = 'oc1'");
+        if ($ppp1) {
+        ?>
+            <script>
+                $(document).ready(function() {
+                    Swal.fire({
+                        title: 'Success',
+                        html: 'Piano <br><b><?= $piano_name ?></b><br> has been sent to Repair !',
+                        type: 'success',
+                        confirmButtonText: 'OK',
+                        allowOutsideClick: false
+                        // timer: 2000,
+                        // showCancelButton: false,
+                        // showConfirmButton: false
+                    }).then(function() {
+                        // disini diarahkan ke halaman print dulu baru unset session dan balik ke halaman index
+                        <?php
+                        // unset($_SESSION['cardnumber']);
+                        ?>
+                        window.location = 'index.php';
+                    });
+                });
+            </script>
+<?php
+        }
     }
 }
 ?>

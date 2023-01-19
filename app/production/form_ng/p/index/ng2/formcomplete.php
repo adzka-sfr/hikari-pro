@@ -188,6 +188,7 @@
                         // showCancelButton: false,
                         // showConfirmButton: false
                     }).then(function() {
+                        <?php $_SESSION['queue'] = 'tbo'; ?>
                         window.location = 'index.php';
                     });
                 });
