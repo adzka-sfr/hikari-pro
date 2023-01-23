@@ -66,6 +66,11 @@
         language: "id"
     });
 
+    $('.ngen').select2({
+        placeholder: "Select Serial Number",
+        language: "id"
+    });
+
     $('.halocab').select2({
         placeholder: "Select cabinet",
         allowClear: true,
