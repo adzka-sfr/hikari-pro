@@ -626,7 +626,7 @@
                                     ?>
                                     <div class="row">
                                         <div class="col-12">
-                                            <input <?= $dis ?> required name="agree" value="agree" type="checkbox"> Saya yakin piano <b><?= $piano_name ?></b> sudah dilakukan repair dengan semestinya <?= $count_ng1 ?>
+                                            <input <?= $dis ?> required name="agree" value="agree" type="checkbox"> Saya yakin piano <b><?= $piano_name ?></b> sudah dilakukan repair dengan semestinya
                                         </div>
                                     </div>
                                     <div class="row">

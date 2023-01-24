@@ -51,7 +51,7 @@ include('../koneksi.php');
               </ul>
             </div>
 
-            <div class="menu_section">
+            <!-- <div class="menu_section">
               <h3>Employee</h3>
               <ul class="nav side-menu">
                 <li><a><i class="fa fa-gears"></i> Settings <span class="fa fa-chevron-down"></span></a>
@@ -61,12 +61,12 @@ include('../koneksi.php');
                   </ul>
                 </li>
               </ul>
-            </div>
+            </div> -->
           </div>
           <!-- /sidebar menu -->
 
           <!-- /menu footer buttons -->
-          <div class="sidebar-footer hidden-small">
+          <!-- <div class="sidebar-footer hidden-small">
             <a style="color: inherit;" href="<?= base_url('dashboard') ?>" data-toggle="tooltip" data-placement="top" title="Dashboard">
               <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             </a>
@@ -79,7 +79,7 @@ include('../koneksi.php');
             <a data-toggle="tooltip" data-placement="top" title="Logout" href="<?= base_url('auth/act_logout.php') ?>">
               <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </a>
-          </div>
+          </div> -->
           <!-- /menu footer buttons -->
         </div>
       </div>

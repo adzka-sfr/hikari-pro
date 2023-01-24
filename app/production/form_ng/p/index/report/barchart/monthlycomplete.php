@@ -152,7 +152,7 @@ $count_ng = count($ratio_ng);
         yAxis: [{
             type: 'value',
             min: 0,
-            max: 100,
+            max: 150,
             axisLabel: {
                 formatter: '{value}'
             },

@@ -66,7 +66,7 @@
                             </div>
                             <di class="row">
                                 <div class="col-md-12" style="text-align: center;">
-                                    Completeness
+                                    Completeness 3
                                 </div>
                             </di>
                         </th>
