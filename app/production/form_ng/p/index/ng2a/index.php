@@ -147,7 +147,7 @@ if ($_SESSION['role'] != 'repair out check') {
 
                                 <div class="col-md-4 col-sm-4  form-group has-feedback">
                                     <form method="POST">
-                                        <input type="text" name="acard" class="form-control has-feedback-left" placeholder="Serial No">
+                                        <input type="text" name="acard" class="form-control has-feedback-left" placeholder="Serial No" autofocus>
                                         <span class="fa fa-qrcode form-control-feedback left"></span>
                                     </form>
                                 </div>

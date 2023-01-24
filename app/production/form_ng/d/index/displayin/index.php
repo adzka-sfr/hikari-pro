@@ -2,7 +2,7 @@
 include('../../../../../../_header.php');
 include('../../app_name.php');
 ?>
-
+<script src="<?= base_url('_assets/src/add/sweetalert2.all.min.js') ?>"></script>
 
 <body class="nav-md footer_fixed" style="background-color: #ffffff;">
     <div class="loading" style="background-color:#263238 ;">
@@ -54,7 +54,7 @@ include('../../app_name.php');
                 <div class="col-4"></div>
                 <div class="col-md-4 col-sm-4  form-group has-feedback" style="text-align: center;">
                     <form method="POST">
-                        <input type="text" name="acard" class="form-control has-feedback-left" placeholder="A-Card No / Serial No" autofocus>
+                        <input type="text" name="cardnumber" class="form-control has-feedback-left" placeholder="A-Card No / Serial No" autofocus>
                         <span class="fa fa-barcode form-control-feedback left"></span>
                     </form>
                 </div>
@@ -65,26 +65,128 @@ include('../../app_name.php');
         <div class="dashboard_graph">
             <div class="row">
                 <?php
-                if (isset($_POST['acard'])) {
-                    $_SESSION['acard'] = $_POST['acard'];
+                if (isset($_POST['cardnumber'])) {
+                    $_SESSION['cardnumber'] = $_POST['cardnumber'];
                 }
 
-                if (empty($_SESSION['acard'])) {
+                if (empty($_SESSION['cardnumber'])) {
                     include 'nothing.php';
                 } else {
                     $ptng = substr($_SESSION['cardnumber'], 0, 1);
                     if ($ptng == 'U' or $ptng == 'u') {
-                        // cntrol number
-                        $sql1 = mysqli_query($connect_pro, "SELECT * FROM formng_register WHERE c_ctrlnumber = '$_SESSION[acard]'");
-                        $data1 = mysqli_fetch_array($sql1);
+                        // CONTROL NUMBER //
+                        $sql = mysqli_query($connect_pro, "SELECT res.id FROM formng_resulti res JOIN formng_register reg ON res.c_serialnumber = reg.c_serialnumber WHERE reg.c_ctrlnumber = '$_SESSION[cardnumber]'");
+                        $data = mysqli_fetch_array($sql);
 
-
-                        include 'data.php';
-                    } elseif ($ptng == 'J' or $ptng == 'j') {
-                        // serial number
-                    } else {
+                        if (!empty($data['id'])) {
+                            // JIKA DATA BENAR
+                            $sql = mysqli_query($connect_pro, "SELECT * FROM formng_register WHERE c_ctrlnumber = '$_SESSION[cardnumber]'");
+                            $data = mysqli_fetch_array($sql);
+                            $_SESSION['cardnumber'] = $data['c_serialnumber'];
                 ?>
-                        <!-- bikin popup disini jika asal scan -->
+                            <script>
+                                $(document).ready(function() {
+                                    Swal.fire({
+                                        title: 'Data Found!',
+                                        text: 'Ada data yang mulia',
+                                        type: 'success',
+                                        timer: 2000,
+                                        showCancelButton: false,
+                                        showConfirmButton: false
+                                    });
+                                });
+                            </script>
+                        <?php
+                            include 'data.php';
+                        } else {
+                            // JIKA DATA SALAH
+                        ?>
+                            <script>
+                                $(document).ready(function() {
+                                    Swal.fire({
+                                        title: 'Tidak ada data yang mulia!',
+                                        text: 'hehe',
+                                        type: 'error',
+                                        timer: 2000,
+                                        showCancelButton: false,
+                                        showConfirmButton: false
+                                    }).then(function() {
+                                        <?php
+                                        unset($_SESSION['cardnumber']);
+                                        ?>
+                                        window.location = 'index.php';
+                                    });
+                                });
+                            </script>
+                        <?php
+                        }
+                    } elseif ($ptng == 'J' or $ptng == 'j') {
+                        // SERIAL NUMBER //
+                        $sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulti WHERE c_serialnumber = '$_SESSION[cardnumber]'");
+                        $data = mysqli_fetch_array($sql);
+
+                        if (!empty($data['id'])) {
+                            // JIKA DATA BENAR
+                            $sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulti WHERE c_serialnumber = '$_SESSION[cardnumber]'");
+                            $data = mysqli_fetch_array($sql);
+                            $_SESSION['cardnumber'] = $data['c_serialnumber'];
+                        ?>
+                            <script>
+                                $(document).ready(function() {
+                                    Swal.fire({
+                                        title: 'Ada data yang mulia!',
+                                        text: 'hehe',
+                                        type: 'success',
+                                        timer: 2000,
+                                        showCancelButton: false,
+                                        showConfirmButton: false
+                                    });
+                                });
+                            </script>
+                        <?php
+                            include 'data.php';
+                        } else {
+                            // JIKA DATA SALAH
+                        ?>
+                            <script>
+                                $(document).ready(function() {
+                                    Swal.fire({
+                                        title: 'Tidak ada data yang mulia!',
+                                        text: 'hehe',
+                                        type: 'error',
+                                        timer: 2000,
+                                        showCancelButton: false,
+                                        showConfirmButton: false
+                                    }).then(function() {
+                                        <?php
+                                        unset($_SESSION['cardnumber']);
+                                        ?>
+                                        window.location = 'index.php';
+                                    });
+                                });
+                            </script>
+                        <?php
+                        }
+                    } else {
+                        // ASAL SCAN //
+                        ?>
+                        <script>
+                            $(document).ready(function() {
+                                Swal.fire({
+                                    title: 'Data Not Found!',
+                                    text: 'Tidak bisa asal scan yang mulia!',
+                                    type: 'error',
+                                    timer: 2000,
+                                    showCancelButton: false,
+                                    showConfirmButton: false
+                                }).then(function() {
+                                    <?php
+                                    unset($_SESSION['cardnumber']);
+                                    ?>
+                                    window.location = 'index.php';
+                                });
+                            });
+                        </script>
                 <?php
                     }
                 }
@@ -94,6 +196,28 @@ include('../../app_name.php');
 
     </div>
     <!-- /page content -->
+
+    <!-- ini popup yg udah mateng dengan auto close -->
+    <script>
+        // $(document).ready(function() {
+        //     Swal.fire({
+        //         title: 'Data Not Found!',
+        //         text: 'Login success!',
+        //         type: 'error',
+        //         timer: 2000,
+        //         showCancelButton: false,
+        //         showConfirmButton: false
+        //     }).then(function() {
+        //         <?php
+                    //         unset($_SESSION['cardnumber']);
+                    //         
+                    ?>
+        //         window.location = 'index.php';
+        //     });
+        // });
+    </script>
+    <!-- ini popup yg udah mateng dengan auto close -->
+
 
     <?php
     include('../../../../../../_footer.php'); ?>

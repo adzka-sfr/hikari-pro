@@ -166,30 +166,30 @@
             $c_checker = $_SESSION['nama'];
 
             $sql1 = mysqli_query($connect_pro, "INSERT INTO formng_resulti SET c_serialnumber = '$c_serialnumber', c_pianoname = '$c_pianoname', c_item = '$c_item', c_status = '$c_status', c_detail = '$c_detail', c_inspectiondate = '$c_inspectiondate', c_checker = '$c_checker'");
-            if ($sql1) {
+        }
+        if ($sql1) {
     ?>
-                <script>
-                    $(document).ready(function() {
-                        Swal.fire({
-                            title: 'Good Job',
-                            html: 'Inside check for <br><b><?= $_SESSION['pianoname_inside'] ?></b><br> has been recorded !',
-                            type: 'success',
-                            confirmButtonText: 'OK',
-                            allowOutsideClick: false
-                            // timer: 2000,
-                            // showCancelButton: false,
-                            // showConfirmButton: false
-                        }).then(function() {
-                            // disini diarahkan ke halaman print dulu baru unset session dan balik ke halaman index
-                            <?php
-                            unset($_SESSION['cardnumber']);
-                            ?>
-                            window.location = 'index.php';
-                        });
+            <script>
+                $(document).ready(function() {
+                    Swal.fire({
+                        title: 'Good Job',
+                        html: 'Inside check for <br><b><?= $_SESSION['pianoname_inside'] ?></b><br> has been recorded !',
+                        type: 'success',
+                        confirmButtonText: 'OK',
+                        allowOutsideClick: false
+                        // timer: 2000,
+                        // showCancelButton: false,
+                        // showConfirmButton: false
+                    }).then(function() {
+                        // disini diarahkan ke halaman print dulu baru unset session dan balik ke halaman index
+                        <?php
+                        unset($_SESSION['cardnumber']);
+                        ?>
+                        window.location = 'index.php';
                     });
-                </script>
+                });
+            </script>
     <?php
-            }
         }
     }
     ?>
