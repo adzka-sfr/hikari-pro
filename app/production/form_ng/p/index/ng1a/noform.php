@@ -18,7 +18,7 @@
         <div class="col-12">
             <div style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 1em;">
                 <?php
-                $sql = mysqli_query($connect_pro, "SELECT DISTINCT res.c_serialnumber, reg.c_ctrlnumber FROM formng_resulti res JOIN formng_register reg ON res.c_serialnumber = reg.c_serialnumber WHERE reg.c_incheckby = '' order by c_ctrlnumber asc");
+                $sql = mysqli_query($connect_pro, "SELECT DISTINCT res.c_serialnumber, reg.c_ctrlnumber, res.c_checker FROM formng_resulti res JOIN formng_register reg ON res.c_serialnumber = reg.c_serialnumber WHERE reg.c_incheckby = '' order by c_ctrlnumber asc");
                 while ($data = mysqli_fetch_array($sql)) {
                 ?>
                     <form method="post">
@@ -27,6 +27,7 @@
                     <?php
                     if (isset($_POST['b' . $data['c_serialnumber']])) {
                         $_SESSION['in_serialprint'] = $data['c_serialnumber'];
+                        $_SESSION['checker'] = $data['c_checker'];
                     ?>
                         <script>
                             window.location = "print.php";

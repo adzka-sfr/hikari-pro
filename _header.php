@@ -302,9 +302,9 @@ if (!isset($_SESSION['id'])) {
   <!-- untuk teks blink -->
   <style>
     blink {
-      -webkit-animation: 1s linear infinite kedip;
+      -webkit-animation: 0.5s linear infinite kedip;
       /* for Safari 4.0 - 8.0 */
-      animation: 1s linear infinite kedip;
+      animation: 0.5s linear infinite kedip;
     }
 
     /* for Safari 4.0 - 8.0 */

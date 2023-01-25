@@ -7,7 +7,7 @@ session_start();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Repair Inside</title>
+    <title>Repair Outside</title>
     <link rel="icon" href="logo_icon.png">
     <link href="script/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript" src="script/jquery.min.js"></script>
@@ -128,7 +128,8 @@ session_start();
     $checker = $_SESSION['checker'];
 
     //get data ng
-    $sql = mysqli_query($connect_pro, "SELECT c.c_item, r.c_detail FROM formng_resulti r JOIN formng_checkinside c ON r.c_item = c.c_code WHERE r.c_serialnumber = '$serial' AND r.c_status = 'NG'");
+    $sql = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber = '$serial' AND c_ng2 != '' order by c_arealabel");
+    $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_resultc WHERE c_serialnumber = '$serial' AND c_result2 = 'NO'");
 
     ?>
 
@@ -144,7 +145,7 @@ session_start();
     <div class="page">
 
         <!-- Content -->
-        <h6 style="text-align: center;">Inside Check</h6>
+        <h6 style="text-align: center;">Outside Check <?= $_SESSION['outside'] ?></h6>
         <input id="text" type="hidden" value="<?= $serial ?>" /><br />
         <div style="text-align: center;">
             <div style="padding-top: 0px; font-size:15px; "><b><?= $checker ?></b></div>
@@ -153,17 +154,42 @@ session_start();
         </div>
         <hr>
         <div style="font-size: 12px; padding-left: 0px; margin-left: 0px;">
+            <h6 style="padding-left: 10px;">Outside NG</h6>
             <ul>
                 <?php
                 while ($data = mysqli_fetch_array($sql)) {
+                    if ($data['c_section'] == '1 top board outside') {
+                        $section = 'TBO';
+                    } elseif ($data['c_section'] == '2 top board inside') {
+                        $section = 'TBI';
+                    } elseif ($data['c_section'] == '3 upper keyboard') {
+                        $section = 'UK';
+                    } elseif ($data['c_section'] == '4 body') {
+                        $section = 'B';
+                    } elseif ($data['c_section'] == '5 body back') {
+                        $section = 'BB';
+                    }
                 ?>
-                    <li><?= $data['c_item'] ?><br><b><?= $data['c_detail'] ?></b></li>
+                    <li>(<b><?= $section ?>_<?= $data['c_arealabel'] ?></b>) <?= $data['c_cabinet'] ?><br><b><?= $data['c_ng2'] ?></b></li>
                 <?php
                 }
                 ?>
             </ul>
         </div>
         <hr>
+
+        <div style="font-size: 12px; padding-left: 0px; margin-left: 0px;">
+            <h6 style="padding-left: 10px;">Completeness NG</h6>
+            <ul>
+                <?php
+                while ($data = mysqli_fetch_array($sql2)) {
+                ?>
+                    <li><?= $data['c_partname'] ?></li>
+                <?php
+                }
+                ?>
+            </ul>
+        </div>
 
     </div>
 

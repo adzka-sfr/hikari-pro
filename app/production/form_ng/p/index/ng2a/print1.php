@@ -125,9 +125,10 @@ session_start();
     <?php
     $connect_pro = new mysqli("localhost", "root", "", "hikari_project");
     $serial = $_SESSION['in_serialprint'];
+    $checker = $_SESSION['checker'];
 
     //get data ng
-    $sql = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber = '$serial' AND c_ng1 != ''");
+    $sql = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber = '$serial' AND c_ng1 != '' order by c_arealabel");
     $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_resultc WHERE c_serialnumber = '$serial' AND c_result1 = 'NO'");
 
     ?>
@@ -147,6 +148,7 @@ session_start();
         <h6 style="text-align: center;">Outside Check <?= $_SESSION['outside'] ?></h6>
         <input id="text" type="hidden" value="<?= $serial ?>" /><br />
         <div style="text-align: center;">
+            <div style="padding-top: 0px; font-size:15px; "><b><?= $checker ?></b></div>
             <div id="qrcode" style="width:25mm; height:25mm; margin-left: 27%;"></div>
             <div style="padding-top: 0px; font-size:15px; "><b><?= $serial ?></b></div>
         </div>
@@ -156,8 +158,19 @@ session_start();
             <ul>
                 <?php
                 while ($data = mysqli_fetch_array($sql)) {
+                    if ($data['c_section'] == '1 top board outside') {
+                        $section = 'TBO';
+                    } elseif ($data['c_section'] == '2 top board inside') {
+                        $section = 'TBI';
+                    } elseif ($data['c_section'] == '3 upper keyboard') {
+                        $section = 'UK';
+                    } elseif ($data['c_section'] == '4 body') {
+                        $section = 'B';
+                    } elseif ($data['c_section'] == '5 body back') {
+                        $section = 'BB';
+                    }
                 ?>
-                    <li><?= $data['c_cabinet'] ?><br><b><?= $data['c_ng1'] ?></b></li>
+                    <li>(<b><?= $section ?>_<?= $data['c_arealabel'] ?></b>) <?= $data['c_cabinet'] ?><br><b><?= $data['c_ng1'] ?></b></li>
                 <?php
                 }
                 ?>
