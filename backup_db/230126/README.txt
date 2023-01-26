@@ -1,0 +1,1 @@
+Isi database : data lokal adzka
