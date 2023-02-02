@@ -75,6 +75,10 @@
         placeholder: "Select cabinet",
         allowClear: true,
     });
+
+    $('.cari_basic').select2({
+        placeholder: "Select from below",
+    });
 </script>
 
 <!-- untuk datatables -->
