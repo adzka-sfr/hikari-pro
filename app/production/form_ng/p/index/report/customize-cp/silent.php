@@ -70,8 +70,9 @@
             $c_partname = $_POST['prosil'];
             $c_type = 's';
             $c_code_lama = 'sil';
+            $c_status = 'enable';
 
-            $dli = mysqli_query($connect_pro, "INSERT INTO formng_checkcomplete SET c_partname = '$c_partname', c_type = '$c_type', c_code = '$c_code_lama'");
+            $dli = mysqli_query($connect_pro, "INSERT INTO formng_checkcomplete SET c_partname = '$c_partname', c_type = '$c_type', c_code = '$c_code_lama', c_status = '$c_status'");
 
             $sql1 = mysqli_query($connect_pro, "SELECT MAX(id) as maks FROM formng_checkcomplete");
             $data1 = mysqli_fetch_array($sql1);

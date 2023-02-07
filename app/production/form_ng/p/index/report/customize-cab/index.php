@@ -67,7 +67,8 @@
         <?php
         if (isset($_POST['addcab'])) {
             $c_name = $_POST['cabin'];
-            $dli = mysqli_query($connect_pro, "INSERT INTO formng_listcabinet SET c_name = '$c_name'");
+            $c_status = 'enable';
+            $dli = mysqli_query($connect_pro, "INSERT INTO formng_listcabinet SET c_name = '$c_name', c_status = '$c_status'");
 
             if ($dli) {
         ?>

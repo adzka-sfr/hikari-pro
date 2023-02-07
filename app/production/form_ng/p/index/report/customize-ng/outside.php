@@ -85,7 +85,8 @@
             $c_area = 'outside';
             $c_ng = $_POST['ngout'];
             $c_dept = $_POST['dept'];
-            $dli = mysqli_query($connect_pro, "INSERT INTO formng_listng SET c_area = '$c_area', c_ng = '$c_ng', c_dept = '$c_dept'");
+            $c_status = 'enable';
+            $dli = mysqli_query($connect_pro, "INSERT INTO formng_listng SET c_area = '$c_area', c_ng = '$c_ng', c_dept = '$c_dept', c_status = '$c_status'");
 
             if ($dli) {
         ?>

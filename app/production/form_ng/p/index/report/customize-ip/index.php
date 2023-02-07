@@ -69,8 +69,9 @@
         if (isset($_POST['addprocin'])) {
             $c_item = $_POST['procin'];
             $c_code_lama = 'in';
+            $c_status = 'enable';
 
-            $dli = mysqli_query($connect_pro, "INSERT INTO formng_checkinside SET c_item = '$c_item', c_code = '$c_code_lama'");
+            $dli = mysqli_query($connect_pro, "INSERT INTO formng_checkinside SET c_item = '$c_item', c_code = '$c_code_lama', c_status = '$c_status'");
 
             $sql1 = mysqli_query($connect_pro, "SELECT MAX(id) as maks FROM formng_checkinside");
             $data1 = mysqli_fetch_array($sql1);

@@ -73,8 +73,9 @@
         if (isset($_POST['addin'])) {
             $c_area = 'inside';
             $c_ng = $_POST['ngin'];
+            $c_status = 'enable';
             $c_dept = 'INSIDE';
-            $dli = mysqli_query($connect_pro, "INSERT INTO formng_listng SET c_area = '$c_area', c_ng = '$c_ng', c_dept = '$c_dept'");
+            $dli = mysqli_query($connect_pro, "INSERT INTO formng_listng SET c_area = '$c_area', c_ng = '$c_ng', c_dept = '$c_dept', c_status = '$c_status'");
 
             if ($dli) {
         ?>
