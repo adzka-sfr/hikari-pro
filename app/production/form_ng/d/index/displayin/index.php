@@ -76,7 +76,7 @@ include('../../app_name.php');
                             $(document).ready(function() {
                                 Swal.fire({
                                     title: 'Data Found!',
-                                    text: 'Ada data yang mulia',
+                                    text: '',
                                     type: 'success',
                                     timer: 2000,
                                     showCancelButton: false,
@@ -92,8 +92,8 @@ include('../../app_name.php');
                         <script>
                             $(document).ready(function() {
                                 Swal.fire({
-                                    title: 'Tidak ada data yang mulia!',
-                                    text: 'hehe',
+                                    title: 'Data Not Found!',
+                                    text: '',
                                     type: 'error',
                                     timer: 2000,
                                     showCancelButton: false,
@@ -125,8 +125,8 @@ include('../../app_name.php');
                         <script>
                             $(document).ready(function() {
                                 Swal.fire({
-                                    title: 'Ada data yang mulia!',
-                                    text: 'hehe',
+                                    title: 'Data Found!',
+                                    text: '',
                                     type: 'success',
                                     timer: 2000,
                                     showCancelButton: false,
@@ -142,8 +142,8 @@ include('../../app_name.php');
                         <script>
                             $(document).ready(function() {
                                 Swal.fire({
-                                    title: 'Tidak ada data yang mulia!',
-                                    text: 'hehe',
+                                    title: 'Data Not Found!',
+                                    text: '',
                                     type: 'error',
                                     timer: 2000,
                                     showCancelButton: false,
@@ -152,6 +152,7 @@ include('../../app_name.php');
                                     <?php
                                     unset($_SESSION['cardnumber']);
                                     unset($_SESSION['checker']);
+                                    unset($_SESSION['pianoname']);
                                     ?>
                                     window.location = 'index.php';
                                 });
@@ -166,7 +167,7 @@ include('../../app_name.php');
                         $(document).ready(function() {
                             Swal.fire({
                                 title: 'Data Not Found!',
-                                text: 'Tidak bisa asal scan yang mulia!',
+                                text: '',
                                 type: 'error',
                                 timer: 2000,
                                 showCancelButton: false,
@@ -175,6 +176,7 @@ include('../../app_name.php');
                                 <?php
                                 unset($_SESSION['cardnumber']);
                                 unset($_SESSION['checker']);
+                                unset($_SESSION['pianoname']);
                                 ?>
                                 window.location = 'index.php';
                             });
