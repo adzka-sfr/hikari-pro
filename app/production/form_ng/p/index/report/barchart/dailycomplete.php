@@ -58,15 +58,15 @@ for ($tgl = 1; $tgl <= $sumOfDay; $tgl++) {
     $data1 = mysqli_fetch_array($sup1);
     $total_pianoe1 = $data1['total'];
 
-    $sup1 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total from formng_register where c_finishcomplete2  LIKE '$tanggal%'");
-    $data1 = mysqli_fetch_array($sup1);
-    $total_pianoe2 = $data1['total'];
+    // $sup1 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total from formng_register where c_finishcomplete2  LIKE '$tanggal%'");
+    // $data1 = mysqli_fetch_array($sup1);
+    // $total_pianoe2 = $data1['total'];
 
-    $sup1 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total from formng_register where c_finishcomplete3  LIKE '$tanggal%'");
-    $data1 = mysqli_fetch_array($sup1);
-    $total_pianoe3 = $data1['total'];
+    // $sup1 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total from formng_register where c_finishcomplete3  LIKE '$tanggal%'");
+    // $data1 = mysqli_fetch_array($sup1);
+    // $total_pianoe3 = $data1['total'];
 
-    $total_pianoe = $total_pianoe1 + $total_pianoe2 + $total_pianoe3;
+    $total_pianoe = $total_pianoe1;
 
     //get jumlah temuan cek 1
     $sup2a = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resultc WHERE c_inspectiondate1 LIKE '$tanggal%' AND c_result1 = 'NO'");
@@ -113,7 +113,7 @@ $count_ng = count($ratio_ng);
     option = {
         color: ['#4A94CD', '#E95555', '#FF7400'],
         title: {
-            text: 'Status Temuan Completeness (Daily)',
+            text: 'Status Temuan Completeness (<?= $month_judul ?>)',
         },
         tooltip: {
             trigger: 'axis',
@@ -145,6 +145,12 @@ $count_ng = count($ratio_ng);
         legend: {
             data: ['Jumlah Piano', 'Jumlah Temuan', 'Ratio NG'],
             top: 30
+        },
+        grid: {
+            left: '2%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
         },
         xAxis: [{
             type: 'category',

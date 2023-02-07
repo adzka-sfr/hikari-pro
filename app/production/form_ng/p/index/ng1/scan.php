@@ -1,6 +1,5 @@
 <?php include('../../../../../../_header.php');
 include('../../app_name.php');
-include('../koneksi.php');
 
 ?>
 <script>

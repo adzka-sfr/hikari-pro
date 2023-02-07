@@ -5,7 +5,7 @@
         $inspec_in = date('l, d M Y', strtotime($now));
         $ngin = array();
         $i = 0;
-        $sql1 = mysqli_query($connect_pro, "SELECT c_ng FROM formng_listng WHERE c_area = 'inside' ORDER BY c_ng asc");
+        $sql1 = mysqli_query($connect_pro, "SELECT c_ng FROM formng_listng WHERE c_area = 'inside' AND c_status = 'enable' ORDER BY c_ng asc");
         while ($data1 = mysqli_fetch_array($sql1)) {
             $ngin[$i] = $data1['c_ng'];
             $i++;
@@ -82,7 +82,7 @@
                     <tbody>
                         <?php
                         $i = 0;
-                        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_checkinside ORDER BY id asc");
+                        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_checkinside WHERE c_status = 'enable' ORDER BY id asc");
                         while ($data2 = mysqli_fetch_array($sql2)) {
 
                             // pemberian warna background tr

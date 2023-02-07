@@ -212,7 +212,7 @@
             $c_pianoname = $_SESSION['pianoname_repair'];
             if (!empty($_POST['ck' . $in])) {
                 $c_repairdate = date('Y-m-d H:i:s', strtotime($now));
-                $c_repair = $_SESSION['nama'];
+                $c_repair = $_SESSION['repair_name'];
                 $c_item = $_POST['c_item' . $in];
 
                 $sql1 = mysqli_query($connect_pro, "UPDATE formng_resulti SET c_repair = '$c_repair', c_repairdate = '$c_repairdate' WHERE c_serialnumber = '$c_serialnumber' AND c_item = '$c_item'");

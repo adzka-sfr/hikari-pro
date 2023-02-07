@@ -130,7 +130,7 @@ $count_ng = count($ratio_ng);
             axisPointer: {
                 type: 'shadow'
             },
-            name: 'Date',
+            name: 'Month',
             nameLocation: 'center',
             nameGap: 30, // posisi
             nameTextStyle: {

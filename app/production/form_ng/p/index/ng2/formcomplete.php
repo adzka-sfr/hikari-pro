@@ -91,7 +91,7 @@
                         <?php
                         $i = 0;
                         $ng = 0;
-                        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_checkcomplete WHERE c_type = '$_SESSION[complete_outside1]' ORDER BY id asc");
+                        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_checkcomplete WHERE c_type = '$_SESSION[complete_outside1]' AND c_status = 'enable' ORDER BY id asc");
                         while ($data2 = mysqli_fetch_array($sql2)) {
 
                             // pemberian warna background tr

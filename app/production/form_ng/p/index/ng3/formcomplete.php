@@ -91,13 +91,10 @@
                         <?php
                         $i = 0;
                         $ng = 0;
-                        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_checkcomplete WHERE c_type = '$_SESSION[complete_outside2]' ORDER BY id asc");
+                        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_resultc WHERE c_serialnumber = '$_SESSION[serialnumber_outside2]' ORDER BY id asc");
                         while ($data2 = mysqli_fetch_array($sql2)) {
 
-                            // get hasil cek completeness sebelumnya
-                            $sql3 = mysqli_query($connect_pro, "SELECT c_result1 FROM formng_resultc WHERE c_serialnumber = '$_SESSION[serialnumber_outside2]' AND c_code = '$data2[c_code]'");
-                            $data3 = mysqli_fetch_array($sql3);
-                            if ($data3['c_result1'] == 'NO') {
+                            if ($data2['c_result1'] == 'NO') {
                                 $check = '';
                             } else {
                                 $check = 'checked';

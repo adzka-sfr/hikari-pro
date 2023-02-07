@@ -138,27 +138,6 @@
                 }
             }
 
-
-            ?>
-            <!-- <div class="separator"></div> -->
-            <!-- gambar 2 -->
-            <?php
-            // include 'reguler/top_board_inside.php';
-            ?>
-            <!-- <div class="separator"></div> -->
-            <!-- gambar 3 -->
-            <?php
-            // include 'reguler/upper_keyboard.php';
-            ?>
-            <!-- <div class="separator"></div> -->
-            <!-- gambar 4 -->
-            <?php
-            // include 'reguler/body.php';
-            ?>
-            <!-- <div class="separator"></div> -->
-            <!-- gambar 4 -->
-            <?php
-            // include 'reguler/body_back.php';
             ?>
         </div>
     </div>

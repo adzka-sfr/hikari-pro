@@ -183,7 +183,7 @@
                             for ($c = 1; $c <= $no; $c++) {
                                 if (!empty($_POST['check' . $c])) {
                                     $id = $_POST['id' . $c];
-                                    $pp1 = mysqli_query($connect_pro, "UPDATE formng_resultro SET c_repairdate = '$date_in', c_picrepair = '$_SESSION[nama]' WHERE id = $id");
+                                    $pp1 = mysqli_query($connect_pro, "UPDATE formng_resultro SET c_repairdate = '$date_in', c_picrepair = '$_SESSION[repair_name]' WHERE id = $id");
                                 }
                             }
                             // update pada resulto1 dengan membedakan query berdasarkan proses yang aktif (oc1, oc2, oc3)

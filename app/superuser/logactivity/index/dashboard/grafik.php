@@ -47,10 +47,13 @@ for ($tgl = 1; $tgl <= $sumOfDay; $tgl++) {
     $tanggal = date('Y-m', strtotime($month_umpama));
     $tanggal = $tanggal . "-" . $tgl;
 
-    $sql = mysqli_query($connect_log, "SELECT COUNT(log_time) as total FROM activity_log WHERE process_name = 'login' AND log_time LIKE '$tanggal%'");
-    $data = mysqli_fetch_array($sql);
+    $jum = 0;
+    $sql = mysqli_query($connect_log, "SELECT DISTINCT employee_name FROM activity_log WHERE process_name = 'login' AND log_time LIKE '$tanggal%'");
+    while ($data = mysqli_fetch_array($sql)) {
+        $jum++;
+    }
 
-    $total_qty[$z] = $data['total'];
+    $total_qty[$z] = $jum;
     $z++;
 }
 
@@ -151,7 +154,7 @@ $count_qty = count($total_qty);
                 },
                 tooltip: {
                     valueFormatter: function(value) {
-                        return value + ' %';
+                        return value + ' user';
                     }
                 },
                 data: [<?php

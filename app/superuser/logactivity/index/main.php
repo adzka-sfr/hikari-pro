@@ -1,12 +1,13 @@
 <?php include('../../../../_header.php');
 include('../app_name.php');
 
-if ($_SESSION['id'] != "24891") { // super user
+if ($_SESSION['dept'] != "ICTM") { // super user
     echo "<script>window.location='" . base_url('dashboard') . "';</script>";
 }
 ?>
 
 <body class="nav-md footer_fixed">
+    <title>Log Activity</title>
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col menu_fixed">

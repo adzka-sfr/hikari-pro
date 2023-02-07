@@ -99,7 +99,7 @@
 if (isset($_POST['repairc'])) {
     for ($in = 1; $in <= $no; $in++) {
         $rcdate = date('Y-m-d H:i:s', strtotime($now));
-        $repairname = $_SESSION['nama'];
+        $repairname = $_SESSION['repair_name'];
         if (!empty($_POST['c' . $in])) {
             $c_code = $_POST['c' . $in];
             if ($_SESSION['last_process'] == 'oc1') {

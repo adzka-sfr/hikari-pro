@@ -18,7 +18,7 @@
                     $no++;
                     $total_ng11 = 0;
                     $total_ng22 = 0;
-                    
+
 
                     //get data pada bulan ini
                     //cek pada hasil pengecekan inside

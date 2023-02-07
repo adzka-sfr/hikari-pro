@@ -94,7 +94,7 @@ $count_ng = count($ratio_ng);
     option = {
         color: ['#4A94CD', '#E95555', '#FF7400'],
         title: {
-            text: 'Status Temuan Inside (Daily)',
+            text: 'Status Temuan Inside (<?= $month_judul ?>)',
         },
         tooltip: {
             trigger: 'axis',
@@ -126,6 +126,12 @@ $count_ng = count($ratio_ng);
         legend: {
             data: ['Jumlah Piano', 'Jumlah Temuan', 'Ratio NG'],
             top: 30
+        },
+        grid: {
+            left: '2%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
         },
         xAxis: [{
             type: 'category',

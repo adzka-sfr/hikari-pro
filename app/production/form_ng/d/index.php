@@ -24,9 +24,9 @@ if (empty($row_prev)) {
         $_SESSION['app_error'] = $data['c_name'];
         echo "<script>window.location='" . base_url('_error') . "';</script>";
     } elseif ($data['c_status'] == 'deploy') {
-        if ($_SESSION['role'] == 'display_in' and $_SESSION['dept'] == 'Assembly UP') {
+        if ($_SESSION['role'] == 'display_in' and $_SESSION['dept'] == 'Quality Control') {
             echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/index/displayin') . "';</script>";
-        } elseif ($_SESSION['role'] == 'display_out' and $_SESSION['dept'] == 'Assembly UP') {
+        } elseif ($_SESSION['role'] == 'display_out' and $_SESSION['dept'] == 'Quality Control') {
             echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/index/displayout') . "';</script>";
         } else {
             // jika role dan departemen tidak sesuai namun masih ada pada tabel pevilege
