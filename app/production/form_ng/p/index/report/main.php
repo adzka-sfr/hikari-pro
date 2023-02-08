@@ -155,9 +155,9 @@ include('../../app_name.php');
                                     <img src="<?= base_url('_assets/production/images/profile.png') ?>" alt=""><?php echo $_SESSION['nama'] ?>
                                 </a>
                                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="_profile/"> Profile</a>
-                                    <a class="dropdown-item" href="_settings/">Settings</a>
-                                    <a class="dropdown-item" href="_help/">Help</a>
+                                    <!-- <a class="dropdown-item" href="_profile/"> Profile</a> -->
+                                    <!-- <a class="dropdown-item" href="_settings/">Settings</a> -->
+                                    <!-- <a class="dropdown-item" href="_help/">Help</a> -->
                                     <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </div>
                             </li>

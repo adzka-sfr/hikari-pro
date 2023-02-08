@@ -41,6 +41,7 @@
                 <?php
                 if (isset($_POST['reset'])) {
                     unset($_SESSION['cardnumber_outside3']);
+                    unset($_SESSION['note3']);
                 }
                 ?>
             </div>

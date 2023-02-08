@@ -41,6 +41,7 @@
                 <?php
                 if (isset($_POST['reset'])) {
                     unset($_SESSION['cardnumber_outside2']);
+                    unset($_SESSION['note2']);
                 }
                 ?>
             </div>
@@ -126,7 +127,7 @@ if (empty($_SESSION['cardnumber_outside2'])) {
             } else {
                 $sql1 = mysqli_query($connect_pro, "SELECT r.c_serialnumber, r.c_pianoname, c.c_category2 FROM formng_register r JOIN formng_category c ON r.c_gmc = c.c_gmc WHERE r.c_serialnumber = '$_SESSION[cardnumber_outside2]'");
                 $data1 = mysqli_fetch_array($sql1);
-                
+
                 $_SESSION['serialnumber_outside2'] = $data1['c_serialnumber'];
                 $_SESSION['pianoname_outside2'] = $data1['c_pianoname'];
                 $_SESSION['complete_outside2'] = $data1['c_category2'];
@@ -226,7 +227,7 @@ if (empty($_SESSION['cardnumber_outside2'])) {
                                     include('form1ver.php');
                                 }
                             } else {
-                                include('form1ver.php');                 
+                                include('form1ver.php');
                             }
                         }
                     } elseif ($data2['c_category'] == 'f') {

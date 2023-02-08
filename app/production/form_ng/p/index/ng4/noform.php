@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-12">
-            <h5><u>Don't Forget to Validation, <?= $_SESSION['nama'] ?> !</u></h5>
+            <h5><u>Don't Forget to Validation, <?= $_SESSION['nama'] ?> !<button onclick="window.location.reload()" class="btn btn-primary ml-4"><i class="fa fa-refresh"></i></button></u></h5>
             <br>
         </div>
     </div>

@@ -11,6 +11,56 @@
         $i++;
     }
     ?>
+    <?php
+    if (empty($_SESSION['note2'])) {
+    ?>
+        <script>
+            (async () => {
+                const {
+                    value: text
+                } = await Swal.fire({
+                    input: 'textarea',
+                    title: 'Apakah ada catatan dari repair?',
+                    inputPlaceholder: 'Contoh : Fall Board ganti, Fall Center ganti, dll',
+                    inputAttributes: {
+                        'aria-label': 'Type your message here'
+                    },
+                    showCancelButton: true,
+                    allowOutsideClick: false,
+                    cancelButtonText: 'Close',
+                    confirmButtonText: 'Save'
+                })
+
+                if (text) {
+                    $.ajax({
+                        url: "note.php",
+                        type: "POST",
+                        data: {
+                            note: text
+                        },
+                        cache: false,
+                        success: function(dataResult) {
+                            var dataResult = JSON.parse(dataResult);
+                            if (dataResult.statusCode == 200) {
+                                Swal.fire({
+                                    title: 'Success',
+                                    html: 'Catatan sudah di rekam !',
+                                    type: 'success',
+                                    confirmButtonText: 'Ok',
+                                    allowOutsideClick: false
+                                });
+                            }
+
+                        }
+                    });
+                }
+            })()
+        </script>
+    <?php
+        $_SESSION['note2'] = 'isi';
+    }
+    ?>
+
     <div class="row">
         <div class="col-12">
             <h3>Completeness Check 2</h3>
