@@ -246,6 +246,76 @@
                 <h2><u>Body</u></h2>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12" style="text-align: right;">
+                <?php
+                $sql = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$serial_number' AND c_section = '$section' AND c_picrepair = ''");
+                $data = mysqli_fetch_array($sql);
+                if (empty($data['id'])) {
+                ?>
+                    <button disabled name="ra_b" class="btn btn-sm btn-primary">Repair All in B</button>
+                <?php
+                } else {
+                ?>
+                    <form method="post">
+                        <input type="hidden" value="<?= $serial_number ?>" id="v_serial">
+                        <input type="hidden" value="<?= $section ?>" id="v_section">
+                        <button name="ra_b" class="btn btn-sm btn-primary">Repair All in B</button>
+                    </form>
+
+                    <?php
+                    if (isset($_POST['ra_b'])) {
+                    ?>
+                        <script>
+                            Swal.fire({
+                                title: 'Repair semua pada B?',
+                                text: "Tindakan ini bersifat permanen!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, repair all!'
+                            }).then((result) => {
+                                if (result.value) {
+                                    var v_serial = document.getElementById('v_serial').value;
+                                    var v_section = document.getElementById('v_section').value;
+
+                                    $.ajax({
+                                        url: "furniture/repair_all.php",
+                                        type: "POST",
+                                        data: {
+                                            v_serial: v_serial,
+                                            v_section: v_section
+                                        },
+                                        cache: false,
+                                        success: function(dataResult) {
+                                            var dataResult = JSON.parse(dataResult);
+                                            if (dataResult.statusCode == 200) {
+                                                Swal.fire({
+                                                    title: 'Success',
+                                                    text: 'Section Updated!',
+                                                    type: 'success',
+                                                    confirmButtonText: 'OK'
+                                                }).then(function() {
+                                                    window.location = 'index.php';
+                                                });
+                                            }
+
+                                        }
+                                    });
+                                }
+                            })
+                        </script>
+                    <?php
+                    }
+                    ?>
+
+                <?php
+                }
+                ?>
+
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">

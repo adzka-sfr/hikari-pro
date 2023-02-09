@@ -87,7 +87,7 @@
                         <th style="width: 10%;">Check 2</th>
                         <th style="width: 10%;">Check 3</th>
                     </thead>
-                    <tbody>
+                    <tbody style="font-size: 18px;">
                         <?php
                         $i = 0;
                         $ng = 0;

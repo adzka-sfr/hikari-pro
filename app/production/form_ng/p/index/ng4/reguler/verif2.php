@@ -327,7 +327,7 @@
                                     <th colspan="5">
                                         <div class="row">
                                             <div class="col-4">
-                                                Process : <u>Out Side Check 1</u>
+                                                Process : <u>Out Side Check 3</u>
                                             </div>
                                         </div>
                                     </th>
@@ -509,14 +509,17 @@
                                     // ng
                                     if (!empty($verif_data1['c_ng1'])) {
                                         $ng = $verif_data1['c_ng1'];
+                                        $cab = $verif_data1['c_cabinet'];
                                     }
 
                                     if (!empty($verif_data1['c_ng2'])) {
                                         $ng = $verif_data1['c_ng2'];
+                                        $cab = $verif_data1['c_cabinet'];
                                     }
 
                                     if (!empty($verif_data1['c_ng3'])) {
                                         $ng = $verif_data1['c_ng3'];
+                                        $cab = $verif_data1['c_cabinet'];
                                         $count_ng3++;
                                     }
                                     // $ng = $verif_data1['c_ng1'];
@@ -532,7 +535,7 @@
                                                 if (!empty($verif_data1['c_repairdate1'])) {
 
                                                     $r1 = '<div class="containere">
-                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 0px; left: 90%; background-color: #FF5739; ">R1</button>
+                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 0px; left: 80%; background-color: #FF5739; ">' . $verif_data1['c_repair1'] . '</button>
                         </div>';
                                                 }
                                             ?>
@@ -549,7 +552,7 @@
                                                 if (!empty($verif_data1['c_repairdate2'])) {
 
                                                     $r2 = '<div class="containere">
-                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 17px; left: 90%; background-color: #69C33B; ">R2</button>
+                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 17px; left: 80%; background-color: #69C33B; ">' . $verif_data1['c_repair2'] . '</button>
                         </div>';
                                                 }
                                             ?>
@@ -566,7 +569,7 @@
                                                 if (!empty($verif_data1['c_repairdate3'])) {
                                                     $count_ng3--;
                                                     $r3 = '<div class="containere">
-                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 34px; left: 90%; background-color: #41A5E1; ">R3</button>
+                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 34px; left: 80%; background-color: #41A5E1; ">' . $verif_data1['c_repair3'] . '</button>
                         </div>';
                                                 }
                                             ?>
@@ -585,7 +588,9 @@
                                             <?= $r1 ?>
                                             <?= $r2 ?>
                                             <?= $r3 ?>
-                                            <?= $ng ?>
+                                            <?= $cab ?>
+                                            <br>
+                                            <b> <?= $ng ?> </b>
 
                                         </td>
                                     </tr>
@@ -603,110 +608,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <?php
-                            $sql4 = mysqli_query($connect_pro, "SELECT c_finishoutcheck3 FROM formng_register WHERE c_serialnumber = '$serial_number'");
-                            $data4 = mysqli_fetch_array($sql4);
-                            if (!empty($data4['c_finishoutcheck3'])) {
-                            ?>
-                                <div class="row">
-                                    <div class="col-12" style="text-align: center; padding-top: 10px;">
-                                        <button disabled name="str" class="btn btn-success">Data has been closed</button>
-                                    </div>
-                                </div>
-                            <?php
-                            } else {
-                            ?>
-                                <form method="post">
-                                    <?php
-                                    if ($count_ng3 > 0) {
-                                        $dis = 'disabled';
-                                    } else {
-                                        $dis = '';
-                                    }
-                                    ?>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <input <?= $dis ?> required name="agree" value="agree" type="checkbox"> Saya yakin piano <b><?= $piano_name ?></b> sudah dilakukan repair dengan semestinya
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12" style="text-align: center; padding-top: 10px;">
 
-                                            <button <?= $dis ?> type="submit" name="str" class="btn btn-success">Close check card</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            <?php
-                            }
-                            ?>
-
-                        </div>
-                    </div>
-
-
-                    <?php
-                    // jika klik button bisa diserahkan ke repair
-                    if (isset($_POST['str'])) {
-                        //cek apakah nama tukang validasi sama dengan tukang check
-                        $sql = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resultro WHERE c_serialnumber = '$serial_number' AND c_process = 'oc3' limit 1");
-                        $data = mysqli_fetch_array($sql);
-                        $checker3 = $data['c_checker'];
-                        if ($checker3 == $_SESSION['nama']) {
-                            $tgl_fo1 = date('Y-m-d H:i:s', strtotime($now));
-                            $ppp1 = mysqli_query($connect_pro, "UPDATE formng_register SET c_finishoutcheck3 = '$tgl_fo1', c_outcheck3by = '$_SESSION[nama]' WHERE c_serialnumber = '$serial_number'");
-                            if ($ppp1) {
-                    ?>
-                                <script>
-                                    $(document).ready(function() {
-                                        Swal.fire({
-                                            title: 'Success',
-                                            html: 'Piano <br><b><?= $piano_name ?></b><br> has been closed !',
-                                            type: 'success',
-                                            confirmButtonText: 'OK',
-                                            allowOutsideClick: false
-                                            // timer: 2000,
-                                            // showCancelButton: false,
-                                            // showConfirmButton: false
-                                        }).then(function() {
-                                            // disini diarahkan ke halaman print dulu baru unset session dan balik ke halaman index
-                                            <?php
-                                            // unset($_SESSION['cardnumber']);
-                                            ?>
-                                            window.location = 'index.php';
-                                        });
-                                    });
-                                </script>
-                            <?php
-                                // }
-                            }
-                        } else {
-                            ?>
-                            <script>
-                                $(document).ready(function() {
-                                    Swal.fire({
-                                        title: 'Validasi ditolak!',
-                                        html: 'PIC checker dan PIC validasi harus sama<br>untuk serial number ini harus divalidasi oleh <u><?= $checker3 ?></u> !',
-                                        type: 'error',
-                                        confirmButtonText: 'OK',
-                                        allowOutsideClick: false
-                                        // timer: 2000,
-                                        // showCancelButton: false,
-                                        // showConfirmButton: false
-                                    }).then(function() {
-                                        // disini diarahkan ke halaman print dulu baru unset session dan balik ke halaman index
-                                        <?php
-                                        // unset($_SESSION['cardnumber']);
-                                        ?>
-                                        window.location = 'index.php';
-                                    });
-                                });
-                            </script>
-                    <?php
-                        }
-                    }
-                    ?>
                 </div>
                 <div class="tab-pane fade" id="completeness" role="tabpanel" aria-labelledby="completeness-tab">
                     <div class="row">
@@ -856,7 +758,7 @@
                                                     if (!empty($data6['c_repairdate1'])) {
                                                 ?>
                                                         <div class="containere">
-                                                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 0px; left: 90%; background-color: #CF9502; ">R1</button>
+                                                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 0px; left: 50%; background-color: #CF9502; "><?= $data6['c_repair1by'] ?></button>
                                                         </div>
                                                     <?php
                                                     }
@@ -876,7 +778,7 @@
                                                     if (!empty($data6['c_repairdate2'])) {
                                                 ?>
                                                         <div class="containere">
-                                                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 0px; left: 90%; background-color: #CF9502; ">R2</button>
+                                                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 0px; left: 50%; background-color: #CF9502; "><?= $data6['c_repair2by'] ?></button>
                                                         </div>
                                                     <?php
                                                     }
@@ -893,10 +795,12 @@
                                             <td>
                                                 <?php
                                                 if ($data6['c_result3'] == 'NO') {
+                                                    $count_ng3++;
                                                     if (!empty($data6['c_repairdate3'])) {
+                                                        $count_ng3--;
                                                 ?>
                                                         <div class="containere">
-                                                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 0px; left: 90%; background-color: #CF9502; ">R3</button>
+                                                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 0px; left: 50%; background-color: #CF9502; "><?= $data6['c_repair3by'] ?></button>
                                                         </div>
                                                     <?php
                                                     }
@@ -918,6 +822,110 @@
                             </table>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <?php
+                            $sql4 = mysqli_query($connect_pro, "SELECT c_finishoutcheck3 FROM formng_register WHERE c_serialnumber = '$serial_number'");
+                            $data4 = mysqli_fetch_array($sql4);
+                            if (!empty($data4['c_finishoutcheck3'])) {
+                            ?>
+                                <div class="row">
+                                    <div class="col-12" style="text-align: center; padding-top: 10px;">
+                                        <button disabled name="str" class="btn btn-success">Data has been closed</button>
+                                    </div>
+                                </div>
+                            <?php
+                            } else {
+                            ?>
+                                <form method="post">
+                                    <?php
+                                    if ($count_ng3 > 0) {
+                                        $dis = 'disabled';
+                                    } else {
+                                        $dis = '';
+                                    }
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input <?= $dis ?> required name="agree" value="agree" type="checkbox"> Saya yakin piano <b><?= $piano_name ?></b> sudah dilakukan repair dengan semestinya<?= $count_ng3 ?>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12" style="text-align: center; padding-top: 10px;">
+
+                                            <button <?= $dis ?> type="submit" name="str" class="btn btn-success">Close check card</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            <?php
+                            }
+                            ?>
+
+                        </div>
+                    </div>
+
+
+                    <?php
+                    // jika klik button bisa diserahkan ke repair
+                    if (isset($_POST['str'])) {
+                        //cek apakah nama tukang validasi sama dengan tukang check
+                        $sql = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resultro WHERE c_serialnumber = '$serial_number' AND c_process = 'oc3' limit 1");
+                        $data = mysqli_fetch_array($sql);
+                        $checker3 = $data['c_checker'];
+                        if ($checker3 == $_SESSION['nama']) {
+                            $tgl_fo1 = date('Y-m-d H:i:s', strtotime($now));
+                            $ppp1 = mysqli_query($connect_pro, "UPDATE formng_register SET c_finishoutcheck3 = '$tgl_fo1', c_outcheck3by = '$_SESSION[nama]' WHERE c_serialnumber = '$serial_number'");
+                            if ($ppp1) {
+                    ?>
+                                <script>
+                                    $(document).ready(function() {
+                                        Swal.fire({
+                                            title: 'Success',
+                                            html: 'Piano <br><b><?= $piano_name ?></b><br> has been closed !',
+                                            type: 'success',
+                                            confirmButtonText: 'OK',
+                                            allowOutsideClick: false
+                                            // timer: 2000,
+                                            // showCancelButton: false,
+                                            // showConfirmButton: false
+                                        }).then(function() {
+                                            // disini diarahkan ke halaman print dulu baru unset session dan balik ke halaman index
+                                            <?php
+                                            // unset($_SESSION['cardnumber']);
+                                            ?>
+                                            window.location = 'index.php';
+                                        });
+                                    });
+                                </script>
+                            <?php
+                                // }
+                            }
+                        } else {
+                            ?>
+                            <script>
+                                $(document).ready(function() {
+                                    Swal.fire({
+                                        title: 'Validasi ditolak!',
+                                        html: 'PIC checker dan PIC validasi harus sama<br>untuk serial number ini harus divalidasi oleh <u><?= $checker3 ?></u> !',
+                                        type: 'error',
+                                        confirmButtonText: 'OK',
+                                        allowOutsideClick: false
+                                        // timer: 2000,
+                                        // showCancelButton: false,
+                                        // showConfirmButton: false
+                                    }).then(function() {
+                                        // disini diarahkan ke halaman print dulu baru unset session dan balik ke halaman index
+                                        <?php
+                                        // unset($_SESSION['cardnumber']);
+                                        ?>
+                                        window.location = 'index.php';
+                                    });
+                                });
+                            </script>
+                    <?php
+                        }
+                    }
+                    ?>
                 </div>
             </div>
         </div>

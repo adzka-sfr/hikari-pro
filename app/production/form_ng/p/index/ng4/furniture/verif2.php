@@ -327,7 +327,7 @@
                                     <th colspan="5">
                                         <div class="row">
                                             <div class="col-4">
-                                                Process : <u>Out Side Check 1</u>
+                                                Process : <u>Out Side Check 3</u>
                                             </div>
                                         </div>
                                     </th>
@@ -509,14 +509,17 @@
                                     // ng
                                     if (!empty($verif_data1['c_ng1'])) {
                                         $ng = $verif_data1['c_ng1'];
+                                        $cab = $verif_data1['c_cabinet'];
                                     }
 
                                     if (!empty($verif_data1['c_ng2'])) {
                                         $ng = $verif_data1['c_ng2'];
+                                        $cab = $verif_data1['c_cabinet'];
                                     }
 
                                     if (!empty($verif_data1['c_ng3'])) {
                                         $ng = $verif_data1['c_ng3'];
+                                        $cab = $verif_data1['c_cabinet'];
                                         $count_ng3++;
                                     }
                                     // $ng = $verif_data1['c_ng1'];
@@ -532,7 +535,7 @@
                                                 if (!empty($verif_data1['c_repairdate1'])) {
 
                                                     $r1 = '<div class="containere">
-                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 0px; left: 90%; background-color: #FF5739; ">R1</button>
+                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 0px; left: 80%; background-color: #FF5739; ">' . $verif_data1['c_repair1'] . '</button>
                         </div>';
                                                 }
                                             ?>
@@ -549,7 +552,7 @@
                                                 if (!empty($verif_data1['c_repairdate2'])) {
 
                                                     $r2 = '<div class="containere">
-                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 17px; left: 90%; background-color: #69C33B; ">R2</button>
+                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 17px; left: 80%; background-color: #69C33B; ">' . $verif_data1['c_repair2'] . '</button>
                         </div>';
                                                 }
                                             ?>
@@ -566,7 +569,7 @@
                                                 if (!empty($verif_data1['c_repairdate3'])) {
                                                     $count_ng3--;
                                                     $r3 = '<div class="containere">
-                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 34px; left: 90%; background-color: #41A5E1; ">R3</button>
+                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 34px; left: 80%; background-color: #41A5E1; ">' . $verif_data1['c_repair3'] . '</button>
                         </div>';
                                                 }
                                             ?>
@@ -585,7 +588,9 @@
                                             <?= $r1 ?>
                                             <?= $r2 ?>
                                             <?= $r3 ?>
-                                            <?= $ng ?>
+                                            <?= $cab ?>
+                                            <br>
+                                            <b> <?= $ng ?> </b>
 
                                         </td>
                                     </tr>
@@ -856,7 +861,7 @@
                                                     if (!empty($data6['c_repairdate1'])) {
                                                 ?>
                                                         <div class="containere">
-                                                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 0px; left: 90%; background-color: #CF9502; ">R1</button>
+                                                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 0px; left: 50%; background-color: #CF9502; "><?= $data6['c_repair1by'] ?></button>
                                                         </div>
                                                     <?php
                                                     }
@@ -876,7 +881,7 @@
                                                     if (!empty($data6['c_repairdate2'])) {
                                                 ?>
                                                         <div class="containere">
-                                                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 0px; left: 90%; background-color: #CF9502; ">R2</button>
+                                                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 0px; left: 50%; background-color: #CF9502; "><?= $data6['c_repair2by'] ?></button>
                                                         </div>
                                                     <?php
                                                     }
@@ -896,7 +901,7 @@
                                                     if (!empty($data6['c_repairdate3'])) {
                                                 ?>
                                                         <div class="containere">
-                                                            <button class="bton retro" style="width:30px; border-radius: 0px; rotate: -3deg; font-size: 10px; opacity: 50%; top: 0px; left: 90%; background-color: #CF9502; ">R3</button>
+                                                            <button class="bton retro" style="width:100px; border-radius: 0px; rotate: -3deg; font-size: 12px; opacity: 70%; top: 0px; left: 50%; background-color: #CF9502; "><?= $data6['c_repair3by'] ?></button>
                                                         </div>
                                                     <?php
                                                     }
