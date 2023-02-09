@@ -128,7 +128,8 @@ if (empty($_SESSION['cardnumber'])) {
                 // == jika ada lanjut insert ke tabel register jika data belum pernah diinput == //
                 $sql3 = mysqli_query($connect_pro, "SELECT id FROM formng_register WHERE c_ctrlnumber = '$data[ACARDNO]'");
                 if (empty(mysqli_fetch_array($sql3))) {
-                    mysqli_query($connect_pro, "INSERT INTO formng_register SET c_ctrlnumber = '$data[ACARDNO]', c_plannumber = '$data[PLNNO]', c_gmc = '$data[HMCD]', c_serialnumber = '$data[SEIBAN]', c_pianoname = '$data[HMNM]'");
+                    $tgl_register = date('Y-m-d H:i:s', strtotime($now));
+                    mysqli_query($connect_pro, "INSERT INTO formng_register SET c_ctrlnumber = '$data[ACARDNO]', c_plannumber = '$data[PLNNO]', c_gmc = '$data[HMCD]', c_serialnumber = '$data[SEIBAN]', c_pianoname = '$data[HMNM]', c_register = '$tgl_register'");
                 }
                 // == jika ada lanjut insert ke tabel register jika data belum pernah diinput == //
 

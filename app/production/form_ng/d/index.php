@@ -28,6 +28,8 @@ if (empty($row_prev)) {
             echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/index/displayin') . "';</script>";
         } elseif ($_SESSION['role'] == 'display_out' and $_SESSION['dept'] == 'Quality Control') {
             echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/index/displayout') . "';</script>";
+        } elseif ($_SESSION['role'] == 'display_all' and $_SESSION['dept'] == 'Quality Control') {
+            echo "<script>window.location='" . base_url('app/' . $data['c_dir'] . '/index/displayall') . "';</script>";
         } else {
             // jika role dan departemen tidak sesuai namun masih ada pada tabel pevilege
             echo "<script>window.location='../';</script>";
