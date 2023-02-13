@@ -31,7 +31,7 @@ include('../../app_name.php');
     </div>
 
     <!-- page content -->
-    <div class="right_col" role="main" style="background-color: #2B3035;">
+    <div class="right_col" role="main">
 
         <div class="dashboard_graph" style="padding-bottom: 0px;">
             <div class="row">
@@ -49,7 +49,7 @@ include('../../app_name.php');
             <hr style="margin: 0px;">
         </div>
 
-        <div class="dashboard_graph" style="background-color: #2B3035;">
+        <div class="dashboard_graph">
 
             <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
@@ -86,7 +86,7 @@ include('../../app_name.php');
                                 </div>
                             </div>
 
-                            <table class="table" style="font-size: 28px; color: #ffffff;">
+                            <table class="table table-striped" style="font-size: 28px;">
                                 <thead style="text-align: center;">
                                     <th style="width: 13%;">No Seri</th>
                                     <th style="text-align: left; width: 40%;">Piano Name</th>
@@ -104,10 +104,10 @@ include('../../app_name.php');
                                     ?>
                                         <tr>
                                             <td style="text-align: center;">
-                                                <div style="background-color: #9747FF; color: #ffffff; font-weight: bold;"><?= $data['c_serialnumber'] ?></div>
+                                                <div style=" font-weight: bold;"><?= $data['c_serialnumber'] ?></div>
                                             </td>
                                             <td>
-                                                <div style="background-color: #CA833D; color: #ffffff; font-weight: bold;"><?= $data['c_pianoname'] ?></div>
+                                                <div style=" font-weight: bold;"><?= $data['c_pianoname'] ?></div>
                                             </td>
                                             <td style="text-align: center;">
                                                 <?php
@@ -141,11 +141,15 @@ include('../../app_name.php');
                                                     }
                                                 }
                                                 ?>
-                                                <div style="background-color: #14AE5C; color: #ffffff; font-weight: bold;"><?= $status_process ?></div>
+                                                <div style="<?php
+                                                            if ($status_process == 'Finish') {
+                                                                echo 'background-color: #14AE5C; color: #ffffff;';
+                                                            }
+                                                            ?>font-weight: bold;"><?= $status_process ?></div>
                                             </td>
                                             <!-- <td></td> -->
                                             <td style="text-align: center; ">
-                                                <div style="background-color: #9747FF; color: #ffffff; font-weight: bold;" id="waktu<?= $no ?>"></div>
+                                                <div style="font-weight: bold;" id="waktu<?= $no ?>"></div>
                                                 <script>
                                                     // Set the date we're counting down to
 

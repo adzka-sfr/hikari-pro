@@ -38,7 +38,7 @@ $tahunGajah = date('Y', strtotime($now));
 $sumOfDay = cal_days_in_month($kalenderMasehi, $bulanSutena, $tahunGajah);
 
 // hitung outside 1
-$sql = mysqli_query($connect_pro, "SELECT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc1'");
+$sql = mysqli_query($connect_pro, "SELECT DISTINCT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc1'");
 $v_count = 0;
 while ($data = mysqli_fetch_array($sql)) {
     $v_count++;
@@ -58,7 +58,7 @@ if ($p1 == 0) {
 }
 
 // hitung outside 2
-$sql = mysqli_query($connect_pro, "SELECT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc2'");
+$sql = mysqli_query($connect_pro, "SELECT DISTINCT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc2'");
 $v_count = 0;
 while ($data = mysqli_fetch_array($sql)) {
     $v_count++;
@@ -83,7 +83,7 @@ if ($p2 == 0) {
 }
 
 // hitung outside 2
-$sql = mysqli_query($connect_pro, "SELECT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc3'");
+$sql = mysqli_query($connect_pro, "SELECT DISTINCT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc3'");
 $v_count = 0;
 while ($data = mysqli_fetch_array($sql)) {
     $v_count++;

@@ -1,6 +1,6 @@
 <?php include('../../../../../../_header.php');
 include('../../app_name.php');
-
+unset($_SESSION['note2']);
 ?>
 <script>
   var el = document.getElementById('overlayBtn');

@@ -22,7 +22,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th style="vertical-align:top;padding-top:0px; width: 10%;">
+                        <th style="vertical-align:top;padding-top:0px; width: 25%; font-size: 15px;">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
                                     No Seri :
@@ -36,29 +36,29 @@
                         </th>
                         <th style="vertical-align:top;padding-top:0px">
                             <div class="row">
-                                <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="col-md-12" style="margin-top: 5px; ">
                                     Model :
                                 </div>
                             </div>
                             <di class="row">
-                                <div class="col-md-12" style="text-align: center;">
+                                <div class="col-md-12" style="text-align: center; font-size: 15px;">
                                     <?= $_SESSION['pianoname_outside1'] ?>
                                 </div>
                             </di>
                         </th>
-                        <th style="vertical-align:top;padding-top:0px; width: 25%;">
+                        <th style="vertical-align:top;padding-top:0px; width: 25%; ">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
                                     Inspection Date :
                                 </div>
                             </div>
                             <di class="row">
-                                <div class="col-md-12" style="text-align: center;">
+                                <div class="col-md-12" style="text-align: center; font-size: 15px;">
                                     <?= date('l, d M Y', strtotime($now)) ?>
                                 </div>
                             </di>
                         </th>
-                        <th style="vertical-align:top;padding-top:0px; width: 15%;">
+                        <!-- <th style="vertical-align:top;padding-top:0px; width: 15%;">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
                                     Process :
@@ -69,7 +69,7 @@
                                     Completeness
                                 </div>
                             </di>
-                        </th>
+                        </th> -->
                     </tr>
                 </thead>
             </table>
@@ -87,7 +87,7 @@
                         <th style="width: 10%;">Check 2</th>
                         <th style="width: 10%;">Check 3</th>
                     </thead>
-                    <tbody style="font-size: 18px;">
+                    <tbody style="font-size: 15px;">
                         <?php
                         $i = 0;
                         $ng = 0;

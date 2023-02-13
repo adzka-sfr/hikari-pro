@@ -307,7 +307,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12" style="text-align: center;"><u><?= $serial_number ?></u></div>
+                                            <div class="col-12" style="text-align: center; font-size: 15px;"><u><?= $serial_number ?></u></div>
                                         </div>
                                     </th>
                                     <th>
@@ -317,7 +317,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12" style="text-align: center;">
+                                            <div class="col-12" style="text-align: center; font-size: 15px;">
                                                 <u><?= $piano_name ?></u>
                                             </div>
                                         </div>

@@ -199,8 +199,8 @@
 
                             <!-- baris n -->
                             <tr <?= $br ?>>
-                                <td style="text-align: center;" rowspan="2"><?= $i ?></td>
-                                <td rowspan="2"><?= $data3['c_item'] ?></td>
+                                <td style="text-align: center; font-size: 15px;" rowspan="2"><?= $i ?></td>
+                                <td rowspan="2" style="font-size: 15px;"><?= $data3['c_item'] ?></td>
                                 <td colspan="2" style="text-align: center;"><?= $data2['c_detail'] ?></td>
                             </tr>
                             <tr <?= $br ?>>
@@ -267,8 +267,8 @@
                         } else {
                         ?>
                             <tr>
-                                <td style="text-align: center;"><?= $i ?></td>
-                                <td><?= $data3['c_item'] ?></td>
+                                <td style="text-align: center; font-size: 15px;"><?= $i ?></td>
+                                <td style="font-size: 15px;"><?= $data3['c_item'] ?></td>
                                 <td colspan="2" style="padding: 2px;">
                                     <table class="table table-bordered" style="border-color: #358809;">
                                         <tr>

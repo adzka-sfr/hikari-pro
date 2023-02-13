@@ -12,11 +12,16 @@
             <div style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 1em;">
                 <?php
                 $nama_checker = $_SESSION['nama'];
-                $sql = mysqli_query($connect_pro, "SELECT DISTINCT res.c_serialnumber FROM formng_resulto1 res JOIN formng_register reg ON res.c_serialnumber = reg.c_serialnumber WHERE res.c_checker2 = '$nama_checker' AND res.c_repair2 != '' AND reg.c_outcheck2by = ''");
+                $sql = mysqli_query($connect_pro, "SELECT DISTINCT res.c_serialnumber FROM formng_resulto1 res JOIN formng_register reg ON res.c_serialnumber = reg.c_serialnumber WHERE res.c_checker2= '$nama_checker' AND res.c_ng2 != '' AND res.c_repair2 != '' AND reg.c_outcheck2by = '';");
                 while ($data = mysqli_fetch_array($sql)) {
+                    $sql1 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$data[c_serialnumber]' AND c_ng != '' AND c_picrepair = ''");
+                    $data1 = mysqli_fetch_array($sql1);
+
+                    if (empty($data1['id'])) {
                 ?>
-                    <button style="background-color: #ffa700; border-color: #ffa700;" class="btn btn-primary"><?= $data['c_serialnumber'] ?></button>
+                        <button disabled style="background-color: #ffa700; border-color: #ffa700;" class="btn btn-primary"><?= $data['c_serialnumber'] ?></button>
                 <?php
+                    }
                 }
                 ?>
             </div>

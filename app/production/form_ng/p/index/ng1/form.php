@@ -17,14 +17,14 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th style="vertical-align:top;padding-top:0px; width: 10%;">
+                            <th style="vertical-align:top;padding-top:0px; width: 25%;">
                                 <div class="row">
                                     <div class="col-md-12" style="margin-top: 5px;">
                                         No Seri :
                                     </div>
                                 </div>
                                 <di class="row">
-                                    <div class="col-md-12" style="text-align: center;">
+                                    <div class="col-md-12" style="text-align: center; font-size: 15px;">
                                         <?= $_SESSION['serialnumber_inside'] ?>
                                     </div>
                                 </di>
@@ -36,7 +36,7 @@
                                     </div>
                                 </div>
                                 <di class="row">
-                                    <div class="col-md-12" style="text-align: center;">
+                                    <div class="col-md-12" style="text-align: center; font-size: 15px;">
                                         <?= $_SESSION['pianoname_inside'] ?>
                                     </div>
                                 </di>
@@ -48,12 +48,12 @@
                                     </div>
                                 </div>
                                 <di class="row">
-                                    <div class="col-md-12" style="text-align: center;">
+                                    <div class="col-md-12" style="text-align: center; font-size: 15px;">
                                         <?= date('l, d M Y', strtotime($now)) ?>
                                     </div>
                                 </di>
                             </th>
-                            <th style="vertical-align:top;padding-top:0px; width: 15%;">
+                            <!-- <th style="vertical-align:top;padding-top:0px; width: 15%;">
                                 <div class="row">
                                     <div class="col-md-12" style="margin-top: 5px;">
                                         Process :
@@ -64,7 +64,7 @@
                                         Inside Check
                                     </div>
                                 </di>
-                            </th>
+                            </th> -->
                         </tr>
                     </thead>
                 </table>
@@ -88,17 +88,17 @@
                             // pemberian warna background tr
                             $i++;
                             if ($i % 2 == 0) {
-                                $br = 'style = "background-color: #F2F2F2;"';
+                                $br = 'style = "background-color: #DEDEDE;"';
                             } else {
                                 $br = '';
                             }
                         ?>
                             <!-- baris n -->
                             <tr <?= $br ?>>
-                                <td rowspan="2" style="text-align: center;"><?= $i ?></td>
-                                <td rowspan="2"><?= $data2['c_item'] ?></td>
+                                <td rowspan="2" style="text-align: center; font-size: 15px;"><?= $i ?></td>
+                                <td rowspan="2" style="font-size: 15px;"><?= $data2['c_item'] ?></td>
                                 <input type="hidden" name="process_inside<?= $i ?>" value="<?= $data2['c_code'] ?>">
-                                <td style="width: 50px; vertical-align:top;padding-top:15px; text-align: center;">
+                                <td style="width: 50px; vertical-align:top;padding-top:15px; text-align: center; background-color: #82DE82 ;">
                                     OK
                                 </td>
                                 <td colspan="2">
@@ -106,7 +106,7 @@
                                 </td>
                             </tr>
                             <tr <?= $br ?>>
-                                <td style="width: 50px; vertical-align:top;padding-top:15px; text-align: center;">
+                                <td style="width: 50px; vertical-align:top;padding-top:15px; text-align: center; background-color: #DE8282 ;">
                                     NG
                                 </td>
                                 <td style="width: 50px;">
