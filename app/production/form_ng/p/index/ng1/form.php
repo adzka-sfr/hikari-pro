@@ -77,7 +77,7 @@
                     <thead style="text-align: center;">
                         <th style="width: 5%;">No</th>
                         <th style="width: 40%;">Item</th>
-                        <th colspan="3">Hasil Cek</th>
+                        <th style="width: 55%;" colspan="3">Hasil Cek</th>
                     </thead>
                     <tbody>
                         <?php
@@ -98,21 +98,21 @@
                                 <td rowspan="2" style="text-align: center; font-size: 15px;"><?= $i ?></td>
                                 <td rowspan="2" style="font-size: 15px;"><?= $data2['c_item'] ?></td>
                                 <input type="hidden" name="process_inside<?= $i ?>" value="<?= $data2['c_code'] ?>">
-                                <td style="width: 50px; vertical-align:top;padding-top:15px; text-align: center; background-color: #82DE82 ;">
+                                <td style=" vertical-align:top;padding-top:15px; text-align: center; background-color: #82DE82 ;">
                                     OK
                                 </td>
-                                <td colspan="2">
+                                <td colspan="2" >
                                     <input required type="radio" class="radioku<?= $i ?>" style="transform: scale(2); margin: 10px;" name="inside<?= $i ?>" value="OK" />
                                 </td>
                             </tr>
                             <tr <?= $br ?>>
-                                <td style="width: 50px; vertical-align:top;padding-top:15px; text-align: center; background-color: #DE8282 ;">
+                                <td style=" vertical-align:top;padding-top:15px; text-align: center; background-color: #DE8282 ;">
                                     NG
                                 </td>
-                                <td style="width: 50px;">
+                                <td>
                                     <input type="radio" class="radioku<?= $i ?> ng<?= $i ?>" style="transform: scale(2); margin: 10px;" name="inside<?= $i ?>" value="NG" />
                                 </td>
-                                <td>
+                                <td style="width: 90%;">
                                     <select class="halodecktot" id="duar<?= $i ?>" style="width: 100% " disabled required name="jenis<?= $i ?>">
                                         <option></option>
                                         <?php

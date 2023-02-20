@@ -147,7 +147,7 @@ if ($p3 == 0) {
             }
         },
         legend: {
-            data: ['Jumlah Piano', 'Jumlah Temuan', 'Ratio NG'],
+            data: ['Jumlah Piano', 'Jumlah Temuan', 'Rata-Rata NG'],
             top: 30
         },
         xAxis: [{
@@ -211,7 +211,7 @@ if ($p3 == 0) {
                 data: [<?= $ng1 ?>, <?= $ng2 ?>, <?= $ng3 ?>]
             },
             {
-                name: 'Ratio NG',
+                name: 'Rata-Rata NG',
                 type: 'line',
                 // label: {
                 //     show: true,
@@ -219,7 +219,7 @@ if ($p3 == 0) {
                 // },
                 tooltip: {
                     valueFormatter: function(value) {
-                        return value + ' %';
+                        return value + '';
                     }
                 },
                 data: [<?= $r1 ?>, <?= $r2 ?>, <?= $r3 ?>]

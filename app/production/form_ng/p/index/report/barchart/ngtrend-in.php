@@ -1,4 +1,4 @@
-<div id="ngtrend" style="height:2300px; width: 100%; padding-top: 10px; padding-bottom: 0px; padding-right: 0px; padding-left: 0px; "></div>
+<div id="ngtrend" style="height:10000px; width: 100%; padding-top: 10px; padding-bottom: 0px; padding-right: 0px; padding-left: 0px; "></div>
 
 <?php
 // =============================================== CONNECTION

@@ -1,4 +1,4 @@
-<div id="bar2a" style="height:300px; width: 100%; padding-top: 10px; padding-bottom: 0px; padding-right: 0px; padding-left: 0px; "></div>
+<div id="bar3a" style="height:300px; width: 100%; padding-top: 10px; padding-bottom: 0px; padding-right: 0px; padding-left: 0px; "></div>
 
 <?php
 // =============================================== CONNECTION
@@ -37,83 +37,53 @@ $bulanSutena = date('m', strtotime($now));
 $tahunGajah = date('Y', strtotime($now));
 $sumOfDay = cal_days_in_month($kalenderMasehi, $bulanSutena, $tahunGajah);
 
+$tanggal = date('Y-m-d', strtotime($now));
+$labeltitle = date('l, d M', strtotime($now));
+$labelbar = date('d M', strtotime($now));
 
-$total_piano = array();
-$total_temuan = array();
-$ratio_ng = array();
-$z = 0;
+//get jumlah piano
+$sup1 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total from formng_register where c_finishoutcheck1  LIKE '$tanggal%'");
+$data1 = mysqli_fetch_array($sup1);
+$total_pianoe1 = $data1['total'];
 
-for ($tgl = 1; $tgl <= $sumOfDay; $tgl++) {
-    $total_pianoe = 0;
-    $total_temuane = 0;
+$total_pianoe = $total_pianoe1;
 
-    if ($tgl < 10) {
-        $tgl = "0" . $tgl;
-    }
-    $tanggal = date('Y-m', strtotime($month_umpama));
-    $tanggal = $tanggal . "-" . $tgl;
+//get jumlah temuan cek 1
+$sup2a = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resulto1 WHERE c_inspectiondate1 LIKE '$tanggal%' AND c_ng1 != ''");
+$data2a = mysqli_fetch_array($sup2a);
+$total_temuane1 = $data2a['total'];
 
-    //get jumlah piano
-    $sup1 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total from formng_register where c_finishcomplete1  LIKE '$tanggal%'");
-    $data1 = mysqli_fetch_array($sup1);
-    $total_pianoe1 = $data1['total'];
+//get jumlah temuan cek 2
+$sup2b = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resulto1 WHERE c_inspectiondate2 LIKE '$tanggal%' AND c_ng2 != ''");
+$data2b = mysqli_fetch_array($sup2b);
+$total_temuane2 = $data2b['total'];
 
-    // $sup1 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total from formng_register where c_finishcomplete2  LIKE '$tanggal%'");
-    // $data1 = mysqli_fetch_array($sup1);
-    // $total_pianoe2 = $data1['total'];
+//get jumlah temuan cek 3
+$sup2c = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resulto1 WHERE c_inspectiondate3 LIKE '$tanggal%' AND c_ng3 != ''");
+$data2c = mysqli_fetch_array($sup2c);
+$total_temuane3 = $data2c['total'];
 
-    // $sup1 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total from formng_register where c_finishcomplete3  LIKE '$tanggal%'");
-    // $data1 = mysqli_fetch_array($sup1);
-    // $total_pianoe3 = $data1['total'];
+$total_temuane = $total_temuane1 + $total_temuane2 + $total_temuane3;
 
-    $total_pianoe = $total_pianoe1;
-
-    //get jumlah temuan cek 1
-    $sup2a = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resultc WHERE c_inspectiondate1 LIKE '$tanggal%' AND c_result1 = 'NO'");
-    $data2a = mysqli_fetch_array($sup2a);
-    $total_temuane1 = $data2a['total'];
-
-    //get jumlah temuan cek 2
-    $sup2b = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resultc WHERE c_inspectiondate2 LIKE '$tanggal%' AND c_result2 = 'NO'");
-    $data2b = mysqli_fetch_array($sup2b);
-    $total_temuane2 = $data2b['total'];
-
-    //get jumlah temuan cek 3
-    $sup2c = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resultc WHERE c_inspectiondate3 LIKE '$tanggal%' AND c_result3 = 'NO'");
-    $data2c = mysqli_fetch_array($sup2c);
-    $total_temuane3 = $data2c['total'];
-
-    $total_temuane = $total_temuane1 + $total_temuane2 + $total_temuane3;
-
-    //get Rata-Rata NG
-    if ($total_pianoe == 0) {
-        $ratio_nge = 0;
-    } else {
-        $ratio_nge = $total_temuane / $total_pianoe;
-        $ratio_nge = number_format($ratio_nge, 2, '.', '');
-    }
-
-    $total_piano[$z] = $total_pianoe;
-    $total_temuan[$z] = $total_temuane;
-    $ratio_ng[$z] = $ratio_nge;
-
-    $z++;
+//get Rata-Rata NG
+if ($total_pianoe == 0) {
+    $ratio_nge = 0;
+} else {
+    $ratio_nge = $total_temuane / $total_pianoe;
+    $ratio_nge = number_format($ratio_nge, 2, '.', '');
 }
 
-$count_piano = count($total_piano);
-$count_temuan = count($total_temuan);
-$count_ng = count($ratio_ng);
 // =========================================================== LOGIC
 ?>
 <script>
-    var chartDom = document.getElementById('bar2a');
+    var chartDom = document.getElementById('bar3a');
     var myChart = echarts.init(chartDom);
     var option;
 
     option = {
         color: ['#4A94CD', '#E95555', '#FF7400'],
         title: {
-            text: 'Status Temuan Completeness (<?= $month_judul ?>)',
+            text: 'Status Temuan Outside (<?= $labeltitle ?>)',
         },
         tooltip: {
             trigger: 'axis',
@@ -155,11 +125,7 @@ $count_ng = count($ratio_ng);
         xAxis: [{
             type: 'category',
             data: [
-                <?php
-                for ($b = 1; $b <= $sumOfDay; $b++) {
-                    echo "'" . $b . "',";
-                }
-                ?>
+                '<?= $labelbar ?>'
             ],
             axisPointer: {
                 type: 'shadow'
@@ -200,11 +166,7 @@ $count_ng = count($ratio_ng);
                     }
                 },
 
-                data: [<?php
-                        for ($b = 0; $b < $count_piano; $b++) {
-                            echo $total_piano[$b] . ",";
-                        }
-                        ?>],
+                data: [<?= $total_pianoe ?>],
             },
             {
                 name: 'Jumlah Temuan',
@@ -218,11 +180,7 @@ $count_ng = count($ratio_ng);
                         return value + '';
                     }
                 },
-                data: [<?php
-                        for ($b = 0; $b < $count_temuan; $b++) {
-                            echo $total_temuan[$b] . ",";
-                        }
-                        ?>]
+                data: [<?= $total_temuane ?>]
             },
             {
                 name: 'Rata-Rata NG',
@@ -236,11 +194,7 @@ $count_ng = count($ratio_ng);
                         return value + '';
                     }
                 },
-                data: [<?php
-                        for ($b = 0; $b < $count_ng; $b++) {
-                            echo $ratio_ng[$b] . ",";
-                        }
-                        ?>]
+                data: [<?= $ratio_nge ?>]
             }
         ]
     };

@@ -79,6 +79,14 @@
     $('.cari_basic').select2({
         placeholder: "Select from below",
     });
+
+    $('.cari_model').select2({
+        placeholder: "Select model from below",
+    });
+
+    $('.cari_proses').select2({
+        placeholder: "Select process from below",
+    });
 </script>
 
 <!-- untuk datatables -->

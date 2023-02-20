@@ -68,10 +68,10 @@ include('../../app_name.php');
                                         echo 'class="active"';
                                     } ?>><a href="main.php?p=data"><i class="fa fa-file-text-o"></i> Summary of NG</a>
                                 </li>
-                                <li <?php if ($_GET['p'] == "data2") {
+                                <!-- <li <?php if ($_GET['p'] == "data2") {
                                         echo 'class="active"';
                                     } ?>><a href="main.php?p=data2"><i class="fa fa-gears"></i> Summary by Process</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
 

@@ -54,7 +54,7 @@ include('../../app_name.php');
             <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <?php
-                    $sql = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as jumlah FROM formng_register");
+                    $sql = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as jumlah FROM formng_register WHERE c_packed_status = ''");
                     $data = mysqli_fetch_array($sql);
 
                     $a = $data['jumlah']; // count data
@@ -90,21 +90,28 @@ include('../../app_name.php');
                                 <thead style="text-align: center;">
                                     <th style="width: 13%;">No Seri</th>
                                     <th style="text-align: left; width: 40%;">Piano Name</th>
-                                    <th style="width: 20%;">Progress</th>
+                                    <th style="width: 22%;">Progress</th>
                                     <!-- <th>PIC</th> -->
                                     <th style="width: 20%;">Time Spent</th>
                                     <th>Status</th>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = mysqli_query($connect_pro, "SELECT * FROM formng_register order by id limit $awal,$b");
+                                    $sql = mysqli_query($connect_pro, "SELECT * FROM formng_register WHERE c_packed_status = '' order by id limit $awal,$b");
 
                                     while ($data = mysqli_fetch_array($sql)) {
+                                        // get st
+                                        $sql1 = mysqli_query($connect_pro, "SELECT c_st_qc, c_st_rep FROM formng_category WHERE c_gmc = '$data[c_gmc]'");
+                                        $data1 = mysqli_fetch_array($sql1);
+                                        $batas = $data1['c_st_qc'] + $data1['c_st_rep'];
+                                        $batastomenit = $batas * 60;
+                                        $batas = $batastomenit * 1000;
+
                                         $no = $data['c_serialnumber'];
                                     ?>
                                         <tr>
                                             <td style="text-align: center;">
-                                                <div style=" font-weight: bold;"><?= $data['c_serialnumber'] ?></div>
+                                                <div style=" font-weight: bold;"><?= $data['c_serialnumber'] ?><input type="hidden" id="batas<?= $no ?>" value="<?= $batas ?>"></div>
                                             </td>
                                             <td>
                                                 <div style=" font-weight: bold;"><?= $data['c_pianoname'] ?></div>
@@ -150,50 +157,73 @@ include('../../app_name.php');
                                             <!-- <td></td> -->
                                             <td style="text-align: center; ">
                                                 <div style="font-weight: bold;" id="waktu<?= $no ?>"></div>
-                                                <script>
-                                                    // Set the date we're counting down to
-
-                                                    var countDownDate<?= $no ?> = new Date("<?= $data['c_register'] ?>").getTime();
-
-                                                    // Update the count down every 1 second
-                                                    var x<?= $no ?> = setInterval(function() {
-
-                                                        // Get today's date and time
-                                                        var now = new Date().getTime();
-
-                                                        // Find the distance between now and the count down date
-                                                        var distance<?= $no ?> = now - countDownDate<?= $no ?>;
-
-                                                        // Time calculations for days, hours, minutes and seconds
-                                                        var days<?= $no ?> = Math.floor(distance<?= $no ?> / (1000 * 60 * 60 * 24));
-                                                        var hours<?= $no ?> = Math.floor((distance<?= $no ?> % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                                        var minutes<?= $no ?> = Math.floor((distance<?= $no ?> % (1000 * 60 * 60)) / (1000 * 60));
-                                                        var seconds<?= $no ?> = Math.floor((distance<?= $no ?> % (1000 * 60)) / 1000);
-
-                                                        if (days<?= $no ?> < 10) {
-                                                            days<?= $no ?> = "0" + days<?= $no ?>;
-                                                        }
-
-                                                        if (hours<?= $no ?> < 10) {
-                                                            hours<?= $no ?> = "0" + hours<?= $no ?>;
-                                                        }
-
-                                                        if (minutes<?= $no ?> < 10) {
-                                                            minutes<?= $no ?> = "0" + minutes<?= $no ?>;
-                                                        }
-
-                                                        if (seconds<?= $no ?> < 10) {
-                                                            seconds<?= $no ?> = "0" + seconds<?= $no ?>;
-                                                        }
-
-                                                        // Display the result in the element with id="demo"
-                                                        document.getElementById("waktu<?= $no ?>").innerHTML = days<?= $no ?> + "d " + hours<?= $no ?> + ":" +
-                                                            minutes<?= $no ?> + ":" + seconds<?= $no ?> + "";
-                                                    }, 1000);
-                                                </script>
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                <div style="text-align: center; font-weight: bold; background-color: #FFFFFF; color: #FFFFFF; padding: 5px;" id="hasilbatas<?= $no ?>"></div>
+                                            </td>
                                         </tr>
+                                        <script>
+                                            // Set the date we're counting down to
+
+                                            var countDownDate<?= $no ?> = new Date("<?= $data['c_register'] ?>").getTime();
+
+                                            // Update the count down every 1 second
+                                            var x<?= $no ?> = setInterval(function() {
+
+                                                // Get today's date and time
+                                                <?php
+                                                if ($status_process == 'Finish') {
+                                                ?>
+                                                    var now<?= $no ?> = new Date("<?= $data['c_finishoutcheck3'] ?>").getTime();
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    var now<?= $no ?> = new Date().getTime();
+                                                <?php
+                                                }
+                                                ?>
+
+                                                // Find the distance between now and the count down date
+                                                var distance<?= $no ?> = now<?= $no ?> - countDownDate<?= $no ?>;
+
+                                                // Time calculations for days, hours, minutes and seconds
+                                                var days<?= $no ?> = Math.floor(distance<?= $no ?> / (1000 * 60 * 60 * 24));
+                                                var hours<?= $no ?> = Math.floor((distance<?= $no ?> % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                                var minutes<?= $no ?> = Math.floor((distance<?= $no ?> % (1000 * 60 * 60)) / (1000 * 60));
+                                                var seconds<?= $no ?> = Math.floor((distance<?= $no ?> % (1000 * 60)) / 1000);
+
+                                                if (days<?= $no ?> < 10) {
+                                                    days<?= $no ?> = "0" + days<?= $no ?>;
+                                                }
+
+                                                if (hours<?= $no ?> < 10) {
+                                                    hours<?= $no ?> = "0" + hours<?= $no ?>;
+                                                }
+
+                                                if (minutes<?= $no ?> < 10) {
+                                                    minutes<?= $no ?> = "0" + minutes<?= $no ?>;
+                                                }
+
+                                                if (seconds<?= $no ?> < 10) {
+                                                    seconds<?= $no ?> = "0" + seconds<?= $no ?>;
+                                                }
+
+                                                // Display the result in the element with id="demo"
+                                                document.getElementById("waktu<?= $no ?>").innerHTML = days<?= $no ?> + "d " + hours<?= $no ?> + ":" +
+                                                    minutes<?= $no ?> + ":" + seconds<?= $no ?> + "";
+
+                                                var batas<?= $no ?> = document.getElementById('batas<?= $no ?>').value;
+
+                                                if (distance<?= $no ?> > batas<?= $no ?>) {
+                                                    document.getElementById("hasilbatas<?= $no ?>").innerHTML = "Abnormal";
+                                                    // $('#hasilbatas<?= $no ?>').innerHTML = "Abnormal";
+                                                    $('#hasilbatas<?= $no ?>').css("background-color", "#FF3C3C");
+                                                } else {
+                                                    document.getElementById("hasilbatas<?= $no ?>").innerHTML = "Normal";
+                                                    $('#hasilbatas<?= $no ?>').css("background-color", "#14AE5C");
+                                                }
+                                            }, 1000);
+                                        </script>
                                     <?php
                                     }
                                     ?>

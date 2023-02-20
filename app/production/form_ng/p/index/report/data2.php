@@ -3,7 +3,7 @@
             <a class="nav-link active" id="ng-tab" data-toggle="tab" href="#ng" role="tab" aria-controls="ng" aria-selected="true">Inside Check</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="cabinet-tab" data-toggle="tab" href="#cabinet" role="tab" aria-controls="cabinet" aria-selected="false">Completeness Check</a>
+            <a class="nav-link " id="cabinet-tab" data-toggle="tab" href="#cabinet" role="tab" aria-controls="cabinet" aria-selected="false">Completeness Check</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="dept-tab" data-toggle="tab" href="#dept" role="tab" aria-controls="dept" aria-selected="false">Outside Check</a>

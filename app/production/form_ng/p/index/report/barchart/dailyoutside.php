@@ -86,12 +86,12 @@ for ($tgl = 1; $tgl <= $sumOfDay; $tgl++) {
 
     $total_temuane = $total_temuane1 + $total_temuane2 + $total_temuane3;
 
-    //get ratio ng
+    //get Rata-Rata NG
     if ($total_pianoe == 0) {
         $ratio_nge = 0;
     } else {
         $ratio_nge = $total_temuane / $total_pianoe;
-        $ratio_nge = round($ratio_nge);
+        $ratio_nge = number_format($ratio_nge, 2, '.', '');
     }
 
     $total_piano[$z] = $total_pianoe;
@@ -144,7 +144,7 @@ $count_ng = count($ratio_ng);
             }
         },
         legend: {
-            data: ['Jumlah Piano', 'Jumlah Temuan', 'Ratio NG'],
+            data: ['Jumlah Piano', 'Jumlah Temuan', 'Rata-Rata NG'],
             top: 30
         },
         grid: {
@@ -197,7 +197,7 @@ $count_ng = count($ratio_ng);
                 // },
                 tooltip: {
                     valueFormatter: function(value) {
-                        return value + ' ';
+                        return value + '';
                     }
                 },
 
@@ -216,7 +216,7 @@ $count_ng = count($ratio_ng);
                 // },
                 tooltip: {
                     valueFormatter: function(value) {
-                        return value + ' ';
+                        return value + '';
                     }
                 },
                 data: [<?php
@@ -226,7 +226,7 @@ $count_ng = count($ratio_ng);
                         ?>]
             },
             {
-                name: 'Ratio NG',
+                name: 'Rata-Rata NG',
                 type: 'line',
                 // label: {
                 //     show: true,
@@ -234,7 +234,7 @@ $count_ng = count($ratio_ng);
                 // },
                 tooltip: {
                     valueFormatter: function(value) {
-                        return value + ' %';
+                        return value + '';
                     }
                 },
                 data: [<?php

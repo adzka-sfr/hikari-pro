@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12" style="margin-top: 10px;">
-        <h5>Outsddide</h5>
+        <h5>Outside</h5>
     </div>
 </div>
 <div class="row">
