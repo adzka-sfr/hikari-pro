@@ -194,6 +194,27 @@
 
                     </tbody>
                 </table>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <label for="catatan">
+                    <h6>Note :</h6>
+                </label>
+
+                <textarea readonly class="form-control" name="catatan" rows="3">
+<?php
+$sql = mysqli_query($connect_pro, "SELECT c_noteincheck FROM formng_register WHERE c_serialnumber = '$_SESSION[serialnumber_repair]'");
+$data = mysqli_fetch_array($sql);
+
+if (!empty($data['c_noteincheck'])) {
+?>
+<?= $data['c_noteincheck'] ?>
+            <?php
+        }
+            ?>
+            </textarea>
             </div>
         </div>
 

@@ -368,14 +368,14 @@ $type = $data2['c_category'];
                     <tbody>
                         <tr class="heading">
                             <td>No</td>
-                            <td>Item</td>
-                            <td style="text-align: center; width: 10%;">Check</td>
+                            <td style="width: 40%;">Item</td>
+                            <td style="text-align: center; width: 40%;">Check</td>
                             <td>Repair</td>
                         </tr>
 
                         <?php
                         $no = 0;
-                        $sql = mysqli_query($connect_pro, "SELECT c.c_item, r.c_status, r.c_repairdate FROM formng_resulti r JOIN formng_checkinside c ON r.c_item = c.c_code WHERE r.c_serialnumber = '$serial' order by r.id limit 0,31");
+                        $sql = mysqli_query($connect_pro, "SELECT c.c_item, r.c_status, r.c_repairdate, r.c_repair, r.c_detail FROM formng_resulti r JOIN formng_checkinside c ON r.c_item = c.c_code WHERE r.c_serialnumber = '$serial' order by r.id limit 0,22");
                         while ($data = mysqli_fetch_array($sql)) {
                             $no++;
                         ?>
@@ -386,19 +386,22 @@ $type = $data2['c_category'];
                                                                 if ($data['c_status'] == 'OK') {
                                                                     echo 'PASS';
                                                                 } else {
-                                                                    echo 'NG';
+                                                                    // echo 'NG';
+                                                                    echo $data['c_detail'];
                                                                 }
                                                                 ?></td>
                                 <td><?php
-                                    if ($data['c_status'] == 'NG') {
-                                        if (!empty($data['c_repairdate'])) {
-                                            echo 'OK';
-                                        } else {
-                                            echo 'NOT YET';
-                                        }
-                                    } else {
-                                        echo '-';
-                                    }
+                                    // if ($data['c_status'] == 'NG') {
+                                    //     if (!empty($data['c_repairdate'])) {
+                                    //         echo 'OK';
+                                    //     } else {
+                                    //         echo 'NOT YET';
+                                    //     }
+                                    // } else {
+                                    //     echo '-';
+                                    // }
+
+                                    echo $data['c_repair'];
                                     ?></td>
                             </tr>
                         <?php
@@ -433,13 +436,13 @@ $type = $data2['c_category'];
                     <tbody>
                         <tr class="heading">
                             <td>No</td>
-                            <td>Item</td>
-                            <td style="text-align: center; width: 10%;">Check</td>
+                            <td style="width: 40%;">Item</td>
+                            <td style="text-align: center; width: 40%;">Check</td>
                             <td>Repair</td>
                         </tr>
 
                         <?php
-                        $sql = mysqli_query($connect_pro, "SELECT c.c_item, r.c_status, r.c_repairdate FROM formng_resulti r JOIN formng_checkinside c ON r.c_item = c.c_code WHERE r.c_serialnumber = '$serial' order by r.id limit 31,100");
+                        $sql = mysqli_query($connect_pro, "SELECT c.c_item, r.c_status, r.c_repairdate, r.c_repair, r.c_detail FROM formng_resulti r JOIN formng_checkinside c ON r.c_item = c.c_code WHERE r.c_serialnumber = '$serial' order by r.id limit 22,100");
                         while ($data = mysqli_fetch_array($sql)) {
                             $no++;
                         ?>
@@ -450,19 +453,21 @@ $type = $data2['c_category'];
                                                                 if ($data['c_status'] == 'OK') {
                                                                     echo 'PASS';
                                                                 } else {
-                                                                    echo 'NG';
+                                                                    // echo 'NG';
+                                                                    echo $data['c_detail'];
                                                                 }
                                                                 ?></td>
                                 <td><?php
-                                    if ($data['c_status'] == 'NG') {
-                                        if (!empty($data['c_repairdate'])) {
-                                            echo 'OK';
-                                        } else {
-                                            echo 'NOT YET';
-                                        }
-                                    } else {
-                                        echo '-';
-                                    }
+                                    // if ($data['c_status'] == 'NG') {
+                                    //     if (!empty($data['c_repairdate'])) {
+                                    //         echo 'OK';
+                                    //     } else {
+                                    //         echo 'NOT YET';
+                                    //     }
+                                    // } else {
+                                    //     echo '-';
+                                    // }
+                                    echo $data['c_repair'];
                                     ?></td>
                             </tr>
                         <?php
@@ -475,41 +480,24 @@ $type = $data2['c_category'];
 
 
             <div class="signer">
-                <div class="form signer-item">
-                    <label for="signature" class="label"></label>
-                    <br>
-                    <div style="width: 100%; padding: 10px;" class=" signature">
+                <div class="form signer-item" style="width: 40%;">
 
+                    <label for="signature" class="label">Note:</label>
+                    <br>
+                    <div style="width: 100%; height: 80px; padding: 10px; " class="border signature">
+                        <?php
+                        $sqlnote = mysqli_query($connect_pro, "SELECT c_noteincheck FROM formng_register WHERE c_serialnumber = '$serial'");
+                        $data_n = mysqli_fetch_array($sqlnote);
+                        if (!empty($data_n['c_noteincheck'])) {
+                        ?>
+                            <pre style="font-size: smaller;"><?= $data_n['c_noteincheck'] ?></pre>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
-                <div class="form signer-item">
-                    <label for="signature" class="label"></label>
-                    <br>
-                    <div style="width: 100%; padding: 10px;" class=" signature">
 
-                    </div>
-                </div>
-                <div class="form signer-item">
-                    <label for="signature" class="label"></label>
-                    <br>
-                    <div style="width: 100%; padding: 10px;" class=" signature">
 
-                    </div>
-                </div>
-                <div class="form signer-item">
-                    <label for="signature" class="label"></label>
-                    <br>
-                    <div style="width: 100%; padding: 10px;" class=" signature">
-
-                    </div>
-                </div>
-                <div class="form signer-item">
-                    <label for="signature" class="label"></label>
-                    <br>
-                    <div style="width: 100%; padding: 10px;" class=" signature">
-
-                    </div>
-                </div>
                 <div class="form signer-item">
                     <label for="signature" class="label"></label>
                     <br>
@@ -519,7 +507,10 @@ $type = $data2['c_category'];
                 </div>
 
 
+
+
                 <div class="form signer-item">
+
                     <label for="signature" class="label">Checked by:</label>
                     <br>
                     <div style="width: fit-content; padding: 10px;" class="border signature">
@@ -1410,7 +1401,7 @@ $type = $data2['c_category'];
                             <li><?= $data_n['c_notecheck3'] ?> - Approved by <?= $data_n['c_outcheck3by'] ?></li>
                         <?php
                         }
-                        
+
                         ?>
                     </ul>
                 </div>

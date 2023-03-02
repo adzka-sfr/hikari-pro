@@ -61,7 +61,7 @@ if (isset($_SESSION['id'])) {
                                 <br />
                                 <div>
                                     <h1>
-                                        <img src="<?= base_url('_assets/production/images/yamaha_purple_left.png') ?>" alt="logo-yamaha" style="width: 130px;">
+                                         <img src="<?= base_url('_assets/production/images/yamaha_purple_left.png') ?>" alt="logo-yamaha" style="width: 130px;">
                                     </h1>
                                     <p>©2022 All Rights Reserved. Yamaha Indonesia . Privacy and Terms</p>
                                 </div>

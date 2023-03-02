@@ -1,11 +1,19 @@
 <div class="row">
     <div class="col-12">
-        <table class="table table-bordered">
+        <script>
+            $(document).ready(function() {
+                $('#table_ng_cabinet').DataTable({
+                    paging: false
+                });
+
+            });
+        </script>
+        <table id="table_ng_cabinet" class="table table-bordered">
             <thead style="text-align: center;">
-                <th style="width: 5%;">No</th>
-                <th>Kabinet</th>
-                <th style="width: 20%;">Total Temuan</th>
-                <th style="width: 20%;">Status</th>
+                <th style="width: 5px;">No</th>
+                <th style="width: 300px;">Kabinet</th>
+                <th style="width: 100px;">Total Temuan</th>
+                <th style="width: 100px;">Status</th>
             </thead>
             <tbody>
                 <?php

@@ -1,6 +1,14 @@
 <div class="row">
     <div class="col-12">
-        <table class="table table-bordered">
+        <script>
+            $(document).ready(function() {
+                $('#table_ng_ng').DataTable({
+                    paging: false
+                });
+
+            });
+        </script>
+        <table id="table_ng_ng" class="table table-bordered">
             <thead style="text-align: center;">
                 <th style="width: 5%;">No</th>
                 <th>Jenis NG</th>

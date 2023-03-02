@@ -101,8 +101,8 @@
                                 <td style=" vertical-align:top;padding-top:15px; text-align: center; background-color: #82DE82 ;">
                                     OK
                                 </td>
-                                <td colspan="2" >
-                                    <input required type="radio" class="radioku<?= $i ?>" style="transform: scale(2); margin: 10px;" name="inside<?= $i ?>" value="OK" />
+                                <td colspan="2">
+                                    <input type="radio" class="radioku<?= $i ?>" style="transform: scale(2); margin: 10px;" name="inside<?= $i ?>" value="OK" />
                                 </td>
                             </tr>
                             <tr <?= $br ?>>
@@ -142,6 +142,19 @@
         </div>
 
         <div class="row">
+            <div class="col-12 mb-3">
+                <label for="catatan">
+                    <h5>Note :</h5>
+                </label>
+                <textarea class="form-control" name="catatan" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <input required name="agree" value="agree" type="checkbox"> Saya yakin piano <b><?= $_SESSION['pianoname_inside'] ?> ( <u style="color: red;"><?= $_SESSION['serialnumber_inside'] ?></u> )</b> sudah sesuai dengan kondisi aktual
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12" style="text-align: center;">
                 <button type="submit" name="verif" class="btn btn-success">Submit</button>
             </div>
@@ -156,11 +169,16 @@
             $c_item = $_POST['process_inside' . $in];
             $c_status = $_POST['inside' . $in];
 
-            if ($_POST['inside' . $in] == 'OK') {
-                $c_detail = 'ok';
+            if (!empty($_POST['inside' . $in])) {
+                if ($_POST['inside' . $in] == 'OK') {
+                    $c_detail = 'ok';
+                } else {
+                    $c_detail = $_POST['jenis' . $in];
+                }
             } else {
-                $c_detail = $_POST['jenis' . $in];
+                $c_detail = 'ok';
             }
+
 
             $c_inspectiondate = date('Y-m-d H:i:s', strtotime($now));
             $c_checker = $_SESSION['nama'];
@@ -168,6 +186,10 @@
             $sql1 = mysqli_query($connect_pro, "INSERT INTO formng_resulti SET c_serialnumber = '$c_serialnumber', c_pianoname = '$c_pianoname', c_item = '$c_item', c_status = '$c_status', c_detail = '$c_detail', c_inspectiondate = '$c_inspectiondate', c_checker = '$c_checker'");
         }
         if ($sql1) {
+            // update register untuk mengisi note incheck
+            if (!empty($_POST['catatan'])) {
+                mysqli_query($connect_pro, "UPDATE formng_register SET c_noteincheck = '$_POST[catatan]' WHERE c_serialnumber = '$_SESSION[serialnumber_inside]'");
+            }
     ?>
             <script>
                 $(document).ready(function() {
