@@ -304,6 +304,7 @@
                     </div>
                     <div class="row">
 <<<<<<< HEAD
+<<<<<<< HEAD
                         <?php
                         $dver_sql = mysqli_query($connect_pro, "SELECT c_inspectiondate1  FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' ORDER BY id asc limit 1 ");
                         $dver = mysqli_fetch_array($dver_sql);
@@ -355,11 +356,16 @@
                         <div class="col-12">
                             <table class="table">
 >>>>>>> fc3b16c (menambah yang belum ditambah)
+=======
+                        <div class="col-12">
+                            <table class="table">
+>>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                                 <tr style="text-align: center;">
                                     <td><i class="fa fa-pencil" style="color: #DC4646 ;"></i> Outside Check 1</td>
                                     <td><i class="fa fa-pencil" style="color: #5AA65A ;"></i> Outside Check 2</td>
                                     <td><i class="fa fa-pencil" style="color: #1340FF ;"></i> Outside Check 3</td>
                                 </tr>
+<<<<<<< HEAD
 <<<<<<< HEAD
                                 <?php
                                 $verif_sql1 = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' ORDER BY c_section, c_arealabel ");
@@ -484,6 +490,8 @@
 
 =======
 >>>>>>> fc3b16c (menambah yang belum ditambah)
+=======
+>>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                             </table>
                         </div>
                     </div>
@@ -977,6 +985,7 @@
                     </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                     <?php
                     // jika klik button bisa diserahkan ke repair
@@ -1041,6 +1050,8 @@
                     ?>
 =======
 >>>>>>> fc3b16c (menambah yang belum ditambah)
+=======
+>>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                 </div>
 
                 <div class="tab-pane fade" id="completeness" role="tabpanel" aria-labelledby="completeness-tab">

@@ -1323,6 +1323,7 @@ $type = $data2['c_category'];
                             </td>
                         </tr>
                     </table>
+<<<<<<< HEAD
                 </div>
             <?php
             }
@@ -1363,8 +1364,13 @@ $type = $data2['c_category'];
 
                         ?>
                     </ul>
+=======
+>>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                 </div>
-            </div>
+            <?php
+            }
+            ?>
+
 
 
 

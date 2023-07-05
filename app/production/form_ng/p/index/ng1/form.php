@@ -5,11 +5,6 @@
         $inspec_in = date('l, d M Y', strtotime($now));
         $ngin = array();
         $i = 0;
-        $sql1 = mysqli_query($connect_pro, "SELECT c_ng FROM formng_listng WHERE c_area = 'inside' AND c_status = 'enable' ORDER BY c_ng asc");
-        while ($data1 = mysqli_fetch_array($sql1)) {
-            $ngin[$i] = $data1['c_ng'];
-            $i++;
-        }
         ?>
 
         <div class="row">
@@ -113,7 +108,7 @@
                                     <input type="radio" class="radioku<?= $i ?> ng<?= $i ?>" style="transform: scale(2); margin: 10px;" name="inside<?= $i ?>" value="NG" />
                                 </td>
                                 <td>
-                                    <select class="halodecktot" id="duar<?= $i ?>" style="width: 100% " disabled required name="jenis<?= $i ?>">
+                                    <select class="halodecktot" style="width: 95%;" id="duar<?= $i ?>" multiple="multiple" disabled required name="jenis<?= $i ?>[]">
                                         <option></option>
                                         <?php
                                         $sql3 = mysqli_query($connect_pro, "SELECT c_ng FROM formng_itemnginside WHERE c_code = '$data2[c_code]'");
@@ -143,6 +138,27 @@
         </div>
 
         <div class="row">
+            <div class="col-12">
+                <blink>
+                    <h6 style=" color:red;">Pastikan kembali untuk point 23, 35, dan 36!</h6>
+                </blink>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                <label for="catatan">
+                    <h5>Note :</h5>
+                </label>
+                <textarea class="form-control" name="catatan" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <input required name="agree" value="agree" type="checkbox"> Saya yakin piano <b><?= $_SESSION['pianoname_inside'] ?> ( <u style="color: red;"><?= $_SESSION['serialnumber_inside'] ?></u> )</b> sudah sesuai dengan kondisi aktual
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12" style="text-align: center;">
                 <button type="submit" name="verif" class="btn btn-success">Submit</button>
             </div>
@@ -155,14 +171,6 @@
             $c_serialnumber = $_SESSION['serialnumber_inside'];
             $c_pianoname = $_SESSION['pianoname_inside'];
             $c_item = $_POST['process_inside' . $in];
-            $c_status = $_POST['inside' . $in];
-
-            if ($_POST['inside' . $in] == 'OK') {
-                $c_detail = 'ok';
-            } else {
-                $c_detail = $_POST['jenis' . $in];
-            }
-
             $c_inspectiondate = date('Y-m-d H:i:s', strtotime($now));
             $c_checker = $_SESSION['nama'];
 

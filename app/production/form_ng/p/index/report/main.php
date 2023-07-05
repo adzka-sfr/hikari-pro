@@ -108,7 +108,10 @@ include('../../app_name.php');
                                         echo 'class="active"';
                                     } ?>><a href="main.php?p=ap"><i class="fa fa-print"></i>Add Piano</a>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                                 </li>
                             </ul>
                         </div>
@@ -119,7 +122,10 @@ include('../../app_name.php');
                                 <li <?php if ($_GET['p'] == "reset") {
                                         echo 'class="active"';
                                     } ?>><a href="main.php?p=reset"><i class="fa fa-exclamation-triangle"></i> Reset Serialnumber</a>
+<<<<<<< HEAD
 >>>>>>> fc3b16c (menambah yang belum ditambah)
+=======
+>>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                                 </li>
                             </ul>
                         </div>
