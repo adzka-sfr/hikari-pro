@@ -6,11 +6,12 @@
     }
 </script>
 <!-- To Stop Form Resubmission -->
-<div class="dashboard_graph" style="margin-top: 10px;">
+<hr>
+<div class="dashboard_graph" style="margin-top: 10px; margin-bottom: 100px;">
 
     <div class="row">
         <div class="col-12">
-            <h5><u>Already to Print & Repair</u></h5>
+            <h5><u>Siap untuk Print & Repair<button onclick="window.location.reload()" class="btn btn-primary ml-4"><i class="fa fa-refresh"></i></button></u></h5>
             <br>
         </div>
     </div>
@@ -23,10 +24,9 @@
             </div>
             <div class="row">
                 <div class="col-12" style="text-align: center;">
-                    <div style="display: flex; flex-direction: column;  align-content: center; ">
+                    <div style="display: flex; flex-direction: column; align-content: flex-start; gap: 1em;">
                         <?php
-                        // WHERE reg.c_incheckby = ''
-                        $sql = mysqli_query($connect_pro, "SELECT DISTINCT res.c_serialnumber, reg.c_ctrlnumber, res.c_checker FROM formng_resultro res JOIN formng_register reg ON res.c_serialnumber = reg.c_serialnumber WHERE reg.c_outcheck1by = '' AND res.c_process = 'oc1' order by c_ctrlnumber asc");
+                        $sql = mysqli_query($connect_pro, "SELECT rep.c_serialnumber, reg.c_complete1by FROM formng_repairdata rep JOIN formng_register reg ON rep.c_serialnumber = reg.c_serialnumber WHERE c_endprocess IS NULL  AND c_process = 'oc1' ORDER BY c_startprocess");
                         while ($data = mysqli_fetch_array($sql)) {
                         ?>
                             <form method="post">
@@ -35,8 +35,8 @@
                             <?php
                             if (isset($_POST['b1' . $data['c_serialnumber']])) {
                                 $_SESSION['in_serialprint'] = $data['c_serialnumber'];
-                                $_SESSION['outside'] = '1';
-                                $_SESSION['checker'] = $data['c_checker'];
+                                $_SESSION['checker'] = $data['c_complete1by'];
+                                $_SESSION['process'] = 'oc1';
                             ?>
                                 <script>
                                     window.location = "print1.php";
@@ -59,8 +59,7 @@
                 <div class="col-12">
                     <div style="display: flex; flex-direction: column; align-content: flex-start; gap: 1em;">
                         <?php
-                        // WHERE reg.c_incheckby = ''
-                        $sql = mysqli_query($connect_pro, "SELECT DISTINCT res.c_serialnumber, reg.c_ctrlnumber, res.c_checker FROM formng_resultro res JOIN formng_register reg ON res.c_serialnumber = reg.c_serialnumber WHERE reg.c_outcheck2by = '' AND res.c_process = 'oc2' order by c_ctrlnumber asc");
+                        $sql = mysqli_query($connect_pro, "SELECT rep.c_serialnumber, reg.c_complete2by FROM formng_repairdata rep JOIN formng_register reg ON rep.c_serialnumber = reg.c_serialnumber WHERE c_endprocess IS NULL  AND c_process = 'oc2' ORDER BY c_startprocess");
                         while ($data = mysqli_fetch_array($sql)) {
                         ?>
                             <form method="post">
@@ -69,11 +68,11 @@
                             <?php
                             if (isset($_POST['b2' . $data['c_serialnumber']])) {
                                 $_SESSION['in_serialprint'] = $data['c_serialnumber'];
-                                $_SESSION['outside'] = '2';
-                                $_SESSION['checker'] = $data['c_checker'];
+                                $_SESSION['checker'] = $data['c_complete2by'];
+                                $_SESSION['process'] = 'oc2';
                             ?>
                                 <script>
-                                    window.location = "print2.php";
+                                    window.location = "print1.php";
                                 </script>
                         <?php
                             }
@@ -93,8 +92,7 @@
                 <div class="col-12">
                     <div style="display: flex; flex-direction: column; align-content: flex-start; gap: 1em;">
                         <?php
-                        // WHERE reg.c_incheckby = ''
-                        $sql = mysqli_query($connect_pro, "SELECT DISTINCT res.c_serialnumber, reg.c_ctrlnumber, res.c_checker FROM formng_resultro res JOIN formng_register reg ON res.c_serialnumber = reg.c_serialnumber  WHERE reg.c_outcheck3by = '' AND res.c_process = 'oc3' order by c_ctrlnumber asc");
+                        $sql = mysqli_query($connect_pro, "SELECT rep.c_serialnumber, reg.c_complete3by FROM formng_repairdata rep JOIN formng_register reg ON rep.c_serialnumber = reg.c_serialnumber WHERE c_endprocess IS NULL  AND c_process = 'oc3' ORDER BY c_startprocess");
                         while ($data = mysqli_fetch_array($sql)) {
                         ?>
                             <form method="post">
@@ -103,11 +101,11 @@
                             <?php
                             if (isset($_POST['b3' . $data['c_serialnumber']])) {
                                 $_SESSION['in_serialprint'] = $data['c_serialnumber'];
-                                $_SESSION['outside'] = '3';
-                                $_SESSION['checker'] = $data['c_checker'];
+                                $_SESSION['checker'] = $data['c_complete3by'];
+                                $_SESSION['process'] = 'oc3';
                             ?>
                                 <script>
-                                    window.location = "print3.php";
+                                    window.location = "print1.php";
                                 </script>
                         <?php
                             }

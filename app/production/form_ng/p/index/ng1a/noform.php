@@ -6,11 +6,12 @@
     }
 </script>
 <!-- To Stop Form Resubmission -->
-<div class="dashboard_graph" style="margin-top: 10px;">
+<hr>
+<div class="dashboard_graph" style="margin-top: 10px; margin-bottom: 100px;">
 
     <div class="row">
         <div class="col-12">
-            <h5><u>Already to Print & Repair</u></h5>
+            <h5><u>Siap untuk Print & Repair<button onclick="window.location.reload()" class="btn btn-primary ml-4"><i class="fa fa-refresh"></i></button></u></h5>
             <br>
         </div>
     </div>

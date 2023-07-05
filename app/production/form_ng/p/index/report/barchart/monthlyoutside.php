@@ -60,28 +60,18 @@ for ($bln = 1; $bln <= $sumOfDay; $bln++) {
     $total_pianoe = $data1['total'];
 
     //get jumlah temuan cek 1
-    $sup2a = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resulto1 WHERE c_inspectiondate1 LIKE '$tanggal%' AND c_ng1 != ''");
+    $sup2a = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resultong WHERE c_inspectiondate LIKE '$tanggal%'");
     $data2a = mysqli_fetch_array($sup2a);
     $total_temuane1 = $data2a['total'];
 
-    //get jumlah temuan cek 2
-    $sup2b = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resulto1 WHERE c_inspectiondate2 LIKE '$tanggal%' AND c_ng2 != ''");
-    $data2b = mysqli_fetch_array($sup2b);
-    $total_temuane2 = $data2b['total'];
+    $total_temuane = $total_temuane1;
 
-    //get jumlah temuan cek 3
-    $sup2c = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resulto1 WHERE c_inspectiondate3 LIKE '$tanggal%' AND c_ng3 != ''");
-    $data2c = mysqli_fetch_array($sup2c);
-    $total_temuane3 = $data2c['total'];
-
-    $total_temuane = $total_temuane1 + $total_temuane2 + $total_temuane3;
-
-    //get ratio ng
+    //get Rata-Rata NG
     if ($total_pianoe == 0) {
         $ratio_nge = 0;
     } else {
         $ratio_nge = $total_temuane / $total_pianoe;
-        $ratio_nge = round($ratio_nge);
+        $ratio_nge = number_format($ratio_nge, 2, '.', '');
     }
 
     $total_piano[$z] = $total_pianoe;
@@ -134,7 +124,7 @@ $count_ng = count($ratio_ng);
             }
         },
         legend: {
-            data: ['Jumlah Piano', 'Jumlah Temuan', 'Ratio NG'],
+            data: ['Jumlah Piano', 'Jumlah Temuan', 'Rata-Rata NG'],
             top: 30
         },
         xAxis: [{
@@ -143,7 +133,7 @@ $count_ng = count($ratio_ng);
             axisPointer: {
                 type: 'shadow'
             },
-            name: 'Date',
+            name: 'Month',
             nameLocation: 'center',
             nameGap: 30, // posisi
             nameTextStyle: {
@@ -175,7 +165,7 @@ $count_ng = count($ratio_ng);
                 // },
                 tooltip: {
                     valueFormatter: function(value) {
-                        return value + ' ';
+                        return value + '';
                     }
                 },
 
@@ -194,7 +184,7 @@ $count_ng = count($ratio_ng);
                 // },
                 tooltip: {
                     valueFormatter: function(value) {
-                        return value + ' ';
+                        return value + '';
                     }
                 },
                 data: [<?php
@@ -204,7 +194,7 @@ $count_ng = count($ratio_ng);
                         ?>]
             },
             {
-                name: 'Ratio NG',
+                name: 'Rata-Rata NG',
                 type: 'line',
                 // label: {
                 //     show: true,
@@ -212,7 +202,7 @@ $count_ng = count($ratio_ng);
                 // },
                 tooltip: {
                     valueFormatter: function(value) {
-                        return value + ' %';
+                        return value + '';
                     }
                 },
                 data: [<?php

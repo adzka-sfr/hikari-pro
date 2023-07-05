@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12" style="text-align: center;"><u><?= $serial_number ?></u></div>
+                        <div class="col-12" style="text-align: center; font-size: 15px;"><u><?= $serial_number ?></u></div>
                     </div>
                 </th>
                 <th colspan="2">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12" style="text-align: center;">
+                        <div class="col-12" style="text-align: center; font-size: 15px;">
                             <u><?= $piano_name ?></u>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12" style="text-align: center;">
-                            <u>Out Side Check 1</u>
+                            <u>Out Side Check 2</u>
                         </div>
                     </div>
                 </th>
@@ -249,16 +249,18 @@
                 // ng
                 if (!empty($verif_data1['c_ng1'])) {
                     $ng = $verif_data1['c_ng1'];
+                    $cab = $verif_data1['c_cabinet'];
                 }
 
                 if (!empty($verif_data1['c_ng2'])) {
                     $ng = $verif_data1['c_ng2'];
+                    $cab = $verif_data1['c_cabinet'];
                 }
 
                 if (!empty($verif_data1['c_ng3'])) {
                     $ng = $verif_data1['c_ng3'];
+                    $cab = $verif_data1['c_cabinet'];
                 }
-                // $ng = $verif_data1['c_ng1'];
             ?>
                 <tr style="text-align: center; height: 10px;">
                     <td><?= $no ?>
@@ -298,11 +300,21 @@
                     </td>
                     <td><?= $section ?></td>
                     <td><?= $area ?></td>
-                    <td style="text-align: left; width: 20%;"><?= $ng ?></td>
+                    <td style="text-align: left; width: 20%;">
+                        <?= $ng ?>
+                        <br>
+                        <b><?= $cab ?></b>
+                    </td>
                 </tr>
             <?php
             }
             ?>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
 
 
         </table>

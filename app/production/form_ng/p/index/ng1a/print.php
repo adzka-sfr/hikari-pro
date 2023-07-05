@@ -164,7 +164,24 @@ session_start();
             </ul>
         </div>
         <hr>
+        <?php
+        $sql = mysqli_query($connect_pro, "SELECT c_noteincheck FROM formng_register WHERE c_serialnumber = '$serial'");
+        $data = mysqli_fetch_array($sql);
 
+        if (!empty($data['c_noteincheck'])) {
+        ?>
+            <div style="font-size: 12px; padding-left: 10px; margin-left: 0px;">
+                <b>Note:</b>
+                <br>
+
+                <b>
+                    <pre><?= $data['c_noteincheck'] ?></pre>
+                </b>
+                <!-- <span><?= $data['c_noteincheck'] ?></span> -->
+            </div>
+        <?php
+        }
+        ?>
     </div>
 
 

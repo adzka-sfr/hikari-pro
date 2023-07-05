@@ -107,19 +107,19 @@
                     </style>
                     <select class="xixi" id="refres1" name="wc1">
                         <option value="" selected disabled>Select Work Center</option>
-                        <option value="W130">Setting Veneer</option>
-                        <option value="W170">Hot Press Panel</option>
-                        <option value="W300">Machine Leg UP</option>
-                        <option value="W400">Out & WW Check</option>
+                        <option value="W130">W130 - Setting Veneer</option>
+                        <option value="W170">W170 - Hot Press Panel</option>
+                        <option value="W300">W300 - Machine Leg UP</option>
+                        <option value="W400">W400 - Out & WW Check</option>
                     </select>
                 </div>
                 <div class="col-6">
                     <select class="xixi" id="refres2" name="wc2">
                         <option value="" selected disabled>Select Work Center</option>
-                        <option value="W130">Setting Veneer</option>
-                        <option value="W170">Hot Press Panel</option>
-                        <option value="W300">Machine Leg UP</option>
-                        <option value="W400">Out & WW Check</option>
+                        <option value="W130">W130 - Setting Veneer</option>
+                        <option value="W170">W170 - Hot Press Panel</option>
+                        <option value="W300">W300 - Machine Leg UP</option>
+                        <option value="W400">W400 - Out & WW Check</option>
                     </select>
                 </div>
 

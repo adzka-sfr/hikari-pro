@@ -5,11 +5,6 @@
         $inspec_in = date('l, d M Y', strtotime($now));
         $ngin = array();
         $i = 0;
-        $sql1 = mysqli_query($connect_pro, "SELECT c_ng FROM formng_listng WHERE c_area = 'inside' ORDER BY c_ng asc");
-        while ($data1 = mysqli_fetch_array($sql1)) {
-            $ngin[$i] = $data1['c_ng'];
-            $i++;
-        }
         ?>
 
         <div class="row">
@@ -17,14 +12,14 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th style="vertical-align:top;padding-top:0px; width: 10%;">
+                            <th style="vertical-align:top;padding-top:0px; width: 25%;">
                                 <div class="row">
                                     <div class="col-md-12" style="margin-top: 5px;">
                                         No Seri :
                                     </div>
                                 </div>
                                 <di class="row">
-                                    <div class="col-md-12" style="text-align: center;">
+                                    <div class="col-md-12" style="text-align: center; font-size: 15px;">
                                         <?= $_SESSION['serialnumber_inside'] ?>
                                     </div>
                                 </di>
@@ -36,7 +31,7 @@
                                     </div>
                                 </div>
                                 <di class="row">
-                                    <div class="col-md-12" style="text-align: center;">
+                                    <div class="col-md-12" style="text-align: center; font-size: 15px;">
                                         <?= $_SESSION['pianoname_inside'] ?>
                                     </div>
                                 </di>
@@ -48,12 +43,12 @@
                                     </div>
                                 </div>
                                 <di class="row">
-                                    <div class="col-md-12" style="text-align: center;">
+                                    <div class="col-md-12" style="text-align: center; font-size: 15px;">
                                         <?= date('l, d M Y', strtotime($now)) ?>
                                     </div>
                                 </di>
                             </th>
-                            <th style="vertical-align:top;padding-top:0px; width: 15%;">
+                            <!-- <th style="vertical-align:top;padding-top:0px; width: 15%;">
                                 <div class="row">
                                     <div class="col-md-12" style="margin-top: 5px;">
                                         Process :
@@ -64,7 +59,7 @@
                                         Inside Check
                                     </div>
                                 </di>
-                            </th>
+                            </th> -->
                         </tr>
                     </thead>
                 </table>
@@ -77,48 +72,49 @@
                     <thead style="text-align: center;">
                         <th style="width: 5%;">No</th>
                         <th style="width: 40%;">Item</th>
-                        <th colspan="3">Hasil Cek</th>
+                        <th style="width: 55%;" colspan="3">Hasil Cek</th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 0;
-                        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_checkinside ORDER BY id asc");
+                        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_checkinside WHERE c_status = 'enable' ORDER BY id asc");
                         while ($data2 = mysqli_fetch_array($sql2)) {
 
                             // pemberian warna background tr
                             $i++;
                             if ($i % 2 == 0) {
-                                $br = 'style = "background-color: #F2F2F2;"';
+                                $br = 'style = "background-color: #DEDEDE;"';
                             } else {
                                 $br = '';
                             }
                         ?>
                             <!-- baris n -->
                             <tr <?= $br ?>>
-                                <td rowspan="2" style="text-align: center;"><?= $i ?></td>
-                                <td rowspan="2"><?= $data2['c_item'] ?></td>
+                                <td rowspan="2" style="text-align: center; font-size: 15px;"><?= $i ?></td>
+                                <td rowspan="2" style="font-size: 15px;"><?= $data2['c_item'] ?></td>
                                 <input type="hidden" name="process_inside<?= $i ?>" value="<?= $data2['c_code'] ?>">
-                                <td style="width: 50px; vertical-align:top;padding-top:15px; text-align: center;">
+                                <td style=" vertical-align:top;padding-top:15px; text-align: center; background-color: #82DE82 ;">
                                     OK
                                 </td>
                                 <td colspan="2">
-                                    <input required type="radio" class="radioku<?= $i ?>" style="transform: scale(2); margin: 10px;" name="inside<?= $i ?>" value="OK" />
+                                    <input type="radio" class="radioku<?= $i ?>" style="transform: scale(2); margin: 10px;" name="inside<?= $i ?>" value="OK" />
                                 </td>
                             </tr>
                             <tr <?= $br ?>>
-                                <td style="width: 50px; vertical-align:top;padding-top:15px; text-align: center;">
+                                <td style=" vertical-align:top;padding-top:15px; text-align: center; background-color: #DE8282 ;">
                                     NG
                                 </td>
-                                <td style="width: 50px;">
+                                <td>
                                     <input type="radio" class="radioku<?= $i ?> ng<?= $i ?>" style="transform: scale(2); margin: 10px;" name="inside<?= $i ?>" value="NG" />
                                 </td>
                                 <td>
-                                    <select class="halodecktot" id="duar<?= $i ?>" style="width: 100% " disabled required name="jenis<?= $i ?>">
+                                    <select class="halodecktot" style="width: 95%;" id="duar<?= $i ?>" multiple="multiple" disabled required name="jenis<?= $i ?>[]">
                                         <option></option>
                                         <?php
-                                        for ($j = 0; $j < count($ngin); $j++) {
+                                        $sql3 = mysqli_query($connect_pro, "SELECT c_ng FROM formng_itemnginside WHERE c_code = '$data2[c_code]'");
+                                        while ($data3 = mysqli_fetch_array($sql3)) {
                                         ?>
-                                            <option value="<?= $ngin[$j] ?>"><?= $ngin[$j] ?></option>
+                                            <option value="<?= $data3['c_ng'] ?>"><?= $data3['c_ng'] ?></option>
                                         <?php
                                         }
                                         ?>
@@ -142,6 +138,27 @@
         </div>
 
         <div class="row">
+            <div class="col-12">
+                <blink>
+                    <h6 style=" color:red;">Pastikan kembali untuk point 23, 35, dan 36!</h6>
+                </blink>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-3">
+                <label for="catatan">
+                    <h5>Note :</h5>
+                </label>
+                <textarea class="form-control" name="catatan" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-4">
+                <input required name="agree" value="agree" type="checkbox"> Saya yakin piano <b><?= $_SESSION['pianoname_inside'] ?> ( <u style="color: red;"><?= $_SESSION['serialnumber_inside'] ?></u> )</b> sudah sesuai dengan kondisi aktual
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12" style="text-align: center;">
                 <button type="submit" name="verif" class="btn btn-success">Submit</button>
             </div>
@@ -154,20 +171,34 @@
             $c_serialnumber = $_SESSION['serialnumber_inside'];
             $c_pianoname = $_SESSION['pianoname_inside'];
             $c_item = $_POST['process_inside' . $in];
-            $c_status = $_POST['inside' . $in];
-
-            if ($_POST['inside' . $in] == 'OK') {
-                $c_detail = 'ok';
-            } else {
-                $c_detail = $_POST['jenis' . $in];
-            }
-
             $c_inspectiondate = date('Y-m-d H:i:s', strtotime($now));
             $c_checker = $_SESSION['nama'];
 
-            $sql1 = mysqli_query($connect_pro, "INSERT INTO formng_resulti SET c_serialnumber = '$c_serialnumber', c_pianoname = '$c_pianoname', c_item = '$c_item', c_status = '$c_status', c_detail = '$c_detail', c_inspectiondate = '$c_inspectiondate', c_checker = '$c_checker'");
+            if (!empty($_POST['inside' . $in])) {
+                $c_status = $_POST['inside' . $in];
+                if ($_POST['inside' . $in] == 'OK') {
+                    $c_detail = 'ok';
+
+                    $sql1 = mysqli_query($connect_pro, "INSERT INTO formng_resulti SET c_serialnumber = '$c_serialnumber', c_pianoname = '$c_pianoname', c_item = '$c_item', c_status = '$c_status', c_detail = '$c_detail', c_inspectiondate = '$c_inspectiondate', c_checker = '$c_checker'");
+                } else {
+                    foreach ($_POST['jenis' . $in] as $value) {
+                        $sql1 = mysqli_query($connect_pro, "INSERT INTO formng_resulti SET c_serialnumber = '$c_serialnumber', c_pianoname = '$c_pianoname', c_item = '$c_item', c_status = '$c_status', c_detail = '$value', c_inspectiondate = '$c_inspectiondate', c_checker = '$c_checker'");
+                    }
+                }
+            } else {
+                $c_status = 'OK';
+                $c_detail = 'ok';
+
+                $sql1 = mysqli_query($connect_pro, "INSERT INTO formng_resulti SET c_serialnumber = '$c_serialnumber', c_pianoname = '$c_pianoname', c_item = '$c_item', c_status = '$c_status', c_detail = '$c_detail', c_inspectiondate = '$c_inspectiondate', c_checker = '$c_checker'");
+            }
         }
+        // hapus item yang tidak pakai
+        $ppp = mysqli_query($connect_pro, "DELETE FROM formng_resulti WHERE c_serialnumber = '$c_serialnumber' AND c_detail = 'Tidak pakai'");
         if ($sql1) {
+            // update register untuk mengisi note incheck
+            if (!empty($_POST['catatan'])) {
+                mysqli_query($connect_pro, "UPDATE formng_register SET c_noteincheck = '$_POST[catatan]' WHERE c_serialnumber = '$_SESSION[serialnumber_inside]'");
+            }
     ?>
             <script>
                 $(document).ready(function() {

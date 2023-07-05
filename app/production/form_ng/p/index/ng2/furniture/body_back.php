@@ -232,14 +232,14 @@
             <?php
             $data_ng = array();
             $a = 0;
-            $ng_sql = mysqli_query($connect_pro, "SELECT * FROM formng_listng WHERE c_area = 'outside'");
+            $ng_sql = mysqli_query($connect_pro, "SELECT * FROM formng_listng WHERE c_area = 'outside' AND c_status = 'enable'");
             while ($ng_data = mysqli_fetch_array($ng_sql)) {
                 $data_ng[$a] = $ng_data['c_ng'];
                 $a++;
             }
             $data_cb = array();
             $b = 0;
-            $cb_sql = mysqli_query($connect_pro, "SELECT * FROM formng_listcabinet");
+            $cb_sql = mysqli_query($connect_pro, "SELECT * FROM formng_listcabinet WHERE c_status = 'enable'");
             while ($cb_data = mysqli_fetch_array($cb_sql)) {
                 $data_cb[$b] = $cb_data['c_name'];
                 $b++;

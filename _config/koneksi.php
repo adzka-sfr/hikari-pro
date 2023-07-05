@@ -2,6 +2,7 @@
 // setting default timezone
 date_default_timezone_set('Asia/Jakarta');
 $now = date('Y-m-d H:i:s');
+// $now = '2023-01-03 11:59:00';
 session_start();
 
 $servername = "localhost";
@@ -27,10 +28,10 @@ if ($connect->connect_error) {
 // jangan lupa mengganti base url
 // fungsi base_url
 // $_SESSION['base_url'] = "https://hikari.local/hikari";
-$_SESSION['base_url'] = "https://172.17.192.242/hikari";
+$_SESSION['base_url'] = "https://172.17.192.131/hikari-pro";
 function base_url($url = null)
 {
-  $base_url = "https://172.17.192.242/hikari";
+  $base_url = "https://172.17.192.131/hikari-pro";
   // $base_url = "https://hikari.local/hikari";
   if ($url != null) {
     return $base_url . "/" . $url;

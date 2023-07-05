@@ -22,7 +22,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th style="vertical-align:top;padding-top:0px; width: 10%;">
+                        <th style="vertical-align:top;padding-top:0px; width: 25%; font-size: 15px;">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
                                     No Seri :
@@ -36,29 +36,29 @@
                         </th>
                         <th style="vertical-align:top;padding-top:0px">
                             <div class="row">
-                                <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="col-md-12" style="margin-top: 5px; ">
                                     Model :
                                 </div>
                             </div>
                             <di class="row">
-                                <div class="col-md-12" style="text-align: center;">
+                                <div class="col-md-12" style="text-align: center; font-size: 15px;">
                                     <?= $_SESSION['pianoname_outside1'] ?>
                                 </div>
                             </di>
                         </th>
-                        <th style="vertical-align:top;padding-top:0px; width: 25%;">
+                        <th style="vertical-align:top;padding-top:0px; width: 25%; ">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
-                                    Inspection Date :
+                                    Tanggal Pengecekan :
                                 </div>
                             </div>
                             <di class="row">
-                                <div class="col-md-12" style="text-align: center;">
+                                <div class="col-md-12" style="text-align: center; font-size: 15px;">
                                     <?= date('l, d M Y', strtotime($now)) ?>
                                 </div>
                             </di>
                         </th>
-                        <th style="vertical-align:top;padding-top:0px; width: 15%;">
+                        <!-- <th style="vertical-align:top;padding-top:0px; width: 15%;">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
                                     Process :
@@ -69,7 +69,7 @@
                                     Completeness
                                 </div>
                             </di>
-                        </th>
+                        </th> -->
                     </tr>
                 </thead>
             </table>
@@ -82,16 +82,16 @@
                 <table class="table table-bordered">
                     <thead style="text-align: center;">
                         <th style="width: 5%;">No</th>
-                        <th>Part Name</th>
-                        <th style="width: 10%;">Check 1</th>
-                        <th style="width: 10%;">Check 2</th>
-                        <th style="width: 10%;">Check 3</th>
+                        <th>Nama Item</th>
+                        <th style="width: 10%;">Cek 1</th>
+                        <th style="width: 10%;">Cek 2</th>
+                        <th style="width: 10%;">Cek 3</th>
                     </thead>
-                    <tbody>
+                    <tbody style="font-size: 15px;">
                         <?php
                         $i = 0;
                         $ng = 0;
-                        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_checkcomplete WHERE c_type = '$_SESSION[complete_outside1]' ORDER BY id asc");
+                        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_checkcomplete WHERE c_type = '$_SESSION[complete_outside1]' AND c_status = 'enable' ORDER BY id asc");
                         while ($data2 = mysqli_fetch_array($sql2)) {
 
                             // pemberian warna background tr
@@ -141,13 +141,13 @@
 
         <div class="row">
             <div class="col-12">
-                <input required name="agree" value="agree" type="checkbox"> Saya yakin data <b>Completeness Part</b> sudah sesuai dengan kondisi aktual
+                <input required name="agree" value="agree" type="checkbox"> Saya yakin data <b>Completeness</b> sudah sesuai dengan kondisi aktual
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-12" style="text-align: center;">
-                <button type="submit" name="verif" class="btn btn-success">Submit, and go to Outside Check</button>
+                <button type="submit" name="verif" class="btn btn-success">Simpan, dan Cek Outside</button>
             </div>
         </div>
     </form>
@@ -179,8 +179,8 @@
             <script>
                 $(document).ready(function() {
                     Swal.fire({
-                        title: 'Success',
-                        html: 'Input data completeness for <br><b><?= $_SESSION['pianoname_outside1'] ?></b><br> has been recorded !',
+                        title: 'Berhasil',
+                        html: 'Data completeness untuk <br><b><?= $_SESSION['pianoname_outside1'] ?></b><br> berhasil direkam !',
                         type: 'success',
                         confirmButtonText: 'Ok',
                         allowOutsideClick: true

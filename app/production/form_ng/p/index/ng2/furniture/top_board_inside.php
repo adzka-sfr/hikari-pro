@@ -21,7 +21,7 @@
                             $label = $tbo1['c_line'] . "-" . $tbo1['c_btn_queue'];
 
                             // cek apakah ada data ng ?
-                            $tbo2_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulto1 WHERE c_serialnumber = '$serial_nmuber' AND c_areacode = '$id'");
+                            $tbo2_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' AND c_areacode = '$id'");
                             if (empty(mysqli_fetch_array($tbo2_sql))) {
                                 $bg = 'background-color: #157347;';
                             } else {
@@ -45,7 +45,7 @@
                             $label = $tbo1['c_line'] . "-" . $tbo1['c_btn_queue'];
 
                             // cek apakah ada data ng ?
-                            $tbo2_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulto1 WHERE c_serialnumber = '$serial_nmuber' AND c_areacode = '$id'");
+                            $tbo2_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' AND c_areacode = '$id'");
                             if (empty(mysqli_fetch_array($tbo2_sql))) {
                                 $bg = 'background-color: #157347;';
                             } else {
@@ -69,7 +69,7 @@
                             $label = $tbo1['c_line'] . "-" . $tbo1['c_btn_queue'];
 
                             // cek apakah ada data ng ?
-                            $tbo2_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulto1 WHERE c_serialnumber = '$serial_nmuber' AND c_areacode = '$id'");
+                            $tbo2_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' AND c_areacode = '$id'");
                             if (empty(mysqli_fetch_array($tbo2_sql))) {
                                 $bg = 'background-color: #157347;';
                             } else {
@@ -93,7 +93,7 @@
                             $label = $tbo1['c_line'] . "-" . $tbo1['c_btn_queue'];
 
                             // cek apakah ada data ng ?
-                            $tbo2_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulto1 WHERE c_serialnumber = '$serial_nmuber' AND c_areacode = '$id'");
+                            $tbo2_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' AND c_areacode = '$id'");
                             if (empty(mysqli_fetch_array($tbo2_sql))) {
                                 $bg = 'background-color: #157347;';
                             } else {
@@ -117,7 +117,7 @@
                             $label = $tbo1['c_line'] . "-" . $tbo1['c_btn_queue'];
 
                             // cek apakah ada data ng ?
-                            $tbo2_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulto1 WHERE c_serialnumber = '$serial_nmuber' AND c_areacode = '$id'");
+                            $tbo2_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' AND c_areacode = '$id'");
                             if (empty(mysqli_fetch_array($tbo2_sql))) {
                                 $bg = 'background-color: #157347;';
                             } else {
@@ -136,14 +136,14 @@
             <?php
             $data_ng = array();
             $a = 0;
-            $ng_sql = mysqli_query($connect_pro, "SELECT * FROM formng_listng WHERE c_area = 'outside'");
+            $ng_sql = mysqli_query($connect_pro, "SELECT * FROM formng_listng WHERE c_area = 'outside' AND c_status = 'enable'");
             while ($ng_data = mysqli_fetch_array($ng_sql)) {
                 $data_ng[$a] = $ng_data['c_ng'];
                 $a++;
             }
             $data_cb = array();
             $b = 0;
-            $cb_sql = mysqli_query($connect_pro, "SELECT * FROM formng_listcabinet");
+            $cb_sql = mysqli_query($connect_pro, "SELECT * FROM formng_listcabinet WHERE c_status = 'enable'");
             while ($cb_data = mysqli_fetch_array($cb_sql)) {
                 $data_cb[$b] = $cb_data['c_name'];
                 $b++;
@@ -160,7 +160,7 @@
                 // cabinet
                 $cabng = array();
                 $a = 0;
-                $cabsql = mysqli_query($connect_pro, "SELECT DISTINCT c_cabinet FROM formng_resulto1 WHERE c_serialnumber = '$serial_nmuber' AND c_areacode = '$id'");
+                $cabsql = mysqli_query($connect_pro, "SELECT DISTINCT c_cabinet FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' AND c_areacode = '$id'");
                 while ($cabdata = mysqli_fetch_array($cabsql)) {
                     $cabng[$a] = $cabdata['c_cabinet'];
                     $a++;
@@ -206,7 +206,7 @@
                                             <div class="mb-3 row">
                                                 <div class="col-sm-6">
                                                     <label for="serialnumber">Serial Number :</label>
-                                                    <input style="border-radius: 3px;" type="text" name="slip_p" class="form-control" value="<?= $serial_nmuber ?>" readonly>
+                                                    <input style="border-radius: 3px;" type="text" name="slip_p" class="form-control" value="<?= $serial_number ?>" readonly>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <label for="model">Model :</label>
@@ -257,7 +257,7 @@
                                                         for ($i = 0; $i < count($data_ng); $i++) {
                                                             // cek data ng yang sudah tersimpan
                                                             if (!empty($cabng[0])) {
-                                                                $modal_sql1 = mysqli_query($connect_pro, "SELECT c_ng1 FROM formng_resulto1 WHERE c_serialnumber = '$serial_nmuber' AND c_areacode = '$id' AND c_cabinet = '$cabng[0]' AND c_ng1 = '$data_ng[$i]'");
+                                                                $modal_sql1 = mysqli_query($connect_pro, "SELECT c_ng1 FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' AND c_areacode = '$id' AND c_cabinet = '$cabng[0]' AND c_ng1 = '$data_ng[$i]'");
                                                                 if (empty(mysqli_fetch_array($modal_sql1))) {
                                                                     $sel = '';
                                                                 } else {
@@ -310,7 +310,7 @@
                                                         for ($i = 0; $i < count($data_ng); $i++) {
                                                             // cek data ng yang sudah tersimpan
                                                             if (!empty($cabng[1])) {
-                                                                $modal_sql1 = mysqli_query($connect_pro, "SELECT c_ng1 FROM formng_resulto1 WHERE c_serialnumber = '$serial_nmuber' AND c_areacode = '$id' AND c_cabinet = '$cabng[1]' AND c_ng1 = '$data_ng[$i]'");
+                                                                $modal_sql1 = mysqli_query($connect_pro, "SELECT c_ng1 FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' AND c_areacode = '$id' AND c_cabinet = '$cabng[1]' AND c_ng1 = '$data_ng[$i]'");
                                                                 if (empty(mysqli_fetch_array($modal_sql1))) {
                                                                     $sel = '';
                                                                 } else {
@@ -360,7 +360,7 @@
                                                         for ($i = 0; $i < count($data_ng); $i++) {
                                                             // cek data ng yang sudah tersimpan
                                                             if (!empty($cabng[2])) {
-                                                                $modal_sql1 = mysqli_query($connect_pro, "SELECT c_ng1 FROM formng_resulto1 WHERE c_serialnumber = '$serial_nmuber' AND c_areacode = '$id' AND c_cabinet = '$cabng[2]' AND c_ng1 = '$data_ng[$i]'");
+                                                                $modal_sql1 = mysqli_query($connect_pro, "SELECT c_ng1 FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' AND c_areacode = '$id' AND c_cabinet = '$cabng[2]' AND c_ng1 = '$data_ng[$i]'");
                                                                 if (empty(mysqli_fetch_array($modal_sql1))) {
                                                                     $sel = '';
                                                                 } else {
@@ -405,16 +405,16 @@
                             $date_in = date('Y-m-d H:i:s');
 
                             if (empty($_POST['cab1']) and empty($_POST['cab2']) and empty($_POST['cab3'])) {
-                                $pp1 = mysqli_query($connect_pro, "DELETE FROM formng_resulto1 where c_serialnumber = '$serial_nmuber' AND c_areacode = '$id'");
+                                $pp1 = mysqli_query($connect_pro, "DELETE FROM formng_resulto1 where c_serialnumber = '$serial_number' AND c_areacode = '$id'");
                             } else {
                                 // delete untuk kemudian melakukan update di bawahnya
-                                $pp1 =   mysqli_query($connect_pro, "DELETE FROM formng_resulto1 where c_serialnumber = '$serial_nmuber' AND c_areacode = '$id'");
+                                $pp1 =   mysqli_query($connect_pro, "DELETE FROM formng_resulto1 where c_serialnumber = '$serial_number' AND c_areacode = '$id'");
 
                                 if (!empty($_POST['cab1'])) {
                                     $cab = $_POST['cab1'];
                                     if (!empty($_POST['ng1'])) {
                                         foreach ($_POST['ng1'] as $value) {
-                                            $pp1 = mysqli_query($connect_pro, "INSERT INTO formng_resulto1 SET c_serialnumber = '$serial_nmuber', c_pianoname = '$piano_name', c_section = '$section', c_arealabel = '$label', c_areacode = '$id',c_cabinet = '$cab', c_ng1 = '$value', c_inspectiondate1 = '$date_in', c_checker1 = '$_SESSION[nama]' ");
+                                            $pp1 = mysqli_query($connect_pro, "INSERT INTO formng_resulto1 SET c_serialnumber = '$serial_number', c_pianoname = '$piano_name', c_section = '$section', c_arealabel = '$label', c_areacode = '$id',c_cabinet = '$cab', c_ng1 = '$value', c_inspectiondate1 = '$date_in', c_checker1 = '$_SESSION[nama]' ");
                                         }
                                     }
                                 }
@@ -423,7 +423,7 @@
                                     $cab = $_POST['cab2'];
                                     if (!empty($_POST['ng2'])) {
                                         foreach ($_POST['ng2'] as $value) {
-                                            $pp1 = mysqli_query($connect_pro, "INSERT INTO formng_resulto1 SET c_serialnumber = '$serial_nmuber', c_pianoname = '$piano_name', c_section = '$section', c_arealabel = '$label', c_areacode = '$id',c_cabinet = '$cab', c_ng1 = '$value', c_inspectiondate1 = '$date_in', c_checker1 = '$_SESSION[nama]' ");
+                                            $pp1 = mysqli_query($connect_pro, "INSERT INTO formng_resulto1 SET c_serialnumber = '$serial_number', c_pianoname = '$piano_name', c_section = '$section', c_arealabel = '$label', c_areacode = '$id',c_cabinet = '$cab', c_ng1 = '$value', c_inspectiondate1 = '$date_in', c_checker1 = '$_SESSION[nama]' ");
                                         }
                                     }
                                 }
@@ -432,7 +432,7 @@
                                     $cab = $_POST['cab3'];
                                     if (!empty($_POST['ng3'])) {
                                         foreach ($_POST['ng3'] as $value) {
-                                            $pp1 = mysqli_query($connect_pro, "INSERT INTO formng_resulto1 SET c_serialnumber = '$serial_nmuber', c_pianoname = '$piano_name', c_section = '$section', c_arealabel = '$label', c_areacode = '$id',c_cabinet = '$cab', c_ng1 = '$value', c_inspectiondate1 = '$date_in', c_checker1 = '$_SESSION[nama]' ");
+                                            $pp1 = mysqli_query($connect_pro, "INSERT INTO formng_resulto1 SET c_serialnumber = '$serial_number', c_pianoname = '$piano_name', c_section = '$section', c_arealabel = '$label', c_areacode = '$id',c_cabinet = '$cab', c_ng1 = '$value', c_inspectiondate1 = '$date_in', c_checker1 = '$_SESSION[nama]' ");
                                         }
                                     }
                                 }
@@ -483,7 +483,7 @@
             <tbody>
                 <?php
                 $no = 1;
-                $his_ng = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber = '$serial_nmuber' AND c_section = '$section' ORDER BY c_arealabel desc");
+                $his_ng = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' AND c_section = '$section' ORDER BY c_arealabel desc");
                 if (empty(mysqli_fetch_array($his_ng))) {
                 ?>
                     <tr>
@@ -491,7 +491,7 @@
                     </tr>
                     <?php
                 } else {
-                    $his_ng = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber = '$serial_nmuber' AND c_section = '$section' ORDER BY c_arealabel desc");
+                    $his_ng = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' AND c_section = '$section' ORDER BY c_arealabel desc");
                     while ($his_ng_data = mysqli_fetch_array($his_ng)) {
                     ?>
                         <tr>

@@ -107,51 +107,7 @@
       </div>
     </div>
 
-    <div class="dashboard_graph" style="background-color: #F7F7F7;">
-      <div class="row x_title">
-        <div class="col-md-12">
-          <h3>Managerial <small style="font-size: 15px;">Apps</small></h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="bs-glyphicons ">
-          <ul class="bs-glyphicons-list ">
-            <!-- isi konten aplikasinya -->
-            <?php
-            $q_app_m = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'managerial' ORDER BY c_dir");
-            $manag = 100;
-            while ($d_app_m = mysqli_fetch_array($q_app_m)) {
-              $d_dir_m = $d_app_m['c_dir'];
-              $d_name_m = $d_app_m['c_name'];
-              $d_img_m = $d_app_m['c_img'];
-            ?>
 
-              <a target="_blank" rel="noopener noreferrer" href="<?= base_url('app/managerial/' . $d_dir_m) ?>">
-                <li class="zoom" onmouseover="mouseOver<?= $manag ?>()" onmouseout="mouseOut<?= $manag ?>()">
-                  <span class="glyphicon " aria-hidden="true"><img src="<?= base_url('_assets/production/icons/projects/' . $d_img_m . '.png') ?>" id="manag<?= $manag ?>" alt="<?= $d_name_m ?>" height="50" width="50"></span>
-                  <span class="glyphicon-class"><?= $d_name_m ?></span>
-                </li>
-                <script type="text/javascript">
-                  function mouseOver<?= $manag ?>() {
-                    document.getElementById("manag<?= $manag ?>").src = "<?= base_url('_assets/production/icons/projects/' . $d_img_m . '_w.png') ?>";
-                  }
-
-                  function mouseOut<?= $manag ?>() {
-                    document.getElementById("manag<?= $manag ?>").src = "<?= base_url('_assets/production/icons/projects/' . $d_img_m . '.png') ?>"
-                  }
-                </script>
-              </a>
-
-            <?php
-              $manag++;
-            }
-            ?>
-
-            <!-- isi konten aplikasinya -->
-          </ul>
-        </div>
-      </div>
-    </div>
 
     <div class="dashboard_graph" style="background-color: #F7F7F7; margin-bottom: 50px;">
       <div class="row x_title">
@@ -169,7 +125,7 @@
           <ul class="bs-glyphicons-list ">
             <!-- isi konten aplikasinya -->
             <?php
-            $q_app_p = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'production' AND c_subgroup = 'painting' ORDER BY c_name");
+            $q_app_p = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'production' AND c_subgroup = 'sub1' ORDER BY c_name");
             $sub1 = 500;
             while ($d_app_p = mysqli_fetch_array($q_app_p)) {
               $d_dir_p = $d_app_p['c_dir'];
@@ -212,7 +168,7 @@
           <ul class="bs-glyphicons-list ">
             <!-- isi konten aplikasinya -->
             <?php
-            $q_app_p = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'production' AND c_subgroup = 'assembly' ORDER BY c_name");
+            $q_app_p = mysqli_query($connect, "SELECT * from t_app WHERE c_group = 'production' AND c_subgroup = 'sub2' ORDER BY c_name");
             $sub2 = 800;
             while ($d_app_p = mysqli_fetch_array($q_app_p)) {
               $d_dir_p = $d_app_p['c_dir'];

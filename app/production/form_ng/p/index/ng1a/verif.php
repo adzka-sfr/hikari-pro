@@ -49,7 +49,7 @@
                         <th style="vertical-align:top;padding-top:0px; width: 25%;">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
-                                    Repair Date :
+                                    Tanggal Repair :
                                 </div>
                             </div>
                             <di class="row">
@@ -61,7 +61,7 @@
                         <th style="vertical-align:top;padding-top:0px; width: 15%;">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
-                                    Process :
+                                    Proses :
                                 </div>
                             </div>
                             <di class="row">
@@ -117,8 +117,8 @@
 
                                 <!-- baris n -->
                                 <tr <?= $br ?>>
-                                    <td style="text-align: center;" rowspan="2"><?= $i ?></td>
-                                    <td rowspan="2"><?= $data3['c_item'] ?></td>
+                                    <td style="text-align: center; font-size: 15px;" rowspan="2"><?= $i ?></td>
+                                    <td rowspan="2" style="font-size: 15px;"><?= $data3['c_item'] ?></td>
                                     <td colspan="2" style="text-align: center; font-weight: bold; color: #fff; background-color: <?= $fixed ?>;"><?= $data2['c_detail'] ?></td>
                                 </tr>
                                 <tr <?= $br ?>>
@@ -152,6 +152,7 @@
                                             <div class="checkbox">
                                                 <label>
                                                     <input type="hidden" name="c_item<?= $i ?>" value="<?= $data2['c_item'] ?>">
+                                                    <input type="hidden" name="c_detail<?= $i ?>" value="<?= $data2['c_detail'] ?>">
                                                     <input name="ck<?= $i ?>" value="checked" type="checkbox" style="transform: scale(2); margin: 10px; vertical-align:top;padding-top:70px;">
                                                 </label>
                                             </div>
@@ -194,6 +195,27 @@
 
                     </tbody>
                 </table>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <label for="catatan">
+                    <h6>Catatan :</h6>
+                </label>
+
+                <textarea readonly class="form-control" name="catatan" rows="3">
+<?php
+$sql = mysqli_query($connect_pro, "SELECT c_noteincheck FROM formng_register WHERE c_serialnumber = '$_SESSION[serialnumber_repair]'");
+$data = mysqli_fetch_array($sql);
+
+if (!empty($data['c_noteincheck'])) {
+?>
+<?= $data['c_noteincheck'] ?>
+            <?php
+        }
+            ?>
+            </textarea>
             </div>
         </div>
 
@@ -212,10 +234,11 @@
             $c_pianoname = $_SESSION['pianoname_repair'];
             if (!empty($_POST['ck' . $in])) {
                 $c_repairdate = date('Y-m-d H:i:s', strtotime($now));
-                $c_repair = $_SESSION['nama'];
+                $c_repair = $_SESSION['repair_name'];
                 $c_item = $_POST['c_item' . $in];
+                $c_detail = $_POST['c_detail' . $in];
 
-                $sql1 = mysqli_query($connect_pro, "UPDATE formng_resulti SET c_repair = '$c_repair', c_repairdate = '$c_repairdate' WHERE c_serialnumber = '$c_serialnumber' AND c_item = '$c_item'");
+                $sql1 = mysqli_query($connect_pro, "UPDATE formng_resulti SET c_repair = '$c_repair', c_repairdate = '$c_repairdate' WHERE c_serialnumber = '$c_serialnumber' AND c_item = '$c_item' AND c_detail = '$c_detail'");
             }
         }
         if ($sql1) {

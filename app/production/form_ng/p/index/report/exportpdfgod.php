@@ -136,7 +136,7 @@ $dateshow = date('Y-m-d', strtotime($_SESSION['dateshow']));
                 } else {
                     ?>
                     <tr>
-                        <td colspan="5" style="text-align: center;">Tidak Ada Data Yang Mulia</td>
+                        <td colspan="5" style="text-align: center;">Data not found</td>
                     </tr>
                 <?php
                 }

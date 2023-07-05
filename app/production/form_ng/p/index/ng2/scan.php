@@ -1,6 +1,5 @@
 <?php include('../../../../../../_header.php');
 include('../../app_name.php');
-include('../koneksi.php');
 
 ?>
 <script>
@@ -175,6 +174,7 @@ include('../koneksi.php');
                       hasil: hasil
                     },
                     cache: false,
+                    rememberLastUsedCamera: true,
                     success: function(datares) {
                       window.location = 'index.php';
                     }

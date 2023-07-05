@@ -264,6 +264,32 @@ if (!isset($_SESSION['id'])) {
       border-radius: 5px;
       text-align: center;
     }
+
+    .containere .chck {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      opacity: 15%;
+      font-size: 12px;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .containere .ingpo {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      background-color: none;
+      opacity: 100%;
+      padding: 0px;
+      font-size: 8px;
+      font-weight: bold;
+      border: solid 1px;
+      border-color: #DC3545;
+      cursor: pointer;
+      text-align: center;
+    }
   </style>
   <!-- style untuk koordinat -->
 
@@ -335,6 +361,24 @@ if (!isset($_SESSION['id'])) {
         visibility: visible;
       }
     }
+
+    .blink {
+      animation: blink 1s linear infinite;
+    }
+
+    @keyframes blink {
+      0% {
+        opacity: 0;
+      }
+
+      50% {
+        opacity: .5;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
   </style>
   <!-- untuk teks blink -->
 
@@ -365,7 +409,25 @@ if (!isset($_SESSION['id'])) {
       z-index: 99;
     }
 
+    .block-content {
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      opacity: 0.7;
+      background-color: #fff;
+      z-index: 4;
+    }
+
     .loading-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 100;
+    }
+
+    .loading1-image {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -410,6 +472,26 @@ if (!isset($_SESSION['id'])) {
   </style>
   <!-- untuk loader halaman -->
 
+  <!-- spinner object -->
+  <style>
+    @keyframes rotation {
+      100% {
+        transform: rotate(0);
+      }
+
+      50% {
+        transform: rotate(900deg);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+
+      0% {
+        transform: rotate(1800deg);
+        animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      }
+    }
+  </style>
+  <!-- spinner object -->
+
   <!-- untuk font rebel -->
   <style>
     @font-face {
@@ -417,8 +499,17 @@ if (!isset($_SESSION['id'])) {
       src: url("<?= base_url('_assets/src/add/font_tambahan/retro.ttf') ?>");
     }
 
+    @font-face {
+      font-family: "ahihijam";
+      src: url("<?= base_url('_assets/src/add/font_tambahan/digit2.ttf') ?>");
+    }
+
     .retro {
       font-family: "retro";
+    }
+
+    .jamdigit {
+      font-family: "ahihijam";
     }
   </style>
   <!-- untuk font rebel -->
@@ -426,6 +517,397 @@ if (!isset($_SESSION['id'])) {
 
   <!-- Tambahan -->
 
+  <!-- data tables -->
+  <!-- <link rel="stylesheet" type="text/css" href="<?= base_url('_assets/src/add/datatables/jquery.dataTables.css') ?>"> -->
+
+  <!-- <script type="text/javascript" charset="utf8" src="<?= base_url('_assets/src/add/datatables/jquery.dataTables.js') ?>"></script> -->
 
 
+  <!-- data tables -->
+
+  <!-- device info  -->
+  <script>
+    var os = [{
+        name: 'Windows Phone',
+        value: 'Windows Phone',
+        version: 'OS'
+      },
+      {
+        name: 'Windows',
+        value: 'Win',
+        version: 'NT'
+      },
+      {
+        name: 'iPhone',
+        value: 'iPhone',
+        version: 'OS'
+      },
+      {
+        name: 'iPad',
+        value: 'iPad',
+        version: 'OS'
+      },
+      {
+        name: 'Kindle',
+        value: 'Silk',
+        version: 'Silk'
+      },
+      {
+        name: 'Android',
+        value: 'Android',
+        version: 'Android'
+      },
+      {
+        name: 'PlayBook',
+        value: 'PlayBook',
+        version: 'OS'
+      },
+      {
+        name: 'BlackBerry',
+        value: 'BlackBerry',
+        version: '/'
+      },
+      {
+        name: 'Macintosh',
+        value: 'Mac',
+        version: 'OS X'
+      },
+      {
+        name: 'Linux',
+        value: 'Linux',
+        version: 'rv'
+      },
+      {
+        name: 'Palm',
+        value: 'Palm',
+        version: 'PalmOS'
+      }
+    ];
+
+    var browser = [{
+        name: 'Chrome',
+        value: 'Chrome',
+        version: 'Chrome'
+      },
+      {
+        name: 'Firefox',
+        value: 'Firefox',
+        version: 'Firefox'
+      },
+      {
+        name: 'Safari',
+        value: 'Safari',
+        version: 'Version'
+      },
+      {
+        name: 'Internet Explorer',
+        value: 'MSIE',
+        version: 'MSIE'
+      },
+      {
+        name: 'Opera',
+        value: 'Opera',
+        version: 'Opera'
+      },
+      {
+        name: 'BlackBerry',
+        value: 'CLDC',
+        version: 'CLDC'
+      },
+      {
+        name: 'Mozilla',
+        value: 'Mozilla',
+        version: 'Mozilla'
+      }
+    ];
+
+    var header = [
+      navigator.platform,
+      navigator.userAgent,
+      navigator.appVersion,
+      navigator.vendor,
+      window.opera
+    ];
+
+    function matchItem(string, data) {
+      var i = 0,
+        j = 0,
+        html = '',
+        regex,
+        regexv,
+        match,
+        matches,
+        version;
+
+      for (i = 0; i < data.length; i += 1) {
+        regex = new RegExp(data[i].value, 'i');
+        match = regex.test(string);
+        if (match) {
+          regexv = new RegExp(data[i].version + '[- /:;]([\d._]+)', 'i');
+          matches = string.match(regexv);
+          version = '';
+          if (matches) {
+            if (matches[1]) {
+              matches = matches[1];
+            }
+          }
+          if (matches) {
+            matches = matches.split(/[._]+/);
+            for (j = 0; j < matches.length; j += 1) {
+              if (j === 0) {
+                version += matches[j] + '.';
+              } else {
+                version += matches[j];
+              }
+            }
+          } else {
+            version = '0';
+          }
+          return {
+            name: data[i].name,
+            version: parseFloat(version)
+          };
+        }
+      }
+      return {
+        name: 'unknown',
+        version: 0
+      };
+    };
+
+    var header = [
+      navigator.platform,
+      navigator.userAgent,
+      navigator.appVersion,
+      navigator.vendor,
+      window.opera
+    ];
+
+    var agent = header.join('');
+    var os = this.matchItem(agent, os);
+    var browser = this.matchItem(agent, browser);
+    // console.log(agent);
+    // console.log(os);
+    // console.log(browser);
+
+    // create function for device info (Windows, Macintosh, Android)
+    function deviceinfo() {
+      return os.name;
+    }
+  </script>
+  <!-- device info -->
+
+  <!-- spinner google -->
+  <style>
+    .spinner {
+      -webkit-animation: rotator 1.4s linear infinite;
+      animation: rotator 1.4s linear infinite;
+    }
+
+    @-webkit-keyframes rotator {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+      }
+    }
+
+    @keyframes rotator {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+      }
+    }
+
+    .path {
+      stroke-dasharray: 187;
+      stroke-dashoffset: 0;
+      -webkit-transform-origin: center;
+      -ms-transform-origin: center;
+      transform-origin: center;
+      -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+      animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+    }
+
+    @-webkit-keyframes colors {
+      0% {
+        stroke: #73879C;
+      }
+
+      25% {
+        stroke: #73879C;
+      }
+
+      50% {
+        stroke: #73879C;
+      }
+
+      75% {
+        stroke: #73879C;
+      }
+
+      100% {
+        stroke: #73879C;
+      }
+    }
+
+    @keyframes colors {
+      0% {
+        stroke: #73879C;
+      }
+
+      25% {
+        stroke: #73879C;
+      }
+
+      50% {
+        stroke: #73879C;
+      }
+
+      75% {
+        stroke: #73879C;
+      }
+
+      100% {
+        stroke: #73879C;
+      }
+    }
+
+    @-webkit-keyframes dash {
+      0% {
+        stroke-dashoffset: 187;
+      }
+
+      50% {
+        stroke-dashoffset: 46.75;
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+      }
+
+      100% {
+        stroke-dashoffset: 187;
+        -webkit-transform: rotate(450deg);
+        transform: rotate(450deg);
+      }
+    }
+
+    @keyframes dash {
+      0% {
+        stroke-dashoffset: 187;
+      }
+
+      50% {
+        stroke-dashoffset: 46.75;
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+      }
+
+      100% {
+        stroke-dashoffset: 187;
+        -webkit-transform: rotate(450deg);
+        transform: rotate(450deg);
+      }
+    }
+  </style>
+
+  <!-- readonly select2 -->
+  <style>
+    select[readonly].select2-hidden-accessible+.select2-container {
+      pointer-events: none;
+      touch-action: none;
+    }
+
+    select[readonly].select2-hidden-accessible+.select2-container .select2-selection {
+      background: #eee;
+      box-shadow: none;
+    }
+
+    select[readonly].select2-hidden-accessible+.select2-container .select2-selection__arrow,
+    select[readonly].select2-hidden-accessible+.select2-container .select2-selection__clear {
+      display: none;
+    }
+  </style>
+
+  <!-- switch model saklar -->
+  <style>
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 10px;
+      width: 10px;
+      left: 5px;
+      bottom: 2px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked+.slider {
+      background-color: #26B99A;
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px #26B99A;
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(10px);
+      -ms-transform: translateX(10px);
+      transform: translateX(10px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+  </style>
+
+  <!-- video -->
+  <style>
+    #myVideo {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+  </style>
 </head>

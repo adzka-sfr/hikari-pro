@@ -317,6 +317,22 @@ $type = $data2['c_category'];
             border-radius: 5px;
             text-align: center;
         }
+
+        .containere .ingpo {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            background-color: transparent;
+            opacity: 100%;
+            padding: 0px;
+            font-size: 8px;
+            font-weight: bold;
+            border: solid 1px;
+            border-radius: 5px;
+            border-color: #DC3545;
+            cursor: pointer;
+            text-align: center;
+        }
     </style>
     <!-- style untuk koordinat -->
 
@@ -368,37 +384,53 @@ $type = $data2['c_category'];
                     <tbody>
                         <tr class="heading">
                             <td>No</td>
-                            <td>Item</td>
-                            <td style="text-align: center; width: 10%;">Check</td>
+                            <td style="width: 40%;">Item</td>
+                            <td style="text-align: center; width: 40%;">Check</td>
                             <td>Repair</td>
                         </tr>
 
                         <?php
                         $no = 0;
-                        $sql = mysqli_query($connect_pro, "SELECT c.c_item, r.c_status, r.c_repairdate FROM formng_resulti r JOIN formng_checkinside c ON r.c_item = c.c_code WHERE r.c_serialnumber = '$serial' order by r.id limit 0,31");
+                        $sql = mysqli_query($connect_pro, "SELECT DISTINCT c_item, c_status FROM formng_resulti WHERE c_serialnumber = '$serial' order by id limit 0,22");
                         while ($data = mysqli_fetch_array($sql)) {
+                            $sql3 = mysqli_query($connect_pro, "SELECT c_item FROM formng_checkinside WHERE c_code = '$data[c_item]'");
+                            $data3 = mysqli_fetch_array($sql3);
                             $no++;
                         ?>
                             <tr class="item">
                                 <td><?= $no ?></td>
-                                <td><?= $data['c_item'] ?></td>
+                                <td><?= $data3['c_item'] ?></td>
                                 <td style="text-align: center;"><?php
                                                                 if ($data['c_status'] == 'OK') {
                                                                     echo 'PASS';
                                                                 } else {
-                                                                    echo 'NG';
+                                                                    // echo 'NG';
+                                                                    $sql4 = mysqli_query($connect_pro, "SELECT c_detail FROM formng_resulti WHERE c_serialnumber = '$serial' AND c_item = '$data[c_item]'");
+                                                                    while ($data4 = mysqli_fetch_array($sql4)) {
+                                                                        echo $data4['c_detail'] . "</br>";
+                                                                    }
                                                                 }
                                                                 ?></td>
                                 <td><?php
-                                    if ($data['c_status'] == 'NG') {
-                                        if (!empty($data['c_repairdate'])) {
-                                            echo 'OK';
-                                        } else {
-                                            echo 'NOT YET';
-                                        }
+                                    // if ($data['c_status'] == 'NG') {
+                                    //     if (!empty($data['c_repairdate'])) {
+                                    //         echo 'OK';
+                                    //     } else {
+                                    //         echo 'NOT YET';
+                                    //     }
+                                    // } else {
+                                    //     echo '-';
+                                    // }
+                                    $sql5 = mysqli_query($connect_pro, "SELECT c_repair FROM formng_resulti WHERE c_serialnumber = '$serial' AND c_item = '$data[c_item]'");
+                                    $data5 = mysqli_fetch_array($sql5);
+                                    if ($data5['c_repair'] != '') {
+                                        $sql5 = mysqli_query($connect_pro, "SELECT c_repair FROM formng_resulti WHERE c_serialnumber = '$serial' AND c_item = '$data[c_item]'");
+                                        $data5 = mysqli_fetch_array($sql5);
+                                        echo $data5['c_repair'];
                                     } else {
-                                        echo '-';
+                                        echo "-";
                                     }
+
                                     ?></td>
                             </tr>
                         <?php
@@ -433,36 +465,52 @@ $type = $data2['c_category'];
                     <tbody>
                         <tr class="heading">
                             <td>No</td>
-                            <td>Item</td>
-                            <td style="text-align: center; width: 10%;">Check</td>
+                            <td style="width: 40%;">Item</td>
+                            <td style="text-align: center; width: 40%;">Check</td>
                             <td>Repair</td>
                         </tr>
 
                         <?php
-                        $sql = mysqli_query($connect_pro, "SELECT c.c_item, r.c_status, r.c_repairdate FROM formng_resulti r JOIN formng_checkinside c ON r.c_item = c.c_code WHERE r.c_serialnumber = '$serial' order by r.id limit 31,100");
+                        $sql = mysqli_query($connect_pro, "SELECT DISTINCT c_item, c_status FROM formng_resulti WHERE c_serialnumber = '$serial' order by id limit 22,100");
                         while ($data = mysqli_fetch_array($sql)) {
+                            $sql3 = mysqli_query($connect_pro, "SELECT c_item FROM formng_checkinside WHERE c_code = '$data[c_item]'");
+                            $data3 = mysqli_fetch_array($sql3);
                             $no++;
                         ?>
                             <tr class="item">
                                 <td><?= $no ?></td>
-                                <td><?= $data['c_item'] ?></td>
+                                <td><?= $data3['c_item'] ?></td>
                                 <td style="text-align: center;"><?php
                                                                 if ($data['c_status'] == 'OK') {
                                                                     echo 'PASS';
                                                                 } else {
-                                                                    echo 'NG';
+                                                                    // echo 'NG';
+                                                                    $sql4 = mysqli_query($connect_pro, "SELECT c_detail FROM formng_resulti WHERE c_serialnumber = '$serial' AND c_item = '$data[c_item]'");
+                                                                    while ($data4 = mysqli_fetch_array($sql4)) {
+                                                                        echo $data4['c_detail'] . "</br>";
+                                                                    }
                                                                 }
                                                                 ?></td>
                                 <td><?php
-                                    if ($data['c_status'] == 'NG') {
-                                        if (!empty($data['c_repairdate'])) {
-                                            echo 'OK';
-                                        } else {
-                                            echo 'NOT YET';
-                                        }
+                                    // if ($data['c_status'] == 'NG') {
+                                    //     if (!empty($data['c_repairdate'])) {
+                                    //         echo 'OK';
+                                    //     } else {
+                                    //         echo 'NOT YET';
+                                    //     }
+                                    // } else {
+                                    //     echo '-';
+                                    // }
+                                    $sql5 = mysqli_query($connect_pro, "SELECT c_repair FROM formng_resulti WHERE c_serialnumber = '$serial' AND c_item = '$data[c_item]'");
+                                    $data5 = mysqli_fetch_array($sql5);
+                                    if ($data5['c_repair'] != '') {
+                                        $sql5 = mysqli_query($connect_pro, "SELECT c_repair FROM formng_resulti WHERE c_serialnumber = '$serial' AND c_item = '$data[c_item]'");
+                                        $data5 = mysqli_fetch_array($sql5);
+                                        echo $data5['c_repair'];
                                     } else {
-                                        echo '-';
+                                        echo "-";
                                     }
+
                                     ?></td>
                             </tr>
                         <?php
@@ -475,41 +523,24 @@ $type = $data2['c_category'];
 
 
             <div class="signer">
-                <div class="form signer-item">
-                    <label for="signature" class="label"></label>
-                    <br>
-                    <div style="width: 100%; padding: 10px;" class=" signature">
+                <div class="form signer-item" style="width: 40%;">
 
+                    <label for="signature" class="label">Note:</label>
+                    <br>
+                    <div style="width: 100%; height: 80px; padding: 10px; " class="border signature">
+                        <?php
+                        $sqlnote = mysqli_query($connect_pro, "SELECT c_noteincheck FROM formng_register WHERE c_serialnumber = '$serial'");
+                        $data_n = mysqli_fetch_array($sqlnote);
+                        if (!empty($data_n['c_noteincheck'])) {
+                        ?>
+                            <pre style="font-size: smaller;"><?= $data_n['c_noteincheck'] ?></pre>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
-                <div class="form signer-item">
-                    <label for="signature" class="label"></label>
-                    <br>
-                    <div style="width: 100%; padding: 10px;" class=" signature">
 
-                    </div>
-                </div>
-                <div class="form signer-item">
-                    <label for="signature" class="label"></label>
-                    <br>
-                    <div style="width: 100%; padding: 10px;" class=" signature">
 
-                    </div>
-                </div>
-                <div class="form signer-item">
-                    <label for="signature" class="label"></label>
-                    <br>
-                    <div style="width: 100%; padding: 10px;" class=" signature">
-
-                    </div>
-                </div>
-                <div class="form signer-item">
-                    <label for="signature" class="label"></label>
-                    <br>
-                    <div style="width: 100%; padding: 10px;" class=" signature">
-
-                    </div>
-                </div>
                 <div class="form signer-item">
                     <label for="signature" class="label"></label>
                     <br>
@@ -519,7 +550,10 @@ $type = $data2['c_category'];
                 </div>
 
 
+
+
                 <div class="form signer-item">
+
                     <label for="signature" class="label">Checked by:</label>
                     <br>
                     <div style="width: fit-content; padding: 10px;" class="border signature">
@@ -821,207 +855,359 @@ $type = $data2['c_category'];
                 <h2><?= $serial ?> #<?= $namepiano ?></h2>
             </div>
             <div class="intro-table">
-                <div class="intro-form intro-form-item">
-                    <div class="containere">
-                        <?php
-                        if ($type == 'f') {
-                        ?>
-                            <img src="image/furniture/tbo.png" alt="top board outside">
-                        <?php
-                        } elseif ($type == 'p') {
-                        ?>
-                            <img src="image/reguler/tbo.jpg" alt="top board outside">
-                        <?php
-                        }
-                        ?>
-
-
-                        <?php
-                        $section = '1 top board outside';
-                        $sql = mysqli_query($connect_pro, "SELECT DISTINCT c_arealabel, c_areacode FROM formng_resulto1 WHERE c_serialnumber = '$serial' AND c_section = '$section'");
-                        while ($data = mysqli_fetch_array($sql)) {
-                            $sql1 = mysqli_query($connect_pro, "SELECT c_top, c_left FROM formng_basecoor WHERE c_btn_id = '$data[c_areacode]'");
-                            $data1 = mysqli_fetch_array($sql1);
-                            $top = $data1['c_top'];
-                            $left = $data1['c_left'];
-                        ?>
-                            <button class="bton" style="width: 40px; height: 25px; opacity: 50%; top: <?= $top ?>%; left: <?= $left ?>%; background-color: #FF130F; " data-bs-toggle="modal" data-bs-target="#a1"><?= $data['c_arealabel'] ?></button>
-                        <?php
-                        }
-                        ?>
-
-                    </div>
-                </div>
-
                 <div class="intro-form">
-                    <div class="intro-form-item-border">
-                        <p class="intro-table-title">Section 1:</p>
-                        <p>Top Board Outside</p>
-                    </div>
                     <div class="table-box">
                         <table cellpadding="0" cellspacing="0" style="padding-left: 5px; padding-right: 5px;">
                             <tbody>
-                                <tr class="heading">
-                                    <td style="width: 10%;">Area</td>
-                                    <td>Cabinet</td>
-                                    <td>NG Found</td>
-                                    <td style="width: 10%;">Checker</td>
+                                <tr class="heading" style="font-weight: bold;">
+                                    <td style="width: 10%; text-align: left;">No</td>
+                                    <td style="width: 70%; text-align: left;">NG</td>
+                                    <td style="width: 30%; text-align: center;">Repaired</td>
                                 </tr>
-
                                 <?php
-                                $sql = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber  = '$serial' AND c_section = '$section' order by c_section");
-                                while ($data = mysqli_fetch_array($sql)) {
-                                    if (!empty($data['c_inspectiondate1'])) {
+                                $sql = mysqli_query($connect_pro, "SELECT id FROM formng_resultong WHERE c_serialnumber = '$serial'");
+                                $data = mysqli_fetch_array($sql);
+                                if (empty($data)) {
+                                    // kosong
                                 ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng1'] ?></td>
-                                            <td><?= $data['c_checker1'] ?><br>(C1)</td>
-                                        </tr>
+                                    <tr class="item">
+                                        <td colspan="3">No NG Found</td>
+                                    </tr>
                                     <?php
-                                    }
+                                } else {
+                                    // tidak kosong
+                                    $sql = mysqli_query($connect_pro, "SELECT DISTINCT  c_numberng, c_ng FROM formng_resultong WHERE c_serialnumber = '$serial' ORDER BY c_numberng ASC");
+                                    while ($data = mysqli_fetch_array($sql)) {
+                                        // list cabinet aktif
+                                        $cab_active = array();
+                                        $nolist = 0;
+                                        $active_sql = mysqli_query($connect_pro, "SELECT c_cabinet, c_repaired, c_process FROM formng_resultong WHERE c_serialnumber = '$serial' AND c_numberng = $data[c_numberng]");
+                                        while ($active_data = mysqli_fetch_array($active_sql)) {
+                                            $cab_active[] = array($active_data['c_cabinet'], $active_data['c_repaired'], $active_data['c_process']);
+                                            $nolist++;
+                                        }
+                                        $count_cabactive = count($cab_active);
 
-                                    if (!empty($data['c_inspectiondate2'])) {
+                                        // warna pena untuk nama ng
+                                        $merah_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resultong WHERE c_serialnumber = '$serial' AND c_numberng = '$data[c_numberng]' AND c_process = 'oc1'");
+                                        $merah_data = mysqli_fetch_array($merah_sql);
+                                        if (!empty($merah_data)) {
+                                            $warna_pen = '#DC4646';
+                                        } else {
+                                            $hijau_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resultong WHERE c_serialnumber = '$serial' AND c_numberng = '$data[c_numberng]' AND c_process = 'oc2'");
+                                            $hijau_data = mysqli_fetch_array($hijau_sql);
+                                            if (!empty($hijau_data)) {
+                                                $warna_pen = '#5AA65A';
+                                            } else {
+                                                $biru_sql = mysqli_query($connect_pro, "SELECT id FROM formng_resultong WHERE c_serialnumber = '$serial' AND c_numberng = '$data[c_numberng]' AND c_process = 'oc3'");
+                                                $biru_data = mysqli_fetch_array($biru_sql);
+                                                if (!empty($biru_data)) {
+                                                    $warna_pen = '#1340FF';
+                                                } else {
+                                                    $warna_pen = '#000000';
+                                                }
+                                            }
+                                        }
                                     ?>
                                         <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng2'] ?></td>
-                                            <td><?= $data['c_checker2'] ?><br>(C2)</td>
+                                            <td style="width: 10%; text-align: left;"><?= $data['c_numberng'] ?></td>
+                                            <td style="width: 70%; text-align: left; color: <?= $warna_pen ?>;"><?= $data['c_ng'] ?></td>
+                                            <td><?= $cab_active[0][1] ?></td>
                                         </tr>
-                                    <?php
-                                    }
-
-                                    if (!empty($data['c_inspectiondate3'])) {
-                                    ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng3'] ?></td>
-                                            <td><?= $data['c_checker3'] ?><br>(C3)</td>
-                                        </tr>
+                                        <?php
+                                        // for ($a = 0; $a < $count_cabactive; $a++) {
+                                        //     // warna pena untuk nama cabinet
+                                        //     $c_cabinet = $cab_active[$a][0];
+                                        //     $c_process = $cab_active[$a][2];
+                                        //     $c_repaired = $cab_active[$a][1];
+                                        //     if ($c_process == 'oc1') {
+                                        //         $warna_pen = '#DC4646';
+                                        //     } elseif ($c_process == 'oc2') {
+                                        //         $warna_pen = '#5AA65A';
+                                        //     } elseif ($c_process == 'oc3') {
+                                        //         $warna_pen = '#1340FF';
+                                        //     } else {
+                                        //         $warna_pen = '#000000';
+                                        //     }
+                                        ?>
+                                        <!-- <tr class="item">
+                                                <td></td>
+                                                <td style="text-align: left; color: <?= $warna_pen ?>;"><?= $c_cabinet ?></td>
+                                                <td style="text-align: center;"><?= $c_repaired ?></td>
+                                            </tr> -->
+                                        <?php
+                                        // }
+                                        ?>
                                 <?php
                                     }
                                 }
                                 ?>
-                                <tr class="item">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr class="item">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
-
-            <div class="intro-table">
-                <div class="intro-form intro-form-item">
-                    <div class="containere">
+                <div class="intro-form intro-form-item" style="margin-left: 10%;">
+                    <div class="containere" style="margin-bottom: 30px;">
                         <?php
                         if ($type == 'f') {
+                            $c_section = 'ftbo';
                         ?>
-                            <img src="image/furniture/tbi.png" alt="top board inside">
+                            <img src="image/furniture/tbo.png" alt="top board outside" style="opacity: 60%;">
                         <?php
                         } elseif ($type == 'p') {
+                            $c_section = 'ptbo';
                         ?>
-                            <img src="image/reguler/tbi.jpg" alt="top board inside">
+                            <img src="image/reguler/tbo.jpg" alt="top board outside" style="opacity: 60%;">
                         <?php
                         }
-                        ?>
 
-
-                        <?php
-                        $section = '2 top board inside';
-                        $sql = mysqli_query($connect_pro, "SELECT DISTINCT c_arealabel, c_areacode FROM formng_resulto1 WHERE c_serialnumber = '$serial' AND c_section = '$section'");
+                        $sql = mysqli_query($connect_pro, "SELECT fb.c_section, fr.c_code, fb.c_top, fb.c_left FROM formng_resultoloc fr JOIN formng_basecoordinate fb ON fr.c_code = fb.c_code WHERE fb.c_section = '$c_section' AND fr.c_serialnumber = '$serial';");
                         while ($data = mysqli_fetch_array($sql)) {
-                            $sql1 = mysqli_query($connect_pro, "SELECT c_top, c_left FROM formng_basecoor WHERE c_btn_id = '$data[c_areacode]'");
-                            $data1 = mysqli_fetch_array($sql1);
-                            $top = $data1['c_top'];
-                            $left = $data1['c_left'];
+                            $isi = array();
+                            $sql1 = mysqli_query($connect_pro, "SELECT c_numberng, c_process FROM formng_resultoloc WHERE c_serialnumber = '$serial' AND c_code = '$data[c_code]'");
+                            while ($data1 = mysqli_fetch_array($sql1)) {
+                                $isi[] = array("$data1[c_numberng]", "$data1[c_process]");
+                            }
+                            $countisi = count($isi);
                         ?>
-                            <button class="bton" style="width: 40px; height: 25px; opacity: 50%; top: <?= $top ?>%; left: <?= $left ?>%; background-color: #FF130F; " data-bs-toggle="modal" data-bs-target="#a1"><?= $data['c_arealabel'] ?></button>
-                        <?php
-                        }
-                        ?>
-
-                    </div>
-                </div>
-
-                <div class="intro-form">
-                    <div class="intro-form-item-border">
-                        <p class="intro-table-title">Section 2:</p>
-                        <p>Top Board Inside</p>
-                    </div>
-                    <div class="table-box">
-                        <table cellpadding="0" cellspacing="0" style="padding-left: 5px; padding-right: 5px;">
-                            <tbody>
-                                <tr class="heading">
-                                    <td style="width: 10%;">Area</td>
-                                    <td>Cabinet</td>
-                                    <td>NG Found</td>
-                                    <td style="width: 10%;">Checker</td>
-                                </tr>
-
+                            <button class="ingpo" style="width: 20px; height: 20px; top: <?= $data['c_top'] ?>%; left: <?= $data['c_left'] ?>%;">
                                 <?php
-                                $sql = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber  = '$serial' AND c_section = '$section' order by c_section");
-                                while ($data = mysqli_fetch_array($sql)) {
-                                    if (!empty($data['c_inspectiondate1'])) {
+                                for ($f = 0; $f < $countisi; $f++) {
+                                    if ($isi[$f][1] == 'oc1') {
+                                        $pen = '#DC4646';
+                                    } elseif ($isi[$f][1] == 'oc2') {
+                                        $pen = '#5AA65A';
+                                    } elseif ($isi[$f][1] == 'oc3') {
+                                        $pen = '#1340FF';
+                                    }
+                                    if ($f == 0) {
                                 ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng1'] ?></td>
-                                            <td><?= $data['c_checker1'] ?><br>(C1)</td>
-                                        </tr>
+                                        <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span>
                                     <?php
-                                    }
-
-                                    if (!empty($data['c_inspectiondate2'])) {
+                                    } elseif (($f % 2) == 0) {
                                     ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng2'] ?></td>
-                                            <td><?= $data['c_checker2'] ?><br>(C2)</td>
-                                        </tr>
+                                        <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span>
                                     <?php
-                                    }
-
-                                    if (!empty($data['c_inspectiondate3'])) {
+                                    } else {
                                     ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng3'] ?></td>
-                                            <td><?= $data['c_checker3'] ?><br>(C3)</td>
-                                        </tr>
+                                        , <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span><br>
                                 <?php
                                     }
                                 }
                                 ?>
-                                <tr class="item">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr class="item">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            </button>
+                        <?php
+                        }
+                        ?>
+
+                    </div>
+                    <div class="containere" style="margin-bottom: 30px;">
+                        <?php
+                        if ($type == 'f') {
+                            $c_section = 'ftbi';
+                        ?>
+                            <img src="image/furniture/tbi.png" alt="top board inside" style="opacity: 60%;">
+                        <?php
+                        } elseif ($type == 'p') {
+                            $c_section = 'ptbi';
+                        ?>
+                            <img src="image/reguler/tbi.jpg" alt="top board inside" style="opacity: 60%;">
+                        <?php
+                        }
+                        $sql = mysqli_query($connect_pro, "SELECT fb.c_section, fr.c_code, fb.c_top, fb.c_left FROM formng_resultoloc fr JOIN formng_basecoordinate fb ON fr.c_code = fb.c_code WHERE fb.c_section = '$c_section' AND fr.c_serialnumber = '$serial';");
+                        while ($data = mysqli_fetch_array($sql)) {
+                            $isi = array();
+                            $sql1 = mysqli_query($connect_pro, "SELECT c_numberng, c_process FROM formng_resultoloc WHERE c_serialnumber = '$serial' AND c_code = '$data[c_code]'");
+                            while ($data1 = mysqli_fetch_array($sql1)) {
+                                $isi[] = array("$data1[c_numberng]", "$data1[c_process]");
+                            }
+                            $countisi = count($isi);
+                        ?>
+                            <button class="ingpo" style="width: 20px; height: 20px; top: <?= $data['c_top'] ?>%; left: <?= $data['c_left'] ?>%;">
+                                <?php
+                                for ($f = 0; $f < $countisi; $f++) {
+                                    if ($isi[$f][1] == 'oc1') {
+                                        $pen = '#DC4646';
+                                    } elseif ($isi[$f][1] == 'oc2') {
+                                        $pen = '#5AA65A';
+                                    } elseif ($isi[$f][1] == 'oc3') {
+                                        $pen = '#1340FF';
+                                    }
+                                    if ($f == 0) {
+                                ?>
+                                        <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span>
+                                    <?php
+                                    } elseif (($f % 2) == 0) {
+                                    ?>
+                                        <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        , <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span><br>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </button>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="containere" style="margin-bottom: 30px;">
+                        <?php
+                        if ($type == 'f') {
+                            $c_section = 'fuk';
+                        ?>
+                            <img src="image/furniture/uk.png" alt="upper keyboard" style="opacity: 60%;">
+                        <?php
+                        } elseif ($type == 'p') {
+                            $c_section = 'puk';
+                        ?>
+                            <img src="image/reguler/uk.jpg" alt="upper keyboard" style="opacity: 60%;">
+                        <?php
+                        }
+                        $sql = mysqli_query($connect_pro, "SELECT fb.c_section, fr.c_code, fb.c_top, fb.c_left FROM formng_resultoloc fr JOIN formng_basecoordinate fb ON fr.c_code = fb.c_code WHERE fb.c_section = '$c_section' AND fr.c_serialnumber = '$serial';");
+                        while ($data = mysqli_fetch_array($sql)) {
+                            $isi = array();
+                            $sql1 = mysqli_query($connect_pro, "SELECT c_numberng, c_process FROM formng_resultoloc WHERE c_serialnumber = '$serial' AND c_code = '$data[c_code]'");
+                            while ($data1 = mysqli_fetch_array($sql1)) {
+                                $isi[] = array("$data1[c_numberng]", "$data1[c_process]");
+                            }
+                            $countisi = count($isi);
+                        ?>
+                            <button class="ingpo" style="width: 20px; height: 20px; top: <?= $data['c_top'] ?>%; left: <?= $data['c_left'] ?>%;">
+                                <?php
+                                for ($f = 0; $f < $countisi; $f++) {
+                                    if ($isi[$f][1] == 'oc1') {
+                                        $pen = '#DC4646';
+                                    } elseif ($isi[$f][1] == 'oc2') {
+                                        $pen = '#5AA65A';
+                                    } elseif ($isi[$f][1] == 'oc3') {
+                                        $pen = '#1340FF';
+                                    }
+                                    if ($f == 0) {
+                                ?>
+                                        <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span>
+                                    <?php
+                                    } elseif (($f % 2) == 0) {
+                                    ?>
+                                        <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        , <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span><br>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </button>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="containere" style="margin-bottom: 30px;">
+                        <?php
+                        if ($type == 'f') {
+                            $c_section = 'fb';
+                        ?>
+                            <img src="image/furniture/b.png" alt="body" style="opacity: 60%;">
+                        <?php
+                        } elseif ($type == 'p') {
+                            $c_section = 'pb';
+                        ?>
+                            <img src="image/reguler/b.jpg" alt="body" style="opacity: 60%;">
+                        <?php
+                        }
+                        $sql = mysqli_query($connect_pro, "SELECT fb.c_section, fr.c_code, fb.c_top, fb.c_left FROM formng_resultoloc fr JOIN formng_basecoordinate fb ON fr.c_code = fb.c_code WHERE fb.c_section = '$c_section' AND fr.c_serialnumber = '$serial';");
+                        while ($data = mysqli_fetch_array($sql)) {
+                            $isi = array();
+                            $sql1 = mysqli_query($connect_pro, "SELECT c_numberng, c_process FROM formng_resultoloc WHERE c_serialnumber = '$serial' AND c_code = '$data[c_code]'");
+                            while ($data1 = mysqli_fetch_array($sql1)) {
+                                $isi[] = array("$data1[c_numberng]", "$data1[c_process]");
+                            }
+                            $countisi = count($isi);
+                        ?>
+                            <button class="ingpo" style="width: 20px; height: 20px; top: <?= $data['c_top'] ?>%; left: <?= $data['c_left'] ?>%;">
+                                <?php
+                                for ($f = 0; $f < $countisi; $f++) {
+                                    if ($isi[$f][1] == 'oc1') {
+                                        $pen = '#DC4646';
+                                    } elseif ($isi[$f][1] == 'oc2') {
+                                        $pen = '#5AA65A';
+                                    } elseif ($isi[$f][1] == 'oc3') {
+                                        $pen = '#1340FF';
+                                    }
+                                    if ($f == 0) {
+                                ?>
+                                        <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span>
+                                    <?php
+                                    } elseif (($f % 2) == 0) {
+                                    ?>
+                                        <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        , <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span><br>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </button>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="containere" style="margin-bottom: 30px;">
+                        <?php
+                        if ($type == 'f') {
+                            $c_section = 'fbb';
+                        ?>
+                            <img src="image/furniture/bb.png" alt="back body" style="opacity: 60%;">
+                        <?php
+                        } elseif ($type == 'p') {
+                            $c_section = 'pbb';
+                        ?>
+                            <img src="image/reguler/bb.jpg" alt="back body" style="opacity: 60%;">
+                        <?php
+                        }
+                        $sql = mysqli_query($connect_pro, "SELECT fb.c_section, fr.c_code, fb.c_top, fb.c_left FROM formng_resultoloc fr JOIN formng_basecoordinate fb ON fr.c_code = fb.c_code WHERE fb.c_section = '$c_section' AND fr.c_serialnumber = '$serial';");
+                        while ($data = mysqli_fetch_array($sql)) {
+                            $isi = array();
+                            $sql1 = mysqli_query($connect_pro, "SELECT c_numberng, c_process FROM formng_resultoloc WHERE c_serialnumber = '$serial' AND c_code = '$data[c_code]'");
+                            while ($data1 = mysqli_fetch_array($sql1)) {
+                                $isi[] = array("$data1[c_numberng]", "$data1[c_process]");
+                            }
+                            $countisi = count($isi);
+                        ?>
+                            <button class="ingpo" style="width: 20px; height: 20px; top: <?= $data['c_top'] ?>%; left: <?= $data['c_left'] ?>%;">
+                                <?php
+                                for ($f = 0; $f < $countisi; $f++) {
+                                    if ($isi[$f][1] == 'oc1') {
+                                        $pen = '#DC4646';
+                                    } elseif ($isi[$f][1] == 'oc2') {
+                                        $pen = '#5AA65A';
+                                    } elseif ($isi[$f][1] == 'oc3') {
+                                        $pen = '#1340FF';
+                                    }
+                                    if ($f == 0) {
+                                ?>
+                                        <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span>
+                                    <?php
+                                    } elseif (($f % 2) == 0) {
+                                    ?>
+                                        <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        , <span style="color: <?= $pen ?>; padding: 0px;"><?= $isi[$f][0] ?></span><br>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </button>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -1048,336 +1234,100 @@ $type = $data2['c_category'];
                 <h2><?= $serial ?> #<?= $namepiano ?></h2>
             </div>
 
-            <div class="intro-table">
-                <div class="intro-form intro-form-item">
-                    <div class="containere">
-                        <?php
-                        if ($type == 'f') {
-                        ?>
-                            <img src="image/furniture/uk.png" alt="upper keyboard">
-                        <?php
-                        } elseif ($type == 'p') {
-                        ?>
-                            <img src="image/reguler/uk.jpg" alt="upper keyboard">
-                        <?php
-                        }
-                        ?>
-
-
-                        <?php
-                        $section = '3 upper keyboard';
-                        $sql = mysqli_query($connect_pro, "SELECT DISTINCT c_arealabel, c_areacode FROM formng_resulto1 WHERE c_serialnumber = '$serial' AND c_section = '$section'");
-                        while ($data = mysqli_fetch_array($sql)) {
-                            $sql1 = mysqli_query($connect_pro, "SELECT c_top, c_left FROM formng_basecoor WHERE c_btn_id = '$data[c_areacode]'");
-                            $data1 = mysqli_fetch_array($sql1);
-                            $top = $data1['c_top'];
-                            $left = $data1['c_left'];
-                        ?>
-                            <button class="bton" style="width: 40px; height: 25px; opacity: 50%; top: <?= $top ?>%; left: <?= $left ?>%; background-color: #FF130F; " data-bs-toggle="modal" data-bs-target="#a1"><?= $data['c_arealabel'] ?></button>
-                        <?php
-                        }
-                        ?>
-
-                    </div>
-                </div>
-
-                <div class="intro-form">
-                    <div class="intro-form-item-border">
-                        <p class="intro-table-title">Section 3:</p>
-                        <p>Upper Keyboard</p>
-                    </div>
-                    <div class="table-box">
-                        <table cellpadding="0" cellspacing="0" style="padding-left: 5px; padding-right: 5px;">
-                            <tbody>
-                                <tr class="heading">
-                                    <td style="width: 10%;">Area</td>
-                                    <td>Cabinet</td>
-                                    <td>NG Found</td>
-                                    <td style="width: 10%;">Checker</td>
-                                </tr>
-
-                                <?php
-                                $sql = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber  = '$serial' AND c_section = '$section' order by c_section");
-                                while ($data = mysqli_fetch_array($sql)) {
-                                    if (!empty($data['c_inspectiondate1'])) {
-                                ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng1'] ?></td>
-                                            <td><?= $data['c_checker1'] ?><br>(C1)</td>
-                                        </tr>
-                                    <?php
-                                    }
-
-                                    if (!empty($data['c_inspectiondate2'])) {
-                                    ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng2'] ?></td>
-                                            <td><?= $data['c_checker2'] ?><br>(C2)</td>
-                                        </tr>
-                                    <?php
-                                    }
-
-                                    if (!empty($data['c_inspectiondate3'])) {
-                                    ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng3'] ?></td>
-                                            <td><?= $data['c_checker3'] ?><br>(C3)</td>
-                                        </tr>
-                                <?php
-                                    }
-                                }
-                                ?>
-                                <tr class="item">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr class="item">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="intro-table">
-                <div class="intro-form intro-form-item">
-                    <div class="containere">
-                        <?php
-                        if ($type == 'f') {
-                        ?>
-                            <img src="image/furniture/b.png" alt="body">
-                        <?php
-                        } elseif ($type == 'p') {
-                        ?>
-                            <img src="image/reguler/b.jpg" alt="body">
-                        <?php
-                        }
-                        ?>
-
-
-                        <?php
-                        $section = '4 body';
-                        $sql = mysqli_query($connect_pro, "SELECT DISTINCT c_arealabel, c_areacode FROM formng_resulto1 WHERE c_serialnumber = '$serial' AND c_section = '$section'");
-                        while ($data = mysqli_fetch_array($sql)) {
-                            $sql1 = mysqli_query($connect_pro, "SELECT c_top, c_left FROM formng_basecoor WHERE c_btn_id = '$data[c_areacode]'");
-                            $data1 = mysqli_fetch_array($sql1);
-                            $top = $data1['c_top'];
-                            $left = $data1['c_left'];
-                        ?>
-                            <button class="bton" style="width: 40px; height: 25px; opacity: 50%; top: <?= $top ?>%; left: <?= $left ?>%; background-color: #FF130F; " data-bs-toggle="modal" data-bs-target="#a1"><?= $data['c_arealabel'] ?></button>
-                        <?php
-                        }
-                        ?>
-
-                    </div>
-                </div>
-
-                <div class="intro-form">
-                    <div class="intro-form-item-border">
-                        <p class="intro-table-title">Section 4:</p>
-                        <p>Body</p>
-                    </div>
-                    <div class="table-box">
-                        <table cellpadding="0" cellspacing="0" style="padding-left: 5px; padding-right: 5px;">
-                            <tbody>
-                                <tr class="heading">
-                                    <td style="width: 10%;">Area</td>
-                                    <td>Cabinet</td>
-                                    <td>NG Found</td>
-                                    <td style="width: 10%;">Checker</td>
-                                </tr>
-
-                                <?php
-                                $sql = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber  = '$serial' AND c_section = '$section' order by c_section");
-                                while ($data = mysqli_fetch_array($sql)) {
-                                    if (!empty($data['c_inspectiondate1'])) {
-                                ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng1'] ?></td>
-                                            <td><?= $data['c_checker1'] ?><br>(C1)</td>
-                                        </tr>
-                                    <?php
-                                    }
-
-                                    if (!empty($data['c_inspectiondate2'])) {
-                                    ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng2'] ?></td>
-                                            <td><?= $data['c_checker2'] ?><br>(C2)</td>
-                                        </tr>
-                                    <?php
-                                    }
-
-                                    if (!empty($data['c_inspectiondate3'])) {
-                                    ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng3'] ?></td>
-                                            <td><?= $data['c_checker3'] ?><br>(C3)</td>
-                                        </tr>
-                                <?php
-                                    }
-                                }
-                                ?>
-                                <tr class="item">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr class="item">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- HALAMAN 6 -->
-
-        <!-- HALAMAN 7 -->
-        <div id="pspdfkit-header">
-            <div class="header-columns">
-                <div class="logotype">
-                    <img class="logo" src="image/logo_icon.png" />
-                    <p>PT Yamaha Indonesia</p>
-                </div>
-
-                <div>
-                    <p>[outside check]</p>
-                </div>
-            </div>
-        </div>
-        <div class="page" style="page-break-after: always">
             <div>
-                <h2><?= $serial ?> #<?= $namepiano ?></h2>
+                <label for="signature" class="label">Note:</label>
+                <br>
+                <div style="width: 40%; height: 50px; padding: 10px;" class="border signature">
+                    <ul>
+                        <!-- <li>Ganti Fallboard - Approved by Fatma</li> -->
+                        <?php
+                        $sqlnote = mysqli_query($connect_pro, "SELECT c_outcheck1by, c_outcheck2by, c_outcheck3by, c_notecheck1, c_notecheck2, c_notecheck3 FROM formng_register WHERE c_serialnumber = '$serial'");
+                        $data_n = mysqli_fetch_array($sqlnote);
+
+                        if (!empty($data_n['c_notecheck1'])) {
+                        ?>
+                            <li><?= $data_n['c_notecheck1'] ?> - Approved by <?= $data_n['c_outcheck1by'] ?></li>
+                        <?php
+                        }
+
+                        if (!empty($data_n['c_notecheck2'])) {
+                        ?>
+                            <li><?= $data_n['c_notecheck2'] ?> - Approved by <?= $data_n['c_outcheck2by'] ?></li>
+                        <?php
+                        }
+
+                        if (!empty($data_n['c_notecheck3'])) {
+                        ?>
+                            <li><?= $data_n['c_notecheck3'] ?> - Approved by <?= $data_n['c_outcheck3by'] ?></li>
+                        <?php
+                        }
+
+                        ?>
+                    </ul>
+                </div>
             </div>
 
-            <div class="intro-table">
-                <div class="intro-form intro-form-item">
-                    <div class="containere">
-                        <?php
-                        if ($type == 'f') {
-                        ?>
-                            <img src="image/furniture/bb.png" alt="body back">
-                        <?php
-                        } elseif ($type == 'p') {
-                        ?>
-                            <img src="image/reguler/bb.jpg" alt="body back">
-                        <?php
-                        }
-                        ?>
+            <?php
+            $sql_cfs = mysqli_query($connect_pro, "SELECT id, c_ng, c_ok, c_checker, c_note FROM formng_cfs WHERE c_serialnumber = '$serial'");
+            $data_cfs = mysqli_fetch_array($sql_cfs);
 
-
-                        <?php
-                        $section = '5 body back';
-                        $sql = mysqli_query($connect_pro, "SELECT DISTINCT c_arealabel, c_areacode FROM formng_resulto1 WHERE c_serialnumber = '$serial' AND c_section = '$section'");
-                        while ($data = mysqli_fetch_array($sql)) {
-                            $sql1 = mysqli_query($connect_pro, "SELECT c_top, c_left FROM formng_basecoor WHERE c_btn_id = '$data[c_areacode]'");
-                            $data1 = mysqli_fetch_array($sql1);
-                            $top = $data1['c_top'];
-                            $left = $data1['c_left'];
-                        ?>
-                            <button class="bton" style="width: 40px; height: 25px; opacity: 50%; top: <?= $top ?>%; left: <?= $left ?>%; background-color: #FF130F; " data-bs-toggle="modal" data-bs-target="#a1"><?= $data['c_arealabel'] ?></button>
-                        <?php
-                        }
-                        ?>
-
-                    </div>
-                </div>
-
-                <div class="intro-form">
-                    <div class="intro-form-item-border">
-                        <p class="intro-table-title">Section 5:</p>
-                        <p>Body Back</p>
-                    </div>
-                    <div class="table-box">
-                        <table cellpadding="0" cellspacing="0" style="padding-left: 5px; padding-right: 5px;">
-                            <tbody>
-                                <tr class="heading">
-                                    <td style="width: 10%;">Area</td>
-                                    <td>Cabinet</td>
-                                    <td>NG Found</td>
-                                    <td style="width: 10%;">Checker</td>
-                                </tr>
-
+            if (!empty($data_cfs['id'])) {
+            ?>
+                <div>
+                    <br>
+                    <label for="signature" class="label">Check Fungsi Silent:</label>
+                    <br>
+                    <table style="border-collapse: collapse; border: 1px solid #000000; width: 400px;">
+                        <tr>
+                            <td style="text-align: center; padding: 10px; width: 50%; border: 1px solid #000000;">
                                 <?php
-                                $sql = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber  = '$serial' AND c_section = '$section' order by c_section");
-                                while ($data = mysqli_fetch_array($sql)) {
-                                    if (!empty($data['c_inspectiondate1'])) {
+                                if (!empty($data_cfs['c_ng'])) {
                                 ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng1'] ?></td>
-                                            <td><?= $data['c_checker1'] ?><br>(C1)</td>
+                                    <table style="border-collapse: collapse; color: #FF130F; border: 2px solid #FF130F;">
+                                        <tr>
+                                            <td style="text-align: center; width: 200px; font-weight: bold; font-size: larger; font-family: 'Typewrite Bold'; border: 2px solid #FF130F;"><?= $data_cfs['c_checker'] ?></td>
                                         </tr>
-                                    <?php
-                                    }
-
-                                    if (!empty($data['c_inspectiondate2'])) {
-                                    ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng2'] ?></td>
-                                            <td><?= $data['c_checker2'] ?><br>(C2)</td>
+                                        <tr>
+                                            <td style="text-align: center; font-family: 'Typewrite Thin'; border: 2px solid #FF130F;"><?= date('d-m-Y H:i:s', strtotime($data_cfs['c_ng'])) ?></td>
                                         </tr>
-                                    <?php
-                                    }
-
-                                    if (!empty($data['c_inspectiondate3'])) {
-                                    ?>
-                                        <tr class="item">
-                                            <td><?= $data['c_arealabel'] ?></td>
-                                            <td><?= $data['c_cabinet'] ?></td>
-                                            <td><?= $data['c_ng3'] ?></td>
-                                            <td><?= $data['c_checker3'] ?><br>(C3)</td>
-                                        </tr>
+                                    </table>
                                 <?php
-                                    }
                                 }
                                 ?>
-                                <tr class="item">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr class="item">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            </td>
+                            <td style="text-align: center; padding: 10px; width: 50%; font-family: 'Typewrite Bold'; border: 1px solid #000000;">
+                                <?php
+                                if (!empty($data_cfs['c_ok'])) {
+                                ?>
+                                    <table style="border-collapse: collapse; color: #FF130F; border: 2px solid #FF130F;">
+                                        <tr>
+                                            <td style="text-align: center; width: 200px; font-weight: bold; font-size: larger; font-family: 'Typewrite Bold'; border: 2px solid #FF130F;"><?= $data_cfs['c_checker'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center; font-family: 'Typewrite Thin'; border: 2px solid #FF130F;"><?= date('d-m-Y H:i:s', strtotime($data_cfs['c_ok'])) ?></td>
+                                        </tr>
+                                    </table>
+                                <?php
+                                }
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; font-family: 'Typewrite Thin'; border: 1px solid #000000;">NG</td>
+                            <td style="text-align: center; font-family: 'Typewrite Thin'; border: 1px solid #000000;">OK</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding: 10px;">
+                                Note : <br>
+                                <p><?= $data_cfs['c_note'] ?></p>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-            </div>
+            <?php
+            }
+            ?>
+
 
             <div class="signer">
                 <div class="form signer-item">
@@ -1389,7 +1339,7 @@ $type = $data2['c_category'];
                                 <td style="text-align: center; width: 200px; font-weight: bold; font-size: larger; font-family: 'Typewrite Bold'; border: 2px solid #FF130F;"><?= $data99['c_outcheck1by'] ?></td>
                             </tr>
                             <tr>
-                                <td style="text-align: center; font-family: 'Typewrite Thin'; border: 2px solid #FF130F;"><?= date('d-m-Y', strtotime($data99['c_finishoutcheck1'])) ?></td>
+                                <td style="text-align: center; font-family: 'Typewrite Thin'; border: 2px solid #FF130F;"><?= date('d-m-Y H:i:s', strtotime($data99['c_finishoutcheck1'])) ?></td>
                             </tr>
                         </table>
                     </div>
@@ -1403,7 +1353,7 @@ $type = $data2['c_category'];
                                 <td style="text-align: center; width: 200px; font-weight: bold; font-size: larger; font-family: 'Typewrite Bold'; border: 2px solid #FF130F;"><?= $data99['c_outcheck2by'] ?></td>
                             </tr>
                             <tr>
-                                <td style="text-align: center; font-family: 'Typewrite Thin'; border: 2px solid #FF130F;"><?= date('d-m-Y', strtotime($data99['c_finishoutcheck2'])) ?></td>
+                                <td style="text-align: center; font-family: 'Typewrite Thin'; border: 2px solid #FF130F;"><?= date('d-m-Y H:i:s', strtotime($data99['c_finishoutcheck2'])) ?></td>
                             </tr>
                         </table>
                     </div>
@@ -1417,7 +1367,7 @@ $type = $data2['c_category'];
                                 <td style="text-align: center; width: 200px; font-weight: bold; font-size: larger; font-family: 'Typewrite Bold'; border: 2px solid #FF130F;"><?= $data99['c_outcheck3by'] ?></td>
                             </tr>
                             <tr>
-                                <td style="text-align: center; font-family: 'Typewrite Thin'; border: 2px solid #FF130F;"><?= date('d-m-Y', strtotime($data99['c_finishoutcheck3'])) ?></td>
+                                <td style="text-align: center; font-family: 'Typewrite Thin'; border: 2px solid #FF130F;"><?= date('d-m-Y H:i:s', strtotime($data99['c_finishoutcheck3'])) ?></td>
                             </tr>
                         </table>
                     </div>
@@ -1426,7 +1376,7 @@ $type = $data2['c_category'];
 
         </div>
 
-        <!-- HALAMAN 7 -->
+        <!-- HALAMAN 6 -->
 
     </div>
 

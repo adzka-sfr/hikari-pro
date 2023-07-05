@@ -1,6 +1,5 @@
 <?php include('../../../../../../_header.php');
 include('../../app_name.php');
-include('../koneksi.php');
 
 ?>
 <script>
@@ -20,7 +19,7 @@ include('../koneksi.php');
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col menu_fixed">
-                <div class="left_col scroll-view">
+                <div class="left_col scroll-view" style="padding-bottom: 50px;">
                     <div class="navbar nav_title" style="border: 0;">
                         <a href="<?= base_url('dashboard') ?>" class="site_title" style="padding-left: 15px;"><img src="<?= base_url('_assets/production/images/emblem_hikari_white.png') ?>" alt="logo" style="width: 40px;"> <span><img src="<?= base_url('_assets/production/images/hikari_text_white.png') ?>" alt="piano" style="width: 110px;"></span></a>
                     </div>
@@ -45,11 +44,19 @@ include('../koneksi.php');
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 
                         <div class="menu_section">
-                            <h3>General</h3>
+                            <h3>Dashboard</h3>
                             <ul class="nav side-menu">
                                 <li <?php if ($_GET['p'] == "dash") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=dash"><i class="fa fa-desktop"></i> Dashboard</a>
+                                    } ?>><a href="main.php?p=dash"><i class="fa fa-desktop"></i> Ratio</a>
+                                </li>
+                                <li <?php if ($_GET['p'] == "proc") {
+                                        echo 'class="active"';
+                                    } ?>><a href="main.php?p=proc"><i class="fa fa-cubes"></i> Process</a>
+                                </li>
+                                <li <?php if ($_GET['p'] == "ngtrend") {
+                                        echo 'class="active"';
+                                    } ?>><a href="main.php?p=ngtrend"><i class="fa fa-signal"></i> NG Trend</a>
                                 </li>
                             </ul>
                         </div>
@@ -61,9 +68,55 @@ include('../koneksi.php');
                                         echo 'class="active"';
                                     } ?>><a href="main.php?p=data"><i class="fa fa-file-text-o"></i> Summary of NG</a>
                                 </li>
-                                <li <?php if ($_GET['p'] == "data2") {
+                                <!-- <li <?php if ($_GET['p'] == "data2") {
+                                                echo 'class="active"';
+                                            } ?>><a href="main.php?p=data2"><i class="fa fa-gears"></i> Summary by Process</a>
+                                </li> -->
+                            </ul>
+                        </div>
+
+                        <div class="menu_section">
+                            <h3>Manage PIC</h3>
+                            <ul class="nav side-menu">
+                                <li <?php if ($_GET['p'] == "picp") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=data2"><i class="fa fa-print"></i> Summary by Process</a>
+                                    } ?>><a href="main.php?p=picp"><i class="fa fa-unlock-alt"></i>PIC Previlege</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="menu_section">
+                            <h3>Customize Data</h3>
+                            <ul class="nav side-menu">
+                                <li <?php if ($_GET['p'] == "ng") {
+                                        echo 'class="active"';
+                                    } ?>><a href="main.php?p=ng"><i class="fa fa-print"></i>Type of NG</a>
+                                </li>
+                                <li <?php if ($_GET['p'] == "cab") {
+                                        echo 'class="active"';
+                                    } ?>><a href="main.php?p=cab"><i class="fa fa-print"></i>List of Cabinet</a>
+                                </li>
+                                <li <?php if ($_GET['p'] == "ip") {
+                                        echo 'class="active"';
+                                    } ?>><a href="main.php?p=ip"><i class="fa fa-print"></i>Inside Process</a>
+                                </li>
+                                <li <?php if ($_GET['p'] == "cp") {
+                                        echo 'class="active"';
+                                    } ?>><a href="main.php?p=cp"><i class="fa fa-print"></i>Completeness Process</a>
+                                </li>
+                                <li <?php if ($_GET['p'] == "ap") {
+                                        echo 'class="active"';
+                                    } ?>><a href="main.php?p=ap"><i class="fa fa-print"></i>Add Piano</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="menu_section">
+                            <h3>Danger Area</h3>
+                            <ul class="nav side-menu">
+                                <li <?php if ($_GET['p'] == "reset") {
+                                        echo 'class="active"';
+                                    } ?>><a href="main.php?p=reset"><i class="fa fa-exclamation-triangle"></i> Reset Serialnumber</a>
                                 </li>
                             </ul>
                         </div>
@@ -112,9 +165,9 @@ include('../koneksi.php');
                                     <img src="<?= base_url('_assets/production/images/profile.png') ?>" alt=""><?php echo $_SESSION['nama'] ?>
                                 </a>
                                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="_profile/"> Profile</a>
-                                    <a class="dropdown-item" href="_settings/">Settings</a>
-                                    <a class="dropdown-item" href="_help/">Help</a>
+                                    <!-- <a class="dropdown-item" href="_profile/"> Profile</a> -->
+                                    <!-- <a class="dropdown-item" href="_settings/">Settings</a> -->
+                                    <!-- <a class="dropdown-item" href="_help/">Help</a> -->
                                     <a class="dropdown-item" href="<?= base_url('auth/act_logout.php') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </div>
                             </li>
@@ -147,7 +200,7 @@ include('../koneksi.php');
                     <?php
 
                     if (empty($_GET['p'])) {
-                        $_GET['p'] = "assy";
+                        $_GET['p'] = "dash";
                     } else {
                         include "content.php";
                     }

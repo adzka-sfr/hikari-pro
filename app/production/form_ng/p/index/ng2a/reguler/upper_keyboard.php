@@ -181,7 +181,7 @@
                             for ($c = 1; $c <= $no; $c++) {
                                 if (!empty($_POST['check' . $c])) {
                                     $id = $_POST['id' . $c];
-                                    $pp1 = mysqli_query($connect_pro, "UPDATE formng_resultro SET c_repairdate = '$date_in', c_picrepair = '$_SESSION[nama]' WHERE id = $id");
+                                    $pp1 = mysqli_query($connect_pro, "UPDATE formng_resultro SET c_repairdate = '$date_in', c_picrepair = '$_SESSION[repair_name]' WHERE id = $id");
                                 }
                             }
                             // update pada resulto1 dengan membedakan query berdasarkan proses yang aktif (oc1, oc2, oc3)
@@ -244,6 +244,76 @@
         <div class="row">
             <div class="col-12" style="text-align: center;">
                 <h2><u>Upper Keyboard</u></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="text-align: right;">
+                <?php
+                $sql = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$serial_number' AND c_section = '$section' AND c_picrepair = ''");
+                $data = mysqli_fetch_array($sql);
+                if (empty($data['id'])) {
+                ?>
+                    <button disabled name="ra_uk" class="btn btn-sm btn-primary">Repair All in UK</button>
+                <?php
+                } else {
+                ?>
+                    <form method="post">
+                        <input type="hidden" value="<?= $serial_number ?>" id="v_serial">
+                        <input type="hidden" value="<?= $section ?>" id="v_section">
+                        <button name="ra_uk" class="btn btn-sm btn-primary">Repair All in UK</button>
+                    </form>
+
+                    <?php
+                    if (isset($_POST['ra_uk'])) {
+                    ?>
+                        <script>
+                            Swal.fire({
+                                title: 'Repair semua pada UK?',
+                                text: "Tindakan ini bersifat permanen!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, repair all!'
+                            }).then((result) => {
+                                if (result.value) {
+                                    var v_serial = document.getElementById('v_serial').value;
+                                    var v_section = document.getElementById('v_section').value;
+
+                                    $.ajax({
+                                        url: "reguler/repair_all.php",
+                                        type: "POST",
+                                        data: {
+                                            v_serial: v_serial,
+                                            v_section: v_section
+                                        },
+                                        cache: false,
+                                        success: function(dataResult) {
+                                            var dataResult = JSON.parse(dataResult);
+                                            if (dataResult.statusCode == 200) {
+                                                Swal.fire({
+                                                    title: 'Success',
+                                                    text: 'Section Updated!',
+                                                    type: 'success',
+                                                    confirmButtonText: 'OK'
+                                                }).then(function() {
+                                                    window.location = 'index.php';
+                                                });
+                                            }
+
+                                        }
+                                    });
+                                }
+                            })
+                        </script>
+                    <?php
+                    }
+                    ?>
+
+                <?php
+                }
+                ?>
+
             </div>
         </div>
     </div>

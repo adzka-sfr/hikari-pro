@@ -15,7 +15,16 @@
 <script>
     $(window).on('load', function() {
         $('.loading').hide();
-    })
+    });
+
+    function showBlock() {
+        $(".block-content").show()
+    }
+
+    function hideBlock() {
+        $(".block-content").hide()
+
+    }
 </script>
 <!-- untuk loading page -->
 
@@ -27,6 +36,8 @@
     }, false);
 </script> -->
 
+
+
 <!-- untuk dropdown search -->
 <script>
     // untuk aktivasi dropdown berdasarkan radio button
@@ -34,12 +45,12 @@
         $('.duar').prop('disabled', !$(this).is('.other'));
         $(document).ready(function() {
             $('.duar').select2({
-                placeholder: "Choose NG"
+                placeholder: "Pilih NG"
             });
         });
     });
     $('.duar').select2({
-        placeholder: "Choose NG"
+        placeholder: "Pilih NG"
     }); // untuk  dropdown dengan radio button
 
     $('.cari_slip').select2({
@@ -56,14 +67,16 @@
     $('#kon').select2();
 
     $('.halodeck').select2({
-        placeholder: "Choose NG",
+        placeholder: "Pilih NG",
         allowClear: true,
         language: "id"
     });
 
     $('.halodecktot').select2({
-        placeholder: "Choose NG",
-        language: "id"
+        placeholder: "Pilih NG",
+        language: "id",
+        allowClear: true,
+
     });
 
     $('.ngen').select2({
@@ -74,6 +87,18 @@
     $('.halocab').select2({
         placeholder: "Select cabinet",
         allowClear: true,
+    });
+
+    $('.cari_basic').select2({
+        placeholder: "Select from below",
+    });
+
+    $('.cari_model').select2({
+        placeholder: "Select model from below",
+    });
+
+    $('.cari_proses').select2({
+        placeholder: "Select process from below",
     });
 </script>
 
@@ -181,6 +206,8 @@
 
 <!-- Custom Theme Scripts -->
 <script src="<?= base_url('_assets/build/js/custom.min.js') ?>"></script>
+
+
 
 <!-- Tambahan -->
 

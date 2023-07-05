@@ -8,11 +8,10 @@
 
         <div class="col-1" style="text-align: right;">
             <i>Furniture</i>
-            <?php
-            $type_piano = 'f'; // $piano
+            <?php 
             $serial_number = $_SESSION['serialnumber_outside3']; // $slip
-            $piano_name = $_SESSION['pianoname_outside3']; // berupa session juga harusnya //4 $model
-
+            $pianoname = $_SESSION['pianoname_outside3']; // berupa session juga harusnya //4 $model
+            $process = 'oc3';
             ?>
         </div>
         <div class="separator" style="margin: 0px; padding: 0px;"></div>
