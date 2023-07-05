@@ -38,14 +38,11 @@ $tahunGajah = date('Y', strtotime($now));
 $sumOfDay = cal_days_in_month($kalenderMasehi, $bulanSutena, $tahunGajah);
 
 // hitung outside 1
-$sql = mysqli_query($connect_pro, "SELECT DISTINCT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc1'");
-$v_count = 0;
-while ($data = mysqli_fetch_array($sql)) {
-    $v_count++;
-}
-$p1 = $v_count;
+$sql = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as piano1 FROM formng_repairdata WHERE c_startprocess LIKE '$month_umpama%' AND c_process = 'oc1'");
+$data = mysqli_fetch_array($sql);
+$p1 = $data['piano1'];
 
-$sql = mysqli_query($connect_pro, "SELECT COUNT(c_ng) as ng1 FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc1' AND c_ng != ''");
+$sql = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as ng1 FROM formng_resultong WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc1'");
 $data = mysqli_fetch_array($sql);
 $ng1 = $data['ng1'];
 
@@ -58,14 +55,11 @@ if ($p1 == 0) {
 }
 
 // hitung outside 2
-$sql = mysqli_query($connect_pro, "SELECT DISTINCT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc2'");
-$v_count = 0;
-while ($data = mysqli_fetch_array($sql)) {
-    $v_count++;
-}
-$p2 = $v_count;
+$sql = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as piano2 FROM formng_repairdata WHERE c_startprocess LIKE '$month_umpama%' AND c_process = 'oc2'");
+$data = mysqli_fetch_array($sql);
+$p2 = $data['piano2'];
 
-$sql = mysqli_query($connect_pro, "SELECT COUNT(c_ng) as ng2 FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc2' AND c_ng != ''");
+$sql = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as ng2 FROM formng_resultong WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc2'");
 $data = mysqli_fetch_array($sql);
 $ng2 = $data['ng2'];
 
@@ -82,17 +76,15 @@ if ($p2 == 0) {
     );
 }
 
-// hitung outside 2
-$sql = mysqli_query($connect_pro, "SELECT DISTINCT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc3'");
-$v_count = 0;
-while ($data = mysqli_fetch_array($sql)) {
-    $v_count++;
-}
-$p3 = $v_count;
+// hitung outside 3
+$sql = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as piano3 FROM formng_repairdata WHERE c_startprocess LIKE '$month_umpama%' AND c_process = 'oc3'");
+$data = mysqli_fetch_array($sql);
+$p3 = $data['piano3'];
 
-$sql = mysqli_query($connect_pro, "SELECT COUNT(c_ng) as ng3 FROM formng_resultro WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc3' AND c_ng != ''");
+$sql = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as ng3 FROM formng_resultong WHERE c_inspectiondate LIKE '$month_umpama%' AND c_process = 'oc3'");
 $data = mysqli_fetch_array($sql);
 $ng3 = $data['ng3'];
+
 
 if ($p3 == 0) {
     $r3 = 0;

@@ -51,30 +51,21 @@ for ($tgl = 1; $tgl <= $sumOfDay; $tgl++) {
     $tanggal = $tanggal . "-" . $tgl;
 
     // get ng outside 1
-    $sql = mysqli_query($connect_pro, "SELECT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$tanggal%' AND c_process = 'oc1' AND c_ng != ''");
-    $v_count = 0;
-    while ($data = mysqli_fetch_array($sql)) {
-        $v_count++;
-    }
-    $p1 = $v_count;
+    $sql = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as dpiano1 FROM formng_resultong WHERE c_inspectiondate LIKE '$tanggal%' AND c_process = 'oc1'");
+    $data = mysqli_fetch_array($sql);
+    $p1 = $data['dpiano1'];
     $o1[$z] = $p1;
 
     // get ng outside 2
-    $sql = mysqli_query($connect_pro, "SELECT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$tanggal%' AND c_process = 'oc2' AND c_ng != ''");
-    $v_count = 0;
-    while ($data = mysqli_fetch_array($sql)) {
-        $v_count++;
-    }
-    $p2 = $v_count;
+    $sql = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as dpiano2 FROM formng_resultong WHERE c_inspectiondate LIKE '$tanggal%' AND c_process = 'oc2'");
+    $data = mysqli_fetch_array($sql);
+    $p2 = $data['dpiano2'];
     $o2[$z] = $p2;
 
     // get ng outside 3
-    $sql = mysqli_query($connect_pro, "SELECT c_serialnumber FROM formng_resultro WHERE c_inspectiondate LIKE '$tanggal%' AND c_process = 'oc3' AND c_ng != ''");
-    $v_count = 0;
-    while ($data = mysqli_fetch_array($sql)) {
-        $v_count++;
-    }
-    $p3 = $v_count;
+    $sql = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as dpiano3 FROM formng_resultong WHERE c_inspectiondate LIKE '$tanggal%' AND c_process = 'oc3'");
+    $data = mysqli_fetch_array($sql);
+    $p3 = $data['dpiano3'];
     $o3[$z] = $p3;
     $z++;
 }

@@ -1,4 +1,4 @@
-<div id="ngtrend" style="height:10000px; width: 100%; padding-top: 10px; padding-bottom: 0px; padding-right: 0px; padding-left: 0px; "></div>
+<div id="ngtrend" style="height:5000px; width: 100%; padding-top: 10px; padding-bottom: 0px; padding-right: 0px; padding-left: 0px; ">a</div>
 
 <?php
 // =============================================== CONNECTION
@@ -45,7 +45,7 @@ $intrend =  array();
 //bulan lalu
 $month_lalu = date('Y-m', strtotime('-1month', strtotime($month_umpama)));
 
-$sql = mysqli_query($connect_pro, "SELECT * FROM formng_listng where c_area = 'inside' order by c_ng desc");
+$sql = mysqli_query($connect_pro, "SELECT c_ng FROM formng_itemnginside order by c_ng desc");
 while ($data = mysqli_fetch_array($sql)) {
     //cek pada hasil pengecekan outside bulan ini
     $sql1 = mysqli_query($connect_pro, "SELECT COUNT(c_detail) as total FROM formng_resulti WHERE c_detail = '$data[c_ng]' AND c_inspectiondate LIKE '$month_umpama%'");
@@ -119,7 +119,7 @@ $colcount = count($intrend);
         series: [{
                 name: 'Last Month',
                 type: 'bar',
-                barGap: 0,
+                barGap: '-100%',
                 label: {
                     show: true,
                     // color: '#fff',

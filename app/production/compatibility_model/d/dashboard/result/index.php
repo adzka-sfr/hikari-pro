@@ -1,14 +1,14 @@
 <?php include('../../../../../../_header.php'); ?>
 <?php include('../koneksi.php') ?>
-
+<?php
+$title = "Compatibility Model";
+?>
+<title><?= $title ?></title>
 <body class="nav-md footer_fixed" style="background-color: #F7F7F7;">
     <div class="top_nav">
         <div class="nav_menu">
             <div class="nav toggle">
-                <!-- <a style="padding-top: 5px;"> -->
-                <!-- <h3 style="letter-spacing: 2px; padding-left: 50px;"><u><b>HIKARI</b></u></h3> -->
-                <a href="<?= base_url('dashboard/') ?>" style="padding-top:15px; padding-left: 30px;"><img src="<?= base_url('_assets/production/images/yamaha_purple_no_waves.png') ?>" alt="logo_yamaha" height="30"></a>
-                <!-- </a> -->
+                <a href="<?= base_url('dashboard/') ?>" style="padding-top:15px; padding-left: 30px;"><img src="<?= base_url('_assets/production/images/hikari_purple.png') ?>" alt="logo_yamaha" height="30"></a>
             </div>
             <nav class="nav navbar-nav">
                 <ul class=" navbar-right">

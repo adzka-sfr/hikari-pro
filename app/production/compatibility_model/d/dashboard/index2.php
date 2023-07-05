@@ -1,5 +1,9 @@
 <?php include('../../../../_header.php'); ?>
 <?php include('koneksi.php') ?>
+<?php
+$title = "Compatibility Model";
+?>
+<title><?= $title ?></title>
 
 <body class="nav-md footer_fixed" style="background-color: #F7F7F7;">
   <div class="top_nav">

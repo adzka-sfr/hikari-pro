@@ -204,9 +204,20 @@
         ?> -->
     </div>
 </div>
+<hr>
 <div class="row">
-    <div class="col-12 tableFixHead-4">
-        <table class="table table-bordered">
+    <div class="col-12" style="max-height: 500px;">
+        <script>
+            $(document).ready(function() {
+                $('#cus_ap').DataTable({
+                    paging: false,
+                    scrollY: '350px',
+                    scrollCollapse: true,
+                    "dom": '<"wrapper"flipt>'
+                });
+            });
+        </script>
+        <table id="cus_ap" class="table table-bordered">
             <thead style="text-align: center;">
                 <th style="width:5%;">No</th>
                 <th style="width: 13%;">GMC</th>

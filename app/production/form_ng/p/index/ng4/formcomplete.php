@@ -28,8 +28,9 @@
                     },
                     showCancelButton: true,
                     allowOutsideClick: false,
-                    cancelButtonText: 'Close',
-                    confirmButtonText: 'Save'
+                    cancelButtonText: 'Tutup',
+                    confirmButtonText: 'Simpan',
+                    cancelButtonColor: '#C82333'
                 })
 
                 if (text) {
@@ -100,7 +101,7 @@
                         <th style="vertical-align:top;padding-top:0px; width: 25%;">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
-                                    Inspection Date :
+                                    Tanggal Pengecekan :
                                 </div>
                             </div>
                             <di class="row">
@@ -133,10 +134,10 @@
                 <table class="table table-bordered">
                     <thead style="text-align: center;">
                         <th style="width: 5%;">No</th>
-                        <th>Part Name</th>
-                        <th style="width: 10%;">Check 1</th>
-                        <th style="width: 10%;">Check 2</th>
-                        <th style="width: 10%;">Check 3</th>
+                        <th>Nama Item</th>
+                        <th style="width: 10%;">Cek1</th>
+                        <th style="width: 10%;">Cek2</th>
+                        <th style="width: 10%;">Cek3</th>
                     </thead>
                     <tbody style="font-size: 15px;">
                         <?php
@@ -205,13 +206,13 @@
 
         <div class="row">
             <div class="col-12">
-                <input required name="agree" value="agree" type="checkbox"> Saya yakin data <b>Completeness Part</b> sudah sesuai dengan kondisi aktual
+                <input required name="agree" value="agree" type="checkbox"> Saya yakin data <b>Completeness</b> sudah sesuai dengan kondisi aktual
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-12" style="text-align: center;">
-                <button type="submit" name="verif" class="btn btn-success">Submit, and go to Outside Check</button>
+                <button type="submit" name="verif" class="btn btn-success">Simpan, dan Cek Outside</button>
             </div>
         </div>
     </form>
@@ -243,8 +244,8 @@
             <script>
                 $(document).ready(function() {
                     Swal.fire({
-                        title: 'Success',
-                        html: 'Input data completeness for <br><b><?= $_SESSION['pianoname_outside3'] ?></b><br> has been recorded !',
+                        title: 'Berhasil',
+                        html: 'Data completeness untuk <br><b><?= $_SESSION['pianoname_outside3'] ?></b><br> berhasil direkam !',
                         type: 'success',
                         confirmButtonText: 'Ok',
                         allowOutsideClick: true

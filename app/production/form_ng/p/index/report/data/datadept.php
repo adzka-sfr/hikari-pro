@@ -20,7 +20,7 @@
                 $no = 0;
                 $sql = mysqli_query($connect_pro, "SELECT distinct c_dept FROM formng_listng order by id asc");
                 $thismonth = date('Y-m', strtotime($now));
-                $lastmonth = date('Y-m', strtotime('-1month', strtotime($now)));
+                $lastmonth = date('Y-m', strtotime('-1month', strtotime($thismonth)));
 
                 while ($data = mysqli_fetch_array($sql)) {
                     $no++;
@@ -28,46 +28,22 @@
                     $total_ng22 = 0;
 
                     // THIS MONTH //
-                    //cek pada hasil pengecekan inside
-                    $sql1 = mysqli_query($connect_pro, "SELECT COUNT(r.c_detail) as total FROM formng_resulti r JOIN formng_listng l ON r.c_detail = l.c_ng WHERE l.c_dept = '$data[c_dept]' AND r.c_inspectiondate LIKE '$thismonth%'");
-                    $data1 = mysqli_fetch_array($sql1);
-                    $total_ng1 = $data1['total'];
 
                     //cek pada hasil pengecekan outside
-                    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng1) as total FROM formng_resulto1 r JOIN formng_listng l ON r.c_ng1 = l.c_ng WHERE l.c_dept = '$data[c_dept]' AND r.c_inspectiondate1 LIKE '$thismonth%'");
+                    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(r.c_ng) as total FROM formng_resultong r JOIN formng_listng l ON r.c_ng = l.c_ng WHERE l.c_dept = '$data[c_dept]' AND r.c_inspectiondate LIKE '$thismonth%'");
                     $data2 = mysqli_fetch_array($sql2);
                     $total_ng2a = $data2['total'];
 
-                    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng2) as total FROM formng_resulto1 r JOIN formng_listng l ON r.c_ng2 = l.c_ng WHERE l.c_dept = '$data[c_dept]' AND r.c_inspectiondate2 LIKE '$thismonth%'");
-                    $data2 = mysqli_fetch_array($sql2);
-                    $total_ng2b = $data2['total'];
-
-                    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng3) as total FROM formng_resulto1 r JOIN formng_listng l ON r.c_ng3 = l.c_ng WHERE l.c_dept = '$data[c_dept]' AND r.c_inspectiondate3 LIKE '$thismonth%'");
-                    $data2 = mysqli_fetch_array($sql2);
-                    $total_ng2c = $data2['total'];
-
-                    $total_ng11 = $total_ng1 + $total_ng2a + $total_ng2b + $total_ng2c;
+                    $total_ng11 = $total_ng2a;
 
                     // LAST MONTH //
-                    //cek pada hasil pengecekan inside
-                    $sql1 = mysqli_query($connect_pro, "SELECT COUNT(r.c_detail) as total FROM formng_resulti r JOIN formng_listng l ON r.c_detail = l.c_ng WHERE l.c_dept = '$data[c_dept]' AND r.c_inspectiondate LIKE '$lastmonth%'");
-                    $data1 = mysqli_fetch_array($sql1);
-                    $total_ng1 = $data1['total'];
 
                     //cek pada hasil pengecekan outside
-                    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng1) as total FROM formng_resulto1 r JOIN formng_listng l ON r.c_ng1 = l.c_ng WHERE l.c_dept = '$data[c_dept]' AND r.c_inspectiondate1 LIKE '$lastmonth%'");
+                    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(r.c_ng) as total FROM formng_resultong r JOIN formng_listng l ON r.c_ng = l.c_ng WHERE l.c_dept = '$data[c_dept]' AND r.c_inspectiondate LIKE '$lastmonth%'");
                     $data2 = mysqli_fetch_array($sql2);
                     $total_ng2a = $data2['total'];
 
-                    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng2) as total FROM formng_resulto1 r JOIN formng_listng l ON r.c_ng2 = l.c_ng WHERE l.c_dept = '$data[c_dept]' AND r.c_inspectiondate2 LIKE '$lastmonth%'");
-                    $data2 = mysqli_fetch_array($sql2);
-                    $total_ng2b = $data2['total'];
-
-                    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng3) as total FROM formng_resulto1 r JOIN formng_listng l ON r.c_ng3 = l.c_ng WHERE l.c_dept = '$data[c_dept]' AND r.c_inspectiondate3 LIKE '$lastmonth%'");
-                    $data2 = mysqli_fetch_array($sql2);
-                    $total_ng2c = $data2['total'];
-
-                    $total_ng22 = $total_ng1 + $total_ng2a + $total_ng2b + $total_ng2c;
+                    $total_ng22 = $total_ng2a;
 
                     //get data persentase status
                     if ($total_ng22 == 0) {

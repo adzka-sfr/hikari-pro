@@ -126,10 +126,21 @@ session_start();
     $connect_pro = new mysqli("localhost", "root", "", "hikari_project");
     $serial = $_SESSION['in_serialprint'];
     $checker = $_SESSION['checker'];
+    $process = $_SESSION['process'];
 
-    //get data ng
-    $sql = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber = '$serial' AND c_ng1 != '' order by c_arealabel");
-    $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_resultc WHERE c_serialnumber = '$serial' AND c_result1 = 'NO'");
+
+    // get data ng completeness
+
+    if ($process == 'oc1') {
+        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_resultc WHERE c_serialnumber = '$serial' AND c_result1 = 'NO'");
+        $judul = 'Outside Check 1';
+    } elseif ($process == 'oc2') {
+        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_resultc WHERE c_serialnumber = '$serial' AND c_result2 = 'NO'");
+        $judul = 'Outside Check 2';
+    } elseif ($process == 'oc3') {
+        $sql2 = mysqli_query($connect_pro, "SELECT * FROM formng_resultc WHERE c_serialnumber = '$serial' AND c_result3 = 'NO'");
+        $judul = 'Outside Check 3';
+    }
 
     ?>
 
@@ -145,7 +156,7 @@ session_start();
     <div class="page">
 
         <!-- Content -->
-        <h6 style="text-align: center;">Outside Check <?= $_SESSION['outside'] ?></h6>
+        <h6 style="text-align: center;"><?= $judul?></h6>
         <input id="text" type="hidden" value="<?= $serial ?>" /><br />
         <div style="text-align: center;">
             <div style="padding-top: 0px; font-size:15px; "><b><?= $checker ?></b></div>
@@ -157,22 +168,20 @@ session_start();
             <h6 style="padding-left: 10px;">Outside NG</h6>
             <ul>
                 <?php
+                $sql = mysqli_query($connect_pro, "SELECT DISTINCT c_cabinet FROM formng_resultong WHERE c_serialnumber = '$serial' AND c_process = '$process'");
                 while ($data = mysqli_fetch_array($sql)) {
-                    if ($data['c_section'] == '1 top board outside') {
-                        $section = 'TBO';
-                    } elseif ($data['c_section'] == '2 top board inside') {
-                        $section = 'TBI';
-                    } elseif ($data['c_section'] == '3 upper keyboard') {
-                        $section = 'UK';
-                    } elseif ($data['c_section'] == '4 body') {
-                        $section = 'B';
-                    } elseif ($data['c_section'] == '5 body back') {
-                        $section = 'BB';
-                    }
                 ?>
-                    <li>(<b><?= $section ?>_<?= $data['c_arealabel'] ?></b>) <?= $data['c_cabinet'] ?><br><b><?= $data['c_ng1'] ?></b></li>
+                    <li style="font-weight: bold;"><?= $data['c_cabinet'] ?></li>
+                    <?php
+                    $sql3 = mysqli_query($connect_pro, "SELECT c_ng, c_numberng FROM formng_resultong WHERE c_serialnumber = '$serial' AND c_process = '$process' AND c_cabinet = '$data[c_cabinet]' ORDER BY c_numberng");
+                    while ($data3 = mysqli_fetch_array($sql3)) {
+                    ?>
+                        (<?= $data3['c_numberng'] ?>) <?= $data3['c_ng'] ?> <br>
                 <?php
+                    }
                 }
+                ?>
+                <?php
                 ?>
             </ul>
         </div>

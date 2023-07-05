@@ -49,21 +49,11 @@ $total_pianoe1 = $data1['total'];
 $total_pianoe = $total_pianoe1;
 
 //get jumlah temuan cek 1
-$sup2a = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resulto1 WHERE c_inspectiondate1 LIKE '$tanggal%' AND c_ng1 != ''");
+$sup2a = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resultong WHERE c_inspectiondate LIKE '$tanggal%'");
 $data2a = mysqli_fetch_array($sup2a);
 $total_temuane1 = $data2a['total'];
 
-//get jumlah temuan cek 2
-$sup2b = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resulto1 WHERE c_inspectiondate2 LIKE '$tanggal%' AND c_ng2 != ''");
-$data2b = mysqli_fetch_array($sup2b);
-$total_temuane2 = $data2b['total'];
-
-//get jumlah temuan cek 3
-$sup2c = mysqli_query($connect_pro, "SELECT COUNT(id) as total FROM formng_resulto1 WHERE c_inspectiondate3 LIKE '$tanggal%' AND c_ng3 != ''");
-$data2c = mysqli_fetch_array($sup2c);
-$total_temuane3 = $data2c['total'];
-
-$total_temuane = $total_temuane1 + $total_temuane2 + $total_temuane3;
+$total_temuane = $total_temuane1;
 
 //get Rata-Rata NG
 if ($total_pianoe == 0) {

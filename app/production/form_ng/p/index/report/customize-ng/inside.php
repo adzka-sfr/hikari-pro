@@ -3,30 +3,41 @@
         <h5>Inside</h5>
     </div>
 </div>
+
 <div class="row">
-    <div class="col-6 tableFixHead-4">
-        <table class="table table-bordered">
+    <div class="col-6" style="max-height: 500px;">
+        <script>
+            $(document).ready(function() {
+                $('#cus_ng_in').DataTable({
+                    paging: false,
+                    scrollY: '350px',
+                    scrollCollapse: true,
+                    "dom": '<"wrapper"flipt>'
+                });
+            });
+        </script>
+        <table id="cus_ng_in" class="table table-bordered">
             <thead style="text-align: center;">
-                <th style="width:10%;">No</th>
+                <th>Process Inside</th>
                 <th>NG</th>
             </thead>
             <tbody>
                 <?php
                 $no  = 0;
-                $sql = mysqli_query($connect_pro, "SELECT * FROM formng_listng WHERE c_area = 'inside'");
+                $sql = mysqli_query($connect_pro, "SELECT fii.c_ng, fii.c_status, fci.c_item FROM formng_itemnginside fii JOIN formng_checkinside fci ON fii.c_code = fci.c_code");
                 while ($data = mysqli_fetch_array($sql)) {
                     $no++;
                     if ($data['c_status'] == 'disabled') {
                 ?>
                         <tr style="background-color: #E2E3E5;">
-                            <td style="text-align: center; "><s><?= $no ?></s></td>
+                            <td><s><?= $data['c_item'] ?></s></td>
                             <td><s><?= $data['c_ng'] ?></s></td>
                         </tr>
                     <?php
                     } else {
                     ?>
                         <tr>
-                            <td style="text-align: center; "><?= $no ?></td>
+                            <td><?= $data['c_item'] ?></td>
                             <td><?= $data['c_ng'] ?></td>
                         </tr>
                 <?php
@@ -46,6 +57,21 @@
         <form method="post">
             <div class="row">
                 <div class="col-12">
+                    <select class="cari_basic" style="width: 100% " required name="adpro">
+                        <option></option>
+                        <?php
+                        $sql = mysqli_query($connect_pro, "SELECT c_code, c_item FROM formng_checkinside");
+                        while ($data = mysqli_fetch_array($sql)) {
+                        ?>
+                            <option value="<?= $data['c_code'] ?>"><?= $data['c_item'] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mt-3">
                     <div class="form-floating">
                         <textarea class="form-control" name="ngin" placeholder="Type NG here" id="floatingTextarea"></textarea>
                         <label for="floatingTextarea">Type NG here</label>
@@ -71,11 +97,10 @@
 
         <?php
         if (isset($_POST['addin'])) {
-            $c_area = 'inside';
+            $c_code = $_POST['adpro'];
             $c_ng = $_POST['ngin'];
             $c_status = 'enable';
-            $c_dept = 'INSIDE';
-            $dli = mysqli_query($connect_pro, "INSERT INTO formng_listng SET c_area = '$c_area', c_ng = '$c_ng', c_dept = '$c_dept', c_status = '$c_status'");
+            $dli = mysqli_query($connect_pro, "INSERT INTO formng_itemnginside SET c_code = '$c_code', c_ng = '$c_ng', c_status = '$c_status'");
 
             if ($dli) {
         ?>
@@ -105,17 +130,39 @@
         </div>
         <form method="post">
             <div class="row">
-                <div class="col-12">
-                    <select class="cari_basic" style="width: 100% " required name="idng">
-                        <option></option>
+                <div class="col-12 mb-2">
+                    <script type="text/javascript">
+                        function searchmodel2() {
+                            var isiap = $("select[name='proc']").val();
+                            $.ajax({
+                                url: "customize-ng/dropdown.php",
+                                method: "POST",
+                                data: {
+                                    isiap: isiap
+                                },
+                                success: function(data) {
+                                    $('#dropproses').prop('disabled', false);
+                                    $('#dropproses').html(data);
+                                }
+                            });
+                        }
+                    </script>
+                    <select class="cari_proses" id="proc" name="proc" style="width: 100% " required onchange="searchmodel2()">
+                        <option disabled selected value="">Select model from below</option>
                         <?php
-                        $sql = mysqli_query($connect_pro, "SELECT * FROM formng_listng WHERE c_area = 'inside'");
+                        $sql = mysqli_query($connect_pro, "SELECT c_item, c_code FROM formng_checkinside order by c_code asc");
                         while ($data = mysqli_fetch_array($sql)) {
                         ?>
-                            <option value="<?= $data['id'] ?>"><?= $data['c_ng'] ?></option>
+                            <option value="<?= $data['c_code'] ?>"><?= $data['c_item'] ?></option>
                         <?php
                         }
                         ?>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mb-2">
+                    <select disabled class="cari_proses" id="dropproses" style="width: 100% " required name="dropproses">
                     </select>
                 </div>
             </div>
@@ -145,9 +192,9 @@
         </form>
         <?php
         if (isset($_POST['updatein'])) {
-            $id = $_POST['idng'];
+            $id = $_POST['dropproses'];
             $c_status = $_POST['c_status'];
-            $dli = mysqli_query($connect_pro, "UPDATE formng_listng SET c_status = '$c_status' WHERE id = '$id'");
+            $dli = mysqli_query($connect_pro, "UPDATE formng_itemnginside SET c_status = '$c_status' WHERE id = '$id'");
 
             if ($dli) {
         ?>

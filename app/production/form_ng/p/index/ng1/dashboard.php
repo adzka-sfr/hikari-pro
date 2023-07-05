@@ -99,6 +99,12 @@ if (empty($_SESSION['cardnumber'])) {
         $data = oci_fetch_array($statment1);
         // == Cek apakah ada isi pada k-staff == //
         if (!empty($data['PLNNO'])) {
+            // result piano dari b45 - u700 -> D0600
+            // result semuanya -> D0130
+            // Acard UP -> D0610
+            // Acard GP -> D0780
+            // BOM -> M0031
+            // MASTER -> M0010
             $sql2 = "SELECT B_ACTY.D0600.ACTUALDT, B_ACTY.D0600.HMCD AS GMC, B_ACTY.D0600.QTY AS QTY, B_ACTY.D0600.PLNNO AS PNUMBER, B_ACTY.D0600.MAKEKTCD AS WC FROM B_ACTY.D0600 WHERE B_ACTY.D0600.PLNNO = '$data[PLNNO]' AND B_ACTY.D0600.MAKEKTCD = 'U400'";
             $statment2 = oci_parse($connection, $sql2);
             oci_execute($statment2);

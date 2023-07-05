@@ -112,13 +112,14 @@
                                 <td>
                                     <input type="radio" class="radioku<?= $i ?> ng<?= $i ?>" style="transform: scale(2); margin: 10px;" name="inside<?= $i ?>" value="NG" />
                                 </td>
-                                <td style="width: 90%;">
+                                <td>
                                     <select class="halodecktot" id="duar<?= $i ?>" style="width: 100% " disabled required name="jenis<?= $i ?>">
                                         <option></option>
                                         <?php
-                                        for ($j = 0; $j < count($ngin); $j++) {
+                                        $sql3 = mysqli_query($connect_pro, "SELECT c_ng FROM formng_itemnginside WHERE c_code = '$data2[c_code]'");
+                                        while ($data3 = mysqli_fetch_array($sql3)) {
                                         ?>
-                                            <option value="<?= $ngin[$j] ?>"><?= $ngin[$j] ?></option>
+                                            <option value="<?= $data3['c_ng'] ?>"><?= $data3['c_ng'] ?></option>
                                         <?php
                                         }
                                         ?>
@@ -142,19 +143,6 @@
         </div>
 
         <div class="row">
-            <div class="col-12 mb-3">
-                <label for="catatan">
-                    <h5>Note :</h5>
-                </label>
-                <textarea class="form-control" name="catatan" rows="3"></textarea>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 mb-4">
-                <input required name="agree" value="agree" type="checkbox"> Saya yakin piano <b><?= $_SESSION['pianoname_inside'] ?> ( <u style="color: red;"><?= $_SESSION['serialnumber_inside'] ?></u> )</b> sudah sesuai dengan kondisi aktual
-            </div>
-        </div>
-        <div class="row">
             <div class="col-12" style="text-align: center;">
                 <button type="submit" name="verif" class="btn btn-success">Submit</button>
             </div>
@@ -169,22 +157,35 @@
             $c_item = $_POST['process_inside' . $in];
             $c_status = $_POST['inside' . $in];
 
-            if (!empty($_POST['inside' . $in])) {
-                if ($_POST['inside' . $in] == 'OK') {
-                    $c_detail = 'ok';
-                } else {
-                    $c_detail = $_POST['jenis' . $in];
-                }
-            } else {
+            if ($_POST['inside' . $in] == 'OK') {
                 $c_detail = 'ok';
+            } else {
+                $c_detail = $_POST['jenis' . $in];
             }
-
 
             $c_inspectiondate = date('Y-m-d H:i:s', strtotime($now));
             $c_checker = $_SESSION['nama'];
 
-            $sql1 = mysqli_query($connect_pro, "INSERT INTO formng_resulti SET c_serialnumber = '$c_serialnumber', c_pianoname = '$c_pianoname', c_item = '$c_item', c_status = '$c_status', c_detail = '$c_detail', c_inspectiondate = '$c_inspectiondate', c_checker = '$c_checker'");
+            if (!empty($_POST['inside' . $in])) {
+                $c_status = $_POST['inside' . $in];
+                if ($_POST['inside' . $in] == 'OK') {
+                    $c_detail = 'ok';
+
+                    $sql1 = mysqli_query($connect_pro, "INSERT INTO formng_resulti SET c_serialnumber = '$c_serialnumber', c_pianoname = '$c_pianoname', c_item = '$c_item', c_status = '$c_status', c_detail = '$c_detail', c_inspectiondate = '$c_inspectiondate', c_checker = '$c_checker'");
+                } else {
+                    foreach ($_POST['jenis' . $in] as $value) {
+                        $sql1 = mysqli_query($connect_pro, "INSERT INTO formng_resulti SET c_serialnumber = '$c_serialnumber', c_pianoname = '$c_pianoname', c_item = '$c_item', c_status = '$c_status', c_detail = '$value', c_inspectiondate = '$c_inspectiondate', c_checker = '$c_checker'");
+                    }
+                }
+            } else {
+                $c_status = 'OK';
+                $c_detail = 'ok';
+
+                $sql1 = mysqli_query($connect_pro, "INSERT INTO formng_resulti SET c_serialnumber = '$c_serialnumber', c_pianoname = '$c_pianoname', c_item = '$c_item', c_status = '$c_status', c_detail = '$c_detail', c_inspectiondate = '$c_inspectiondate', c_checker = '$c_checker'");
+            }
         }
+        // hapus item yang tidak pakai
+        $ppp = mysqli_query($connect_pro, "DELETE FROM formng_resulti WHERE c_serialnumber = '$c_serialnumber' AND c_detail = 'Tidak pakai'");
         if ($sql1) {
             // update register untuk mengisi note incheck
             if (!empty($_POST['catatan'])) {

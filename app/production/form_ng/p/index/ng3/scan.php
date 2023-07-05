@@ -174,6 +174,7 @@ unset($_SESSION['note2']);
                       hasil: hasil
                     },
                     cache: false,
+                    rememberLastUsedCamera: true,
                     success: function(datares) {
                       window.location = 'index.php';
                     }

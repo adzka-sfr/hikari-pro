@@ -174,6 +174,7 @@ include('../../app_name.php');
                       hasil: hasil
                     },
                     cache: false,
+                    rememberLastUsedCamera: true,
                     success: function(datares) {
                       window.location = 'index.php';
                     }

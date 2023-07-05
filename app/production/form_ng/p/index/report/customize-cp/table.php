@@ -29,7 +29,17 @@ if (empty($_POST['isia'])) {
 
 $label_table = substr($list, 2);
 ?>
-<table class="table table-bordered">
+<script>
+    $(document).ready(function() {
+        $('#cus_fur').DataTable({
+            paging: false,
+            scrollY: '350px',
+            scrollCollapse: true,
+            "dom": '<"wrapper"flipt>'
+        });
+    });
+</script>
+<table id="cus_fur" class="table table-bordered">
     <thead style="text-align: center;">
         <th style="width:10%;">No</th>
         <th>Completeness Process (<?= $label_table ?>)</th>

@@ -69,8 +69,8 @@ include('../../app_name.php');
                                     } ?>><a href="main.php?p=data"><i class="fa fa-file-text-o"></i> Summary of NG</a>
                                 </li>
                                 <!-- <li <?php if ($_GET['p'] == "data2") {
-                                        echo 'class="active"';
-                                    } ?>><a href="main.php?p=data2"><i class="fa fa-gears"></i> Summary by Process</a>
+                                                echo 'class="active"';
+                                            } ?>><a href="main.php?p=data2"><i class="fa fa-gears"></i> Summary by Process</a>
                                 </li> -->
                             </ul>
                         </div>
@@ -107,6 +107,19 @@ include('../../app_name.php');
                                 <li <?php if ($_GET['p'] == "ap") {
                                         echo 'class="active"';
                                     } ?>><a href="main.php?p=ap"><i class="fa fa-print"></i>Add Piano</a>
+<<<<<<< HEAD
+=======
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="menu_section">
+                            <h3>Danger Area</h3>
+                            <ul class="nav side-menu">
+                                <li <?php if ($_GET['p'] == "reset") {
+                                        echo 'class="active"';
+                                    } ?>><a href="main.php?p=reset"><i class="fa fa-exclamation-triangle"></i> Reset Serialnumber</a>
+>>>>>>> fc3b16c (menambah yang belum ditambah)
                                 </li>
                             </ul>
                         </div>

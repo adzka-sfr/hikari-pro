@@ -204,19 +204,19 @@ if (empty($_SESSION['cardnumber_outside3'])) {
                     $data2 = mysqli_fetch_array($sql2);
 
                     if ($data2['c_category'] == 'p') {
-                        $sql3 = mysqli_query($connect_pro, "SELECT c_checker3 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]'");
+                        $sql3 = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resultong WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
                         $data3 = mysqli_fetch_array($sql3);
-                        if (!empty($data3['c_checker3'])) {
-                            $sql3 = mysqli_query($connect_pro, "SELECT c_checker3 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]'");
+                        if (!empty($data3['c_checker'])) {
+                            $sql3 = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resultong WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
                             $data3 = mysqli_fetch_array($sql3);
 
-                            if ($data3['c_checker3'] == $_SESSION['nama']) {
+                            if ($data3['c_checker'] == $_SESSION['nama']) {
                                 // cek jika sudah ada isi
                                 $sql4 = mysqli_query($connect_pro, "SELECT c_finishoutcheck3 FROM formng_register WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]'");
                                 $data4 = mysqli_fetch_array($sql4);
 
                                 if (empty($data4['c_finishoutcheck3'])) {
-                                    $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
+                                    $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_repairdata WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
                                     $data5 = mysqli_fetch_array($sql5);
 
                                     if (empty($data5)) {
@@ -250,7 +250,7 @@ if (empty($_SESSION['cardnumber_outside3'])) {
                             $data4 = mysqli_fetch_array($sql4);
 
                             if (empty($data4['c_finishoutcheck3'])) {
-                                $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
+                                $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_repairdata WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
                                 $data5 = mysqli_fetch_array($sql5);
 
                                 if (empty($data5)) {
@@ -263,18 +263,18 @@ if (empty($_SESSION['cardnumber_outside3'])) {
                             }
                         }
                     } elseif ($data2['c_category'] == 'f') {
-                        $sql3 = mysqli_query($connect_pro, "SELECT c_checker3 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]'");
+                        $sql3 = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resultong WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
                         $data3 = mysqli_fetch_array($sql3);
-                        if (!empty($data3['c_checker3'])) {
-                            $sql3 = mysqli_query($connect_pro, "SELECT c_checker3 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]'");
+                        if (!empty($data3['c_checker'])) {
+                            $sql3 = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resultong WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
                             $data3 = mysqli_fetch_array($sql3);
-                            if ($data3['c_checker3'] == $_SESSION['nama']) {
+                            if ($data3['c_checker'] == $_SESSION['nama']) {
                                 // cek jika sudah ada isi
                                 $sql4 = mysqli_query($connect_pro, "SELECT c_finishoutcheck3 FROM formng_register WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]'");
                                 $data4 = mysqli_fetch_array($sql4);
 
                                 if (empty($data4['c_finishoutcheck3'])) {
-                                    $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
+                                    $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_repairdata WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
                                     $data5 = mysqli_fetch_array($sql5);
 
                                     if (empty($data5)) {
@@ -308,7 +308,7 @@ if (empty($_SESSION['cardnumber_outside3'])) {
                             $data4 = mysqli_fetch_array($sql4);
 
                             if (empty($data4['c_finishoutcheck3'])) {
-                                $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
+                                $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_repairdata WHERE c_serialnumber = '$_SESSION[cardnumber_outside3]' AND c_process = 'oc3'");
                                 $data5 = mysqli_fetch_array($sql5);
 
                                 if (empty($data5)) {

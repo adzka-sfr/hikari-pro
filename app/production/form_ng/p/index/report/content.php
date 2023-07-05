@@ -29,6 +29,8 @@ if ($_GET['p'] == 'dash') {
     include "dashboard-ngtrend/index.php";
 } elseif ($_GET['p'] == 'proc') {
     include "dashboard-process/index.php";
+} elseif ($_GET['p'] == 'reset') {
+    include "reset-serial/index.php";
 }else{
     include "dashboard.php";
 }

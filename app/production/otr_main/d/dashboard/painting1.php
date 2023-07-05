@@ -130,23 +130,23 @@
                     </style>
                     <select class="xixi" id="refres1" name="wc1">
                         <option value="" selected disabled>Select Work Center</option>
-                        <option value="P220">UP Spray Satin</option>
-                        <option value="P520">UP Finish Buff Panel</option>
-                        <option value="P530">UP Painting Check</option>
-                        <option value="P550">UP Furniture Check</option>
-                        <option value="P700">GP Buff Panel & Small</option>
-                        <option value="P820">GP Painting Check</option>
+                        <option value="P220">P220 - UP Spray Satin</option>
+                        <option value="P520">P520 - UP Finish Buff Panel</option>
+                        <option value="P530">P530 - UP Painting Check</option>
+                        <option value="P550">P550 - UP Furniture Check</option>
+                        <option value="P700">P700 - GP Buff Panel & Small</option>
+                        <option value="P820">P820 - GP Painting Check</option>
                     </select>
                 </div>
                 <div class="col-6">
                     <select class="xixi" id="refres2" name="wc2">
                         <option value="" selected disabled>Select Work Center</option>
-                        <option value="P220">UP Spray Satin</option>
-                        <option value="P520">UP Finish Buff Panel</option>
-                        <option value="P530">UP Painting Check</option>
-                        <option value="P550">UP Furniture Check</option>
-                        <option value="P700">GP Buff Panel & Small</option>
-                        <option value="P820">GP Painting Check</option>
+                        <option value="P220">P220 - UP Spray Satin</option>
+                        <option value="P520">P520 - UP Finish Buff Panel</option>
+                        <option value="P530">P530 - UP Painting Check</option>
+                        <option value="P550">P550 - UP Furniture Check</option>
+                        <option value="P700">P700 - GP Buff Panel & Small</option>
+                        <option value="P820">P820 - GP Painting Check</option>
                     </select>
                 </div>
 
@@ -178,31 +178,31 @@
     <?php
     //================== ACTIVITY LOG START ==================//
     // log activity record  
-    $now = date('Y-m-d H:i:s');
-    $token = $_SESSION['token'];
+    // $now = date('Y-m-d H:i:s');
+    // $token = $_SESSION['token'];
 
-    $l_t = $now;
-    $sy_n = "Mezzanine"; // Nama Sistem
-    $p_n = "dashboard"; // Nama Proses
-    $q = "read"; // Query
-    $e_n = $_SESSION['nama']; // Nama Karyawan
-    $e_i = $_SESSION['id']; // ID Karyawan
-    $c_i = $_SERVER['REMOTE_ADDR'];
-    $c_n = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-    $s_n = $_SERVER['SCRIPT_NAME'];
-    $h = $_SERVER['HTTP_HOST'];
-    mysqli_query($connect_log, "INSERT INTO activity_log set
-                                    token = '$token',
-                                    log_time = '$l_t',
-                                    system_name = '$sy_n',
-                                    process_name = '$p_n',
-                                    query = '$q',
-                                    employee_name = '$e_n',
-                                    employee_id = '$e_i',
-                                    computer_ip = '$c_i',
-                                    computer_name = '$c_n',
-                                    script_name = '$s_n',
-                                    host = '$h'");
+    // $l_t = $now;
+    // $sy_n = "Mezzanine"; // Nama Sistem
+    // $p_n = "dashboard"; // Nama Proses
+    // $q = "read"; // Query
+    // $e_n = $_SESSION['nama']; // Nama Karyawan
+    // $e_i = $_SESSION['id']; // ID Karyawan
+    // $c_i = $_SERVER['REMOTE_ADDR'];
+    // $c_n = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+    // $s_n = $_SERVER['SCRIPT_NAME'];
+    // $h = $_SERVER['HTTP_HOST'];
+    // mysqli_query($connect_log, "INSERT INTO activity_log set
+    //                                 token = '$token',
+    //                                 log_time = '$l_t',
+    //                                 system_name = '$sy_n',
+    //                                 process_name = '$p_n',
+    //                                 query = '$q',
+    //                                 employee_name = '$e_n',
+    //                                 employee_id = '$e_i',
+    //                                 computer_ip = '$c_i',
+    //                                 computer_name = '$c_n',
+    //                                 script_name = '$s_n',
+    //                                 host = '$h'");
 
     //================== ACTIVITY LOG FINISH ==================//
     ?>

@@ -14,7 +14,7 @@
                     $sql1 = mysqli_query($connect_pro, "SELECT * FROM formng_resultc WHERE c_serialnumber = '$serial_number'");
                     while ($data1 = mysqli_fetch_array($sql1)) {
 
-                        if ($_SESSION['last_process'] == 'oc3') {
+                        if ($process == 'oc3') {
                             if ($data1['c_result3'] == 'NO') {
                                 $no++;
                                 if (!empty($data1['c_repairdate3'])) {
@@ -35,7 +35,7 @@
                                 </tr>
                             <?php
                             }
-                        } elseif ($_SESSION['last_process'] == 'oc2') {
+                        } elseif ($process == 'oc2') {
                             if ($data1['c_result2'] == 'NO') {
                                 $no++;
                                 if (!empty($data1['c_repairdate2'])) {
@@ -56,7 +56,7 @@
                                 </tr>
                             <?php
                             }
-                        } elseif ($_SESSION['last_process'] == 'oc1') {
+                        } elseif ($process == 'oc1') {
                             if ($data1['c_result1'] == 'NO') {
                                 $no++;
                                 if (!empty($data1['c_repairdate1'])) {
@@ -102,11 +102,11 @@ if (isset($_POST['repairc'])) {
         $repairname = $_SESSION['repair_name'];
         if (!empty($_POST['c' . $in])) {
             $c_code = $_POST['c' . $in];
-            if ($_SESSION['last_process'] == 'oc1') {
+            if ($process == 'oc1') {
                 $pp1 = mysqli_query($connect_pro, "UPDATE formng_resultc SET c_repairdate1 = '$rcdate', c_repair1by = '$repairname' WHERE c_serialnumber = '$serial_number' AND c_code = '$c_code'");
-            } elseif ($_SESSION['last_process'] == 'oc2') {
+            } elseif ($process == 'oc2') {
                 $pp1 = mysqli_query($connect_pro, "UPDATE formng_resultc SET c_repairdate2 = '$rcdate', c_repair2by = '$repairname' WHERE c_serialnumber = '$serial_number' AND c_code = '$c_code'");
-            } elseif ($_SESSION['last_process'] == 'oc3') {
+            } elseif ($process == 'oc3') {
                 $pp1 = mysqli_query($connect_pro, "UPDATE formng_resultc SET c_repairdate3 = '$rcdate', c_repair3by = '$repairname' WHERE c_serialnumber = '$serial_number' AND c_code = '$c_code'");
             }
             if ($pp1) {
@@ -116,7 +116,7 @@ if (isset($_POST['repairc'])) {
                         Swal.fire({
                             title: 'Success',
                             html: 'Data repair has been recorded!',
-                            type: 'success',
+                            icon: 'success',
                             confirmButtonText: 'Ok',
                             allowOutsideClick: true
                             // timer: 2000,

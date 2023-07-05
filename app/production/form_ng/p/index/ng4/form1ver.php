@@ -9,10 +9,9 @@
         <div class="col-1" style="text-align: right;">
             <i>Polyester</i>
             <?php
-            $type_piano = 'p';
             $serial_number = $_SESSION['serialnumber_outside3'];
-            $piano_name = $_SESSION['pianoname_outside3'];
-
+            $pianoname = $_SESSION['pianoname_outside3'];
+            $process = 'oc3';
             ?>
         </div>
         <div class="separator" style="margin: 0px; padding: 0px;"></div>

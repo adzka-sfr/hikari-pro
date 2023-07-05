@@ -49,7 +49,7 @@
                         <th style="vertical-align:top;padding-top:0px; width: 25%;">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
-                                    Repair Date :
+                                    Tanggal Repair :
                                 </div>
                             </div>
                             <di class="row">
@@ -61,7 +61,7 @@
                         <th style="vertical-align:top;padding-top:0px; width: 15%;">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
-                                    Process :
+                                    Proses :
                                 </div>
                             </div>
                             <di class="row">
@@ -152,6 +152,7 @@
                                             <div class="checkbox">
                                                 <label>
                                                     <input type="hidden" name="c_item<?= $i ?>" value="<?= $data2['c_item'] ?>">
+                                                    <input type="hidden" name="c_detail<?= $i ?>" value="<?= $data2['c_detail'] ?>">
                                                     <input name="ck<?= $i ?>" value="checked" type="checkbox" style="transform: scale(2); margin: 10px; vertical-align:top;padding-top:70px;">
                                                 </label>
                                             </div>
@@ -200,7 +201,7 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <label for="catatan">
-                    <h6>Note :</h6>
+                    <h6>Catatan :</h6>
                 </label>
 
                 <textarea readonly class="form-control" name="catatan" rows="3">
@@ -235,8 +236,9 @@ if (!empty($data['c_noteincheck'])) {
                 $c_repairdate = date('Y-m-d H:i:s', strtotime($now));
                 $c_repair = $_SESSION['repair_name'];
                 $c_item = $_POST['c_item' . $in];
+                $c_detail = $_POST['c_detail' . $in];
 
-                $sql1 = mysqli_query($connect_pro, "UPDATE formng_resulti SET c_repair = '$c_repair', c_repairdate = '$c_repairdate' WHERE c_serialnumber = '$c_serialnumber' AND c_item = '$c_item'");
+                $sql1 = mysqli_query($connect_pro, "UPDATE formng_resulti SET c_repair = '$c_repair', c_repairdate = '$c_repairdate' WHERE c_serialnumber = '$c_serialnumber' AND c_item = '$c_item' AND c_detail = '$c_detail'");
             }
         }
         if ($sql1) {

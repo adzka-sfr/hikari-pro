@@ -51,32 +51,16 @@ $month_lalu = date('Y-m', strtotime('-1month', strtotime($month_umpama)));
 $sql = mysqli_query($connect_pro, "SELECT * FROM formng_listng where c_area = 'outside' order by c_ng desc");
 while ($data = mysqli_fetch_array($sql)) {
     //cek pada hasil pengecekan outside bulan ini
-    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng1) as total FROM formng_resulto1 WHERE c_ng1 = '$data[c_ng]' AND c_inspectiondate1 LIKE '$month_umpama%'");
+    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM formng_resultong WHERE c_ng = '$data[c_ng]' AND c_inspectiondate LIKE '$month_umpama%'");
     $data2 = mysqli_fetch_array($sql2);
     $total_ng2a = $data2['total'];
-
-    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng2) as total FROM formng_resulto1 WHERE c_ng2 = '$data[c_ng]' AND c_inspectiondate2 LIKE '$month_umpama%'");
-    $data2 = mysqli_fetch_array($sql2);
-    $total_ng2b = $data2['total'];
-
-    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng3) as total FROM formng_resulto1 WHERE c_ng3 = '$data[c_ng]' AND c_inspectiondate3 LIKE '$month_umpama%'");
-    $data2 = mysqli_fetch_array($sql2);
-    $total_ng2c = $data2['total'];
-    $total_ng11 = $total_ng2a + $total_ng2b + $total_ng2c;
+    $total_ng11 = $total_ng2a;
 
     //cek pada hasil pengecekan outside bulan lalu
-    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng1) as total FROM formng_resulto1 WHERE c_ng1 = '$data[c_ng]' AND c_inspectiondate1 LIKE '$month_lalu%'");
+    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM formng_resultong WHERE c_ng = '$data[c_ng]' AND c_inspectiondate LIKE '$month_lalu%'");
     $data2 = mysqli_fetch_array($sql2);
     $total_ng2a = $data2['total'];
-
-    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng2) as total FROM formng_resulto1 WHERE c_ng2 = '$data[c_ng]' AND c_inspectiondate2 LIKE '$month_lalu%'");
-    $data2 = mysqli_fetch_array($sql2);
-    $total_ng2b = $data2['total'];
-
-    $sql2 = mysqli_query($connect_pro, "SELECT COUNT(c_ng3) as total FROM formng_resulto1 WHERE c_ng3 = '$data[c_ng]' AND c_inspectiondate3 LIKE '$month_lalu%'");
-    $data2 = mysqli_fetch_array($sql2);
-    $total_ng2c = $data2['total'];
-    $total_ng22 = $total_ng2a + $total_ng2b + $total_ng2c;
+    $total_ng22 = $total_ng2a;
 
     $outtrend[$a] = array('nama' => $data['c_ng'], 'bulan-ini' => $total_ng11, 'bulan-lalu' => $total_ng22);
 
@@ -137,7 +121,7 @@ $colcount = count($outtrend);
         series: [{
                 name: 'Last Month',
                 type: 'bar',
-                barGap: 0,
+                barGap: '-100%',
                 label: {
                     show: true,
                     // color: '#fff',

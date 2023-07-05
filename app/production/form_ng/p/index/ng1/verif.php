@@ -60,7 +60,7 @@
                         <th style="vertical-align:top;padding-top:0px; width: 25%;">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
-                                    Inspection Date :
+                                    Tanggal Pengecekan :
                                 </div>
                             </div>
                             <di class="row">
@@ -72,7 +72,7 @@
                         <th style="vertical-align:top;padding-top:0px; width: 15%;">
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 5px;">
-                                    Process :
+                                    Proses :
                                 </div>
                             </div>
                             <di class="row">
@@ -85,7 +85,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td rowspan="5" colspan="2"></td>
+                        <td rowspan="6" colspan="2"></td>
                         <td colspan="2" style="height: 60px;">
                             <?php
                             $sql5 = mysqli_query($connect_pro, "SELECT COUNT(c_status) as jumng, c_inspectiondate FROM formng_resulti WHERE c_serialnumber = '$_SESSION[serialnumber_inside]' AND c_status = 'NG'");
@@ -107,15 +107,18 @@
                         </td>
                     </tr>
                     <tr>
+                        <td colspan="2" style="padding: 0px; height: 20px; text-align: center; font-weight: bold;">
+                            <?php
+                            $sql6 = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resulti WHERE c_serialnumber = '$_SESSION[serialnumber_inside]' limit 1");
+                            $data6 = mysqli_fetch_array($sql6);
+
+                            echo $data6['c_checker'];
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="2" style="padding: 0px; height: 20px;">
-                            <div class="row">
-                                <div class="col-3">
-                                    Date :
-                                </div>
-                                <div class="col-8">
-                                    <?= $inngdate ?>
-                                </div>
-                            </div>
+                            Tanggal: <?= $inngdate ?>
                         </td>
                     </tr>
                     <tr>
@@ -141,23 +144,20 @@
                     </tr>
                     <tr>
                         <td colspan="2" style="padding: 0px; height: 20px;">
-                            <div class="row">
-                                <div class="col-3">
-                                    Date :
-                                </div>
-                                <div class="col-8">
-                                    <?= $inokdate ?>
-                                </div>
-                            </div>
+                            Tanggal: <?= $inokdate ?>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="text-align: center; font-weight: bold;">
+                        <td colspan="2" style="padding: 0px; height: 20px; text-align: center; font-weight: bold;">
                             <?php
-                            $sql6 = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resulti WHERE c_serialnumber = '$_SESSION[serialnumber_inside]' limit 1");
+                            $sql6 = mysqli_query($connect_pro, "SELECT c_incheckby FROM formng_register WHERE c_serialnumber = '$_SESSION[serialnumber_inside]'");
                             $data6 = mysqli_fetch_array($sql6);
+                            if (!empty($data6)) {
+                                $sql6 = mysqli_query($connect_pro, "SELECT c_incheckby FROM formng_register WHERE c_serialnumber = '$_SESSION[serialnumber_inside]'");
+                                $data6 = mysqli_fetch_array($sql6);
+                                echo $data6['c_incheckby'];
+                            }
 
-                            echo $data6['c_checker'];
                             ?>
                         </td>
                     </tr>
@@ -306,7 +306,7 @@
     <div class="row">
         <div class="col-12 mb-3">
             <label for="catatan">
-                <h6>Note :</h6>
+                <h6>Catatan :</h6>
             </label>
 
             <textarea readonly class="form-control" name="catatan" rows="3">
@@ -346,7 +346,7 @@ if (!empty($data['c_noteincheck'])) {
             <br>
             <div class="row">
                 <div class="col-12" style="text-align: center;">
-                    <button <?= $send_dis ?> type="submit" name="verif" class="btn btn-success">Send to Outside Check</button>
+                    <button <?= $send_dis ?> type="submit" name="verif" class="btn btn-success">Kirim ke Outside Check</button>
                 </div>
             </div>
         <?php
@@ -354,7 +354,7 @@ if (!empty($data['c_noteincheck'])) {
         ?>
             <div class="row">
                 <div class="col-12" style="text-align: center;">
-                    <button disabled type="submit" name="verif" class="btn btn-success">Data has been sent</button>
+                    <button disabled type="submit" name="verif" class="btn btn-success">Data telah dikirim</button>
                 </div>
             </div>
         <?php
@@ -373,8 +373,8 @@ if (!empty($data['c_noteincheck'])) {
             <script>
                 $(document).ready(function() {
                     Swal.fire({
-                        title: 'Success',
-                        html: 'Piano <br><b><?= $_SESSION['pianoname_inside'] ?></b><br> has been sent to Outside Check 1 !',
+                        title: 'Berhasil',
+                        html: 'Piano <br><b><?= $_SESSION['pianoname_inside'] ?></b><br> telah dikirim ke Outside Check 1 !',
                         type: 'success',
                         confirmButtonText: 'OK',
                         allowOutsideClick: false

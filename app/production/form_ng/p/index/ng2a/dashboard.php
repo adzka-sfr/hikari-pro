@@ -1,6 +1,8 @@
+<script src="<?= base_url('_assets/src/add/sweetalert2/dist/sweetalert2.all.min.js') ?>"></script>
 <div class="row">
     <div class="col-12">
-        <h3>Outside Repair</h3>
+        <h3>Outside Repair <i class="fa fa-gear fa-spin"></i></h3>
+
         <div class="separator"></div>
     </div>
 </div>
@@ -36,6 +38,9 @@
                     unset($_SESSION['cardnumber_repairo1']);
                     unset($_SESSION['repair_id']);
                     unset($_SESSION['repair_name']);
+                    unset($_SESSION['checker1repair']);
+                    unset($_SESSION['checker2repair']);
+                    unset($_SESSION['checker3repair']);
                 ?>
                     <script>
                         window.location = 'index.php';
@@ -110,7 +115,7 @@ if (empty($_SESSION['cardnumber_repairo1'])) {
         <?php
     } else {
 
-        $sql1 = mysqli_query($connect_pro, "SELECT * FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_repairo1]'");
+        $sql1 = mysqli_query($connect_pro, "SELECT * FROM formng_repairdata WHERE c_serialnumber = '$_SESSION[cardnumber_repairo1]' AND c_endprocess IS NULL");
         $data1 = mysqli_fetch_array($sql1);
 
         if (empty($data1['c_serialnumber'])) {
@@ -120,8 +125,8 @@ if (empty($_SESSION['cardnumber_repairo1'])) {
                 $(document).ready(function() {
                     Swal.fire({
                         title: 'Data ditemukan',
-                        text: 'No serial belum selesai pada proses sebelumnya!',
-                        type: 'info',
+                        text: 'Piano masih dalam pengecekan!',
+                        icon: 'info',
                         confirmButtonText: 'OK'
                     }).then(function() {
                         window.location = 'index.php';
@@ -131,43 +136,52 @@ if (empty($_SESSION['cardnumber_repairo1'])) {
             <?php
         } else {
 
-            $sql1 = mysqli_query($connect_pro, "SELECT * FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_repairo1]'");
+            $sql1 = mysqli_query($connect_pro, "SELECT * FROM formng_repairdata WHERE c_serialnumber = '$_SESSION[cardnumber_repairo1]' AND c_endprocess IS NULL");
             $data1 = mysqli_fetch_array($sql1);
 
             $_SESSION['serialnumber_repairo1'] = $data1['c_serialnumber'];
-            $_SESSION['pianoname_repairo1'] = $data1['c_pianoname'];
-            if (empty($_SESSION['queue'])) {
-                $_SESSION['queue'] = 'tbo';
-            }
+            $_SESSION['process'] = $data1['c_process'];
 
-            $sql2 = mysqli_query($connect_pro, "SELECT c_category FROM formng_category WHERE c_gmc = '$data1[c_gmc]' ");
+            $sql2 = mysqli_query($connect_pro, "SELECT fc.c_category FROM formng_resultong fr JOIN formng_register freg ON fr.c_serialnumber = freg.c_serialnumber JOIN formng_category fc ON freg.c_gmc = fc.c_gmc WHERE fr.c_serialnumber = '$_SESSION[serialnumber_repairo1]' limit 1");
             $data2 = mysqli_fetch_array($sql2);
             if (!empty($data2)) {
-                $sql2 = mysqli_query($connect_pro, "SELECT c_category FROM formng_category WHERE c_gmc = '$data1[c_gmc]' ");
+                $sql2 = mysqli_query($connect_pro, "SELECT freg.c_pianoname, fc.c_category FROM formng_resultong fr JOIN formng_register freg ON fr.c_serialnumber = freg.c_serialnumber JOIN formng_category fc ON freg.c_gmc = fc.c_gmc WHERE fr.c_serialnumber = '$_SESSION[serialnumber_repairo1]' limit 1");
                 $data2 = mysqli_fetch_array($sql2);
+                $_SESSION['pianoname'] = $data2['c_pianoname'];
 
-
-
-                // get process
-                $sql4 = mysqli_query($connect_pro, "SELECT c_process, c_checker FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_repairo1]' AND c_process = 'oc3'");
-                $data4 = mysqli_fetch_array($sql4);
-                if (!empty($data4['c_process'])) {
-                    $_SESSION['last_process'] = 'oc3';
-                    $_SESSION['checker1'] = $data4['c_checker']; // get name checker
+                // get name of checker 
+                $sql3a = mysqli_query($connect_pro, "SELECT c_complete1by FROM formng_register WHERE c_serialnumber  = '$_SESSION[cardnumber_repairo1]'");
+                $data3a = mysqli_fetch_array($sql3a);
+                if ($data3a['c_complete1by'] != '') {
+                    $sql3a = mysqli_query($connect_pro, "SELECT c_complete1by FROM formng_register WHERE c_serialnumber  = '$_SESSION[cardnumber_repairo1]'");
+                    $data3a = mysqli_fetch_array($sql3a);
+                    $_SESSION['checker1repair'] = $data3a['c_complete1by'];
                 } else {
-                    $sql4 = mysqli_query($connect_pro, "SELECT c_process, c_checker FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_repairo1]' AND c_process = 'oc2'");
-                    $data4 = mysqli_fetch_array($sql4);
-                    if (!empty($data4['c_process'])) {
-                        $_SESSION['last_process'] = 'oc2';
-                        $_SESSION['checker1'] = $data4['c_checker']; // get name checker
-                    } else {
-                        $sql4 = mysqli_query($connect_pro, "SELECT c_process, c_checker FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_repairo1]' AND c_process = 'oc1'");
-                        $data4 = mysqli_fetch_array($sql4);
-                        if (!empty($data4['c_process'])) {
-                            $_SESSION['last_process'] = 'oc1';
-                            $_SESSION['checker1'] = $data4['c_checker']; // get name checker
-                        }
-                    }
+                    $_SESSION['checker1repair'] = '-';
+                }
+
+                $sql3b = mysqli_query($connect_pro, "SELECT c_complete2by FROM formng_register WHERE c_serialnumber  = '$_SESSION[cardnumber_repairo1]'");
+                $data3b = mysqli_fetch_array($sql3b);
+                if ($data3b['c_complete2by'] != '') {
+                    $sql3b = mysqli_query($connect_pro, "SELECT c_complete2by FROM formng_register WHERE c_serialnumber  = '$_SESSION[cardnumber_repairo1]'");
+                    $data3b = mysqli_fetch_array($sql3b);
+                    $_SESSION['checker2repair'] = $data3b['c_complete2by'];
+                } else {
+                    $_SESSION['checker2repair'] = '-';
+                }
+
+                $sql3c = mysqli_query($connect_pro, "SELECT c_complete3by FROM formng_register WHERE c_serialnumber  = '$_SESSION[cardnumber_repairo1]'");
+                $data3c = mysqli_fetch_array($sql3c);
+                if ($data3c['c_complete3by'] != '') {
+                    $sql3c = mysqli_query($connect_pro, "SELECT c_complete3by FROM formng_register WHERE c_serialnumber  = '$_SESSION[cardnumber_repairo1]'");
+                    $data3c = mysqli_fetch_array($sql3c);
+                    $_SESSION['checker3repair'] = $data3c['c_complete3by'];
+                } else {
+                    $_SESSION['checker3repair'] = '-';
+                }
+
+                if (empty($_SESSION['queue'])) {
+                    $_SESSION['queue'] = 'or';
                 }
 
                 if ($data2['c_category'] == 'p') {

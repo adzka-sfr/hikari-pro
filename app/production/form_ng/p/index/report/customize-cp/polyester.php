@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 tableFixHead-4">
+            <div class="col-12" style="max-height: 500px;">
                 <div id="Container1">
                     <?php include "customize-cp/table.php" ?>
                 </div>

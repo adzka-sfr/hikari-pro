@@ -2,20 +2,20 @@
 <div class="dashboard_graph" style="margin-top: 10px; padding-bottom: 50px;">
 
     <div class="row">
-        <div class="col-11">
-            <h3 style="font-size: 20px;"><?= $_SESSION['serialnumber_outside2'] ?> - <?= $_SESSION['pianoname_outside2'] ?></h3>
+        <div class="separator" style="margin: 0px; padding: 0px;"></div>
+        <div class="col-10">
+            <!-- <h3 style="font-size: 20px;"><?= $_SESSION['serialnumber_outside2'] ?> - <?= $_SESSION['pianoname_outside2'] ?></h3> -->
         </div>
 
-        <div class="col-1" style="text-align: right;">
+        <div class="col-2" style="text-align: right;">
             <i>Polyester</i>
             <?php
-            $type_piano = 'p';
             $serial_number = $_SESSION['serialnumber_outside2'];
-            $piano_name = $_SESSION['pianoname_outside2'];
-
+            $pianoname = $_SESSION['pianoname_outside2'];
+            $process = 'oc2';
             ?>
         </div>
-        <div class="separator" style="margin: 0px; padding: 0px;"></div>
+
 
     </div>
 

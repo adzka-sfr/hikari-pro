@@ -115,7 +115,7 @@ if (empty($_SESSION['cardnumber_outside2'])) {
                     $(document).ready(function() {
                         Swal.fire({
                             title: 'Pengecekan ditolak',
-                            text: 'Anda sudah melakukan cek outside sebelumnya!',
+                            text: 'Anda sudah melakukan cek outside dipiano yang sama sebelumnya!',
                             type: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
@@ -146,7 +146,7 @@ if (empty($_SESSION['cardnumber_outside2'])) {
                     $(document).ready(function() {
                         Swal.fire({
                             title: 'Pengecekan ditolak',
-                            text: 'Anda sudah melakukan cek outside sebelumnya!',
+                            text: 'Anda sudah melakukan cek outside dipiano yang sama sebelumnya!',
                             type: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
@@ -172,19 +172,19 @@ if (empty($_SESSION['cardnumber_outside2'])) {
                     $data2 = mysqli_fetch_array($sql2);
 
                     if ($data2['c_category'] == 'p') {
-                        $sql3 = mysqli_query($connect_pro, "SELECT c_checker2 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]'");
+                        $sql3 = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resultong WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
                         $data3 = mysqli_fetch_array($sql3);
-                        if (!empty($data3['c_checker2'])) {
-                            $sql3 = mysqli_query($connect_pro, "SELECT c_checker2 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]'");
+                        if (!empty($data3['c_checker'])) {
+                            $sql3 = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resultong WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
                             $data3 = mysqli_fetch_array($sql3);
 
-                            if ($data3['c_checker2'] == $_SESSION['nama']) {
+                            if ($data3['c_checker'] == $_SESSION['nama']) {
                                 // cek jika sudah ada isi
                                 $sql4 = mysqli_query($connect_pro, "SELECT c_finishoutcheck2 FROM formng_register WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]'");
                                 $data4 = mysqli_fetch_array($sql4);
 
                                 if (empty($data4['c_finishoutcheck2'])) {
-                                    $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
+                                    $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_repairdata WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
                                     $data5 = mysqli_fetch_array($sql5);
 
                                     if (empty($data5)) {
@@ -202,7 +202,7 @@ if (empty($_SESSION['cardnumber_outside2'])) {
                                     $(document).ready(function() {
                                         Swal.fire({
                                             title: 'Piano sudah pernah di cek!',
-                                            html: 'Silahkan menghubungi checker sebelumnya<br><b><?= $data3['c_checker2'] ?></b>',
+                                            html: 'Silahkan menghubungi checker sebelumnya<br><b><?= $data3['c_checker'] ?></b>',
                                             type: 'info',
                                             confirmButtonText: 'OK'
                                         }).then(function() {
@@ -218,7 +218,7 @@ if (empty($_SESSION['cardnumber_outside2'])) {
                             $data4 = mysqli_fetch_array($sql4);
 
                             if (empty($data4['c_finishoutcheck2'])) {
-                                $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
+                                $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_repairdata WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
                                 $data5 = mysqli_fetch_array($sql5);
 
                                 if (empty($data5)) {
@@ -231,18 +231,18 @@ if (empty($_SESSION['cardnumber_outside2'])) {
                             }
                         }
                     } elseif ($data2['c_category'] == 'f') {
-                        $sql3 = mysqli_query($connect_pro, "SELECT c_checker2 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]'");
+                        $sql3 = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resultong WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
                         $data3 = mysqli_fetch_array($sql3);
-                        if (!empty($data3['c_checker2'])) {
-                            $sql3 = mysqli_query($connect_pro, "SELECT c_checker2 FROM formng_resulto1 WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]'");
+                        if (!empty($data3['c_checker'])) {
+                            $sql3 = mysqli_query($connect_pro, "SELECT c_checker FROM formng_resultong WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
                             $data3 = mysqli_fetch_array($sql3);
-                            if ($data3['c_checker2'] == $_SESSION['nama']) {
+                            if ($data3['c_checker'] == $_SESSION['nama']) {
                                 // cek jika sudah ada isi
                                 $sql4 = mysqli_query($connect_pro, "SELECT c_finishoutcheck2 FROM formng_register WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]'");
                                 $data4 = mysqli_fetch_array($sql4);
 
                                 if (empty($data4['c_finishoutcheck2'])) {
-                                    $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
+                                    $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_repairdata WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
                                     $data5 = mysqli_fetch_array($sql5);
 
                                     if (empty($data5)) {
@@ -260,7 +260,7 @@ if (empty($_SESSION['cardnumber_outside2'])) {
                                     $(document).ready(function() {
                                         Swal.fire({
                                             title: 'Piano sudah pernah di cek!',
-                                            html: 'Silahkan menghubungi checker sebelumnya<br><b><?= $data3['c_checker2'] ?></b>',
+                                            html: 'Silahkan menghubungi checker sebelumnya<br><b><?= $data3['c_checker'] ?></b>',
                                             type: 'info',
                                             confirmButtonText: 'OK'
                                         }).then(function() {
@@ -276,7 +276,7 @@ if (empty($_SESSION['cardnumber_outside2'])) {
                             $data4 = mysqli_fetch_array($sql4);
 
                             if (empty($data4['c_finishoutcheck2'])) {
-                                $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
+                                $sql5 = mysqli_query($connect_pro, "SELECT id FROM formng_repairdata WHERE c_serialnumber = '$_SESSION[cardnumber_outside2]' AND c_process = 'oc2'");
                                 $data5 = mysqli_fetch_array($sql5);
 
                                 if (empty($data5)) {

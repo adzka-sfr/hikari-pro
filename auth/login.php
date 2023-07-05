@@ -36,11 +36,15 @@ if (isset($_SESSION['id'])) {
     </head>
 
     <body class="login">
+        
         <div>
+
             <a class="hiddenanchor" id="signup"></a>
             <div class="login_wrapper">
+
                 <div class="animate form login_form">
                     <section class="login_content">
+
                         <form>
                             <h1><img src="<?= base_url('_assets/production/images/hikari_purple.png') ?>" alt="logo_hikari" height="30"></h1>
                             <div>
@@ -54,10 +58,10 @@ if (isset($_SESSION['id'])) {
                             </div>
                             <div class="clearfix"></div>
                             <div class="separator">
-                                <p class="change_link">New to site?
+                                <!-- <p class="change_link">New to site?
                                     <a href="../board/"> Go to dashboard </a>
 
-                                <div class="clearfix"></div>
+                                <div class="clearfix"></div> -->
                                 <br />
                                 <div>
                                     <h1>

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        <h3>Outside Repair </h3>
+        <h3>Outside Repair</h3>
         <div class="separator"></div>
     </div>
 </div>

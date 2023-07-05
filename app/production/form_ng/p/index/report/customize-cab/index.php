@@ -1,6 +1,16 @@
 <div class="row">
-    <div class="col-6 tableFixHead-4">
-        <table class="table table-bordered">
+    <div class="col-6" style="max-height: 500px;">
+        <script>
+            $(document).ready(function() {
+                $('#cus_cab').DataTable({
+                    paging: false,
+                    scrollY: '350px',
+                    scrollCollapse: true,
+                    "dom": '<"wrapper"flipt>'
+                });
+            });
+        </script>
+        <table id="cus_cab" style="width: 100%;" class="table table-bordered">
             <thead style="text-align: center;">
                 <th style="width:10%;">No</th>
                 <th>Cabinet</th>
