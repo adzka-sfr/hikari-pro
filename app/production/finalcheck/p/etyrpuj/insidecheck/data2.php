@@ -7,7 +7,9 @@ $serialnumber = $_POST['serialnumber'];
 $code = $_POST['code'];
 $ngcode = isset($_POST['ngcode']) ? $_POST['ngcode'] : '';
 
+// (A) cek apakah ngcode nilainya kosong (transisi dari  NG ke OK)
 if ($ngcode != '') {
+    // [a] jika tidak kosong
     // array to string conversion
     $ng = implode("/", $ngcode);
 
@@ -17,5 +19,6 @@ if ($ngcode != '') {
         echo "berhasil";
     }
 } else {
+    // [a] kosong
     echo "ng code null";
 }
