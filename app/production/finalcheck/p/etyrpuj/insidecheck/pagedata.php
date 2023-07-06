@@ -64,6 +64,23 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 </table>
 <!-- judul -->
 
+<!-- stamp -->
+<table class="table table-bordered" style="margin-top: 0px;">
+    <tr style="text-align: center;">
+        <td style="padding-top: 15px; opacity: 30%;">
+            <h5 style="transform: rotate(-12deg);">QC REJECT</h5>
+        </td>
+        <td style="padding-top: 15px; opacity: 30%;">
+            <h5 style="transform: rotate(-12deg);">QC PASS</h5>
+        </td>
+    </tr>
+    <tr>
+        <td>Date: -</td>
+        <td>Date: -</td>
+    </tr>
+</table>
+<!-- stamp -->
+
 <!-- formulir cek inside -->
 <table class="table table-bordered">
     <thead style="text-align: center;">
