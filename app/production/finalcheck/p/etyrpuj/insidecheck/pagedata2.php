@@ -120,66 +120,52 @@ if ($data2['c_repair_inside_o'] != '') {
     <thead style="text-align: center;">
         <th>No</th>
         <th>Item</th>
-        <th colspan="3">Hasil Cek</th>
+        <th>Hasil Cek</th>
     </thead>
     <tbody>
         <?php
         $no = 0;
-        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_result, b.c_detail FROM finalcheck_fetch_incheck a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
+        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_code_ng, a.c_result, b.c_detail FROM finalcheck_fetch_incheck a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
         while ($data = mysqli_fetch_array($sql)) {
             $no++;
             if ($data['c_result'] == 'OK') {
-                $ok = 'checked';
-                $ng = '';
-            } elseif ($data['c_result'] == 'NG') {
-                $ok = '';
-                $ng = 'checked';
-            } else {
-                $ok = '';
-                $ng = '';
-            }
         ?>
-            <tr>
-                <input type="hidden" id="awalstatus<?= $no ?>" value="<?= $data['c_result'] ?>">
-                <input type="hidden" id="item<?= $no ?>" value="<?= $data['c_code_incheck'] ?>">
-                <td rowspan="2" style="text-align: center;"><?= $no ?></td>
-                <td rowspan="2" style="font-size: 15px;"><?= $data['c_detail'] ?></td>
+                <tr>
+                    <td style="text-align: center;"><?= $no ?></td>
+                    <td style="font-size: 15px;"><?= $data['c_detail'] ?></td>
+                    <td style="text-align: center; font-size: 15px;">OK</td>
+                </tr>
+            <?php
+            } elseif ($data['c_result'] == 'NG') {
+                $code_ng = explode("/", $data['c_code_ng']);
+                $rowspan = count($code_ng);
+                $rowspan++;
+            ?>
+                <tr style="background-color: #ED9DA5;">
+                    <td rowspan="<?= $rowspan ?>" style="text-align: center;"><?= $no ?></td>
+                    <td style="font-size: 15px;"><?= $data['c_detail'] ?> <b><u> <?= $data['c_code_incheck'] ?></u></b> <i><?= $rowspan ?></i></td>
+                    <td style="text-align: center; font-size: 15px;">NG</td>
+                </tr>
+                <?php
+                foreach ($code_ng as $value) {
+                ?>
+                    <tr>
+                        <td><?= $value ?></td>
+                        <td style="text-align: center;"><input type="checkbox"></td>
+                    </tr>
+                <?php
+                }
+            } else {
+                ?>
+                <tr>
+                    <td style="text-align: center;"><?= $no ?></td>
+                    <td style="font-size: 15px;"><?= $data['c_detail'] ?></td>
+                    <td style="text-align: center; font-size: 15px;"></td>
+                </tr>
+            <?php
+            }
+            ?>
 
-                <td style="text-align: center; font-size: 15px;">OK</td>
-                <td colspan="2">
-                    <!-- <form id="radio_box<?= $no ?>"> -->
-                    <input type="radio" class="radioku<?= $no ?> " <?= $ok ?> style=" transform: scale(2); margin: 10px;" name="pil<?= $no ?>" value="OK" />
-                    <!-- </form> -->
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: center; font-size: 15px;">NG</td>
-                <td>
-                    <input type="radio" class="radioku<?= $no ?> ng<?= $no ?>" <?= $ng ?> style=" transform: scale(2); margin: 10px;" name="pil<?= $no ?>" value="NG" />
-                </td>
-
-                <td><select class="halodecktot" style="width: 95%;" id="ngcode<?= $no ?>" multiple="multiple" disabled required name="jenis<?= $no ?>[]">
-                        <?php
-                        $sql1 = mysqli_query($connect_pro, "SELECT a.c_code_ng AS c_code_ng, a.c_name AS c_name, b.c_code_ng AS res FROM finalcheck_list_ng a LEFT JOIN finalcheck_fetch_incheck b ON a.c_group = b.c_code_incheck  WHERE a.c_group = '$data[c_code_incheck]' AND b.c_serialnumber = '$pianoserial'");
-
-                        while ($data1 = mysqli_fetch_array($sql1)) {
-                            $selecng = '';
-                            if ($data1['res'] != '') {
-                                $selng = explode('/', $data1['res']);
-                                foreach ($selng as $val) {
-                                    if ($data1['c_code_ng'] == $val) {
-                                        $selecng = 'selected';
-                                    }
-                                }
-                            }
-                        ?>
-                            <option <?= $selecng ?> value="<?= $data1['c_code_ng'] ?>"><?= $data1['c_name'] ?></option>
-                        <?php
-                            $selecng = '';
-                        }
-                        ?>
-                    </select></td>
-            </tr>
             <script>
                 var awal = $('#awalstatus<?= $no ?>').val();
                 $('.radioku<?= $no ?>').change(function() {
