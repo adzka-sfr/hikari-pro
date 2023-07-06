@@ -11,7 +11,6 @@ $pianogmc = isset($_POST['pianogmc']) ? $_POST['pianogmc'] : '';
 $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 
 // [SELECT : finalcheck_fetch_incheck] get tanggal NG -> maks (c_result_date) and c_result=ng || finalcheck_fetch_incheck
-// select max(c_result_date) as ng_date from finalcheck_fetch_incheck where c_serialnumber = 'J40505958' and c_result = 'ng'
 $sql1 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_fetch_incheck WHERE c_serialnumber = '$pianoserial' AND c_result = 'NG'");
 $data1 = mysqli_fetch_array($sql1);
 $ng_date = '-';
@@ -23,6 +22,13 @@ if ($data1['ng_date'] != '') {
 // get tanggal OK -> c_repair_inside_o || finalcheck_repairtime
 // get pic inside check -> c_inside || finalcheck_pic
 // select a.c_repair_inside_o , b.c_inside  from finalcheck_repairtime a inner join finalcheck_pic b on a.c_serialnumber = b.c_serialnumber where b.c_serialnumber = 'J40505958'
+$sql2 = mysqli_query($connect_pro, "SELECT a.c_repair_inside_o , b.c_inside  FROM finalcheck_repairtime a INNER JOIN finalcheck_pic b ON a.c_serialnumber = b.c_serialnumber WHERE b.c_serialnumber = '$pianoserial'");
+$data2 = mysqli_fetch_array($sql2);
+$ok_date = '-';
+$pic = $data2['c_inside'];
+if ($data2['c_repair_inside_o'] != '') {
+    $ok_date = date('d-m-Y', strtotime($data2['ng_date']));
+}
 ?>
 
 <script src="../source/dropdown_search/jquery-3.4.1.js" crossorigin="anonymous"></script>
@@ -81,18 +87,30 @@ if ($data1['ng_date'] != '') {
 <!-- stamp -->
 <table class="table table-bordered" style="margin-top: 0px;">
     <tr style="text-align: center;">
-        <td style="padding-top: 15px; padding-bottom: 15px;">
+        <td style="padding-top: 15px; padding-bottom: 15px; width: 50%;">
             <h5 style="position: absolute; opacity: 30%;">QC REJECT</h5>
-            <span class="stamp is-reject">FIRMAN BUWANA</span>
+            <?php
+            if ($ng_date != '-') {
+            ?>
+                <span class="stamp is-reject"><?= $pic ?></span>
+            <?php
+            }
+            ?>
         </td>
-        <td style="padding-top: 15px; padding-bottom: 15px;">
+        <td style="padding-top: 15px; padding-bottom: 15px; width: 50%;">
             <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
-            <span class="stamp is-pass">FIRMAN BUWANA</span>
+            <?php
+            if ($ok_date != '-') {
+            ?>
+                <span class="stamp is-pass"><?= $pic ?></span>
+            <?php
+            }
+            ?>
         </td>
     </tr>
     <tr>
         <td>Date: <?= $ng_date ?></td>
-        <td>Date: {tanggal pass}</td>
+        <td>Date: <?= $ok_date ?></td>
     </tr>
 </table>
 <!-- stamp -->

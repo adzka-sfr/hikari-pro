@@ -67,11 +67,13 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 <!-- stamp -->
 <table class="table table-bordered" style="margin-top: 0px;">
     <tr style="text-align: center;">
-        <td style="padding-top: 15px; opacity: 30%;">
-            <h5 style="transform: rotate(-12deg);">QC REJECT</h5>
+        <td style="padding-top: 15px; padding-bottom: 15px; width: 50%; height: 80px;">
+            <h5 style="position: absolute; opacity: 30%;">QC REJECT</h5>
+
         </td>
-        <td style="padding-top: 15px; opacity: 30%;">
-            <h5 style="transform: rotate(-12deg);">QC PASS</h5>
+        <td style="padding-top: 15px; padding-bottom: 15px; width: 50%; height: 80px;">
+            <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
+
         </td>
     </tr>
     <tr>
