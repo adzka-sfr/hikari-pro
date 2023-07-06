@@ -22,12 +22,16 @@ if ($data1['ng_date'] != '') {
 // get tanggal OK -> c_repair_inside_o || finalcheck_repairtime
 // get pic inside check -> c_inside || finalcheck_pic
 // select a.c_repair_inside_o , b.c_inside  from finalcheck_repairtime a inner join finalcheck_pic b on a.c_serialnumber = b.c_serialnumber where b.c_serialnumber = 'J40505958'
-$sql2 = mysqli_query($connect_pro, "SELECT a.c_repair_inside_o , b.c_inside  FROM finalcheck_repairtime a INNER JOIN finalcheck_pic b ON a.c_serialnumber = b.c_serialnumber WHERE b.c_serialnumber = '$pianoserial'");
+$sql2 = mysqli_query($connect_pro, "SELECT a.c_repair_inside_o , b.c_inside, a.c_inside_pic  FROM finalcheck_repairtime a INNER JOIN finalcheck_pic b ON a.c_serialnumber = b.c_serialnumber WHERE b.c_serialnumber = '$pianoserial'");
 $data2 = mysqli_fetch_array($sql2);
 $ok_date = '-';
 $pic = $data2['c_inside'];
+$repair = '';
 if ($data2['c_repair_inside_o'] != '') {
     $ok_date = date('d-m-Y', strtotime($data2['ng_date']));
+}
+if ($data2['c_inside_pic'] != '') {
+    $repair = $data2['c_inside_pic'];
 }
 ?>
 
@@ -116,11 +120,12 @@ if ($data2['c_repair_inside_o'] != '') {
 <!-- stamp -->
 
 <!-- formulir cek inside -->
-<table class="table table-bordered">
+<table class="table table-bordered" style="font-size: larger;">
     <thead style="text-align: center;">
         <th>No</th>
         <th>Item</th>
         <th>Hasil Cek</th>
+        <th>Repair</th>
     </thead>
     <tbody>
         <?php
@@ -132,8 +137,9 @@ if ($data2['c_repair_inside_o'] != '') {
         ?>
                 <tr>
                     <td style="text-align: center;"><?= $no ?></td>
-                    <td style="font-size: 15px;"><?= $data['c_detail'] ?></td>
+                    <td><?= $data['c_detail'] ?></td>
                     <td style="text-align: center; font-size: 15px;">OK</td>
+                    <td style="text-align: center;">-</td>
                 </tr>
             <?php
             } elseif ($data['c_result'] == 'NG') {
@@ -143,22 +149,38 @@ if ($data2['c_repair_inside_o'] != '') {
             ?>
                 <tr style="background-color: #ED9DA5;">
                     <td rowspan="<?= $rowspan ?>" style="text-align: center;"><?= $no ?></td>
-                    <td style="font-size: 15px;"><?= $data['c_detail'] ?> <b><u> <?= $data['c_code_incheck'] ?></u></b> <i><?= $rowspan ?></i></td>
+                    <td><?= $data['c_detail'] ?> <b><u> <?= $data['c_code_incheck'] ?></u></b> <i><?= $rowspan ?></i></td>
                     <td style="text-align: center; font-size: 15px;">NG</td>
+                    <td><?= $repair ?></td>
                 </tr>
                 <?php
                 foreach ($code_ng as $value) {
+                    $sql3 = mysqli_query($connect_pro, "SELECT c_name FROM finalcheck_list_ng WHERE c_code_ng = '$value'");
+                    $data3 = mysqli_fetch_array($sql3);
                 ?>
                     <tr>
-                        <td><?= $value ?></td>
-                        <td style="text-align: center;"><input type="checkbox"></td>
+                        <td style="font-size: 15px;">- <?= $data3['c_name'] ?></td>
+                        <td style="text-align: center;"><input id="cekbok<?= $value ?>" onchange="cekbok(this.id)" type="checkbox" style="transform: scale(2);">
+
+                        </td>
+                        <td style="text-align: center;"></td>
                     </tr>
+
                 <?php
                 }
-            } else {
                 ?>
+                <script>
+                    function cekbok(id) {
+                        if ($('#' + id).is(':checked')) {
+                            console.log('anda klik' + id);
+                        }
+                    }
+                </script>
+            <?php
+            } else {
+            ?>
                 <tr>
-                    <td style="text-align: center;"><?= $no ?></td>
+                    <td style=" text-align: center;"><?= $no ?></td>
                     <td style="font-size: 15px;"><?= $data['c_detail'] ?></td>
                     <td style="text-align: center; font-size: 15px;"></td>
                 </tr>
