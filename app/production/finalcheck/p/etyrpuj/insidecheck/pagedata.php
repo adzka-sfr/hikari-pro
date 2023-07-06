@@ -107,7 +107,7 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
             } else {
                 $ok = '';
                 $ng = '';
-                $selectdis = '';
+                $selectdis = 'disabled';
             }
         ?>
             <tr>
@@ -118,18 +118,16 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 
                 <td style="text-align: center; font-size: 15px;">OK</td>
                 <td colspan="2">
-                    <!-- <form id="radio_box<?= $no ?>"> -->
-                    <input type="radio" class="radioku<?= $no ?> " <?= $ok ?> style=" transform: scale(2); margin: 10px;" id="pilok<?= $no ?>" name="pil<?= $no ?>" onchange="radiocek(this.id,'radioku<?= $no ?>','ngcode<?= $no ?>', 'ng<?= $no ?>')" value="OK" />
-                    <!-- </form> -->
+                    <input type="radio" <?= $ok ?> style=" transform: scale(2); margin: 10px;" id="pilok<?= $no ?>" name="pil<?= $no ?>" onchange="radiocek(this.id,'ngcode<?= $no ?>','item<?= $no ?>')" value="OK" />
                 </td>
             </tr>
             <tr>
                 <td style="text-align: center; font-size: 15px;">NG</td>
                 <td>
-                    <input type="radio" class="radioku<?= $no ?> ng<?= $no ?>" <?= $ng ?> style=" transform: scale(2); margin: 10px;" id="pilng<?= $no ?>" name="pil<?= $no ?>" onchange="radiocek(this.id,'radioku<?= $no ?>','ngcode<?= $no ?>', 'ng<?= $no ?>')" value="NG" />
+                    <input type="radio" <?= $ng ?> style=" transform: scale(2); margin: 10px;" id="pilng<?= $no ?>" name="pil<?= $no ?>" onchange="radiocek(this.id,'ngcode<?= $no ?>','item<?= $no ?>')" value="NG" />
                 </td>
 
-                <td><select class="halodecktot" style="width: 95%;" id="ngcode<?= $no ?>" onchange="selectcek(this.id)" multiple="multiple" required <?= $selectdis ?> name="jenis<?= $no ?>[]">
+                <td><select class="halodecktot" style="width: 95%;" id="ngcode<?= $no ?>" onchange="selectcek(this.id,'item<?= $no ?>')" multiple="multiple" required <?= $selectdis ?>>
                         <?php
                         $sql1 = mysqli_query($connect_pro, "SELECT a.c_code_ng AS c_code_ng, a.c_name AS c_name, b.c_code_ng AS res FROM finalcheck_list_ng a LEFT JOIN finalcheck_fetch_incheck b ON a.c_group = b.c_code_incheck  WHERE a.c_group = '$data[c_code_incheck]' AND b.c_serialnumber = '$pianoserial'");
 
@@ -151,116 +149,57 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
                         ?>
                     </select></td>
             </tr>
-            <script>
-                // var awal = $('#awalstatus<?= $no ?>').val();
-                // $('.radioku<?= $no ?>').change(function() {
-                //     $('#ngcode<?= $no ?>').prop('disabled', !$(this).is('.ng<?= $no ?>'));
-
-                //     // get data
-                //     selected_value = $("input[name='pil<?= $no ?>']:checked").val();
-                //     var code = $('#item<?= $no ?>').val();
-                //     var serialnumber = $('#serialnumber').val();
-                //     // console.log(selected_value);
-                //     // console.log(code);
-                //     // console.log(serialnumber);
-
-                //     // jika radio button OK, maka set value kosong untuk select
-                //     if (selected_value == 'OK') {
-                //         $('#ngcode<?= $no ?>').val('').trigger('change');
-                //     }
-
-                //     // ajax untuk melakukan update
-                //     $.ajax({
-                //         url: 'insidecheck/data.php',
-                //         type: 'POST',
-                //         data: {
-                //             "serialnumber": serialnumber,
-                //             "code": code,
-                //             "res": selected_value
-                //         },
-                //         success: function(response) {
-                //             // console.log(response);
-
-                //         }
-                //     });
-                // });
-
-                // if (awal == 'NG') {
-                //     $('#ngcode<?= $no ?>').prop('disabled', false);
-                // }
-
-                // $('#ngcode<?= $no ?>').change(function() {
-                //     var code = $('#item<?= $no ?>').val();
-                //     var serialnumber = $('#serialnumber').val();
-                //     var ngcode = $('#ngcode<?= $no ?>').val();
-                //     // console.log(ngcode);
-                //     $.ajax({
-                //         url: 'insidecheck/data2.php',
-                //         type: 'POST',
-                //         data: {
-                //             "serialnumber": serialnumber,
-                //             "code": code,
-                //             "ngcode": ngcode
-                //         },
-                //         success: function(response) {
-                //             // console.log(response);
-                //         }
-                //     });
-                // })
-            </script>
         <?php
         }
         ?>
         <script>
-            function radiocek(id, radioku, ngcode, ng) {
-                console.log(id, radioku, ngcode, ng)
-                // $('#' + id).change(function() {
-                // console.log(this)
-                // $('#' + ngcode).prop('disabled', !$(this).is('.' + ng));
+            function radiocek(id, ngcode, item) {
+                console.log(id)
                 if ($('#' + id).is(':checked')) {
-                    console.log($('#' + id).val())
                     if ($('#' + id).val() == 'NG') {
                         $('#' + ngcode).attr('disabled', false);
-                        // $("#print").attr("disabled", true);
                     }
                     if ($('#' + id).val() == 'OK') {
                         $('#' + ngcode).attr('disabled', true);
-                        // $("#print").attr("disabled", true);
+                        $('#' + ngcode).val('').trigger('change');
                     }
                 }
+                var serialnumber = $('#serialnumber').val();
+                var res = $('#' + id).val();
+                var code = $('#' + item).val();
+                $.ajax({
+                    url: 'insidecheck/data.php',
+                    type: 'POST',
+                    data: {
+                        "serialnumber": serialnumber,
+                        "code": code,
+                        "res": res
+                    },
+                    success: function(response) {
+                        console.log(response);
 
-                // get data
-                // selected_value = $("input[name='pil<?= $no ?>']:checked").val();
-                // var code = $('#item<?= $no ?>').val();
-                // var serialnumber = $('#serialnumber').val();
-                // // console.log(selected_value);
-                // // console.log(code);
-                // // console.log(serialnumber);
-
-                // // jika radio button OK, maka set value kosong untuk select
-                // if (selected_value == 'OK') {
-                //     $('#ngcode<?= $no ?>').val('').trigger('change');
-                // }
-
-                // // ajax untuk melakukan update
-                // $.ajax({
-                //     url: 'insidecheck/data.php',
-                //     type: 'POST',
-                //     data: {
-                //         "serialnumber": serialnumber,
-                //         "code": code,
-                //         "res": selected_value
-                //     },
-                //     success: function(response) {
-                //         // console.log(response);
-
-                //     }
-                // });
-                // });
+                    }
+                });
             }
 
-            function selectcek(id) {
-                console.log(id)
+            function selectcek(id, item) {
+                console.log($('#' + id).val())
+                var serialnumber = $('#serialnumber').val();
+                var code = $('#' + item).val();
+                var ngcode = $('#' + id).val();
+                // console.log(ngcode);
+                $.ajax({
+                    url: 'insidecheck/data2.php',
+                    type: 'POST',
+                    data: {
+                        "serialnumber": serialnumber,
+                        "code": code,
+                        "ngcode": ngcode
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    }
+                });
             }
         </script>
     </tbody>

@@ -17,5 +17,5 @@ if ($result == 'OK') {
 }
 
 if ($sql) {
-    echo "berhasil";
+    echo $code;
 }
