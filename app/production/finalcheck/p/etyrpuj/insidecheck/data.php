@@ -17,5 +17,5 @@ if ($result == 'OK') {
 }
 
 if ($sql) {
-    echo $code;
+    echo "berhasil/" . $serialnumber . "/" . $code . "/" . $result;
 }
