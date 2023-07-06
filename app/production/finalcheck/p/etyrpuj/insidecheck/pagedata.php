@@ -102,7 +102,7 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
                     <input type="radio" class="radioku<?= $no ?> ng<?= $no ?>" <?= $ng ?> style=" transform: scale(2); margin: 10px;" name="pil<?= $no ?>" value="NG" />
                 </td>
 
-                <td><select class="halodecktot" style="width: 95%;" id="duar<?= $no ?>" multiple="multiple" disabled required name="jenis<?= $no ?>[]">
+                <td><select class="halodecktot" style="width: 95%;" id="ngcode<?= $no ?>" multiple="multiple" disabled required name="jenis<?= $no ?>[]">
                         <?php
                         $sql1 = mysqli_query($connect_pro, "SELECT a.c_code_ng AS c_code_ng, a.c_name AS c_name, b.c_code_ng AS res FROM finalcheck_list_ng a LEFT JOIN finalcheck_fetch_incheck b ON a.c_group = b.c_code_incheck  WHERE a.c_group = '$data[c_code_incheck]' AND b.c_serialnumber = '$pianoserial'");
 
@@ -127,7 +127,7 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
             <script>
                 var awal = $('#awalstatus<?= $no ?>').val();
                 $('.radioku<?= $no ?>').change(function() {
-                    $('#duar<?= $no ?>').prop('disabled', !$(this).is('.ng<?= $no ?>'));
+                    $('#ngcode<?= $no ?>').prop('disabled', !$(this).is('.ng<?= $no ?>'));
 
                     // get data
                     selected_value = $("input[name='pil<?= $no ?>']:checked").val();
@@ -136,6 +136,13 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
                     console.log(selected_value);
                     console.log(code);
                     console.log(serialnumber);
+
+                    // jika radio button OK, maka set value kosong untuk select
+                    if (selected_value == 'OK') {
+                        console.log('berhasil get OK');
+                        $('#ngcode<?= $no ?>').val('').trigger('change');
+                    }
+
                     // ajax untuk melakukan update
                     $.ajax({
                         url: 'insidecheck/data.php',
@@ -147,18 +154,19 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
                         },
                         success: function(response) {
                             console.log(response);
+
                         }
                     });
                 });
 
                 if (awal == 'NG') {
-                    $('#duar<?= $no ?>').prop('disabled', false);
+                    $('#ngcode<?= $no ?>').prop('disabled', false);
                 }
 
-                $('#duar<?= $no ?>').change(function() {
+                $('#ngcode<?= $no ?>').change(function() {
                     var code = $('#item<?= $no ?>').val();
                     var serialnumber = $('#serialnumber').val();
-                    var ngcode = $('#duar<?= $no ?>').val();
+                    var ngcode = $('#ngcode<?= $no ?>').val();
                     console.log(ngcode);
                     $.ajax({
                         url: 'insidecheck/data2.php',
