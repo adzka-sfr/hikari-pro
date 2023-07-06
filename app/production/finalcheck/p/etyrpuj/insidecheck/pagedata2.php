@@ -17,7 +17,7 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 
 <!-- judul pagedata -->
 <hr>
-<h4><i class="fa fa-pencil-square-o"></i> <u>Check Card</u></h4>
+<h4><i class="fa fa-file-archive-o"></i> <u>Result Card</u></h4>
 <!-- judul pagedata -->
 
 <!-- judul -->
