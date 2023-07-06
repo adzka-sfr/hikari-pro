@@ -910,4 +910,70 @@ if (!isset($_SESSION['id'])) {
       min-height: 100%;
     }
   </style>
+
+  <!-- stamp -->
+  <style>
+    .stamp {
+      transform: rotate(12deg);
+      color: #555;
+      font-size: 3rem;
+      font-weight: 700;
+      border: 0.25rem solid #555;
+      display: inline-block;
+      padding: 0.25rem 1rem;
+      text-transform: uppercase;
+      border-radius: 1rem;
+      font-family: 'Courier';
+      -webkit-mask-image: url('<?= base_url('_assets/production/images/grunge.png') ?>');
+      -webkit-mask-size: 944px 604px;
+      mix-blend-mode: multiply;
+    }
+
+    .is-nope {
+      color: #D23;
+      border: 0.5rem double #D23;
+      transform: rotate(3deg);
+      -webkit-mask-position: 2rem 3rem;
+      font-size: 2rem;
+    }
+
+    .is-approved {
+      color: #0A9928;
+      border: 0.5rem solid #0A9928;
+      -webkit-mask-position: 13rem 6rem;
+      transform: rotate(-14deg);
+      border-radius: 0;
+    }
+
+    .is-draft {
+      color: #C4C4C4;
+      border: 0.5rem double #C4C4C4;
+      transform: rotate(-5deg);
+      font-size: 2rem;
+      -webkit-mask-position: 2rem 3rem;
+      font-family: "Open sans", Helvetica, Arial, sans-serif;
+      border-radius: 0;
+    }
+
+    .is-reject {
+      color: #D23;
+      border: 0.5rem double #D23;
+      transform: rotate(-5deg);
+      font-size: 2rem;
+      -webkit-mask-position: 2rem 3rem;
+      font-family: "Open sans", Helvetica, Arial, sans-serif;
+      border-radius: 0;
+    }
+
+    .is-pass {
+      color: #0A9928;
+      border: 0.5rem double #0A9928;
+      transform: rotate(-5deg);
+      font-size: 2rem;
+      -webkit-mask-position: 2rem 3rem;
+      font-family: "Open sans", Helvetica, Arial, sans-serif;
+      border-radius: 0;
+    }
+  </style>
+  <!-- stamp -->
 </head>

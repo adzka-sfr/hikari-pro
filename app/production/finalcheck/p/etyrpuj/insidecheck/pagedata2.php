@@ -9,6 +9,20 @@ $plannumber = isset($_POST['plannumber']) ? $_POST['plannumber'] : '';
 $pianoserial = isset($_POST['pianoserial']) ? $_POST['pianoserial'] : '';
 $pianogmc = isset($_POST['pianogmc']) ? $_POST['pianogmc'] : '';
 $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
+
+// [SELECT : finalcheck_fetch_incheck] get tanggal NG -> maks (c_result_date) and c_result=ng || finalcheck_fetch_incheck
+// select max(c_result_date) as ng_date from finalcheck_fetch_incheck where c_serialnumber = 'J40505958' and c_result = 'ng'
+$sql1 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_fetch_incheck WHERE c_serialnumber = '$pianoserial' AND c_result = 'NG'");
+$data1 = mysqli_fetch_array($sql1);
+$ng_date = '-';
+if ($data1['ng_date'] != '') {
+    $ng_date = date('d-m-Y', strtotime($data1['ng_date']));
+}
+
+// [SELECT : finalcheck_repairtime, finalcheck_pic JOIN by c_serialnumber  ] 
+// get tanggal OK -> c_repair_inside_o || finalcheck_repairtime
+// get pic inside check -> c_inside || finalcheck_pic
+// select a.c_repair_inside_o , b.c_inside  from finalcheck_repairtime a inner join finalcheck_pic b on a.c_serialnumber = b.c_serialnumber where b.c_serialnumber = 'J40505958'
 ?>
 
 <script src="../source/dropdown_search/jquery-3.4.1.js" crossorigin="anonymous"></script>
@@ -67,15 +81,17 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 <!-- stamp -->
 <table class="table table-bordered" style="margin-top: 0px;">
     <tr style="text-align: center;">
-        <td style="padding-top: 15px; opacity: 30%;">
-            <h5 style="transform: rotate(-12deg);">QC REJECT</h5>
+        <td style="padding-top: 15px; padding-bottom: 15px;">
+            <h5 style="position: absolute; opacity: 30%;">QC REJECT</h5>
+            <span class="stamp is-reject">FIRMAN BUWANA</span>
         </td>
-        <td style="padding-top: 15px; opacity: 30%;">
-            <h5 style="transform: rotate(-12deg);">QC PASS</h5>
+        <td style="padding-top: 15px; padding-bottom: 15px;">
+            <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
+            <span class="stamp is-pass">FIRMAN BUWANA</span>
         </td>
     </tr>
     <tr>
-        <td>Date: {tanggal reject}</td>
+        <td>Date: <?= $ng_date ?></td>
         <td>Date: {tanggal pass}</td>
     </tr>
 </table>
