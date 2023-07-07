@@ -303,8 +303,6 @@
                         </div>
                     </div>
                     <div class="row">
-<<<<<<< HEAD
-<<<<<<< HEAD
                         <?php
                         $dver_sql = mysqli_query($connect_pro, "SELECT c_inspectiondate1  FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' ORDER BY id asc limit 1 ");
                         $dver = mysqli_fetch_array($dver_sql);
@@ -315,58 +313,13 @@
                             $tanggal = date('l, d M Y', strtotime($tanggal));
                         }
                         ?>
-                        <div class="col-md-12">
-
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th colspan="4">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                No.Seri :
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12" style="text-align: center; font-size: 15px;"><u><?= $serial_number ?></u></div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                Model :
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12" style="text-align: center; font-size: 15px;">
-                                                <u><?= $piano_name ?></u>
-                                            </div>
-                                        </div>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th colspan="5">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                Process : <u>Out Side Check 1</u>
-                                            </div>
-                                        </div>
-                                    </th>
-
-                                </tr>
-=======
                         <div class="col-12">
                             <table class="table">
->>>>>>> fc3b16c (menambah yang belum ditambah)
-=======
-                        <div class="col-12">
-                            <table class="table">
->>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                                 <tr style="text-align: center;">
                                     <td><i class="fa fa-pencil" style="color: #DC4646 ;"></i> Outside Check 1</td>
                                     <td><i class="fa fa-pencil" style="color: #5AA65A ;"></i> Outside Check 2</td>
                                     <td><i class="fa fa-pencil" style="color: #1340FF ;"></i> Outside Check 3</td>
                                 </tr>
-<<<<<<< HEAD
-<<<<<<< HEAD
                                 <?php
                                 $verif_sql1 = mysqli_query($connect_pro, "SELECT * FROM formng_resulto1 WHERE c_serialnumber = '$serial_number' ORDER BY c_section, c_arealabel ");
                                 $no = 0;
@@ -486,12 +439,6 @@
                                     <td></td>
                                     <td></td>
                                 </tr>
-
-
-=======
->>>>>>> fc3b16c (menambah yang belum ditambah)
-=======
->>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                             </table>
                         </div>
                     </div>
@@ -982,10 +929,6 @@
 
                         </div>
                     </div>
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-
                     <?php
                     // jika klik button bisa diserahkan ke repair
                     if (isset($_POST['str'])) {
@@ -1047,10 +990,6 @@
                         }
                     }
                     ?>
-=======
->>>>>>> fc3b16c (menambah yang belum ditambah)
-=======
->>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                 </div>
 
                 <div class="tab-pane fade" id="completeness" role="tabpanel" aria-labelledby="completeness-tab">

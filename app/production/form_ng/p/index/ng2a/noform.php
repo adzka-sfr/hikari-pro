@@ -116,10 +116,10 @@
             </div>
         </div>
     </div>
-    <div class="col-4" style="text-align: center;">
+    <!-- <div class="col-4" style="text-align: center;">
         <div class="row">
             <div class="col-12">
-                <h6><u>Outside Check 2</u></h6>
+                <h6><u>Outside Check 2aaa</u></h6>
             </div>
         </div>
         <div class="row">
@@ -183,7 +183,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
 

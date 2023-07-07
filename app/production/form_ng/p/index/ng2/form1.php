@@ -92,13 +92,6 @@
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addng">
                         Tambah NG +
                     </button>
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-            ?>
-=======
-=======
->>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                     <!-- Modal -->
                     <div class="modal fade" id="addng" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -1093,10 +1086,6 @@
                     })
                 })
             </script>
-<<<<<<< HEAD
->>>>>>> fc3b16c (menambah yang belum ditambah)
-=======
->>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
         </div>
     </div>
 </div>

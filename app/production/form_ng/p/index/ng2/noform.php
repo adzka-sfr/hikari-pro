@@ -3,16 +3,7 @@
 
     <div class="row">
         <div class="col-12">
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <h5><u>Don't Forget to Validation, <?= $_SESSION['nama'] ?> !<button onclick="window.location.reload()" class="btn btn-primary ml-4"><i class="fa fa-refresh"></i></button></u></h5>
-=======
             <h5><u>Jangan lupa untuk validasi, <?= $_SESSION['nama'] ?> !<button onclick="window.location.reload()" class="btn btn-primary ml-4"><i class="fa fa-refresh"></i></button></u></h5>
->>>>>>> fc3b16c (menambah yang belum ditambah)
-=======
-            <h5><u>Jangan lupa untuk validasi, <?= $_SESSION['nama'] ?> !<button onclick="window.location.reload()" class="btn btn-primary ml-4"><i class="fa fa-refresh"></i></button></u></h5>
->>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
-            <!-- <br> -->
         </div>
     </div>
     <div class="row">
@@ -20,19 +11,6 @@
             <div style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 1em;">
                 <?php
                 $nama_checker = $_SESSION['nama'];
-<<<<<<< HEAD
-<<<<<<< HEAD
-                $sql = mysqli_query($connect_pro, "SELECT DISTINCT res.c_serialnumber FROM formng_resulto1 res JOIN formng_register reg ON res.c_serialnumber = reg.c_serialnumber WHERE res.c_checker1 = '$nama_checker' AND res.c_ng1 != '' AND res.c_repair1 != '' AND reg.c_outcheck1by = '';");
-                while ($data = mysqli_fetch_array($sql)) {
-                    $sql1 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$data[c_serialnumber]' AND c_ng != '' AND c_picrepair = ''");
-                    $data1 = mysqli_fetch_array($sql1);
-
-                    if (empty($data1['id'])) {
-                ?>
-                        <button disabled style="background-color: #ffa700; border-color: #ffa700;" class="btn btn-primary"><?= $data['c_serialnumber'] ?></button>
-=======
-=======
->>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                 // $sql = mysqli_query($connect_pro, "SELECT DISTINCT res.c_serialnumber FROM formng_resulto1 res JOIN formng_register reg ON res.c_serialnumber = reg.c_serialnumber WHERE res.c_checker1 = '$nama_checker' AND res.c_ng1 != '' AND res.c_repair1 != '' AND reg.c_outcheck1by = '';");
                 // while ($data = mysqli_fetch_array($sql)) {
                 //     $sql1 = mysqli_query($connect_pro, "SELECT id FROM formng_resultro WHERE c_serialnumber = '$data[c_serialnumber]' AND c_ng != '' AND c_picrepair = ''");
@@ -53,20 +31,11 @@
                 ?>
                         <!-- <button style="background-color: #ffa700; border-color: #ffa700;" class="btn btn-primary"><?= $data['c_serialnumber'] ?></button> -->
                         <input style="width:130px ;border-radius: 5px;background-color: #ffa700; border-color: #ffa700; text-align: center; font-weight: bold; font-size: larger; color: #ffffff;" type="text" value="<?= $data['c_serialnumber'] ?>" readonly>
-<<<<<<< HEAD
->>>>>>> fc3b16c (menambah yang belum ditambah)
-=======
->>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                 <?php
                     }
                 }
                 ?>
             </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
         </div>
     </div>
 
@@ -143,10 +112,6 @@
                     ?>
                 </tbody>
             </table>
-<<<<<<< HEAD
->>>>>>> fc3b16c (menambah yang belum ditambah)
-=======
->>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
         </div>
     </div>
 
