@@ -129,6 +129,7 @@ if ($data2['c_inside_pic'] != '') {
     </thead>
     <tbody>
         <?php
+        $arr_ng = [];
         $no = 0;
         $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_code_ng, a.c_result, b.c_detail FROM finalcheck_fetch_incheck a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
         while ($data = mysqli_fetch_array($sql)) {
@@ -149,18 +150,22 @@ if ($data2['c_inside_pic'] != '') {
             ?>
                 <tr style="background-color: #ED9DA5;">
                     <td rowspan="<?= $rowspan ?>" style="text-align: center;"><?= $no ?></td>
-                    <td><?= $data['c_detail'] ?> <b><u> <?= $data['c_code_incheck'] ?></u></b> <i><?= $rowspan ?></i></td>
+                    <td>
+                        <?= $data['c_detail'] ?>
+                        <b><u> <?= $data['c_code_incheck'] ?></u></b> <i><?= $rowspan ?></i>
+                    </td>
                     <td style="text-align: center; font-size: 15px;">NG</td>
                     <td><?= $repair ?></td>
                 </tr>
                 <?php
                 foreach ($code_ng as $value) {
+                    array_push($arr_ng, $value);
                     $sql3 = mysqli_query($connect_pro, "SELECT c_name FROM finalcheck_list_ng WHERE c_code_ng = '$value'");
                     $data3 = mysqli_fetch_array($sql3);
                 ?>
                     <tr>
                         <td style="font-size: 15px;">- <?= $data3['c_name'] ?></td>
-                        <td style="text-align: center;"><input id="cekbok<?= $value ?>" onchange="cekbok(this.id)" type="checkbox" style="transform: scale(2);">
+                        <td style="text-align: center;"><input id="cekbok<?= $value ?>" onchange="cekbok(this.id, '<?= $data['c_code_incheck'] ?>')" value="<?= $value ?>" type="checkbox" style="transform: scale(2);">
 
                         </td>
                         <td style="text-align: center;"></td>
@@ -169,13 +174,7 @@ if ($data2['c_inside_pic'] != '') {
                 <?php
                 }
                 ?>
-                <script>
-                    function cekbok(id) {
-                        if ($('#' + id).is(':checked')) {
-                            console.log('anda klik' + id);
-                        }
-                    }
-                </script>
+
             <?php
             } else {
             ?>
@@ -295,6 +294,41 @@ if ($data2['c_inside_pic'] != '') {
         <?php
         }
         ?>
+        <script>
+            var checkbox = <?= json_encode($arr_ng) ?>;
+
+            function cekbok(id, item) {
+                var data_ng = [];
+                for (let i = 0; i < checkbox.length; i++) {
+
+                    var id_checkbox = 'cekbok' + checkbox[i];
+
+                    var serialnumber = $('#serialnumber').val();
+                    if ($('#' + id_checkbox).is(':checked')) {
+                        // console.log($('#' + id).val());
+                        // console.log('anda klik ' + id);
+                        var ngcode = $('#' + id_checkbox).val();
+                    } else {
+                        var ngcode = 'kosong';
+                    }
+
+                    data_ng.push(ngcode);
+                }
+
+                $.ajax({
+                    url: 'insidecheck/data6.php',
+                    type: 'POST',
+                    data: {
+                        "serialnumber": serialnumber,
+                        "ngcode": data_ng,
+                        "code": item
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    }
+                });
+            }
+        </script>
     </tbody>
 </table>
 
