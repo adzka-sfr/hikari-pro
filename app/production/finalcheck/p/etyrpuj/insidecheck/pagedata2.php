@@ -298,6 +298,7 @@ if ($data2['c_inside_pic'] != '') {
             var checkbox = <?= json_encode($arr_ng) ?>;
 
             function cekbok(id, item) {
+                
                 var data_ng = [];
                 for (let i = 0; i < checkbox.length; i++) {
 
@@ -314,14 +315,14 @@ if ($data2['c_inside_pic'] != '') {
 
                     data_ng.push(ngcode);
                 }
-
+                console.log(data_ng);
                 $.ajax({
                     url: 'insidecheck/data6.php',
                     type: 'POST',
                     data: {
                         "serialnumber": serialnumber,
                         "ngcode": data_ng,
-                        "code": item
+                        "item" : item
                     },
                     success: function(response) {
                         console.log(response);

@@ -4,38 +4,43 @@ require '../config.php';
 
 // get data lemparan
 $serialnumber = $_POST['serialnumber'];
-$code = $_POST['code'];
+$item = $_POST['item'];
 $ngcode = isset($_POST['ngcode']) ? $_POST['ngcode'] : '';
 
-// (A) cek apakah ngcode nilainya kosong (transisi dari  NG ke OK)
-// if ($ngcode != '') {
-// [a] jika tidak kosong
-
-$sql1 = mysqli_query($connect_pro, "SELECT c_code_ng FROM finalcheck_fetch_incheck WHERE c_serialnumber = '$serialnumber' AND c_code_incheck = '$code'");
+// [SELECT : finalcheck_fetch_incheck] ambil data untuk item yang sedang aktif (code incheck)
+$sql1 = mysqli_query($connect_pro, "SELECT c_code_ng FROM finalcheck_fetch_incheck WHERE c_serialnumber = '$serialnumber' AND c_code_incheck = '$item'");
 $data1 = mysqli_fetch_array($sql1);
 
+// pecah dulu kode ng nya agar menjadi aray
 $ng = explode('/', $data1['c_code_ng']);
 
-foreach ($ng as $value) {
-    $hasil = array();
-    foreach ($ngcode as $keyng => $valueng) {
-        if ($value == $valueng) {
-            array_push($hasil, "OK");
-        } else {
-            array_push($hasil, "NG");
+// buat variabel array untuk menyimpan hasil
+$hasil = array();
+
+// mulai cek pada setiap kode ng
+foreach ($ng as $val) {
+    // deklarasi awal mula sebagai 'gada'
+    $a = 'gada';
+    // lakukan pengecekan kode ng dengan semua data hasil checklist
+    foreach ($ngcode as  $valueng) {
+        // jika data sama, maka variable deklarasi akan di timpa menjadi 'ada';
+        if ($val == $valueng) {
+            $a = 'ada';
         }
+    }
+
+    // push data ke variabel array berdasarkan hasil pengecekan
+    if ($a == 'gada') {
+        array_push($hasil, "NG");
+    } else {
+        array_push($hasil, "OK");
     }
 }
 
+// jadikan menjadi string kembali untuk di insert
 $hasil_insert = implode('/', $hasil);
-var_dump($hasil_insert);
-die();
-// [UPDATE : finalcheck_fetch_inside] ketika result radio button adalah NG, maka code NG akan di masukkan
-$sql = mysqli_query($connect_pro, "UPDATE finalcheck_fetch_incheck SET c_repair = '$hasil_insert', c_repair_date = '$now' WHERE c_serialnumber = '$serialnumber' AND c_code_incheck = '$code'");
+$sql = mysqli_query($connect_pro, "UPDATE finalcheck_fetch_incheck SET c_repair = '$hasil_insert', c_repair_date = '$now' WHERE c_serialnumber = '$serialnumber' AND c_code_incheck = '$item'");
+
 if ($sql) {
-    echo "berhasil/" . $serialnumber . "/" . $code . "/" . $ngcode;
+    echo "berhasil";
 }
-// } else {
-    // [a] kosong
-    // echo "ng code null";
-// }
