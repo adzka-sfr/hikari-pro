@@ -43,7 +43,7 @@ if ($data2['c_inside_pic'] != '') {
 
 <!-- judul pagedata -->
 <hr>
-<h4><i class="fa fa-file-archive-o"></i> <u>Result Card</u></h4>
+<h4><i class="fa fa-file-archive-o"></i> <u>Result Card - Finish</u></h4>
 <!-- judul pagedata -->
 
 <!-- judul -->
@@ -327,7 +327,7 @@ if ($data2['c_inside_pic'] != '') {
 
                         // pindah data dari finalcheck_fetch_incheck ke tabel finalcheck_inside
                         // isi c_repair_o
-                        
+
                         // var serialnumber = $('#serialnumber').val();
                         // $.ajax({
                         //     url: 'insidecheck/data5.php',

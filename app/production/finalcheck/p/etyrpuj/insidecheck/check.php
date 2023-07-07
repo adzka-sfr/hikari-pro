@@ -13,13 +13,21 @@ if ($kode == 'U') {
     $acard = $codecode;
 
     // (F) cek apakah status sudah terdaftar dan sudah selesai di cek
-    $sql9 = mysqli_query($connect_pro, "SELECT b.c_inside_i, b.c_inside_o  FROM finalcheck_register a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber  WHERE a.c_acard  = '$acard'");
+    $sql9 = mysqli_query($connect_pro, "SELECT b.c_inside_i, b.c_inside_o, c.c_repair_inside_o  FROM finalcheck_register a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber INNER JOIN finalcheck_repairtime c ON a.c_serialnumber = c.c_serialnumber WHERE a.c_acard  = '$acard'");
     $data9 = mysqli_fetch_array($sql9);
     if (!empty($data9['c_inside_i']) && !empty($data9['c_inside_o'])) {
         // [f] sudah terdaftar
         $sql10 = mysqli_query($connect_pro, "SELECT a.c_plannumber, a.c_acard, a.c_serialnumber, a.c_gmc, b.c_name FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_acard = '$acard'");
         $data10 = mysqli_fetch_array($sql10);
-        echo json_encode(array("status" => "ada-sudah-cek", "pianoserial" => $data10['c_serialnumber'], "pianoname" => $data10['c_name'], "pianogmc" => $data10['c_gmc'], "plannumber" => $data10['c_plannumber']));
+
+        // (H) cek apakah sudah selesai sampai validasi
+        if (!empty($data9['c_repair_inside_o'])) {
+            // [h] sudah selesai
+            echo json_encode(array("status" => "ada-sudah-cek-validasi", "pianoserial" => $data10['c_serialnumber'], "pianoname" => $data10['c_name'], "pianogmc" => $data10['c_gmc'], "plannumber" => $data10['c_plannumber']));
+        } else {
+            // [h] masih proses validasi
+            echo json_encode(array("status" => "ada-sudah-cek", "pianoserial" => $data10['c_serialnumber'], "pianoname" => $data10['c_name'], "pianogmc" => $data10['c_gmc'], "plannumber" => $data10['c_plannumber']));
+        }
     } else {
         // [f] belum terdaftar
         // (B) cek no A-Card terdaftar atau tidak pada K-staff
@@ -110,13 +118,21 @@ if ($kode == 'U') {
     $serialnumber = $codecode;
 
     // (G) cek apakah status sudah terdaftar dan sudah selesai di cek
-    $sql11 = mysqli_query($connect_pro, "SELECT b.c_inside_i, b.c_inside_o  FROM finalcheck_register a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber  WHERE a.c_serialnumber  = '$serialnumber'");
+    $sql11 = mysqli_query($connect_pro, "SELECT b.c_inside_i, b.c_inside_o, c.c_repair_inside_o  FROM finalcheck_register a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber INNER JOIN finalcheck_repairtime c ON a.c_serialnumber = c.c_serialnumber  WHERE a.c_serialnumber  = '$serialnumber'");
     $data11 = mysqli_fetch_array($sql11);
     if (!empty($data11['c_inside_i']) && !empty($data11['c_inside_o'])) {
         // [g] sudah terdaftar
         $sql12 = mysqli_query($connect_pro, "SELECT a.c_plannumber, a.c_acard, a.c_serialnumber, a.c_gmc, b.c_name FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_acard = '$acard'");
         $data12 = mysqli_fetch_array($sql12);
-        echo json_encode(array("status" => "ada-sudah-cek", "pianoserial" => $data12['c_serialnumber'], "pianoname" => $data12['c_name'], "pianogmc" => $data12['c_gmc'], "plannumber" => $data12['c_plannumber']));
+
+        // (I) cek apakah sudah selesai validasi
+        if (!empty($data11['c_repair_inside_o'])) {
+            // [i] sudah selesai
+            echo json_encode(array("status" => "ada-sudah-cek-validasi", "pianoserial" => $data12['c_serialnumber'], "pianoname" => $data12['c_name'], "pianogmc" => $data12['c_gmc'], "plannumber" => $data12['c_plannumber']));
+        } else {
+            // [i] masih proses validasi
+            echo json_encode(array("status" => "ada-sudah-cek", "pianoserial" => $data12['c_serialnumber'], "pianoname" => $data12['c_name'], "pianogmc" => $data12['c_gmc'], "plannumber" => $data12['c_plannumber']));
+        }
     } else {
         // [g] belum terdaftar
         // (E) cek apakah no seri sudah terdaftar atau belum

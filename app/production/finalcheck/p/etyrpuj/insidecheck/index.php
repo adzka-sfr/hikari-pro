@@ -220,6 +220,28 @@
                                 });
                             };
                             loadData();
+                        } else if (response.status == 'ada-sudah-cek-validasi') {
+                            // load data jika ada data dan sudah dicek
+                            function loadData() {
+
+                                var dataString = {
+                                    acard: response.acard,
+                                    plannumber: response.plannumber,
+                                    pianoserial: response.pianoserial,
+                                    pianoname: response.pianoname,
+                                    pianogmc: response.pianogmc,
+                                };
+                                $.ajax({
+                                    url: "insidecheck/pagedata3.php",
+                                    type: "POST",
+                                    data: dataString,
+                                    success: function(data) {
+                                        $('#pagedata').show();
+                                        $('#pagedata').html(data);
+                                    }
+                                });
+                            };
+                            loadData();
                         } else if (response.status == 'ada-belum-tr') {
                             // belum melakukan TR di proses U400
                             Swal.fire({
