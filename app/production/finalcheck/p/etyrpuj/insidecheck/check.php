@@ -86,10 +86,10 @@ if ($kode == 'U') {
                     // [INSERT : finalcheck_register] data didaftarkan ke dalam tabel registrasi
                     $sql4 = mysqli_query($connect_pro, "INSERT INTO finalcheck_register SET c_serialnumber = '$serialnumber', c_plannumber = '$plannumber', c_acard = '$acard', c_gmc = '$gmc'");
                     if ($sql4) {
-                        // [INSERT : finalcheck_fetch_incheck] dengan type khusus alias bukan pf (polyester furniture)
+                        // [INSERT : finalcheck_fetch_inside] dengan type khusus alias bukan pf (polyester furniture)
                         $sql5 = mysqli_query($connect_pro, "SELECT c_code_incheck FROM finalcheck_list_incheck WHERE c_code_type = 'pf' AND c_status = 'enable' OR c_code_type = (SELECT c_code_type FROM finalcheck_list_piano WHERE c_gmc = '$gmc') AND c_status = 'enable'");
                         while ($data5 = mysqli_fetch_array($sql5)) {
-                            mysqli_query($connect_pro, "INSERT INTO finalcheck_fetch_incheck SET c_serialnumber = '$serialnumber', c_code_incheck = '$data5[c_code_incheck]'");
+                            mysqli_query($connect_pro, "INSERT INTO finalcheck_fetch_inside SET c_serialnumber = '$serialnumber', c_code_incheck = '$data5[c_code_incheck]'");
                         }
                     }
 

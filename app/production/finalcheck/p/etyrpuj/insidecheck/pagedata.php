@@ -93,7 +93,7 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
     <tbody>
         <?php
         $no = 0;
-        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_result, b.c_detail FROM finalcheck_fetch_incheck a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
+        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_result, b.c_detail FROM finalcheck_fetch_inside a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
         while ($data = mysqli_fetch_array($sql)) {
             $no++;
             if ($data['c_result'] == 'OK') {
@@ -129,7 +129,7 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 
                 <td><select class="halodecktot" style="width: 95%;" id="ngcode<?= $no ?>" onchange="selectcek(this.id,'item<?= $no ?>')" multiple="multiple" required <?= $selectdis ?>>
                         <?php
-                        $sql1 = mysqli_query($connect_pro, "SELECT a.c_code_ng AS c_code_ng, a.c_name AS c_name, b.c_code_ng AS res FROM finalcheck_list_ng a LEFT JOIN finalcheck_fetch_incheck b ON a.c_group = b.c_code_incheck  WHERE a.c_group = '$data[c_code_incheck]' AND b.c_serialnumber = '$pianoserial'");
+                        $sql1 = mysqli_query($connect_pro, "SELECT a.c_code_ng AS c_code_ng, a.c_name AS c_name, b.c_code_ng AS res FROM finalcheck_list_ng a LEFT JOIN finalcheck_fetch_inside b ON a.c_group = b.c_code_incheck  WHERE a.c_group = '$data[c_code_incheck]' AND b.c_serialnumber = '$pianoserial'");
 
                         while ($data1 = mysqli_fetch_array($sql1)) {
                             $selecng = '';

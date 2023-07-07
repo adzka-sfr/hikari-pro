@@ -10,8 +10,8 @@ $pianoserial = isset($_POST['pianoserial']) ? $_POST['pianoserial'] : '';
 $pianogmc = isset($_POST['pianogmc']) ? $_POST['pianogmc'] : '';
 $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 
-// [SELECT : finalcheck_fetch_incheck] get tanggal NG -> maks (c_result_date) and c_result=ng || finalcheck_fetch_incheck
-$sql1 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_fetch_incheck WHERE c_serialnumber = '$pianoserial' AND c_result = 'NG'");
+// [SELECT : finalcheck_inside] get tanggal NG -> maks (c_result_date) and c_result=ng || finalcheck_inside
+$sql1 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_inside WHERE c_serialnumber = '$pianoserial' AND c_result = 'NG'");
 $data1 = mysqli_fetch_array($sql1);
 $ng_date = '-';
 if ($data1['ng_date'] != '') {
@@ -27,13 +27,10 @@ $data2 = mysqli_fetch_array($sql2);
 $ok_date = '-';
 $pic = $data2['c_inside'];
 $repair = '';
-$validation_func = 'disabled'; // jika belum di print tidak bisa di validasi
+$finish_inside_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 if ($data2['c_repair_inside_o'] != '') {
-    $ok_date = date('d-m-Y', strtotime($data2['ng_date']));
-}
-if ($data2['c_inside_pic'] != '') {
-    $repair = $data2['c_inside_pic'];
-    $validation_func = '';
+    $ok_date = date('d-m-Y', strtotime($data1['ng_date']));
+    $finish_inside_func = 'disabled';
 }
 ?>
 
@@ -43,7 +40,7 @@ if ($data2['c_inside_pic'] != '') {
 
 <!-- judul pagedata -->
 <hr>
-<h4><i class="fa fa-file-archive-o"></i> <u>Result Card - Finish</u></h4>
+<h4><i class="fa fa-file-archive-o"></i> <u>Result Card <i class="fa fa-flag-checkered"></i></u></h4>
 <!-- judul pagedata -->
 
 <!-- judul -->
@@ -133,7 +130,7 @@ if ($data2['c_inside_pic'] != '') {
         <?php
         $arr_ng = [];
         $no = 0;
-        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_code_ng, a.c_repair, a.c_result, b.c_detail FROM finalcheck_fetch_incheck a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
+        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_code_ng, a.c_repair, a.c_result, b.c_detail FROM finalcheck_inside a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
         while ($data = mysqli_fetch_array($sql)) {
             $no++;
             if ($data['c_result'] == 'OK') {
@@ -151,7 +148,7 @@ if ($data2['c_inside_pic'] != '') {
                 $rowspan = count($code_ng);
                 $rowspan++;
             ?>
-                <tr style="background-color: #ED9DA5;">
+                <tr style="background-color: #D4D4D4;">
                     <td rowspan="<?= $rowspan ?>" style="text-align: center;"><?= $no ?></td>
                     <td>
                         <?= $data['c_detail'] ?>
@@ -178,7 +175,7 @@ if ($data2['c_inside_pic'] != '') {
                 ?>
                     <tr>
                         <td style="font-size: 15px;">- <?= $data3['c_name'] ?> <?= $urutan ?></td>
-                        <td style="text-align: center;"><input id="cekbok<?= $value ?>" <?= $checklist . $validation_func ?> onchange="cekbok(this.id, '<?= $data['c_code_incheck'] ?>')" value="<?= $value ?>" type="checkbox" style="transform: scale(2);">
+                        <td style="text-align: center;"><input id="cekbok<?= $value ?>" <?= $checklist . " " . $finish_inside_func ?> value="<?= $value ?>" type="checkbox" style="transform: scale(2);">
 
                         </td>
                         <td style="text-align: center;"></td>
@@ -234,145 +231,7 @@ if ($data2['c_inside_pic'] != '') {
 
 <div class="row">
     <div class="col-12 mb-5" style="text-align: center;">
-        <button class="btn btn-success" id="check">Send to Outside Check 1</button>
-        <button class="btn btn-success" id="send" style="display: none;">Send to Outside Check 1</button>
-        <script>
-            var checkbox = <?= json_encode($arr_ng) ?>;
-            var data_ng_global;
-            var serialnumber = $('#serialnumber').val();
-
-            // function untuk melakukan update berdasarkan checkbox
-            function cekbok(id, item) {
-                var data_ng = [];
-                for (let i = 0; i < checkbox.length; i++) {
-
-                    var id_checkbox = 'cekbok' + checkbox[i];
-                    if ($('#' + id_checkbox).is(':checked')) {
-                        var ngcode = $('#' + id_checkbox).val();
-                    } else {
-                        var ngcode = 'kosong';
-                    }
-
-                    data_ng.push(ngcode);
-                }
-
-                $.ajax({
-                    url: 'insidecheck/data6.php',
-                    type: 'POST',
-                    data: {
-                        "serialnumber": serialnumber,
-                        "ngcode": data_ng,
-                        "item": item
-                    },
-                    success: function(response) {
-                        console.log(response);
-                    }
-                });
-            }
-
-            $('#check').click(function() {
-                var status = 'all-repaired';
-                var data_ng_all = [];
-                for (let i = 0; i < checkbox.length; i++) {
-
-                    var id_checkbox = 'cekbok' + checkbox[i];
-
-                    var serialnumber = $('#serialnumber').val();
-                    if ($('#' + id_checkbox).is(':checked')) {
-                        // console.log($('#' + id).val());
-                        // console.log('anda klik ' + id);
-                        var ngcode = $('#' + id_checkbox).val();
-                    } else {
-                        var ngcode = 'kosong';
-                    }
-                    data_ng_all.push(ngcode);
-                }
-
-                for (let j = 0; j < data_ng_all.length; j++) {
-                    if (data_ng_all[j] == 'kosong') {
-                        status = 'not-repaired';
-                    }
-                }
-
-                if (status == 'not-repaired') {
-                    Swal.fire({
-                        title: 'Masih ada data yang belum diceklis!',
-                        icon: 'error',
-                        html: 'Pastikan proses validasi sudah selesai dengan ceklis semua temuan NG',
-                        showConfirmButton: false,
-                        showCancelButton: true,
-                        cancelButtonColor: '#5D646B',
-                        cancelButtonText: 'Oke',
-                    })
-                } else {
-                    console.log('sudah repair semuanya');
-                    $('#send').trigger('click');
-                }
-            })
-
-            $('#send').click(function() {
-                Swal.fire({
-                    title: 'Apakah anda yakin ?',
-                    icon: 'question',
-                    html: 'Data akan diteruskan ke <b>Outside Check 1</b>',
-                    showCancelButton: true,
-                    showConfirmButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Iya',
-                    cancelButtonText: 'Tidak'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        console.log('sudah oke gan sampai outside 1');
-
-                        // pindah data dari finalcheck_fetch_incheck ke tabel finalcheck_inside
-                        // isi c_repair_o
-
-                        // var serialnumber = $('#serialnumber').val();
-                        // $.ajax({
-                        //     url: 'insidecheck/data5.php',
-                        //     type: 'POST',
-                        //     data: {
-                        //         "serialnumber": serialnumber
-                        //     },
-                        //     success: function(response) {
-                        //         var response = JSON.parse(response);
-                        //         if (response.status == 'OK') {
-                        //             Swal.fire({
-                        //                 title: 'Berhasil!',
-                        //                 icon: 'success',
-                        //                 html: 'Data berhasil dikirim ke repair',
-                        //                 showCancelButton: false,
-                        //                 showConfirmButton: true,
-                        //                 confirmButtonColor: '#3085d6',
-                        //                 cancelButtonColor: '#d33',
-                        //                 confirmButtonText: 'Oke',
-                        //                 cancelButtonText: 'Tidak'
-                        //             }).then((result) => {
-                        //                 if (result.isConfirmed) {
-                        //                     $('#clearacard').trigger('click');
-                        //                 }
-                        //             })
-                        //         } else {
-                        //             Swal.fire({
-                        //                 title: 'Gagal!',
-                        //                 icon: 'error',
-                        //                 html: 'Data gagal dikirim, silahkan menghubungi ICTM',
-                        //                 showCancelButton: false,
-                        //                 showConfirmButton: true,
-                        //                 confirmButtonColor: '#3085d6',
-                        //                 cancelButtonColor: '#d33',
-                        //                 confirmButtonText: 'Oke',
-                        //                 cancelButtonText: 'Tidak'
-                        //             })
-                        //         }
-
-                        //     }
-                        // });
-                    }
-                });
-            })
-        </script>
+        <button disabled class="btn btn-success" id="check">Data sudah dikirim ke Outside Check 1</button>
     </div>
 </div>
 <hr>

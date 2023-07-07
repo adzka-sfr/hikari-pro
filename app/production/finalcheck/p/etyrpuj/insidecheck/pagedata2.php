@@ -10,8 +10,8 @@ $pianoserial = isset($_POST['pianoserial']) ? $_POST['pianoserial'] : '';
 $pianogmc = isset($_POST['pianogmc']) ? $_POST['pianogmc'] : '';
 $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 
-// [SELECT : finalcheck_fetch_incheck] get tanggal NG -> maks (c_result_date) and c_result=ng || finalcheck_fetch_incheck
-$sql1 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_fetch_incheck WHERE c_serialnumber = '$pianoserial' AND c_result = 'NG'");
+// [SELECT : finalcheck_fetch_inside] get tanggal NG -> maks (c_result_date) and c_result=ng || finalcheck_fetch_inside
+$sql1 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_fetch_inside WHERE c_serialnumber = '$pianoserial' AND c_result = 'NG'");
 $data1 = mysqli_fetch_array($sql1);
 $ng_date = '-';
 if ($data1['ng_date'] != '') {
@@ -28,8 +28,10 @@ $ok_date = '-';
 $pic = $data2['c_inside'];
 $repair = '';
 $validation_func = 'disabled'; // jika belum di print tidak bisa di validasi
+$finish_inside_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 if ($data2['c_repair_inside_o'] != '') {
-    $ok_date = date('d-m-Y', strtotime($data2['ng_date']));
+    $ok_date = date('d-m-Y', strtotime($data1['ng_date']));
+    $finish_inside_func = 'disabled';
 }
 if ($data2['c_inside_pic'] != '') {
     $repair = $data2['c_inside_pic'];
@@ -133,7 +135,7 @@ if ($data2['c_inside_pic'] != '') {
         <?php
         $arr_ng = [];
         $no = 0;
-        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_code_ng, a.c_repair, a.c_result, b.c_detail FROM finalcheck_fetch_incheck a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
+        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_code_ng, a.c_repair, a.c_result, b.c_detail FROM finalcheck_fetch_inside a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
         while ($data = mysqli_fetch_array($sql)) {
             $no++;
             if ($data['c_result'] == 'OK') {
@@ -147,7 +149,10 @@ if ($data2['c_inside_pic'] != '') {
             <?php
             } elseif ($data['c_result'] == 'NG') {
                 $code_ng = explode("/", $data['c_code_ng']);
-                $code_repair = explode("/", $data['c_repair']);
+                if (!empty($data['c_repair'])) {
+                    $code_repair = explode("/", $data['c_repair']);
+                }
+
                 $rowspan = count($code_ng);
                 $rowspan++;
             ?>
@@ -169,16 +174,17 @@ if ($data2['c_inside_pic'] != '') {
                     $sql3 = mysqli_query($connect_pro, "SELECT c_name FROM finalcheck_list_ng WHERE c_code_ng = '$value'");
                     $data3 = mysqli_fetch_array($sql3);
 
+
                     $checklist = '';
-                    if (
-                        $code_repair[$urutan] == 'OK'
-                    ) {
-                        $checklist = 'checked';
+                    if (!empty($data['c_repair'])) {
+                        if ($code_repair[$urutan] == 'OK') {
+                            $checklist = 'checked';
+                        }
                     }
                 ?>
                     <tr>
                         <td style="font-size: 15px;">- <?= $data3['c_name'] ?> <?= $urutan ?></td>
-                        <td style="text-align: center;"><input id="cekbok<?= $value ?>" <?= $checklist . $validation_func ?> onchange="cekbok(this.id, '<?= $data['c_code_incheck'] ?>')" value="<?= $value ?>" type="checkbox" style="transform: scale(2);">
+                        <td style="text-align: center;"><input id="cekbok<?= $value ?>" <?= $checklist . " " . $validation_func . " " . $finish_inside_func ?> onchange="cekbok(this.id, '<?= $data['c_code_incheck'] ?>')" value="<?= $value ?>" type="checkbox" style="transform: scale(2);">
 
                         </td>
                         <td style="text-align: center;"></td>
@@ -325,50 +331,50 @@ if ($data2['c_inside_pic'] != '') {
                     if (result.isConfirmed) {
                         console.log('sudah oke gan sampai outside 1');
 
-                        // pindah data dari finalcheck_fetch_incheck ke tabel finalcheck_inside
+                        // pindah data dari finalcheck_fetch_inside ke tabel finalcheck_inside
                         // isi c_repair_o
-                        
-                        // var serialnumber = $('#serialnumber').val();
-                        // $.ajax({
-                        //     url: 'insidecheck/data5.php',
-                        //     type: 'POST',
-                        //     data: {
-                        //         "serialnumber": serialnumber
-                        //     },
-                        //     success: function(response) {
-                        //         var response = JSON.parse(response);
-                        //         if (response.status == 'OK') {
-                        //             Swal.fire({
-                        //                 title: 'Berhasil!',
-                        //                 icon: 'success',
-                        //                 html: 'Data berhasil dikirim ke repair',
-                        //                 showCancelButton: false,
-                        //                 showConfirmButton: true,
-                        //                 confirmButtonColor: '#3085d6',
-                        //                 cancelButtonColor: '#d33',
-                        //                 confirmButtonText: 'Oke',
-                        //                 cancelButtonText: 'Tidak'
-                        //             }).then((result) => {
-                        //                 if (result.isConfirmed) {
-                        //                     $('#clearacard').trigger('click');
-                        //                 }
-                        //             })
-                        //         } else {
-                        //             Swal.fire({
-                        //                 title: 'Gagal!',
-                        //                 icon: 'error',
-                        //                 html: 'Data gagal dikirim, silahkan menghubungi ICTM',
-                        //                 showCancelButton: false,
-                        //                 showConfirmButton: true,
-                        //                 confirmButtonColor: '#3085d6',
-                        //                 cancelButtonColor: '#d33',
-                        //                 confirmButtonText: 'Oke',
-                        //                 cancelButtonText: 'Tidak'
-                        //             })
-                        //         }
 
-                        //     }
-                        // });
+                        // var serialnumber = $('#serialnumber').val();
+                        $.ajax({
+                            url: 'insidecheck/data7.php',
+                            type: 'POST',
+                            data: {
+                                "serialnumber": serialnumber
+                            },
+                            success: function(response) {
+                                var response = JSON.parse(response);
+                                if (response.status == 'OK') {
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        icon: 'success',
+                                        html: 'Data berhasil dikirim ke Outside Check 1',
+                                        showCancelButton: false,
+                                        showConfirmButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Oke',
+                                        cancelButtonText: 'Tidak'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            $('#clearacard').trigger('click');
+                                        }
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        icon: 'error',
+                                        html: 'Data gagal dikirim, silahkan menghubungi ICTM',
+                                        showCancelButton: false,
+                                        showConfirmButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Oke',
+                                        cancelButtonText: 'Tidak'
+                                    })
+                                }
+
+                            }
+                        });
                     }
                 });
             })
