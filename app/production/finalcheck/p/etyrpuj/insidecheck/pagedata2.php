@@ -131,7 +131,7 @@ if ($data2['c_inside_pic'] != '') {
         <?php
         $arr_ng = [];
         $no = 0;
-        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_code_ng, a.c_result, b.c_detail FROM finalcheck_fetch_incheck a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
+        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_code_ng, a.c_repair, a.c_result, b.c_detail FROM finalcheck_fetch_incheck a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
         while ($data = mysqli_fetch_array($sql)) {
             $no++;
             if ($data['c_result'] == 'OK') {
@@ -145,6 +145,7 @@ if ($data2['c_inside_pic'] != '') {
             <?php
             } elseif ($data['c_result'] == 'NG') {
                 $code_ng = explode("/", $data['c_code_ng']);
+                $code_repair = explode("/", $data['c_repair']);
                 $rowspan = count($code_ng);
                 $rowspan++;
             ?>
@@ -158,147 +159,49 @@ if ($data2['c_inside_pic'] != '') {
                     <td><?= $repair ?></td>
                 </tr>
                 <?php
+                // die();
+                $urutan = 0;
                 foreach ($code_ng as $value) {
+
                     array_push($arr_ng, $value);
                     $sql3 = mysqli_query($connect_pro, "SELECT c_name FROM finalcheck_list_ng WHERE c_code_ng = '$value'");
                     $data3 = mysqli_fetch_array($sql3);
+
+                    $checklist = '';
+                    if (
+                        $code_repair[$urutan] == 'OK'
+                    ) {
+                        $checklist = 'checked';
+                    }
+                    var_dump($checklist);
                 ?>
                     <tr>
-                        <td style="font-size: 15px;">- <?= $data3['c_name'] ?></td>
-                        <td style="text-align: center;"><input id="cekbok<?= $value ?>" onchange="cekbok(this.id, '<?= $data['c_code_incheck'] ?>')" value="<?= $value ?>" type="checkbox" style="transform: scale(2);">
+                        <td style="font-size: 15px;">- <?= $data3['c_name'] ?> <?= $urutan ?></td>
+                        <td style="text-align: center;"><input id="cekbok<?= $value ?>" <?= $checklist ?> onchange="cekbok(this.id, '<?= $data['c_code_incheck'] ?>')" value="<?= $value ?>" type="checkbox" style="transform: scale(2);">
 
                         </td>
                         <td style="text-align: center;"></td>
                     </tr>
 
                 <?php
+                    $urutan++;
                 }
-                ?>
-
-            <?php
             } else {
-            ?>
+                ?>
                 <tr>
                     <td style=" text-align: center;"><?= $no ?></td>
                     <td style="font-size: 15px;"><?= $data['c_detail'] ?></td>
                     <td style="text-align: center; font-size: 15px;"></td>
                 </tr>
-            <?php
-            }
-            ?>
-
-            <script>
-                var awal = $('#awalstatus<?= $no ?>').val();
-                $('.radioku<?= $no ?>').change(function() {
-                    $('#ngcode<?= $no ?>').prop('disabled', !$(this).is('.ng<?= $no ?>'));
-
-                    // get data
-                    selected_value = $("input[name='pil<?= $no ?>']:checked").val();
-                    var code = $('#item<?= $no ?>').val();
-                    var serialnumber = $('#serialnumber').val();
-                    console.log(selected_value);
-                    console.log(code);
-                    console.log(serialnumber);
-
-                    // jika radio button OK, maka set value kosong untuk select
-                    if (selected_value == 'OK') {
-                        console.log('berhasil get OK');
-                        $('#ngcode<?= $no ?>').val('').trigger('change');
-                    }
-
-                    // ajax untuk melakukan update
-                    $.ajax({
-                        url: 'insidecheck/data.php',
-                        type: 'POST',
-                        data: {
-                            "serialnumber": serialnumber,
-                            "code": code,
-                            "res": selected_value
-                        },
-                        success: function(response) {
-                            console.log(response);
-
-                        }
-                    });
-                });
-
-                if (awal == 'NG') {
-                    $('#ngcode<?= $no ?>').prop('disabled', false);
-                }
-
-                $('#ngcode<?= $no ?>').change(function() {
-                    var code = $('#item<?= $no ?>').val();
-                    var serialnumber = $('#serialnumber').val();
-                    var ngcode = $('#ngcode<?= $no ?>').val();
-                    console.log(ngcode);
-                    $.ajax({
-                        url: 'insidecheck/data2.php',
-                        type: 'POST',
-                        data: {
-                            "serialnumber": serialnumber,
-                            "code": code,
-                            "ngcode": ngcode
-                        },
-                        success: function(response) {
-                            console.log(response);
-                        }
-                    });
-                })
-            </script>
-            <script>
-                // $('#radio_box<?= $no ?>').change(function() {
-                //     selected_value = $("input[name='pil<?= $no ?>']:checked").val();
-                //     var code = $('#item<?= $no ?>').val();
-                //     var serialnumber = $('#serialnumber').val();
-                //     console.log(selected_value);
-                //     console.log(code);
-                //     console.log(serialnumber);
-                //     // ajax untuk melakukan update
-                //     $.ajax({
-                //         url: 'insidecheck/data.php',
-                //         type: 'POST',
-                //         data: {
-                //             "serialnumber": serialnumber,
-                //             "code": code,
-                //             "res": selected_value
-                //         },
-                //         success: function(response) {
-                //             console.log(response);
-                //         }
-                //     });
-
-                //     if (selected_value == 'NG') {
-                //         $('#pilihan<?= $no ?>').prop('disabled', false);
-                //         $('#pilihan<?= $no ?>').change(function() {
-                //             var jenis = $('#pilihan<?= $no ?>').val();
-                //             // $.ajax({
-                //             //     url: 'data2.php',
-                //             //     type: 'POST',
-                //             //     data: {
-                //             //         "jenis": jenis,
-                //             //         "item": item
-                //             //     },
-                //             //     success: function(response) {
-                //             //         console.log(response);
-                //             //     }
-                //             // });
-                //         })
-
-                //     } else if (selected_value == 'OK') {
-                //         $('#pilihan<?= $no ?>').val('').trigger('change');
-                //         $('#pilihan<?= $no ?>').prop('disabled', true);
-                //     }
-
-                // });
-            </script>
         <?php
+            }
         }
         ?>
         <script>
             var checkbox = <?= json_encode($arr_ng) ?>;
 
             function cekbok(id, item) {
-                
+
                 var data_ng = [];
                 for (let i = 0; i < checkbox.length; i++) {
 
@@ -315,14 +218,13 @@ if ($data2['c_inside_pic'] != '') {
 
                     data_ng.push(ngcode);
                 }
-                console.log(data_ng);
                 $.ajax({
                     url: 'insidecheck/data6.php',
                     type: 'POST',
                     data: {
                         "serialnumber": serialnumber,
                         "ngcode": data_ng,
-                        "item" : item
+                        "item": item
                     },
                     success: function(response) {
                         console.log(response);
