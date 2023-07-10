@@ -134,31 +134,16 @@ session_start();
     $q1 = mysqli_query($connect, "SELECT nama FROM auth WHERE role = 'repair incheck'");
 
     // get pic cek and note
-    $q2 = mysqli_query($connect_pro, "SELECT a.c_inside as pic_check, b.c_inside as note_check FROM finalcheck_pic a INNER JOIN finalcheck_note b ON a.c_serialnumber = b.c_serialnumber WHERE a.c_serialnumber = '$serialnumber'");
+    $q2 = mysqli_query($connect_pro, "SELECT a.c_inside as pic_check, b.c_inside as note_check, c.c_inside_pic as pic_repair FROM finalcheck_pic a INNER JOIN finalcheck_note b ON a.c_serialnumber = b.c_serialnumber INNER JOIN finalcheck_repairtime c ON a.c_serialnumber = c.c_serialnumber WHERE a.c_serialnumber = '$serialnumber'");
     $d2 = mysqli_fetch_array($q2);
 
     ?>
-    <div class="row noPrint">
-        <div class="col-12 mb-3">
-            <input type="hidden" value="<?= $serialnumber ?>" id="serialnumber">
-            <select style="width: 100%;" id="ngcode" onchange="selectcek(this.id)" required>
-                <option selected disabled>Pilih PIC Repair</option>
-                <?php
-                while ($d1 = mysqli_fetch_array($q1)) {
-                ?>
-                    <option value="<?= $d1['nama'] ?>"><?= $d1['nama'] ?></option>
-                <?php
-                }
-                ?>
-            </select>
-        </div>
-    </div>
     <div class="row noPrint">
         <div class="col-6" style="text-align: center;">
             <button id="back" class="btn btn-danger">Back</button>
         </div>
         <div class="col-6" style="text-align: center;">
-            <button id="print" class="btn btn-primary" disabled>Print</button>
+            <button id="print" class="btn btn-primary">Print</button>
         </div>
     </div>
     <br>
@@ -211,8 +196,7 @@ session_start();
         </div>
         <hr style="border-top: 3px solid black; margin-bottom: 0px; margin-top:0px;">
         <div style="font-size: 12px; padding-left: 10px; margin-left: 0px; margin-top: 0px;">
-            pic repair: <span id="pic">-</span>
-            <input type="hidden" id="picsend" value="-">
+            pic repair: <span id="pic"><?= $d2['pic_repair'] ?></span>
         </div>
     </div>
 
@@ -249,48 +233,9 @@ session_start();
         });
     </script>
     <script>
-        function selectcek(id) {
-            var pic = $('#' + id).val();
-            // console.log($('#' + id).val())
-            $('#pic').html($('#' + id).val());
-            $('#picsend').val(pic);
-            $('#print').attr("disabled", false);
-        }
-
         $('#print').click(function() {
             // ajax
-            var pic = $('#picsend').val();
-            var serialnumber = $('#serialnumber').val();
-            // console.log(pic);
-            $.ajax({
-                url: 'data3.php',
-                type: 'POST',
-                data: {
-                    "serialnumber": serialnumber,
-                    "pic": pic
-
-                },
-                success: function(response) {
-                    var response = JSON.parse(response);
-                    if (response.status == 'OK') {
-                        window.print()
-                        // console.log('oke print');
-                    } else {
-                        Swal.fire({
-                            title: 'Gagal!',
-                            icon: 'error',
-                            html: 'Silahkan coba lagi nanti',
-                            showCancelButton: false,
-                            showConfirmButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Oke',
-                            cancelButtonText: 'Tidak'
-                        })
-                    }
-
-                }
-            });
+            window.print()
         })
 
         $('#back').click(function() {
@@ -319,13 +264,6 @@ session_start();
                 }
             });
         })
-
-        $('.halodecktot').select2({
-            placeholder: " Pilih Nama",
-            language: "id",
-            allowClear: true,
-
-        });
     </script>
     <script src="../../source/js/bootstrap.bundle.min.js"></script>
 </body>

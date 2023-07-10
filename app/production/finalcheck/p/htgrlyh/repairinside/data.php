@@ -18,17 +18,19 @@ require '../config.php';
             $btn_style = 'btn-primary';
             $btn_dis = '';
             $btn_info = 'Print';
+            $btn_act = 'btnPrint';
             if ($data['c_inside_pic'] != '') {
                 $pic_repair = $data['c_inside_pic'];
                 $btn_style = 'btn-warning';
-                $btn_dis = 'disabled';
+                $btn_dis = '';
                 $btn_info = 'On Repair';
+                $btn_act = 'btnPrint1';
             }
         ?>
             <tr>
                 <td><?= $data['c_serialnumber'] ?></td>
                 <td style="text-align: center;"><?= $data['c_inside'] ?></td>
-                <td><button <?= $btn_dis ?> class="btn <?= $btn_style ?>" style="width: 100%; font-weight: bold;" id="pr-<?= $data['c_serialnumber'] ?>" onclick="btnPrint(this.id, '<?= $data['c_serialnumber'] ?>')"><?= $btn_info ?></button></td>
+                <td><button <?= $btn_dis ?> class="btn <?= $btn_style ?>" style="width: 100%; font-weight: bold;" id="pr-<?= $data['c_serialnumber'] ?>" onclick="<?= $btn_act ?>(this.id, '<?= $data['c_serialnumber'] ?>')"><?= $btn_info ?></button></td>
                 <td style="text-align: center;"><?= $pic_repair ?></td>
             </tr>
         <?php

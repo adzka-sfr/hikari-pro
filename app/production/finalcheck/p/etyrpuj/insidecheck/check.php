@@ -113,16 +113,16 @@ if ($kode == 'U') {
             }
         }
     }
-} elseif ($kode == 'J') {
+} elseif ($kode == 'X') {
     // [a] menjalankan code Serial number
-    $serialnumber = $codecode;
+    $serialnumber = substr($codecode, 2);
 
     // (G) cek apakah status sudah terdaftar dan sudah selesai di cek
     $sql11 = mysqli_query($connect_pro, "SELECT b.c_inside_i, b.c_inside_o, c.c_repair_inside_o  FROM finalcheck_register a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber INNER JOIN finalcheck_repairtime c ON a.c_serialnumber = c.c_serialnumber  WHERE a.c_serialnumber  = '$serialnumber'");
     $data11 = mysqli_fetch_array($sql11);
     if (!empty($data11['c_inside_i']) && !empty($data11['c_inside_o'])) {
         // [g] sudah terdaftar
-        $sql12 = mysqli_query($connect_pro, "SELECT a.c_plannumber, a.c_acard, a.c_serialnumber, a.c_gmc, b.c_name FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_acard = '$acard'");
+        $sql12 = mysqli_query($connect_pro, "SELECT a.c_plannumber, a.c_acard, a.c_serialnumber, a.c_gmc, b.c_name FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber'");
         $data12 = mysqli_fetch_array($sql12);
 
         // (I) cek apakah sudah selesai validasi

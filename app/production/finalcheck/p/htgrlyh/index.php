@@ -1,1 +1,1 @@
-<?php header('location:main.php?page=inch');
+<?php header('location:main.php?page=inrp');
