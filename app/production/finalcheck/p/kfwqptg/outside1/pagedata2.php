@@ -92,7 +92,45 @@ $data = mysqli_fetch_array($sql);
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <div class="row">
+                            <div class="col-12 mb-1">
+                                <label>Nama NG :</label>
+                                <select class="halodecktot" id="ng" name="ng" style="width:100%; height: max-content;">
+                                    <option value="" selected disabled>Select Cabinet</option>
+                                    <option value="dekok">Dekok</option>
+                                    <option value="biskage">Biskage</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-3 mb-1">
+                                <label>Nama Kabinet :</label>
+                                <select class="halodecktot" id="cabin" name="cab[]" multiple="multiple" style="width:100%; height: max-content;">
+                                    <option value="Fall Center">Fall Center</option>
+                                    <option value="Fall Board">Fall Board</option>
+                                    <option value="Top Board">Top Board</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="text-align: center;">
+                                <center>
+                                    <div class="containere">
+                                        <img src="../art/f/tbo.png" style="width:100%">
+                                        <?php
+                                        $c_code_type = 'f';
+                                        $c_image = 'tbo';
+                                        $sql = mysqli_query($connect_pro, "SELECT c_code_coordinate, c_top, c_left FROM finalcheck_list_coordinate WHERE c_code_type = '$c_code_type' AND c_image = '$c_image'");
+                                        while ($data = mysqli_fetch_array($sql)) {
+                                        ?>
+                                            <input type="checkbox" class="chck" name="<?= $c_image ?>[]" value="<?= $data['c_code_coordinate'] ?>" style="width: 30px; height: 30px; top: <?= $data['c_top'] ?>%; left: <?= $data['c_left'] ?>%; accent-color: #FF0000;">
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
