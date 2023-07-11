@@ -1,7 +1,7 @@
 <?php
 // get connection
 require '../config.php';
-// [a][b][c][d][e][f][g]
+// [a][b][c][d][e][f][g][h][i]
 // get data lemparan
 $codecode = $_POST['acard'];
 

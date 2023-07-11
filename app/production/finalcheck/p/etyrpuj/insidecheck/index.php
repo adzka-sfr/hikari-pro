@@ -89,9 +89,9 @@
         if (deviceitem == "Windows") {
             var aspekrasio = 2.9;
         } else if (deviceitem == "Macintosh") {
-            var aspekrasio = 0.3;
+            var aspekrasio = 0.4;
         } else if (deviceitem == "Android") {
-            var aspekrasio = 0.3;
+            var aspekrasio = 0.4;
         }
 
         let config = {
@@ -254,6 +254,7 @@
                             $('#scanner').show();
                             $('#clearacard').hide();
                             $('#loadingacard').hide();
+                            $('#scanner').attr("disabled", false);
                         } else {
                             // jaringan error
                             Swal.fire({

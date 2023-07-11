@@ -4,5 +4,5 @@ if ($_GET['page'] == 'inch') {
 } elseif ($_GET['page'] == 'help') {
     include "manual/index.php";
 } else {
-    include "print/index.php";
+    include "insidecheck/index.php";
 }

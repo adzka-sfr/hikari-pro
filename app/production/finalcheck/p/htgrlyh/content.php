@@ -4,5 +4,5 @@ if ($_GET['page'] == 'inrp') {
 } elseif ($_GET['page'] == 'help') {
     include "manual/index.php";
 } else {
-    include "print/index.php";
+    include "repairinside/index.php";
 }

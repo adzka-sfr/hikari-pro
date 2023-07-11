@@ -12,7 +12,7 @@ require '../config.php';
     </thead>
     <tbody>
         <?php
-        $sql = mysqli_query($connect_pro, "SELECT DISTINCT a.c_serialnumber, b.c_inside, c.c_inside_pic FROM finalcheck_fetch_inside a INNER JOIN finalcheck_pic b ON a.c_serialnumber = b.c_serialnumber INNER JOIN finalcheck_repairtime c ON a.c_serialnumber = c.c_serialnumber ORDER BY c.c_inside_pic ASC");
+        $sql = mysqli_query($connect_pro, "SELECT DISTINCT a.c_serialnumber, b.c_inside, c.c_inside_pic FROM finalcheck_fetch_inside a INNER JOIN finalcheck_pic b ON a.c_serialnumber = b.c_serialnumber INNER JOIN finalcheck_repairtime c ON a.c_serialnumber = c.c_serialnumber INNER JOIN finalcheck_timestamp d ON a.c_serialnumber = d.c_serialnumber WHERE d.c_inside_o != '' ORDER BY c.c_inside_pic ASC");
         while ($data = mysqli_fetch_array($sql)) {
             $pic_repair = '-';
             $btn_style = 'btn-primary';
