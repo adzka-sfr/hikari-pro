@@ -27,7 +27,8 @@ if ($kode == 'X') {
             // echo json_encode(array("status" => "belum-ada-data"));
             $q3 = mysqli_query($connect_pro, "SELECT c.c_code_completeness FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc INNER JOIN finalcheck_list_completeness_model c ON b.c_code_model = c.c_code_model WHERE a.c_serialnumber = '$serialnumber'");
             while ($d3 = mysqli_fetch_array($q3)) {
-                mysqli_query($connect_pro, "INSERT INTO finalcheck_fetch_completeness SET c_serialnumber = '$serialnumber', c_code_completeness = '$d3[c_code_completeness]'");
+                // sekalian insert completeness  awal sebagai N
+                mysqli_query($connect_pro, "INSERT INTO finalcheck_fetch_completeness SET c_serialnumber = '$serialnumber', c_code_completeness = '$d3[c_code_completeness]', c_resultsatu = 'N', c_resultsatu_date = '$now'");
             }
             // [UPDATE : finalcheck_timestamp (c_completenesssatu_i)]
             mysqli_query($connect_pro, "UPDATE finalcheck_timestamp SET c_completenesssatu_i = '$now' WHERE c_serialnumber = '$serialnumber'");

@@ -17,7 +17,7 @@ $data = mysqli_fetch_array($sql);
 
 <!-- judul pagedata -->
 <hr>
-<h4><i class="fa fa-pencil-square-o"></i> <u>Check Card - Completeness</u></h4>
+<h4><i class="fa fa-pencil-square-o"></i> <u>Check Card - Outside</u></h4>
 <!-- judul pagedata -->
 
 <!-- judul -->
@@ -65,70 +65,128 @@ $data = mysqli_fetch_array($sql);
 <!-- judul -->
 
 
-<!-- formulir cek inside -->
-<table class="table table-bordered">
-    <thead style="text-align: center;">
-        <tr>
-            <th rowspan="2">No</th>
-            <th rowspan="2">Item</th>
-            <th colspan="3">Hasil Cek</th>
-        </tr>
-        <tr>
-            <td>C1</td>
-            <td>C2</td>
-            <td>C3</td>
-        </tr>
-
-    </thead>
-    <tbody>
-        <?php
-        $no = 0;
-        $sql = mysqli_query($connect_pro, "SELECT a.c_code_completeness, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE c_serialnumber = '$serialnumber'");
-        while ($data = mysqli_fetch_array($sql)) {
-            $no++;
-        ?>
-            <tr>
-                <td style="text-align: center;"><?= $no ?></td>
-                <td style="font-size: 15px;"><?= $data['c_detail'] ?></td>
-                <td style="font-size: 15px; text-align: center;"><input id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok1(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
-                <td style="font-size: 15px; text-align: center;"><input disabled id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
-                <td style="font-size: 15px; text-align: center;"><input disabled id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok3(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
+<!-- isi konten -->
+<div class="row">
+    <div class="col-12 mb-0">
+        <table class="table">
+            <tr style="text-align: center;">
+                <td><i class="fa fa-pencil" style="color: #DC4646 ;"></i> Outside Check 1</td>
+                <td><i class="fa fa-pencil" style="color: #5AA65A ;"></i> Outside Check 2</td>
+                <td><i class="fa fa-pencil" style="color: #1340FF ;"></i> Outside Check 3</td>
             </tr>
-        <?php
-        }
-        ?>
-        <script>
-            var serialnumber = $('#serialnumber').val();
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahng">
+            <b>Tambah NG</b> <i class="fa fa-plus"></i>
+        </button>
 
-            function cekbok1(id) {
-                console.log($('#' + id).val())
-                var code = $('#' + id).val();
-                var result = 'N';
-                if ($('#' + id).is(':checked')) {
-                    console.log('centang');
-                    result = 'Y';
-                } else {
-                    console.log('tidak centang');
-                    result = 'N';
-                }
-                $.ajax({
-                    url: 'outside1/data.php',
-                    type: 'POST',
-                    data: {
-                        "serialnumber": serialnumber,
-                        "code": code,
-                        "result": result
-                    },
-                    success: function(response) {
-                        console.log(response);
-                    }
-                });
-            }
-        </script>
-    </tbody>
-</table>
-
-
+        <!-- Modal -->
+        <div class="modal fade" id="tambahng" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah NG</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Add NG</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead style="text-align: center;">
+                <th style="width: 5%;">No</th>
+                <th>Detail NG</th>
+            </thead>
+        </table>
+    </div>
+    <div class="col-6">
+        <!-- tbo image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/f/tbo.png" style="width:100%; opacity: 60%;">
+                    <button class="btn ingpo" style="width: 25px; height: 25px; top: 10%; left: 5%;">
+                        <span style="color: red; padding: 0px;">1</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- tbo image -->
+        <br>
+        <hr>
+        <br>
+        <!-- tbi image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/f/tbi.png" style="width:100%; opacity: 60%;">
+                    <button class="btn ingpo" style="width: 25px; height: 25px; top: 10%; left: 5%;">
+                        <span style="color: red; padding: 0px;">1</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- tbi image -->
+        <br>
+        <hr>
+        <br>
+        <!-- uk image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/f/uk.png" style="width:100%; opacity: 60%;">
+                    <button class="btn ingpo" style="width: 25px; height: 25px; top: 10%; left: 5%;">
+                        <span style="color: red; padding: 0px;">1</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- uk image -->
+        <br>
+        <hr>
+        <br>
+        <!-- b image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/f/b.png" style="width:100%; opacity: 60%;">
+                    <button class="btn ingpo" style="width: 25px; height: 25px; top: 10%; left: 5%;">
+                        <span style="color: red; padding: 0px;">1</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- b image -->
+        <br>
+        <hr>
+        <br>
+        <!-- bb image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/f/bb.png" style="width:100%; opacity: 60%;">
+                    <button class="btn ingpo" style="width: 25px; height: 25px; top: 10%; left: 5%;">
+                        <span style="color: red; padding: 0px;">1</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- bb image -->
+        <br>
+        <hr>
+        <br>
+    </div>
+</div>
+<!-- isi konten -->
 
 <!-- note completeness -->
 <div class="row">
@@ -151,7 +209,7 @@ $data = mysqli_fetch_array($sql);
             var note = $('#note1').val();
             var stat = 'select';
             $.ajax({
-                url: 'outside1/data1.php',
+                url: 'outside1/data2.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,
@@ -169,7 +227,7 @@ $data = mysqli_fetch_array($sql);
             var note = $('#note1').val();
             var stat = 'update';
             $.ajax({
-                url: 'outside1/data1.php',
+                url: 'outside1/data2.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,
@@ -231,13 +289,12 @@ $data = mysqli_fetch_array($sql);
 </table>
 <!-- stamp -->
 
-
 <hr>
 
 <div class="row">
-    <div class="col-12 mb-5" style="text-align: right;">
-        <button class="btn btn-success" id="check">Lanjut, Cek Outside <i class="fa fa-hand-o-right"></i></button>
-        <button class="btn btn-success" id="send" style="display: none;">Lanjut, Cek Outside</button>
+    <div class="col-12 mb-5" style="text-align: left;">
+        <button class="btn btn-success" id="check"><i class="fa fa-hand-o-left"></i> Kembali, Cek Completeness</button>
+        <button class="btn btn-success" id="send" style="display: none;">Send to Repair official</button>
         <script>
             $('#check').click(function() {
                 function loadData() {
@@ -246,7 +303,7 @@ $data = mysqli_fetch_array($sql);
                         serialnumber: $('#serialnumber').val(),
                     };
                     $.ajax({
-                        url: "outside1/pagedata2.php",
+                        url: "outside1/pagedata.php",
                         type: "POST",
                         data: dataString,
                         success: function(data) {
