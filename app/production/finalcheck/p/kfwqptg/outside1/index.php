@@ -178,46 +178,14 @@
                             $('#acard').focus();
                             $('#scanner').attr("disabled", false);
                         } else if (response.status == 'ada') {
-                            Swal.fire({
-                                title: 'Ada Data!',
-                                text: 'data benar',
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
                             // load data jika ada data
-                            // function loadData() {
-
-                            //     var dataString = {
-                            //         acard: response.acard,
-                            //         plannumber: response.plannumber,
-                            //         pianoserial: response.pianoserial,
-                            //         pianoname: response.pianoname,
-                            //         pianogmc: response.pianogmc,
-                            //     };
-                            //     $.ajax({
-                            //         url: "insidecheck/pagedata.php",
-                            //         type: "POST",
-                            //         data: dataString,
-                            //         success: function(data) {
-                            //             $('#pagedata').show();
-                            //             $('#pagedata').html(data);
-                            //         }
-                            //     });
-                            // };
-                            // loadData();
-                        } else if (response.status == 'ada-sudah-cek') {
-                            // load data jika ada data dan sudah dicek
                             function loadData() {
 
                                 var dataString = {
-                                    acard: response.acard,
-                                    plannumber: response.plannumber,
-                                    pianoserial: response.pianoserial,
-                                    pianoname: response.pianoname,
-                                    pianogmc: response.pianogmc,
+                                    serialnumber: response.serialnumber,
                                 };
                                 $.ajax({
-                                    url: "insidecheck/pagedata2.php",
+                                    url: "outside1/pagedata.php",
                                     type: "POST",
                                     data: dataString,
                                     success: function(data) {
@@ -227,6 +195,14 @@
                                 });
                             };
                             loadData();
+                        } else if (response.status == 'ada-belum-selesai') {
+                            // load data jika ada data dan sudah dicek
+                            Swal.fire({
+                                title: 'Ada!',
+                                text: 'Belum selesai pada inside check',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
                         } else if (response.status == 'ada-sudah-cek-validasi') {
                             // load data jika ada data dan sudah dicek
                             function loadData() {
@@ -249,19 +225,6 @@
                                 });
                             };
                             loadData();
-                        } else if (response.status == 'ada-belum-tr') {
-                            // belum melakukan TR di proses U400
-                            Swal.fire({
-                                title: 'Belum TR!',
-                                text: 'Pastikan sudah dilakukan TR di proses sebelumnya',
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
-                            $('#acard').attr("readonly", false);
-                            $('#scanner').show();
-                            $('#clearacard').hide();
-                            $('#loadingacard').hide();
-                            $('#scanner').attr("disabled", false);
                         } else {
                             // jaringan error
                             Swal.fire({
