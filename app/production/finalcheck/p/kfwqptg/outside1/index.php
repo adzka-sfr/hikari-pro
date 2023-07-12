@@ -5,6 +5,7 @@
         <hr>
     </div>
 </div>
+
 <div class="row">
     <div class="col-12">
         <div class="row">
@@ -57,6 +58,9 @@
         </div> -->
     </div>
 </div>
+
+
+<!-- Modal Edit -->
 
 
 <!-- untuk mengambil ratio device -->
@@ -255,12 +259,98 @@
 </script>
 <!-- untuk aksi setelah acard terisi -->
 
+
+
 <div class="row">
     <div class="col-12">
         <div style="display: none;" id="pagedata"></div>
     </div>
 </div>
 
+
+<script>
+    function load_data_ng(serialnumber) {
+        $.ajax({
+            type: 'POST',
+            url: 'outside1/detail_ng.php',
+            data: {
+                "serialnumber": serialnumber
+            },
+            success: function(response) {
+                // var response = JSON.parse(response);
+                $('#detail_ng').html(response);
+            }
+        });
+    }
+
+    function load_image_ng(serialnumber, codetype) {
+        $.ajax({
+            type: 'POST',
+            url: 'outside1/image_ng.php',
+            data: {
+                "serialnumber": serialnumber,
+                "codetype": codetype
+            },
+            success: function(response) {
+                // var response = JSON.parse(response);
+                $('#image_ng').html(response);
+            }
+        });
+    }
+
+    function tambahdatang() {
+        var isi = $('#myform').serializeArray();
+        console.log(isi);
+        $.ajax({
+            type: 'POST',
+            url: 'outside1/data3.php',
+            data: isi,
+            success: function(response) {
+                var response = JSON.parse(response);
+                if (response.status == 'berhasil') {
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: 'NG berhasil ditambahkan',
+                        icon: 'success',
+                        timer: 2000,
+                        showCancelButton: false,
+                        showConfirmButton: false
+                    }).then(function() {
+                        load_data_ng(serialnumber);
+                        load_image_ng(serialnumber, codetype);
+                        $('.close-mdl-ng').trigger('click');
+                    });
+
+                } else if (response.status == 'ng-sudah-ada') {
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: 'NG sudah ada dalam list, silahkan melakukan update pada tabel jika akan menambah kabinet atau menambah lokasi NG',
+                        icon: 'error',
+                        // timer: 2000,
+                        showConfirmButton: false,
+                        showCancelButton: true,
+                        cancelButtonColor: '#5D646B',
+                        cancelButtonText: 'Oke',
+                    })
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'error!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                }
+            }
+        });
+    }
+
+    function cancelbtnmdl() {
+        $('#ngAdd').val('').trigger('change');
+        $('#cabAdd').val('').trigger('change');
+        $('#myform input[type="checkbox"]').prop('checked', false);
+    }
+</script>
 <!-- untuk menampilkan page data -->
 <script>
 

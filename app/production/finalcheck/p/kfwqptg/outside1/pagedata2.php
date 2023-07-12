@@ -7,13 +7,22 @@ require '../config.php';
 $serialnumber = isset($_POST['serialnumber']) ? $_POST['serialnumber'] : '';
 
 // get informasi piano
-$sql = mysqli_query($connect_pro, "SELECT b.c_name FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber' ");
+$sql = mysqli_query($connect_pro, "SELECT b.c_name, b.c_code_type FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber' ");
 $data = mysqli_fetch_array($sql);
+$c_name_piano = $data['c_name'];
+$c_code_type = $data['c_code_type'];
+if ($c_code_type == 'f') {
+    $format = 'png';
+} elseif ($c_code_type == 'p') {
+    $format = 'jpg';
+}
 ?>
 
 <script src="../source/dropdown_search/jquery-3.4.1.js" crossorigin="anonymous"></script>
 <script src="../source/dropdown_search/select2.min.js"></script>
 <script src="../source/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<!-- <script src="<?= base_url('_assets/vendors/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script> -->
+<script src="<?= base_url('_bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 
 <!-- judul pagedata -->
 <hr>
@@ -44,7 +53,7 @@ $data = mysqli_fetch_array($sql);
             </div>
             <div class="row">
                 <div class="col-12" style="text-align: center;">
-                    <?= $data['c_name'] ?>
+                    <?= $c_name_piano ?>
                 </div>
             </div>
         </th>
@@ -84,7 +93,7 @@ $data = mysqli_fetch_array($sql);
         </button>
 
         <!-- Modal -->
-        <div class="modal fade" id="tambahng" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="tambahng" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -94,16 +103,23 @@ $data = mysqli_fetch_array($sql);
                     <div class="modal-body">
                         <form id="myform">
                             <!-- setup add ng -->
-                            <input type="hidden" name="serialnumber" value="<?= $serialnumber ?>">
-                            <input type="hidden" name="process" value="oc1">
+                            <input type="hidden" id="serialnumberaddng" name="serialnumber" value="<?= $serialnumber ?>">
+                            <input type="hidden" id="processaddng" name="process" value="oc1">
+                            <input type="hidden" id="codetypeaddng" name="codetype" value="<?= $c_code_type ?>">
                             <!-- setup add ng -->
                             <div class="row">
                                 <div class="col-12 mb-1">
                                     <label>Nama NG :</label>
                                     <select class="halodecktot" id="ngAdd" name="ng" style="width:100%; height: max-content;">
-                                        <option value="" selected disabled>Select Cabinet</option>
-                                        <option value="dekok">Dekok</option>
-                                        <option value="biskage">Biskage</option>
+                                        <option value="" selected disabled>Select NG</option>
+                                        <?php
+                                        $sql1 = mysqli_query($connect_pro, "SELECT c_code_ng, c_name FROM finalcheck_list_ng WHERE c_status = 'enable' AND c_area = 'outside'");
+                                        while ($data1 = mysqli_fetch_array($sql1)) {
+                                        ?>
+                                            <option value="<?= $data1['c_code_ng'] ?>"><?= $data1['c_name'] ?></option>
+                                        <?php
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -111,9 +127,14 @@ $data = mysqli_fetch_array($sql);
                                 <div class="col-12 mt-3 mb-1">
                                     <label>Nama Kabinet :</label>
                                     <select class="halodecktot" id="cabAdd" name="cab[]" multiple="multiple" style="width:100%; height: max-content;">
-                                        <option value="cab1">Fall Center</option>
-                                        <option value="cab2">Fall Board</option>
-                                        <option value="cab3">Top Board</option>
+                                        <?php
+                                        $sql1 = mysqli_query($connect_pro, "SELECT c_code_cabinet, c_name FROM finalcheck_list_cabinet WHERE c_status = 'enable'");
+                                        while ($data1 = mysqli_fetch_array($sql1)) {
+                                        ?>
+                                            <option value="<?= $data1['c_code_cabinet'] ?>"><?= $data1['c_name'] ?></option>
+                                        <?php
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -122,9 +143,9 @@ $data = mysqli_fetch_array($sql);
                                 <div class="col-12" style="text-align: center;">
                                     <center>
                                         <div class="containere">
-                                            <img src="../art/f/tbo.png" style="width:100%">
+                                            <img src="../art/<?= $c_code_type ?>/tbo.<?= $format ?>" style="width:100%">
                                             <?php
-                                            $c_code_type = 'f';
+
                                             $c_image = 'tbo';
                                             $sql = mysqli_query($connect_pro, "SELECT c_code_coordinate, c_top, c_left FROM finalcheck_list_coordinate WHERE c_code_type = '$c_code_type' AND c_image = '$c_image'");
                                             while ($data = mysqli_fetch_array($sql)) {
@@ -143,9 +164,9 @@ $data = mysqli_fetch_array($sql);
                                 <div class="col-12" style="text-align: center;">
                                     <center>
                                         <div class="containere">
-                                            <img src="../art/f/tbi.png" style="width:100%">
+                                            <img src="../art/<?= $c_code_type ?>/tbi.<?= $format ?>" style="width:100%">
                                             <?php
-                                            $c_code_type = 'f';
+
                                             $c_image = 'tbi';
                                             $sql = mysqli_query($connect_pro, "SELECT c_code_coordinate, c_top, c_left FROM finalcheck_list_coordinate WHERE c_code_type = '$c_code_type' AND c_image = '$c_image'");
                                             while ($data = mysqli_fetch_array($sql)) {
@@ -164,9 +185,8 @@ $data = mysqli_fetch_array($sql);
                                 <div class="col-12" style="text-align: center;">
                                     <center>
                                         <div class="containere">
-                                            <img src="../art/f/uk.png" style="width:100%">
+                                            <img src="../art/<?= $c_code_type ?>/uk.<?= $format ?>" style="width:100%">
                                             <?php
-                                            $c_code_type = 'f';
                                             $c_image = 'uk';
                                             $sql = mysqli_query($connect_pro, "SELECT c_code_coordinate, c_top, c_left FROM finalcheck_list_coordinate WHERE c_code_type = '$c_code_type' AND c_image = '$c_image'");
                                             while ($data = mysqli_fetch_array($sql)) {
@@ -185,9 +205,9 @@ $data = mysqli_fetch_array($sql);
                                 <div class="col-12" style="text-align: center;">
                                     <center>
                                         <div class="containere">
-                                            <img src="../art/f/b.png" style="width:100%">
+                                            <img src="../art/<?= $c_code_type ?>/b.<?= $format ?>" style="width:100%">
                                             <?php
-                                            $c_code_type = 'f';
+
                                             $c_image = 'b';
                                             $sql = mysqli_query($connect_pro, "SELECT c_code_coordinate, c_top, c_left FROM finalcheck_list_coordinate WHERE c_code_type = '$c_code_type' AND c_image = '$c_image'");
                                             while ($data = mysqli_fetch_array($sql)) {
@@ -206,9 +226,9 @@ $data = mysqli_fetch_array($sql);
                                 <div class="col-12" style="text-align: center;">
                                     <center>
                                         <div class="containere">
-                                            <img src="../art/f/bb.png" style="width:100%">
+                                            <img src="../art/<?= $c_code_type ?>/bb.<?= $format ?>" style="width:100%">
                                             <?php
-                                            $c_code_type = 'f';
+
                                             $c_image = 'bb';
                                             $sql = mysqli_query($connect_pro, "SELECT c_code_coordinate, c_top, c_left FROM finalcheck_list_coordinate WHERE c_code_type = '$c_code_type' AND c_image = '$c_image'");
                                             while ($data = mysqli_fetch_array($sql)) {
@@ -224,132 +244,215 @@ $data = mysqli_fetch_array($sql);
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" id="btnaddng" class="btn btn-primary">Add NG</button>
+                        <button type="button" class="btn btn-secondary close-mdl-ng" onclick="cancelbtnmdl()" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" onclick="tambahdatang()" class="btn btn-primary">Add NG</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Modal -->
-        <script>
-            $('#btnaddng').click(function() {
-                var isi = $('#myform').serializeArray();
-                console.log(isi);
-                $.ajax({
-                    type: 'POST',
-                    url: 'outside1/data3.php',
-                    data: isi,
-                    success: function(response) {
-                        var response = JSON.parse(response);
-                        if (response.status == 'berhasil') {
-                            Swal.fire({
-                                title: 'Berhasil!',
-                                text: 'NG berhasil ditambah',
-                                icon: 'success',
-                                timer: 2000,
-                                showCancelButton: false,
-                                showConfirmButton: false
-                            })
-                        } else {
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'error',
-                                title: 'error!',
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                        }
-                    }
-                });
-            })
-        </script>
 
         <table class="table table-bordered">
             <thead style="text-align: center;">
-                <th style="width: 5%;">No</th>
+                <th style="width: 10%;">No</th>
                 <th>Detail NG</th>
             </thead>
-            <tbody>
-
+            <tbody id="detail_ng">
             </tbody>
         </table>
+
+        <!-- Modal Edit -->
+        <div class="modal fade" id="editngmodal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit NG <div id="editjudul"></div>
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="myforme">
+                            <!-- setup add ng -->
+                            <!-- <input type="hidden" id="serialnumberaddng" name="serialnumber" value="<?= $serialnumber ?>">
+                            <input type="hidden" id="processaddng" name="process" value="oc1">
+                            <input type="hidden" id="codetypeaddng" name="codetype" value="<?= $c_code_type ?>"> -->
+                            <!-- setup add ng -->
+                            <div class="row">
+                                <div class="col-12 mt-3 mb-1">
+                                    <label>Nama Kabinet :</label>
+                                    <select class="halodecktot" id="cabedit" name="cabedit[]" multiple="multiple" style="width:100%; height: max-content;">
+                                        <?php
+                                        $sql1 = mysqli_query($connect_pro, "SELECT c_code_cabinet, c_name FROM finalcheck_list_cabinet WHERE c_status = 'enable'");
+                                        while ($data1 = mysqli_fetch_array($sql1)) {
+                                        ?>
+                                            <option value="<?= $data1['c_code_cabinet'] ?>"><?= $data1['c_name'] ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-12" style="text-align: center;">
+                                    <center>
+                                        <div class="containere">
+                                            <img src="../art/<?= $c_code_type ?>/tbo.<?= $format ?>" style="width:100%">
+                                            <?php
+
+                                            $c_image = 'tbo';
+                                            $sql = mysqli_query($connect_pro, "SELECT c_code_coordinate, c_top, c_left FROM finalcheck_list_coordinate WHERE c_code_type = '$c_code_type' AND c_image = '$c_image'");
+                                            while ($data = mysqli_fetch_array($sql)) {
+                                            ?>
+                                                <input type="checkbox" class="chck" name="<?= $c_image ?>[]" id="<?= $data['c_code_coordinate'] ?>" value="<?= $data['c_code_coordinate'] ?>" style="width: 30px; height: 30px; top: <?= $data['c_top'] ?>%; left: <?= $data['c_left'] ?>%; accent-color: #FF0000;">
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12" style="text-align: center;">
+                                    <center>
+                                        <div class="containere">
+                                            <img src="../art/<?= $c_code_type ?>/tbi.<?= $format ?>" style="width:100%">
+                                            <?php
+
+                                            $c_image = 'tbi';
+                                            $sql = mysqli_query($connect_pro, "SELECT c_code_coordinate, c_top, c_left FROM finalcheck_list_coordinate WHERE c_code_type = '$c_code_type' AND c_image = '$c_image'");
+                                            while ($data = mysqli_fetch_array($sql)) {
+                                            ?>
+                                                <input type="checkbox" class="chck" name="<?= $c_image ?>[]" id="<?= $data['c_code_coordinate'] ?>" value="<?= $data['c_code_coordinate'] ?>" style="width: 30px; height: 30px; top: <?= $data['c_top'] ?>%; left: <?= $data['c_left'] ?>%; accent-color: #FF0000;">
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12" style="text-align: center;">
+                                    <center>
+                                        <div class="containere">
+                                            <img src="../art/<?= $c_code_type ?>/uk.<?= $format ?>" style="width:100%">
+                                            <?php
+
+                                            $c_image = 'uk';
+                                            $sql = mysqli_query($connect_pro, "SELECT c_code_coordinate, c_top, c_left FROM finalcheck_list_coordinate WHERE c_code_type = '$c_code_type' AND c_image = '$c_image'");
+                                            while ($data = mysqli_fetch_array($sql)) {
+                                            ?>
+                                                <input type="checkbox" class="chck" name="<?= $c_image ?>[]" id="<?= $data['c_code_coordinate'] ?>" value="<?= $data['c_code_coordinate'] ?>" style="width: 30px; height: 30px; top: <?= $data['c_top'] ?>%; left: <?= $data['c_left'] ?>%; accent-color: #FF0000;">
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12" style="text-align: center;">
+                                    <center>
+                                        <div class="containere">
+                                            <img src="../art/<?= $c_code_type ?>/b.<?= $format ?>" style="width:100%">
+                                            <?php
+
+                                            $c_image = 'b';
+                                            $sql = mysqli_query($connect_pro, "SELECT c_code_coordinate, c_top, c_left FROM finalcheck_list_coordinate WHERE c_code_type = '$c_code_type' AND c_image = '$c_image'");
+                                            while ($data = mysqli_fetch_array($sql)) {
+                                            ?>
+                                                <input type="checkbox" class="chck" name="<?= $c_image ?>[]" id="<?= $data['c_code_coordinate'] ?>" value="<?= $data['c_code_coordinate'] ?>" style="width: 30px; height: 30px; top: <?= $data['c_top'] ?>%; left: <?= $data['c_left'] ?>%; accent-color: #FF0000;">
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12" style="text-align: center;">
+                                    <center>
+                                        <div class="containere">
+                                            <img src="../art/<?= $c_code_type ?>/bb.<?= $format ?>" style="width:100%">
+                                            <?php
+                                            $c_image = 'bb';
+                                            $sql = mysqli_query($connect_pro, "SELECT c_code_coordinate, c_top, c_left FROM finalcheck_list_coordinate WHERE c_code_type = '$c_code_type' AND c_image = '$c_image'");
+                                            while ($data = mysqli_fetch_array($sql)) {
+                                            ?>
+                                                <input type="checkbox" class="chck" name="<?= $c_image ?>[]" id="<?= $data['c_code_coordinate'] ?>" value="<?= $data['c_code_coordinate'] ?>" style="width: 30px; height: 30px; top: <?= $data['c_top'] ?>%; left: <?= $data['c_left'] ?>%; accent-color: #FF0000;">
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                            <br>
+                            <hr>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary close-mdl-ng" onclick="cancelbtnmdl()" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" onclick="tambahdatang()" class="btn btn-primary">Add NG</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function editng(id, codeng, numberng, serialnumber) {
+                $('.chck').attr('checked', false);
+                $('#editngmodal').modal('toggle');
+                $('#editjudul').html(codeng);
+                $.ajax({
+                    url: "outside1/data4.php",
+                    type: "POST",
+                    data: {
+                        "codeng": codeng,
+                        "serialnumber": serialnumber
+                    },
+                    success: function(data) {
+                        var data = JSON.parse(data);
+                        console.log(data.cabinet);
+                        console.log(typeof data.cabinet);
+                        $.each($("#cabedit"), function() {
+                            $(this).val(data.cabinet).trigger('change');
+                            //         $('#supplier').val(null).trigger('change.select2');
+                        });
+                    }
+                });
+
+                $.ajax({
+                    url: "outside1/data5.php",
+                    type: "POST",
+                    data: {
+                        "numberng": numberng,
+                        "serialnumber": serialnumber
+                    },
+                    success: function(data) {
+
+                        var data = JSON.parse(data);
+                        console.log(data.coordinate);
+                        console.log(typeof data.coordinate);
+                        data.coordinate.forEach(function(item) {
+                            // do something with `item`
+                            $('#' + item).attr('checked', true);
+                        });
+                    }
+                });
+            }
+        </script>
+        <!-- Modal Edit -->
+
     </div>
-    <div class="col-6">
-        <!-- tbo image -->
-        <div class="row">
-            <div class="col-12">
-                <div class="containere">
-                    <img src="../art/f/tbo.png" style="width:100%; opacity: 60%;">
-                    <button class="btn ingpo" style="width: 25px; height: 25px; top: 5%; left: 1%;">
-                        <span style="color: red; padding: 0px;">1</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- tbo image -->
-        <br>
-        <hr>
-        <br>
-        <!-- tbi image -->
-        <div class="row">
-            <div class="col-12">
-                <div class="containere">
-                    <img src="../art/f/tbi.png" style="width:100%; opacity: 60%;">
-                    <button class="btn ingpo" style="width: 25px; height: 25px; top: 10%; left: 5%;">
-                        <span style="color: red; padding: 0px;">1</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- tbi image -->
-        <br>
-        <hr>
-        <br>
-        <!-- uk image -->
-        <div class="row">
-            <div class="col-12">
-                <div class="containere">
-                    <img src="../art/f/uk.png" style="width:100%; opacity: 60%;">
-                    <button class="btn ingpo" style="width: 25px; height: 25px; top: 10%; left: 5%;">
-                        <span style="color: red; padding: 0px;">1</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- uk image -->
-        <br>
-        <hr>
-        <br>
-        <!-- b image -->
-        <div class="row">
-            <div class="col-12">
-                <div class="containere">
-                    <img src="../art/f/b.png" style="width:100%; opacity: 60%;">
-                    <button class="btn ingpo" style="width: 25px; height: 25px; top: 10%; left: 5%;">
-                        <span style="color: red; padding: 0px;">1</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- b image -->
-        <br>
-        <hr>
-        <br>
-        <!-- bb image -->
-        <div class="row">
-            <div class="col-12">
-                <div class="containere">
-                    <img src="../art/f/bb.png" style="width:100%; opacity: 60%;">
-                    <button class="btn ingpo" style="width: 25px; height: 25px; top: 10%; left: 5%;">
-                        <span style="color: red; padding: 0px;">1</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- bb image -->
-        <br>
-        <hr>
-        <br>
+    <div class="col-6" id="image_ng">
     </div>
 </div>
 <!-- isi konten -->
@@ -460,83 +563,26 @@ $data = mysqli_fetch_array($sql);
 <div class="row">
     <div class="col-12 mb-5" style="text-align: left;">
         <button class="btn btn-success" id="check"><i class="fa fa-hand-o-left"></i> Kembali, Cek Completeness</button>
-        <button class="btn btn-success" id="send" style="display: none;">Send to Repair official</button>
         <script>
-            $('#check').click(function() {
-                function loadData() {
-
-                    var dataString = {
-                        serialnumber: $('#serialnumber').val(),
-                    };
-                    $.ajax({
-                        url: "outside1/pagedata.php",
-                        type: "POST",
-                        data: dataString,
-                        success: function(data) {
-                            $('#pagedata').show();
-                            $('#pagedata').html(data);
-                            window.scrollTo(0, 100);
-                            return false;
-                        }
-                    });
-                };
-                loadData();
+            var serialnumber = $('#serialnumberaddng').val();
+            var codetype = $('#codetypeaddng').val();
+            $(document).ready(function() {
+                load_data_ng(serialnumber);
+                load_image_ng(serialnumber, codetype);
             })
-
-            $('#send').click(function() {
-                Swal.fire({
-                    title: 'Apakah anda yakin ?',
-                    icon: 'question',
-                    html: 'Data akan diteruskan ke bagian repair inside jika terdapat NG',
-                    showCancelButton: true,
-                    showConfirmButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Iya',
-                    cancelButtonText: 'Tidak'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var serialnumber = $('#serialnumber').val();
-                        $.ajax({
-                            url: 'insidecheck/data5.php',
-                            type: 'POST',
-                            data: {
-                                "serialnumber": serialnumber
-                            },
-                            success: function(response) {
-                                var response = JSON.parse(response);
-                                if (response.status == 'OK') {
-                                    Swal.fire({
-                                        title: 'Berhasil!',
-                                        icon: 'success',
-                                        html: 'Data berhasil dikirim ke repair',
-                                        showCancelButton: false,
-                                        showConfirmButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Oke',
-                                        cancelButtonText: 'Tidak'
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            $('#clearacard').trigger('click');
-                                        }
-                                    })
-                                } else {
-                                    Swal.fire({
-                                        title: 'Gagal!',
-                                        icon: 'error',
-                                        html: 'Data gagal dikirim, silahkan menghubungi ICTM',
-                                        showCancelButton: false,
-                                        showConfirmButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Oke',
-                                        cancelButtonText: 'Tidak'
-                                    })
-                                }
-
-                            }
-                        });
+            $('#check').click(function() {
+                var dataString = {
+                    serialnumber: $('#serialnumber').val(),
+                };
+                $.ajax({
+                    url: "outside1/pagedata.php",
+                    type: "POST",
+                    data: dataString,
+                    success: function(data) {
+                        $('#pagedata').show();
+                        $('#pagedata').html(data);
+                        window.scrollTo(0, 100);
+                        return false;
                     }
                 });
             })
