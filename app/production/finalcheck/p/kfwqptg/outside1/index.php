@@ -207,28 +207,20 @@
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });
-                        } else if (response.status == 'ada-sudah-cek-validasi') {
+                        } else if (response.status == 'ada-validasi') {
                             // load data jika ada data dan sudah dicek
-                            function loadData() {
-
-                                var dataString = {
-                                    acard: response.acard,
-                                    plannumber: response.plannumber,
-                                    pianoserial: response.pianoserial,
-                                    pianoname: response.pianoname,
-                                    pianogmc: response.pianogmc,
-                                };
-                                $.ajax({
-                                    url: "insidecheck/pagedata3.php",
-                                    type: "POST",
-                                    data: dataString,
-                                    success: function(data) {
-                                        $('#pagedata').show();
-                                        $('#pagedata').html(data);
-                                    }
-                                });
+                            var dataString = {
+                                serialnumber: response.serialnumber
                             };
-                            loadData();
+                            $.ajax({
+                                url: "outside1/pagedata3.php",
+                                type: "POST",
+                                data: dataString,
+                                success: function(data) {
+                                    $('#pagedata').show();
+                                    $('#pagedata').html(data);
+                                }
+                            });
                         } else {
                             // jaringan error
                             Swal.fire({
@@ -341,6 +333,111 @@
                         timer: 2000
                     })
                 }
+            }
+        });
+    }
+
+    function editdatang() {
+        var isi = $('#myformedit').serializeArray();
+        console.log(isi);
+        $.ajax({
+            type: 'POST',
+            url: 'outside1/data7.php',
+            data: isi,
+            success: function(response) {
+                var response = JSON.parse(response);
+                if (response.status == 'berhasil') {
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: 'NG berhasil edit',
+                        icon: 'success',
+                        timer: 2000,
+                        showCancelButton: false,
+                        showConfirmButton: false
+                    }).then(function() {
+                        load_data_ng(serialnumber);
+                        load_image_ng(serialnumber, codetype);
+                        $('.close-mdl-ng').trigger('click');
+                    });
+
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'error!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                }
+            }
+        });
+    }
+
+    function deleteng(id, serialnumber, codeng, numberng, process) {
+        Swal.fire({
+            title: 'Apakah anda yakin ?',
+            icon: 'question',
+            html: 'Data pengecekan akan dihapus',
+            showCancelButton: true,
+            showConfirmButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: 'outside1/data8.php',
+                    type: 'POST',
+                    data: {
+                        "serialnumber": serialnumber,
+                        "codeng": codeng,
+                        "numberng": numberng,
+                        "process": process
+                    },
+                    success: function(response) {
+                        load_data_ng(serialnumber);
+                        load_image_ng(serialnumber, codetype);
+                        var response = JSON.parse(response);
+                        if (response.status == 'OK') {
+                            Swal.fire({
+                                title: 'Berhasil!',
+                                icon: 'success',
+                                html: 'Data berhasil dihapus',
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Oke',
+                                cancelButtonText: 'Tidak'
+                            })
+                        } else if (response.status == 'GAGAL') {
+                            Swal.fire({
+                                title: 'Gagal!',
+                                icon: 'success',
+                                html: 'Tidak ada data yang bisa dihapus',
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Oke',
+                                cancelButtonText: 'Tidak'
+                            })
+                        } else {
+                            Swal.fire({
+                                title: 'Gagal!',
+                                icon: 'error',
+                                html: 'Data gagal dihapus',
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Oke',
+                                cancelButtonText: 'Tidak'
+                            })
+                        }
+                    }
+                });
             }
         });
     }

@@ -26,7 +26,96 @@ if ($c_code_type == 'f') {
 
 <!-- judul pagedata -->
 <hr>
-<h4><i class="fa fa-pencil-square-o"></i> <u>Check Card - Outside</u></h4>
+<input type="hidden" id="serialnumber" value="<?= $serialnumber ?>">
+<input type="hidden" id="processaddng" name="process" value="oc1">
+<input type="hidden" id="codetypeaddng" name="codetype" value="<?= $c_code_type ?>">
+<div class="row">
+    <div class="col-8" style="text-align: left;">
+        <h4><i class="fa fa-pencil-square-o"></i> <u>Check Card - Outside Validation</u></h4>
+
+    </div>
+    <div class="col-4" style="text-align: right;">
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-success" id="check" style="width: 100%;"><i class="fa fa-arrow-circle-left"></i> Validasi, Completeness</button>
+                <script>
+                    var serialnumber = $('#serialnumberaddng').val();
+                    var codetype = $('#codetypeaddng').val();
+                    $(document).ready(function() {
+                        load_data_ng(serialnumber);
+                        load_image_ng(serialnumber, codetype);
+                    })
+                    $('#check').click(function() {
+                        var dataString = {
+                            serialnumber: $('#serialnumber').val(),
+                        };
+                        $.ajax({
+                            url: "outside1/pagedata3.php",
+                            type: "POST",
+                            data: dataString,
+                            success: function(data) {
+                                $('#pagedata').show();
+                                $('#pagedata').html(data);
+                                window.scrollTo(0, 100);
+                                return false;
+                            }
+                        });
+                    })
+                </script>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary" id="send" style="width: 100%;">Finish Outside Check <i class="fa fa-flag-checkered"></i></button>
+                <script>
+                    var serialnumber = $('#serialnumber').val();
+                    $('#send').click(function() {
+                        Swal.fire({
+                            title: 'Apakah anda yakin ?',
+                            icon: 'question',
+                            html: 'Data akan diteruskan ke bagian Repair jika terdapat NG',
+                            showCancelButton: true,
+                            showConfirmButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Iya',
+                            cancelButtonText: 'Tidak'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // console.log('oke dikirm ke repair');
+                                $.ajax({
+                                    url: "outside1/data10.php",
+                                    type: "POST",
+                                    data: {
+                                        "serialnumber": serialnumber
+                                    },
+                                    success: function(response) {
+                                        var response = JSON.parse(response);
+                                        if (response.status == 'OK') {
+                                            Swal.fire({
+                                                title: 'Berhasil!',
+                                                text: 'Data berhasil dikirim',
+                                                icon: 'success',
+                                                // timer: 2000,
+                                                showCancelButton: false,
+                                                showConfirmButton: true,
+                                                confirmButtonText: 'Oke'
+                                            }).then(function() {
+                                                $('#clearacard').trigger('click');
+
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    })
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- judul pagedata -->
 
 <!-- judul -->
@@ -41,7 +130,7 @@ if ($c_code_type == 'f') {
             <div class="row">
                 <div class="col-12" style="text-align: center;">
                     <?= $serialnumber ?>
-                    <input type="hidden" id="serialnumber" value="<?= $serialnumber ?>">
+
                 </div>
             </div>
         </th>
@@ -591,82 +680,7 @@ if ($c_code_type == 'f') {
 
 <hr>
 
-<div class="row">
-    <div class="col-6 mb-5" style="text-align: left;">
-        <button class="btn btn-success" id="check" style="width: 80%;"><i class="fa fa-arrow-circle-left"></i> Kembali, Cek Completeness</button>
-        <script>
-            var serialnumber = $('#serialnumberaddng').val();
-            var codetype = $('#codetypeaddng').val();
-            $(document).ready(function() {
-                load_data_ng(serialnumber);
-                load_image_ng(serialnumber, codetype);
-            })
-            $('#check').click(function() {
-                var dataString = {
-                    serialnumber: $('#serialnumber').val(),
-                };
-                $.ajax({
-                    url: "outside1/pagedata.php",
-                    type: "POST",
-                    data: dataString,
-                    success: function(data) {
-                        $('#pagedata').show();
-                        $('#pagedata').html(data);
-                        window.scrollTo(0, 100);
-                        return false;
-                    }
-                });
-            })
-        </script>
-    </div>
-    <div class="col-6 mb-5" style="text-align: right;">
-        <button class="btn btn-success" id="send" style="width: 80%;">Kirim, ke Repair Outside <i class="fa fa-shopping-cart"></i></button>
-        <script>
-            var serialnumber = $('#serialnumber').val();
-            $('#send').click(function() {
-                Swal.fire({
-                    title: 'Apakah anda yakin ?',
-                    icon: 'question',
-                    html: 'Data akan diteruskan ke bagian Repair jika terdapat NG',
-                    showCancelButton: true,
-                    showConfirmButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Iya',
-                    cancelButtonText: 'Tidak'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // console.log('oke dikirm ke repair');
-                        $.ajax({
-                            url: "outside1/data10.php",
-                            type: "POST",
-                            data: {
-                                "serialnumber": serialnumber
-                            },
-                            success: function(response) {
-                                var response = JSON.parse(response);
-                                if (response.status == 'OK') {
-                                    Swal.fire({
-                                        title: 'Berhasil!',
-                                        text: 'Data berhasil dikirim',
-                                        icon: 'success',
-                                        // timer: 2000,
-                                        showCancelButton: false,
-                                        showConfirmButton: true,
-                                        confirmButtonText: 'Oke'
-                                    }).then(function() {
-                                        $('#clearacard').trigger('click');
-                                        
-                                    });
-                                }
-                            }
-                        });
-                    }
-                });
-            })
-        </script>
-    </div>
-</div>
+
 <hr>
 <!-- script tambahan -->
 <script>

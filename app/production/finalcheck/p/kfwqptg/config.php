@@ -35,6 +35,7 @@ $namkar = $_SESSION['nama'];
 $rolkar = $_SESSION['role'];
 $depkar = $_SESSION['dept'];
 $jabkar = $_SESSION['jabatan'];
+$publicprocess = 'oc1';
 
 $_SESSION['base_url'] = "https://172.17.192.131/hikari-pro";
 function base_url($url = null)

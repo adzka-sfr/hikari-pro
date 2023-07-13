@@ -14,6 +14,8 @@ if ($data4['total'] == 0) {
     </tr>
     <?php
 } else {
+    // get process pic
+    $process = $publicprocess;
 
     $sql2 = mysqli_query($connect_pro, "SELECT DISTINCT a.c_number_ng, a.c_code_ng, b.c_name as ng_name FROM finalcheck_fetch_outside a  INNER JOIN finalcheck_list_ng b ON a.c_code_ng = b.c_code_ng WHERE a.c_serialnumber = '$serialnumber' ORDER BY a.c_number_ng ASC");
     while ($data2 = mysqli_fetch_array($sql2)) {
@@ -27,7 +29,7 @@ if ($data4['total'] == 0) {
         <tr>
             <td rowspan="<?= $row + 1 ?>" style="text-align: center;">
                 <?= $data2['c_number_ng'] ?><br>
-                <button type="button" id="delete<?= $data2['c_code_ng'] ?>" onclick="deleteng(this.id,'<?= $serialnumber ?>','<?= $data2['c_code_ng'] ?>' )" class="btn btn-danger btn-sm" style="margin:0px; padding-top: 5px;"><i class="fa fa-trash"></i></button>
+                <button type="button" id="delete<?= $data2['c_code_ng'] ?>" onclick="deleteng(this.id,'<?= $serialnumber ?>','<?= $data2['c_code_ng'] ?>','<?= $data2['c_number_ng'] ?>','<?= $process ?>' )" class="btn btn-danger btn-sm" style="margin:0px; padding-top: 5px;"><i class="fa fa-trash"></i></button>
             </td>
             <td>
                 <div class="row">
@@ -35,7 +37,7 @@ if ($data4['total'] == 0) {
                         <b><?= $data2['ng_name'] ?></b>
                     </div>
                     <div class="col-2">
-                        <button type="button" id="edit<?= $data2['c_code_ng'] ?>" class="btn btn-primary btn-sm" onclick="editng(this.id,'<?= $data2['c_code_ng'] ?>','<?= $data2['c_number_ng'] ?>', '<?= $serialnumber ?>')" style="margin:0px; padding-top: 5px;">
+                        <button type="button" id="edit<?= $data2['c_code_ng'] ?>" class="btn btn-primary btn-sm" onclick="editng(this.id,'<?= $data2['c_code_ng'] ?>','<?= $data2['ng_name'] ?>','<?= $data2['c_number_ng'] ?>', '<?= $serialnumber ?>')" style="margin:0px; padding-top: 5px;">
                             <i class="fa fa-pencil"></i></button>
                         </button>
                     </div>

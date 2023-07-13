@@ -35,8 +35,16 @@ if ($kode == 'X') {
 
             echo json_encode(array("status" => "ada", "serialnumber" => $serialnumber));
         } else {
-            // [c] jika sudah ada, tampilin langsung yang ada pada fetch_completeness dan fetch outside
-            echo json_encode(array("status" => "ada", "serialnumber" => $serialnumber));
+            // [c] jika sudah ada
+            // (D) cek apakah proses pengecekan sudah selesai
+            $q4 = mysqli_query($connect_pro, "SELECT c_outsidesatu_o FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
+            $d4 = mysqli_fetch_array($q4);
+
+            if(!empty($d4['c_outsidesatu_o'])){
+                echo json_encode(array("status" => "ada-validasi", "serialnumber" => $serialnumber));
+            }else{
+                echo json_encode(array("status" => "ada", "serialnumber" => $serialnumber));
+            }
         }
     }
 } else {

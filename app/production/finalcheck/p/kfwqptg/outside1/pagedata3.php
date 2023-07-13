@@ -9,6 +9,34 @@ $serialnumber = isset($_POST['serialnumber']) ? $_POST['serialnumber'] : '';
 // get informasi piano
 $sql = mysqli_query($connect_pro, "SELECT b.c_name FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber' ");
 $data = mysqli_fetch_array($sql);
+
+// get date ng
+$sql1 = mysqli_query($connect_pro, "SELECT MAX(c_resultsatu_date) as maks FROM finalcheck_fetch_completeness WHERE c_serialnumber = '$serialnumber' AND c_resultsatu = 'N'");
+$data1 = mysqli_fetch_array($sql1);
+$ng_date1 = '-';
+if ($data1['maks'] != '') {
+    $ng_date1 = date('d-m-Y', strtotime($data1['maks']));
+}
+
+// [SELECT : finalcheck_repairtime, finalcheck_pic JOIN by c_serialnumber  ] 
+// get tanggal OK -> c_repair_inside_o || finalcheck_repairtime
+// get pic inside check -> c_inside || finalcheck_pic
+// select a.c_repair_inside_o , b.c_inside  from finalcheck_repairtime a inner join finalcheck_pic b on a.c_serialnumber = b.c_serialnumber where b.c_serialnumber = 'J40505958'
+$sql2 = mysqli_query($connect_pro, "SELECT a.c_repair_outsidesatu_o , b.c_outsidesatu, a.c_outsidesatu_pic  FROM finalcheck_repairtime a INNER JOIN finalcheck_pic b ON a.c_serialnumber = b.c_serialnumber WHERE b.c_serialnumber = '$serialnumber'");
+$data2 = mysqli_fetch_array($sql2);
+$ok_date = '-';
+$pic = $data2['c_outsidesatu'];
+$repair = '';
+$validation_func = 'disabled';
+$finish_outsidesatu_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
+if ($data2['c_repair_outsidesatu_o'] != '') {
+    $ok_date = date('d-m-Y', strtotime($data1['maks']));
+    $finish_outsidesatu_func = 'disabled';
+}
+if ($data2['c_outsidesatu_pic'] != '') {
+    $repair = $data2['c_outsidesatu_pic'];
+    $validation_func = '';
+}
 ?>
 
 <script src="../source/dropdown_search/jquery-3.4.1.js" crossorigin="anonymous"></script>
@@ -17,7 +45,86 @@ $data = mysqli_fetch_array($sql);
 
 <!-- judul pagedata -->
 <hr>
-<h4><i class="fa fa-pencil-square-o"></i> <u>Check Card - Completeness</u></h4>
+<input type="hidden" id="serialnumber" value="<?= $serialnumber ?>">
+<div class="row">
+    <div class="col-8">
+        <h4><i class="fa fa-pencil-square-o"></i> <u>Check Card - Completeness Validation</u></h4>
+    </div>
+    <div class="col-4" style="text-align: right;">
+        <button class="btn btn-success" id="check" style="width: 100%;">Validasi, Outside <i class="fa fa-arrow-circle-right"></i></button>
+        <script>
+            $('#check').click(function() {
+                var dataString = {
+                    serialnumber: $('#serialnumber').val(),
+                };
+                $.ajax({
+                    url: "outside1/data12.php",
+                    type: "POST",
+                    data: {
+                        "serialnumber": serialnumber
+                    },
+                    success: function(response) {
+                        var response = JSON.parse(response);
+                        if (response.status == 'DONE') {
+                            console.log("gas lur aman");
+                            $.ajax({
+                                url: "outside1/pagedata4.php",
+                                type: "POST",
+                                data: dataString,
+                                success: function(data) {
+                                    $('#pagedata').show();
+                                    $('#pagedata').html(data);
+                                    window.scrollTo(0, 100);
+                                    return false;
+                                }
+                            });
+                        } else if (response.status == 'NOT-YET') {
+                            Swal.fire({
+                                title: 'Apakah anda yakin ?',
+                                icon: 'warning',
+                                html: 'Terdapat data tidak diceklis',
+                                showCancelButton: true,
+                                showConfirmButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Iya',
+                                cancelButtonText: 'Tidak'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    console.log("gas lur aman");
+                                    $.ajax({
+                                        url: "outside1/pagedata4.php",
+                                        type: "POST",
+                                        data: dataString,
+                                        success: function(data) {
+                                            $('#pagedata').show();
+                                            $('#pagedata').html(data);
+                                            window.scrollTo(0, 100);
+                                            return false;
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'error!',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        }
+                    }
+                });
+
+
+
+
+
+            })
+        </script>
+    </div>
+</div>
 <!-- judul pagedata -->
 
 <!-- judul -->
@@ -32,7 +139,6 @@ $data = mysqli_fetch_array($sql);
             <div class="row">
                 <div class="col-12" style="text-align: center;">
                     <?= $serialnumber ?>
-                    <input type="hidden" id="serialnumber" value="<?= $serialnumber ?>">
                 </div>
             </div>
         </th>
@@ -71,10 +177,10 @@ $data = mysqli_fetch_array($sql);
         <tr>
             <th rowspan="2">No</th>
             <th rowspan="2">Item</th>
-            <th colspan="3">Hasil Cek</th>
+            <th colspan="4">Validasi</th>
         </tr>
         <tr>
-            <td>C1</td>
+            <td colspan="2">C1</td>
             <td>C2</td>
             <td>C3</td>
         </tr>
@@ -83,18 +189,39 @@ $data = mysqli_fetch_array($sql);
     <tbody>
         <?php
         $no = 0;
-        $sql = mysqli_query($connect_pro, "SELECT a.c_code_completeness,a.c_resultsatu, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE c_serialnumber = '$serialnumber'");
+        $sql = mysqli_query($connect_pro, "SELECT a.c_code_completeness,a.c_resultsatu, a.c_repairsatu, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE c_serialnumber = '$serialnumber'");
         while ($data = mysqli_fetch_array($sql)) {
-            $checkcom = '';
+            $status = '';
+
             if ($data['c_resultsatu'] == 'Y') {
-                $checkcom = 'checked';
+                $status = 'OK';
+            } else {
+                $status = 'NG';
+                $valcheck = '';
+                if ($data['c_repairsatu'] == 'Y') {
+                    $valcheck = 'checked';
+                }
             }
             $no++;
         ?>
             <tr>
                 <td style="text-align: center;"><?= $no ?></td>
                 <td style="font-size: 15px;"><?= $data['c_detail'] ?></td>
-                <td style="font-size: 15px; text-align: center;"><input id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok1(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" <?= $checkcom ?> style="transform: scale(2);"></td>
+                <td style="font-size: 15px; text-align: center;"><?= $status ?></td>
+                <td style="font-size: 15px; text-align: center;">
+                    <?php
+                    if ($status == 'NG') {
+                    ?>
+                        <input <?= $valcheck ?> <?= $finish_outsidesatu_func . " " . $validation_func ?> id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbokval1(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);">
+                    <?php
+                    } else {
+                    ?>
+                        -
+                    <?php
+                    }
+                    ?>
+
+                </td>
                 <td style="font-size: 15px; text-align: center;"><input disabled id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
                 <td style="font-size: 15px; text-align: center;"><input disabled id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok3(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
             </tr>
@@ -104,7 +231,7 @@ $data = mysqli_fetch_array($sql);
         <script>
             var serialnumber = $('#serialnumber').val();
 
-            function cekbok1(id) {
+            function cekbokval1(id) {
                 console.log($('#' + id).val())
                 var code = $('#' + id).val();
                 var result = 'N';
@@ -116,12 +243,12 @@ $data = mysqli_fetch_array($sql);
                     result = 'N';
                 }
                 $.ajax({
-                    url: 'outside1/data.php',
+                    url: 'outside1/data11.php',
                     type: 'POST',
                     data: {
                         "serialnumber": serialnumber,
                         "code": code,
-                        "result": result
+                        "result": result,
                     },
                     success: function(response) {
                         console.log(response);
@@ -138,7 +265,7 @@ $data = mysqli_fetch_array($sql);
 <div class="row">
     <div class="col-4">
         <h5>Note 1</h5>
-        <textarea name="note1" id="note1" rows="5" style="width: 100%;"></textarea>
+        <textarea disabled name="note1" id="note1" rows="5" style="width: 100%;"></textarea>
     </div>
     <div class="col-4">
         <h5>Note 2</h5>
@@ -200,7 +327,13 @@ $data = mysqli_fetch_array($sql);
         <tr style="text-align: center;">
             <td style="padding-top: 15px; padding-bottom: 15px; width: 33%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC REJECT</h5>
-                <!-- <span class="stamp is-reject" style="font-size:1.2rem"><?= "Graham Bell" ?></span> -->
+                <?php
+                if ($ng_date1 != '-') {
+                ?>
+                    <span class="stamp is-reject" style="font-size:1.2rem"><?= $pic ?></span>
+                <?php
+                }
+                ?>
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 34%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC REJECT</h5>
@@ -210,14 +343,20 @@ $data = mysqli_fetch_array($sql);
             </td>
         </tr>
         <tr>
-            <td>Date: -</td>
+            <td>Date: <?= $ng_date1 ?></td>
             <td>Date: -</td>
             <td>Date: -</td>
         </tr>
         <tr style="text-align: center;">
             <td style="padding-top: 15px; padding-bottom: 15px; width: 33%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
-                <!-- <span class="stamp is-pass" style="font-size:1.2rem"><?= "Graham Bell" ?></span> -->
+                <?php
+                if ($ok_date != '-') {
+                ?>
+                    <span class="stamp is-pass" style="font-size:1.2rem"><?= $pic ?></span>
+                <?php
+                }
+                ?>
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 34%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
@@ -227,7 +366,7 @@ $data = mysqli_fetch_array($sql);
             </td>
         </tr>
         <tr>
-            <td>Date: -</td>
+            <td>Date: <?= $ok_date ?></td>
             <td>Date: -</td>
             <td>Date: -</td>
         </tr>
@@ -238,81 +377,7 @@ $data = mysqli_fetch_array($sql);
 
 <hr>
 
-<div class="row">
-    <div class="col-6"></div>
-    <div class="col-6 mb-5" style="text-align: right;">
-        <button class="btn btn-success" id="check" style="width: 80%;">Lanjut, Cek Outside <i class="fa fa-arrow-circle-right"></i></button>
-        <script>
-            $('#check').click(function() {
-                var dataString = {
-                    serialnumber: $('#serialnumber').val(),
-                };
-                $.ajax({
-                    url: "outside1/data9.php",
-                    type: "POST",
-                    data: {
-                        "serialnumber": serialnumber
-                    },
-                    success: function(response) {
-                        var response = JSON.parse(response);
-                        if (response.status == 'DONE') {
-                            $.ajax({
-                                url: "outside1/pagedata2.php",
-                                type: "POST",
-                                data: dataString,
-                                success: function(data) {
-                                    $('#pagedata').show();
-                                    $('#pagedata').html(data);
-                                    window.scrollTo(0, 100);
-                                    return false;
-                                }
-                            });
-                        } else if (response.status == 'NOT-YET') {
-                            Swal.fire({
-                                title: 'Apakah anda yakin ?',
-                                icon: 'warning',
-                                html: 'Terdapat data tidak diceklis',
-                                showCancelButton: true,
-                                showConfirmButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'Iya',
-                                cancelButtonText: 'Tidak'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    $.ajax({
-                                        url: "outside1/pagedata2.php",
-                                        type: "POST",
-                                        data: dataString,
-                                        success: function(data) {
-                                            $('#pagedata').show();
-                                            $('#pagedata').html(data);
-                                            window.scrollTo(0, 100);
-                                            return false;
-                                        }
-                                    });
-                                }
-                            });
-                        } else {
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'error',
-                                title: 'error!',
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                        }
-                    }
-                });
 
-
-
-
-
-            })
-        </script>
-    </div>
-</div>
 <hr>
 <!-- script tambahan -->
 <script>

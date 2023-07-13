@@ -16,8 +16,9 @@ if ($code_type == 'f') {
         <div class="containere">
             <img src="../art/<?= $code_type ?>/tbo.<?= $format ?>" style="width:100%; opacity: 60%;">
             <?php
-            $c_code_coordinate = $code_type . "tbo";
-            $qtbo = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND a.c_code_coordinate LIKE '$c_code_coordinate%'");
+            $c_code_type = $code_type;
+            $c_image = "tbo";
+            $qtbo = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
             while ($dtbo = mysqli_fetch_array($qtbo)) {
                 $label_get = array();
                 $label = array();
@@ -62,8 +63,9 @@ if ($code_type == 'f') {
         <div class="containere">
             <img src="../art/<?= $code_type ?>/tbi.<?= $format ?>" style="width:100%; opacity: 60%;">
             <?php
-            $c_code_coordinate = $code_type . "tbi";
-            $qtbi = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND a.c_code_coordinate LIKE '$c_code_coordinate%'");
+            $c_code_type = $code_type;
+            $c_image = "tbi";
+            $qtbi = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
             while ($dtbi = mysqli_fetch_array($qtbi)) {
                 $label_get = array();
                 $label = array();
@@ -107,8 +109,9 @@ if ($code_type == 'f') {
         <div class="containere">
             <img src="../art/<?= $code_type ?>/uk.<?= $format ?>" style="width:100%; opacity: 60%;">
             <?php
-            $c_code_coordinate = $code_type . "uk";
-            $quk = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND a.c_code_coordinate LIKE '$c_code_coordinate%'");
+            $c_code_type = $code_type;
+            $c_image = "uk";
+            $quk = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
             while ($duk = mysqli_fetch_array($quk)) {
                 $label_get = array();
                 $label = array();
@@ -152,8 +155,9 @@ if ($code_type == 'f') {
         <div class="containere">
             <img src="../art/<?= $code_type ?>/b.<?= $format ?>" style="width:100%; opacity: 60%;">
             <?php
-            $c_code_coordinate = $code_type . "b";
-            $qb = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND a.c_code_coordinate LIKE '$c_code_coordinate%'");
+            $c_code_type = $code_type;
+            $c_image = "b";
+            $qb = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
             while ($db = mysqli_fetch_array($qb)) {
                 $label_get = array();
                 $label = array();
@@ -197,8 +201,9 @@ if ($code_type == 'f') {
         <div class="containere">
             <img src="../art/<?= $code_type ?>/bb.<?= $format ?>" style="width:100%; opacity: 60%;">
             <?php
-            $c_code_coordinate = $code_type . "bb";
-            $qbb = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND a.c_code_coordinate LIKE '$c_code_coordinate%'");
+            $c_code_type = $code_type;
+            $c_image = "bb";
+            $qbb = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
             while ($dbb = mysqli_fetch_array($qbb)) {
                 $label_get = array();
                 $label = array();
