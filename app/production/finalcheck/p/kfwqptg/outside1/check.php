@@ -40,9 +40,11 @@ if ($kode == 'X') {
             $q4 = mysqli_query($connect_pro, "SELECT c_outsidesatu_o FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
             $d4 = mysqli_fetch_array($q4);
 
-            if(!empty($d4['c_outsidesatu_o'])){
+            if (!empty($d4['c_outsidesatu_o'])) {
+                // disini di cek apakah sudah out repairsatu o -> jika udah ada isi status kasih "ada-sudah-validasi"
+                // jika belum ada isi berarti masih proses validasi
                 echo json_encode(array("status" => "ada-validasi", "serialnumber" => $serialnumber));
-            }else{
+            } else {
                 echo json_encode(array("status" => "ada", "serialnumber" => $serialnumber));
             }
         }

@@ -275,6 +275,20 @@
         });
     }
 
+    function load_data_ngval(serialnumber) {
+        $.ajax({
+            type: 'POST',
+            url: 'outside1/detail_ngval.php',
+            data: {
+                "serialnumber": serialnumber
+            },
+            success: function(response) {
+                // var response = JSON.parse(response);
+                $('#detail_ng').html(response);
+            }
+        });
+    }
+
     function load_image_ng(serialnumber, codetype) {
         $.ajax({
             type: 'POST',
@@ -446,6 +460,42 @@
         $('#ngAdd').val('').trigger('change');
         $('#cabAdd').val('').trigger('change');
         $('#myform input[type="checkbox"]').prop('checked', false);
+    }
+
+    function cekbokvalo(id, serialnumber, codeng, process) {
+        if ($('#' + id).is(':checked')) {
+            console.log('Y');
+            result = 'Y';
+        } else {
+            console.log('N');
+            result = 'N';
+        }
+        console.log(id);
+        console.log(serialnumber);
+        console.log(codeng);
+        console.log(process);
+        $.ajax({
+            type: 'POST',
+            url: 'outside1/data13.php',
+            data: {
+                "serialnumber": serialnumber,
+                "codeng": codeng,
+                "process": process,
+                "result": result
+            },
+            success: function(response) {
+                var response = JSON.parse(response);
+                if (response.status == 'berhasil') {
+                    $('#sendfinisho').attr('disabled', true);
+                    console.log(response.status);
+                } else if (response.status == 'berhasil-clear') {
+                    $('#sendfinisho').attr('disabled', false);
+                    console.log(response.status);
+                } else {
+                    console.log('gagal');
+                }
+            }
+        });
     }
 </script>
 <!-- untuk menampilkan page data -->

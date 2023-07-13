@@ -26,7 +26,7 @@ $sql2 = mysqli_query($connect_pro, "SELECT a.c_repair_outsidesatu_o , b.c_outsid
 $data2 = mysqli_fetch_array($sql2);
 $ok_date = '-';
 $pic = $data2['c_outsidesatu'];
-$repair = '';
+$repair = '-';
 $validation_func = 'disabled';
 $finish_outsidesatu_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 if ($data2['c_repair_outsidesatu_o'] != '') {
@@ -180,9 +180,9 @@ if ($data2['c_outsidesatu_pic'] != '') {
             <th colspan="4">Validasi</th>
         </tr>
         <tr>
-            <td colspan="2">C1</td>
-            <td>C2</td>
-            <td>C3</td>
+            <td colspan="2">R1<br>(<?= $repair ?>)</td>
+            <td>R2</td>
+            <td>R3</td>
         </tr>
 
     </thead>
