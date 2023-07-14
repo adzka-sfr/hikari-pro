@@ -13,15 +13,15 @@ if ($stat == 'update') {
     $sql = mysqli_query($connect_pro, "UPDATE finalcheck_note SET c_completenesssatu = '$note' WHERE c_serialnumber = '$serialnumber'");
 
     if ($sql) {
-        echo $note;
+        echo json_encode(array("note1" => $note));
     }
 } else {
     $serialnumber = $_POST['serialnumber'];
     // [SELECT : finalcheck_note] ketika baru load
-    $sql = mysqli_query($connect_pro, "SELECT c_completenesssatu FROM finalcheck_note WHERE c_serialnumber = '$serialnumber'");
+    $sql = mysqli_query($connect_pro, "SELECT c_completenesssatu, c_completenessdua, c_completenesstiga FROM finalcheck_note WHERE c_serialnumber = '$serialnumber'");
     $data = mysqli_fetch_array($sql);
 
     if ($sql) {
-        echo $data['c_completenesssatu'];
+        echo json_encode(array("note1" => $data['c_completenesssatu'], "note2" => $data['c_completenessdua'], "note3" => $data['c_completenesstiga']));
     }
 }

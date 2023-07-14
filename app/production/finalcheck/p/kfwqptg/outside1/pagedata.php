@@ -163,7 +163,8 @@ $data = mysqli_fetch_array($sql);
                     "stat": stat
                 },
                 success: function(response) {
-                    $('#note1').html(response);
+                    var response = JSON.parse(response);
+                    $('#note1').html(response.note1);
                 }
             });
         })
@@ -181,7 +182,8 @@ $data = mysqli_fetch_array($sql);
                     "stat": stat
                 },
                 success: function(response) {
-                    $('#note1').html(response);
+                    var response = JSON.parse(response);
+                    $('#note1').html(response.note1);
                 }
             });
         })

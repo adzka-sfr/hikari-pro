@@ -516,7 +516,8 @@ if ($c_code_type == 'f') {
                     "stat": stat
                 },
                 success: function(response) {
-                    $('#note1').html(response);
+                    var response = JSON.parse(response);
+                    $('#note1').html(response.note1);
                 }
             });
         })
@@ -535,7 +536,8 @@ if ($c_code_type == 'f') {
                     "stat": stat
                 },
                 success: function(response) {
-                    $('#note1').html(response);
+                    var response = JSON.parse(response);
+                    $('#note1').html(response.note1);
                 }
             });
         })
@@ -656,7 +658,7 @@ if ($c_code_type == 'f') {
                                         confirmButtonText: 'Oke'
                                     }).then(function() {
                                         $('#clearacard').trigger('click');
-                                        
+
                                     });
                                 }
                             }

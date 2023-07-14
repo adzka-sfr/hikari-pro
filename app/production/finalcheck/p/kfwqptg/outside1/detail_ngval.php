@@ -20,7 +20,7 @@ $repair = '-';
 $validation_func = 'disabled';
 $finish_outside_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 if ($data2['c_repair_outsidesatu_o'] != '') {
-    $ok_date = date('d-m-Y', strtotime($data1['ng_date']));
+    $ok_date = date('d-m-Y', strtotime($data4['total']));
     $finish_outside_func = 'disabled';
 }
 if ($data2['c_outsidesatu_pic'] != '') {
@@ -61,7 +61,7 @@ if ($data4['total'] == 0) {
                         <b><?= $data2['ng_name'] ?></b>
                     </div>
                     <div class="col-2">
-                        <input <?= $finish_outside_func . " " . $validation_func." ". $validasio ?> id="cekbokvalo<?= $data2['c_code_ng'] ?>" onchange="cekbokvalo(this.id,'<?= $serialnumber ?>','<?= $data2['c_code_ng'] ?>','<?= $publicprocess ?>')" value="Y" type="checkbox" style="transform: scale(2);">
+                        <input <?= $finish_outside_func . " " . $validation_func . " " . $validasio ?> id="cekbokvalo<?= $data2['c_code_ng'] ?>" onchange="cekbokvalo(this.id,'<?= $serialnumber ?>','<?= $data2['c_code_ng'] ?>','<?= $publicprocess ?>')" value="Y" type="checkbox" style="transform: scale(2);">
                     </div>
                 </div>
             </td>

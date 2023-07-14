@@ -19,11 +19,29 @@ if ($c_code_type == 'f') {
 
 // get stempel 
 // [SELECT : finalcheck_inside] get tanggal NG -> maks (c_result_date) and c_result=ng || finalcheck_inside
-$sql1 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_fetch_outside WHERE c_serialnumber = '$serialnumber'");
+$sql1 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_fetch_outside WHERE c_serialnumber = '$serialnumber' AND c_process = 'oc1'");
 $data1 = mysqli_fetch_array($sql1);
 $ng_date1 = '-';
 if ($data1['ng_date'] != '') {
     $ng_date1 = date('d-m-Y', strtotime($data1['ng_date']));
+}
+
+// get stempel 
+// [SELECT : finalcheck_inside] get tanggal NG -> maks (c_result_date) and c_result=ng || finalcheck_inside
+$sql2 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_fetch_outside WHERE c_serialnumber = '$serialnumber' AND c_process = 'oc2'");
+$data2 = mysqli_fetch_array($sql2);
+$ng_date2 = '-';
+if ($data2['ng_date'] != '') {
+    $ng_date2 = date('d-m-Y', strtotime($data2['ng_date']));
+}
+
+// get stempel 
+// [SELECT : finalcheck_inside] get tanggal NG -> maks (c_result_date) and c_result=ng || finalcheck_inside
+$sql3 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_fetch_outside WHERE c_serialnumber = '$serialnumber' AND c_process = 'oc3'");
+$data3 = mysqli_fetch_array($sql3);
+$ng_date3 = '-';
+if ($data3['ng_date'] != '') {
+    $ng_date3 = date('d-m-Y', strtotime($data3['ng_date']));
 }
 
 // get name
@@ -31,20 +49,46 @@ if ($data1['ng_date'] != '') {
 // get tanggal OK -> c_repair_inside_o || finalcheck_repairtime
 // get pic inside check -> c_inside || finalcheck_pic
 // select a.c_repair_inside_o , b.c_inside  from finalcheck_repairtime a inner join finalcheck_pic b on a.c_serialnumber = b.c_serialnumber where b.c_serialnumber = 'J40505958'
-$sql2 = mysqli_query($connect_pro, "SELECT a.c_repair_outsidesatu_o , b.c_outsidesatu, a.c_outsidesatu_pic  FROM finalcheck_repairtime a INNER JOIN finalcheck_pic b ON a.c_serialnumber = b.c_serialnumber WHERE b.c_serialnumber = '$serialnumber'");
+$sql2 = mysqli_query($connect_pro, "SELECT a.c_repair_outsidesatu_o,a.c_repair_outsidedua_o,a.c_repair_outsidetiga_o, b.c_outsidesatu,b.c_outsidedua,b.c_outsidetiga, a.c_outsidesatu_pic,a.c_outsidedua_pic,a.c_outsidetiga_pic  FROM finalcheck_repairtime a INNER JOIN finalcheck_pic b ON a.c_serialnumber = b.c_serialnumber WHERE b.c_serialnumber = '$serialnumber'");
 $data2 = mysqli_fetch_array($sql2);
-$ok_date = '-';
-$pic = $data2['c_outsidesatu'];
-$repair = '-';
+
+$ok_date1 = '-';
+$ok_date2 = '-';
+$ok_date3 = '-';
+$pic1 = $data2['c_outsidesatu'];
+$pic2 = $data2['c_outsidedua'];
+$pic3 = $data2['c_outsidetiga'];
+$repair1 = '-';
+$repair2 = '-';
+$repair3 = '-';
+
 $validation_func = 'disabled';
 $finish_outside_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 if ($data2['c_repair_outsidesatu_o'] != '') {
-    $ok_date = date('d-m-Y', strtotime($data1['ng_date']));
+    $ok_date1 = date('d-m-Y', strtotime($data2['c_repair_outsidesatu_o']));
     $finish_outside_func = 'disabled';
 }
+
+if ($data2['c_repair_outsidedua_o'] != '') {
+    $ok_date2 = date('d-m-Y', strtotime($data2['c_repair_outsidedua_o']));
+}
+
+if ($data2['c_repair_outsidetiga_o'] != '') {
+    $ok_date3 = date('d-m-Y', strtotime($data2['c_repair_outsidetiga_o']));
+}
+
+// untuk validation func tergantung bagian mana yang aktif
 if ($data2['c_outsidesatu_pic'] != '') {
-    $repair = $data2['c_outsidesatu_pic'];
+    $repair1 = $data2['c_outsidesatu_pic'];
     $validation_func = '';
+}
+
+if ($data2['c_outsidedua_pic'] != '') {
+    $repair2 = $data2['c_outsidedua_pic'];
+}
+
+if ($data2['c_outsidetiga_pic'] != '') {
+    $repair2 = $data2['c_outsidetiga_pic'];
 }
 
 // get repair all and allow finish
@@ -104,7 +148,7 @@ if ($data3['total'] == 0) {
         </div>
         <div class="row">
             <div class="col-12">
-                <button <?= $btnfinishdis ?> class="btn btn-primary" id="sendfinisho" style="width: 100%;">Finish Outside Check <i class="fa fa-flag-checkered"></i></button>
+                <button <?= $btnfinishdis . " " . $finish_outside_func ?> class="btn btn-primary" id="sendfinisho" style="width: 100%;">Finish Outside Check <i class="fa fa-flag-checkered"></i></button>
                 <script>
                     var serialnumber = $('#serialnumber').val();
                     $('#send').click(function() {
@@ -206,9 +250,9 @@ if ($data3['total'] == 0) {
     <div class="col-12 mb-0">
         <table class="table">
             <tr style="text-align: center;">
-                <td style="width: 33%;"><i class="fa fa-gavel" style="color: #DC4646 ;"></i> R1 : <?= $repair ?></td>
-                <td style="width: 34%;"><i class="fa fa-gavel" style="color: #5AA65A ;"></i> R2 : -</td>
-                <td style="width: 33%;"><i class="fa fa-gavel" style="color: #1340FF ;"></i> R3 : -</td>
+                <td style="width: 33%;"><i class="fa fa-gavel" style="color: #DC4646 ;"></i> R1 : <?= $repair1 ?></td>
+                <td style="width: 34%;"><i class="fa fa-gavel" style="color: #5AA65A ;"></i> R2 : <?= $repair2 ?></td>
+                <td style="width: 33%;"><i class="fa fa-gavel" style="color: #1340FF ;"></i> R3 : <?= $repair3 ?></td>
             </tr>
         </table>
     </div>
@@ -224,7 +268,7 @@ if ($data3['total'] == 0) {
             </tbody>
         </table>
     </div>
-    <div class="col-6" id="image_ng">
+    <div class="col-6" id="image_ng" style="text-align: center;">
     </div>
 </div>
 <!-- isi konten -->
@@ -233,7 +277,7 @@ if ($data3['total'] == 0) {
 <div class="row">
     <div class="col-4">
         <h5>Note 1</h5>
-        <textarea name="note1" id="note1" rows="5" style="width: 100%;"></textarea>
+        <textarea disabled name="note1" id="note1" rows="5" style="width: 100%;"></textarea>
     </div>
     <div class="col-4">
         <h5>Note 2</h5>
@@ -247,37 +291,19 @@ if ($data3['total'] == 0) {
     <script>
         $(document).ready(function() {
             var serialnumber = $('#serialnumber').val();
-            var note = $('#note1').val();
             var stat = 'select';
             $.ajax({
                 url: 'outside1/data2.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,
-                    "note": note,
                     "stat": stat
                 },
                 success: function(response) {
-                    $('#note1').html(response);
-                }
-            });
-        })
-
-        $('#note1').blur(function() {
-            var serialnumber = $('#serialnumber').val();
-            var note = $('#note1').val();
-            console.log(note);
-            var stat = 'update';
-            $.ajax({
-                url: 'outside1/data2.php',
-                type: 'POST',
-                data: {
-                    "serialnumber": serialnumber,
-                    "note": note,
-                    "stat": stat
-                },
-                success: function(response) {
-                    $('#note1').html(response);
+                    var response = JSON.parse(response);
+                    $('#note1').html(response.note1);
+                    $('#note2').html(response.note2);
+                    $('#note3').html(response.note3);
                 }
             });
         })
@@ -299,39 +325,73 @@ if ($data3['total'] == 0) {
                 <?php
                 if ($ng_date1 != '-') {
                 ?>
-                    <span class="stamp is-reject" style="font-size:1.2rem"><?= $pic ?></span>
+                    <span class="stamp is-reject" style="font-size:1.2rem; width: 200px;"><?= $pic1 ?></span>
                 <?php
                 }
                 ?>
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 34%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC REJECT</h5>
+                <?php
+                if ($ng_date2 != '-') {
+                ?>
+                    <span class="stamp is-reject" style="font-size:1.2rem ; width: 200px;"><?= $pic2 ?></span>
+                <?php
+                }
+                ?>
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 33%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC REJECT</h5>
+                <?php
+                if ($ng_date3 != '-') {
+                ?>
+                    <span class="stamp is-reject" style="font-size:1.2rem; width: 200px;"><?= $pic3 ?></span>
+                <?php
+                }
+                ?>
             </td>
         </tr>
         <tr>
             <td>Date: <?= $ng_date1 ?></td>
-            <td>Date: -</td>
-            <td>Date: -</td>
+            <td>Date: <?= $ng_date2 ?></td>
+            <td>Date: <?= $ng_date3 ?></td>
         </tr>
         <tr style="text-align: center;">
             <td style="padding-top: 15px; padding-bottom: 15px; width: 33%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
-                <!-- <span class="stamp is-pass" style="font-size:1.2rem"><?= "Graham Bell" ?></span> -->
+                <?php
+                if ($ok_date1 != '-') {
+                ?>
+                    <span class="stamp is-pass" style="font-size:1.2rem; width: 200px;"><?= $pic1 ?></span>
+                <?php
+                }
+                ?>
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 34%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
+                <?php
+                if ($ok_date2 != '-') {
+                ?>
+                    <span class="stamp is-pass" style="font-size:1.2rem; width: 200px;"><?= $pic2 ?></span>
+                <?php
+                }
+                ?>
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 33%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
+                <?php
+                if ($ok_date3 != '-') {
+                ?>
+                    <span class="stamp is-pass" style="font-size:1.2rem; width: 200px;"><?= $pic3 ?></span>
+                <?php
+                }
+                ?>
             </td>
         </tr>
         <tr>
-            <td>Date: -</td>
-            <td>Date: -</td>
-            <td>Date: -</td>
+            <td>Date: <?= $ok_date1 ?></td>
+            <td>Date: <?= $ok_date2 ?></td>
+            <td>Date: <?= $ok_date3 ?></td>
         </tr>
     </tbody>
 </table>
@@ -375,44 +435,35 @@ if ($data3['total'] == 0) {
                                     // load_image_ng(serialnumber, codetype);
                                     var response = JSON.parse(response);
                                     console.log('dikirim ke proses berikutnya');
-                                    console.log(response.serialnumber);
-                                    // if (response.status == 'OK') {
-                                    //     Swal.fire({
-                                    //         title: 'Berhasil!',
-                                    //         icon: 'success',
-                                    //         html: 'Data berhasil dihapus',
-                                    //         showCancelButton: false,
-                                    //         showConfirmButton: true,
-                                    //         confirmButtonColor: '#3085d6',
-                                    //         cancelButtonColor: '#d33',
-                                    //         confirmButtonText: 'Oke',
-                                    //         cancelButtonText: 'Tidak'
-                                    //     })
-                                    // } else if (response.status == 'GAGAL') {
-                                    //     Swal.fire({
-                                    //         title: 'Gagal!',
-                                    //         icon: 'success',
-                                    //         html: 'Tidak ada data yang bisa dihapus',
-                                    //         showCancelButton: false,
-                                    //         showConfirmButton: true,
-                                    //         confirmButtonColor: '#3085d6',
-                                    //         cancelButtonColor: '#d33',
-                                    //         confirmButtonText: 'Oke',
-                                    //         cancelButtonText: 'Tidak'
-                                    //     })
-                                    // } else {
-                                    //     Swal.fire({
-                                    //         title: 'Gagal!',
-                                    //         icon: 'error',
-                                    //         html: 'Data gagal dihapus',
-                                    //         showCancelButton: false,
-                                    //         showConfirmButton: true,
-                                    //         confirmButtonColor: '#3085d6',
-                                    //         cancelButtonColor: '#d33',
-                                    //         confirmButtonText: 'Oke',
-                                    //         cancelButtonText: 'Tidak'
-                                    //     })
-                                    // }
+                                    if (response.status == 'berhasil') {
+                                        Swal.fire({
+                                            title: 'Berhasil!',
+                                            icon: 'success',
+                                            html: 'Data berhasil dikirim ke proses berikutnya',
+                                            showCancelButton: false,
+                                            showConfirmButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Oke',
+                                            cancelButtonText: 'Tidak'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                $('#clearacard').trigger('click');
+                                            }
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            title: 'Gagal!',
+                                            icon: 'error',
+                                            html: 'Data gagal dikirim, silahkan coba lagi',
+                                            showCancelButton: false,
+                                            showConfirmButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Oke',
+                                            cancelButtonText: 'Tidak'
+                                        })
+                                    }
                                 }
                             });
                         }

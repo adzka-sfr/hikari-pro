@@ -10,7 +10,7 @@ $serialnumber = isset($_POST['serialnumber']) ? $_POST['serialnumber'] : '';
 $sql = mysqli_query($connect_pro, "SELECT b.c_name FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber' ");
 $data = mysqli_fetch_array($sql);
 
-// get date ng
+// get date ng1
 $sql1 = mysqli_query($connect_pro, "SELECT MAX(c_resultsatu_date) as maks FROM finalcheck_fetch_completeness WHERE c_serialnumber = '$serialnumber' AND c_resultsatu = 'N'");
 $data1 = mysqli_fetch_array($sql1);
 $ng_date1 = '-';
@@ -18,24 +18,67 @@ if ($data1['maks'] != '') {
     $ng_date1 = date('d-m-Y', strtotime($data1['maks']));
 }
 
+// get date ng2
+$sql2 = mysqli_query($connect_pro, "SELECT MAX(c_resultdua_date) as maks FROM finalcheck_fetch_completeness WHERE c_serialnumber = '$serialnumber' AND c_resultdua = 'N'");
+$data2 = mysqli_fetch_array($sql2);
+$ng_date2 = '-';
+if ($data2['maks'] != '') {
+    $ng_date2 = date('d-m-Y', strtotime($data2['maks']));
+}
+
+// get date ng3
+$sql3 = mysqli_query($connect_pro, "SELECT MAX(c_resulttiga_date) as maks FROM finalcheck_fetch_completeness WHERE c_serialnumber = '$serialnumber' AND c_resulttiga = 'N'");
+$data3 = mysqli_fetch_array($sql3);
+$ng_date3 = '-';
+if ($data3['maks'] != '') {
+    $ng_date3 = date('d-m-Y', strtotime($data3['maks']));
+}
+
 // [SELECT : finalcheck_repairtime, finalcheck_pic JOIN by c_serialnumber  ] 
 // get tanggal OK -> c_repair_inside_o || finalcheck_repairtime
 // get pic inside check -> c_inside || finalcheck_pic
 // select a.c_repair_inside_o , b.c_inside  from finalcheck_repairtime a inner join finalcheck_pic b on a.c_serialnumber = b.c_serialnumber where b.c_serialnumber = 'J40505958'
-$sql2 = mysqli_query($connect_pro, "SELECT a.c_repair_outsidesatu_o , b.c_outsidesatu, a.c_outsidesatu_pic  FROM finalcheck_repairtime a INNER JOIN finalcheck_pic b ON a.c_serialnumber = b.c_serialnumber WHERE b.c_serialnumber = '$serialnumber'");
+$sql2 = mysqli_query($connect_pro, "SELECT a.c_repair_outsidesatu_o,a.c_repair_outsidedua_o,a.c_repair_outsidetiga_o , b.c_outsidesatu,b.c_outsidedua,b.c_outsidetiga, a.c_outsidesatu_pic,a.c_outsidedua_pic,a.c_outsidetiga_pic  FROM finalcheck_repairtime a INNER JOIN finalcheck_pic b ON a.c_serialnumber = b.c_serialnumber WHERE b.c_serialnumber = '$serialnumber'");
 $data2 = mysqli_fetch_array($sql2);
-$ok_date = '-';
-$pic = $data2['c_outsidesatu'];
-$repair = '-';
+
+$ok_date1 = '-';
+$ok_date2 = '-';
+$ok_date3 = '-';
+$pic1 = $data2['c_outsidesatu'];
+$pic2 = $data2['c_outsidedua'];
+$pic3 = $data2['c_outsidetiga'];
+$repair1 = '-';
+$repair2 = '-';
+$repair3 = '-';
+
 $validation_func = 'disabled';
 $finish_outsidesatu_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 if ($data2['c_repair_outsidesatu_o'] != '') {
-    $ok_date = date('d-m-Y', strtotime($data1['maks']));
+    $ok_date1 = date('d-m-Y', strtotime($data2['c_repair_outsidesatu_o']));
     $finish_outsidesatu_func = 'disabled';
 }
+
+if ($data2['c_repair_outsidedua_o'] != '') {
+    $ok_date2 = date('d-m-Y', strtotime($data2['c_repair_outsidedua_o']));
+}
+
+if ($data2['c_repair_outsidetiga_o'] != '') {
+    $ok_date3 = date('d-m-Y', strtotime($data2['c_repair_outsidetiga_o']));
+}
+
+
+// untuk validation func tergantung mana yang aktif
 if ($data2['c_outsidesatu_pic'] != '') {
-    $repair = $data2['c_outsidesatu_pic'];
+    $repair1 = $data2['c_outsidesatu_pic'];
     $validation_func = '';
+}
+
+if ($data2['c_outsidedua_pic'] != '') {
+    $repair2 = $data2['c_outsidedua_pic'];
+}
+
+if ($data2['c_outsidetiga_pic'] != '') {
+    $repair2 = $data2['c_outsidetiga_pic'];
 }
 ?>
 
@@ -180,16 +223,16 @@ if ($data2['c_outsidesatu_pic'] != '') {
             <th colspan="4">Validasi</th>
         </tr>
         <tr>
-            <td colspan="2">R1<br>(<?= $repair ?>)</td>
-            <td>R2</td>
-            <td>R3</td>
+            <td colspan="2">R1<br>(<?= $repair1 ?>)</td>
+            <td>R2<br>(<?= $repair2 ?>)</td>
+            <td>R3<br>(<?= $repair3 ?>)</td>
         </tr>
 
     </thead>
     <tbody>
         <?php
         $no = 0;
-        $sql = mysqli_query($connect_pro, "SELECT a.c_code_completeness,a.c_resultsatu, a.c_repairsatu, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE c_serialnumber = '$serialnumber'");
+        $sql = mysqli_query($connect_pro, "SELECT a.c_code_completeness,a.c_resultsatu, a.c_repairsatu,a.c_resultdua, a.c_repairdua,a.c_resulttiga, a.c_repairtiga, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE c_serialnumber = '$serialnumber'");
         while ($data = mysqli_fetch_array($sql)) {
             $status = '';
 
@@ -201,6 +244,18 @@ if ($data2['c_outsidesatu_pic'] != '') {
                 if ($data['c_repairsatu'] == 'Y') {
                     $valcheck = 'checked';
                 }
+            }
+
+            if ($data['c_resultdua'] == 'Y') {
+                $check2 = 'checked';
+            } else {
+                $check2 = '';
+            }
+
+            if ($data['c_resulttiga'] == 'Y') {
+                $check3 = 'checked';
+            } else {
+                $check3 = '';
             }
             $no++;
         ?>
@@ -222,8 +277,8 @@ if ($data2['c_outsidesatu_pic'] != '') {
                     ?>
 
                 </td>
-                <td style="font-size: 15px; text-align: center;"><input disabled id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
-                <td style="font-size: 15px; text-align: center;"><input disabled id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok3(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
+                <td style="font-size: 15px; text-align: center;"><input disabled <?= $check2 ?> id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
+                <td style="font-size: 15px; text-align: center;"><input disabled <?= $check3 ?> id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok3(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
             </tr>
         <?php
         }
@@ -279,36 +334,19 @@ if ($data2['c_outsidesatu_pic'] != '') {
     <script>
         $(document).ready(function() {
             var serialnumber = $('#serialnumber').val();
-            var note = $('#note1').val();
             var stat = 'select';
             $.ajax({
                 url: 'outside1/data1.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,
-                    "note": note,
                     "stat": stat
                 },
                 success: function(response) {
-                    $('#note1').html(response);
-                }
-            });
-        })
-
-        $('#note').blur(function() {
-            var serialnumber = $('#serialnumber').val();
-            var note = $('#note1').val();
-            var stat = 'update';
-            $.ajax({
-                url: 'outside1/data1.php',
-                type: 'POST',
-                data: {
-                    "serialnumber": serialnumber,
-                    "note": note,
-                    "stat": stat
-                },
-                success: function(response) {
-                    $('#note1').html(response);
+                    var response = JSON.parse(response);
+                    $('#note1').html(response.note1);
+                    $('#note2').html(response.note2);
+                    $('#note3').html(response.note3);
                 }
             });
         })
@@ -330,45 +368,73 @@ if ($data2['c_outsidesatu_pic'] != '') {
                 <?php
                 if ($ng_date1 != '-') {
                 ?>
-                    <span class="stamp is-reject" style="font-size:1.2rem"><?= $pic ?></span>
+                    <span class="stamp is-reject" style="font-size:1.2rem; width: 200px;"><?= $pic1 ?></span>
                 <?php
                 }
                 ?>
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 34%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC REJECT</h5>
+                <?php
+                if ($ng_date2 != '-') {
+                ?>
+                    <span class="stamp is-reject" style="font-size:1.2rem; width: 200px;"><?= $pic2 ?></span>
+                <?php
+                }
+                ?>
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 33%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC REJECT</h5>
+                <?php
+                if ($ng_date3 != '-') {
+                ?>
+                    <span class="stamp is-reject" style="font-size:1.2rem; width: 200px;"><?= $pic3 ?></span>
+                <?php
+                }
+                ?>
             </td>
         </tr>
         <tr>
             <td>Date: <?= $ng_date1 ?></td>
-            <td>Date: -</td>
-            <td>Date: -</td>
+            <td>Date: <?= $ng_date2 ?></td>
+            <td>Date: <?= $ng_date3 ?></td>
         </tr>
         <tr style="text-align: center;">
             <td style="padding-top: 15px; padding-bottom: 15px; width: 33%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
                 <?php
-                if ($ok_date != '-') {
+                if ($ok_date1 != '-') {
                 ?>
-                    <span class="stamp is-pass" style="font-size:1.2rem"><?= $pic ?></span>
+                    <span class="stamp is-pass" style="font-size:1.2rem; width: 200px;"><?= $pic1 ?></span>
                 <?php
                 }
                 ?>
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 34%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
+                <?php
+                if ($ok_date2 != '-') {
+                ?>
+                    <span class="stamp is-pass" style="font-size:1.2rem; width: 200px;"><?= $pic2 ?></span>
+                <?php
+                }
+                ?>
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 33%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
+                <?php
+                if ($ok_date3 != '-') {
+                ?>
+                    <span class="stamp is-pass" style="font-size:1.2rem; width: 200px;"><?= $pic3 ?></span>
+                <?php
+                }
+                ?>
             </td>
         </tr>
         <tr>
-            <td>Date: <?= $ok_date ?></td>
-            <td>Date: -</td>
-            <td>Date: -</td>
+            <td>Date: <?= $ok_date1 ?></td>
+            <td>Date: <?= $ok_date2 ?></td>
+            <td>Date: <?= $ok_date3 ?></td>
         </tr>
     </tbody>
 </table>
