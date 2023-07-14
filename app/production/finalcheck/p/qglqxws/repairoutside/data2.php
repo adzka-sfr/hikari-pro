@@ -2,8 +2,8 @@
 // get connection
 require '../config.php';
 
-unset($_SESSION['serialinside']);
+unset($_SESSION['serialoutside']);
 
-if (empty($_SESSION['serialinside'])) {
+if (empty($_SESSION['serialoutside'])) {
     echo json_encode(array("status" => "OK"));
 }

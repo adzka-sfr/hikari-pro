@@ -7,7 +7,7 @@ session_start();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Repair Inside</title>
+    <title>Repair Outside</title>
     <!-- <link rel="icon" href="logo_icon.png"> -->
     <link href="../../source/css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript" src="../../source/js/jquery.min.js"></script>
@@ -128,15 +128,52 @@ session_start();
     $connect = new mysqli("localhost", "root", "", "hikari");
     $connect_pro = new mysqli("localhost", "root", "", "hikari_project");
     //get data ng
-    $serialnumber = $_SESSION['serialinside'];
+    $serialnumber = $_SESSION['serialoutside'];
 
     // get list pic incheck
-    $q1 = mysqli_query($connect, "SELECT nama FROM auth WHERE role = 'repair incheck'");
+    $q1 = mysqli_query($connect, "SELECT nama FROM auth WHERE role = 'repair outcheck'");
 
-    // get pic cek and note
-    $q2 = mysqli_query($connect_pro, "SELECT a.c_inside as pic_check, b.c_inside as note_check, c.c_inside_pic as pic_repair FROM finalcheck_pic a INNER JOIN finalcheck_note b ON a.c_serialnumber = b.c_serialnumber INNER JOIN finalcheck_repairtime c ON a.c_serialnumber = c.c_serialnumber WHERE a.c_serialnumber = '$serialnumber'");
+    // get pic cek and note + cek proses ke berapa
+    $q2 = mysqli_query($connect_pro, "SELECT a.c_outsidesatu as pic_check1,a.c_outsidedua as pic_check2,a.c_outsidetiga as pic_check3, b.c_outsidesatu as note_check1,b.c_outsidedua as note_check2,b.c_outsidetiga as note_check3, b.c_completenesssatu as note_com1, b.c_completenessdua as note_com2, b.c_completenesstiga as note_com3,c.c_outsidesatu_pic as pic_rep1,c.c_outsidedua_pic as pic_rep2,c.c_outsidetiga_pic as pic_rep3  FROM finalcheck_pic a INNER JOIN finalcheck_note b ON a.c_serialnumber = b.c_serialnumber INNER JOIN finalcheck_repairtime c ON a.c_serialnumber = c.c_serialnumber WHERE a.c_serialnumber = '$serialnumber'");
     $d2 = mysqli_fetch_array($q2);
 
+    if (!empty($d2['pic_check3'])) {
+        $pic_check = $d2['pic_check3'];
+        $serialnumbershow = "S-" . $serialnumber;
+        $location = "3";
+        $process = "oc3";
+        $note_check = $d2['note_check3'];
+        $note_com = $d2['note_com3'];
+        $pic_rep = $d2['pic_rep3'];
+    } else {
+        if (!empty($d2['pic_check2'])) {
+            $pic_check = $d2['pic_check2'];
+            $serialnumbershow = "H-" . $serialnumber;
+            $location = "2";
+            $process = "oc2";
+            $note_check = $d2['note_check2'];
+            $note_com = $d2['note_com2'];
+            $pic_rep = $d2['pic_rep2'];
+        } else {
+            if (!empty($d2['pic_check1'])) {
+                $pic_check = $d2['pic_check1'];
+                $serialnumbershow = "V-" . $serialnumber;
+                $location = "1";
+                $process = "oc1";
+                $note_check = $d2['note_check1'];
+                $note_com = $d2['note_com1'];
+                $pic_rep = $d2['pic_rep1'];
+            } else {
+                $pic_check = '-';
+                $serialnumbershow = "?-" . $serialnumber;
+                $location = "0";
+                $process = "oc0";
+                $note_check = "-";
+                $note_com = "-";
+                $pic_rep = '-';
+            }
+        }
+    }
     ?>
     <div class="row noPrint">
         <div class="col-6" style="text-align: center;">
@@ -150,53 +187,126 @@ session_start();
     <div class="page">
 
         <!-- Content -->
-        <h6 style="text-align: center;">Inside Check</h6>
-        <input id="text" type="hidden" value="<?= "X-" . $serialnumber ?>" /><br />
+        <h6 style="text-align: center;">Outside Check <?= $location ?></h6>
+        <input id="text" type="hidden" value="<?= $serialnumbershow ?>" /><br />
         <div style="text-align: center;">
-            <div style="padding-top: 0px; font-size:15px; "><b><?= $d2['pic_check'] ?></b></div>
+            <div style="padding-top: 0px; font-size:15px; "><b><?= $pic_check ?></b></div>
             <div id="qrcode" style="width:25mm; height:25mm; margin-left: 27%;"></div>
-            <div style="padding-top: 0px; font-size:15px; "><b><?= "X-" . $serialnumber ?></b></div>
+            <div style="padding-top: 0px; font-size:15px; "><b><?= $serialnumbershow ?></b></div>
         </div>
         <hr style="border-top: 3px solid black;">
         <div style="font-size: 12px; padding-left: 0px; margin-left: 0px;">
-            <ul>
-                <?php
-                // get incheck
-                // get ng
-
-
-                $q3 = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_code_ng, b.c_detail FROM finalcheck_fetch_inside a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_result = 'NG' AND a.c_serialnumber ='$serialnumber'");
-                while ($d3 = mysqli_fetch_array($q3)) {
-                    $ng = array();
-
-                    $d3a = explode('/', $d3['c_code_ng']);
-                    foreach ($d3a as $value) {
-                        $q3b = mysqli_query($connect_pro, "SELECT c_name FROM finalcheck_list_ng WHERE c_code_ng = '$value'");
-                        $d3b = mysqli_fetch_array($q3b);
-                        array_push($ng, $d3b['c_name']);
+            <?php
+            $q4 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_fetch_outside WHERE c_serialnumber = '$serialnumber' AND c_process = '$process'");
+            $d4 = mysqli_fetch_array($q4);
+            if ($d4['total'] == 0) {
+            ?>
+                <b>Outside is Good !</b>
+            <?php
+            } else {
+            ?>
+                <b>Outside NG:</b>
+                <ul>
+                    <?php
+                    $q3 = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_cabinet, b.c_name FROM finalcheck_fetch_outside a INNER JOIN finalcheck_list_cabinet b ON a.c_code_cabinet = b.c_code_cabinet WHERE a.c_process = '$process' AND a.c_serialnumber ='$serialnumber'");
+                    while ($d3 = mysqli_fetch_array($q3)) {
+                        $ng = array();
+                        $q3b = mysqli_query($connect_pro, "SELECT a.c_code_ng, a.c_number_ng, b.c_name FROM finalcheck_fetch_outside a INNER JOIN finalcheck_list_ng b ON a.c_code_ng = b.c_code_ng WHERE a.c_code_cabinet = '$d3[c_code_cabinet]'");
+                        while ($d3b = mysqli_fetch_array($q3b)) {
+                            $inject = "(" . $d3b['c_number_ng'] . ") " . $d3b['c_name'];
+                            array_push($ng, $inject);
+                        }
+                        $ng = implode('</br>', $ng);
+                    ?>
+                        <li><b><?= $d3['c_name'] ?></b><br>
+                            <?= $ng ?>
+                        </li>
+                    <?php
                     }
-                    $ng = implode('//', $ng);
-                ?>
-                    <li><?= $d3['c_detail'] ?>.
-                        <b><?= $ng ?></b>
-                    </li>
-                <?php
-                }
-                ?>
-            </ul>
+                    ?>
+                </ul>
+            <?php
+            }
+            ?>
         </div>
-        <hr style="border-top: 3px solid black;">
-        <div style="font-size: 12px; padding-left: 10px; margin-left: 0px; margin-bottom:0px;">
-            <b>Note:</b>
-            <br>
 
-            <b>
-                <pre><?= $d2['note_check'] ?></pre>
-            </b>
+        <?php
+        // jika ada note outside
+        if ($note_check != '') {
+        ?>
+            <hr style="border-top: 3px solid black;">
+            <div style="font-size: 12px; padding-left: 0px; margin-left: 0px;">
+                <b>Outside Note:</b>
+                <b>
+                    <pre><?= $note_check ?></pre>
+                </b>
+            </div>
+        <?php
+        }
+        ?>
+
+        <hr style="border-top: 3px solid black;">
+        <div style="font-size: 12px; padding-left: 0px; margin-left: 0px;">
+            <?php
+            if ($process == 'oc3') {
+                $q4 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_fetch_completeness WHERE c_serialnumber = '$serialnumber' AND c_resulttiga = 'N'");
+                $q3 = mysqli_query($connect_pro, "SELECT a.c_code_completeness, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE a.c_resulttiga = 'N' AND a.c_serialnumber ='$serialnumber'");
+            } elseif ($process == 'oc2') {
+                $q4 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_fetch_completeness WHERE c_serialnumber = '$serialnumber' AND c_resultdua = 'N'");
+                $q3 = mysqli_query($connect_pro, "SELECT a.c_code_completeness, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE a.c_resultdua = 'N' AND a.c_serialnumber ='$serialnumber'");
+            } elseif ($process == 'oc1') {
+                $q4 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_fetch_completeness WHERE c_serialnumber = '$serialnumber' AND c_resultsatu = 'N'");
+                $q3 = mysqli_query($connect_pro, "SELECT a.c_code_completeness, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE a.c_resultsatu = 'N' AND a.c_serialnumber ='$serialnumber'");
+            } else {
+                $q4 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_fetch_completeness WHERE c_serialnumber = 'kosong'");
+                $q3 = mysqli_query($connect_pro, "SELECT a.c_code_completeness, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE a.c_serialnumber ='kosong'");
+            }
+            $d4 = mysqli_fetch_array($q4);
+            if ($d4['total'] == 0) {
+            ?>
+                <b>Completeness is Good !</b>
+            <?php
+            } else {
+            ?>
+                <b>Completeness NG:</b>
+                <ul>
+                    <?php
+                    while ($d3 = mysqli_fetch_array($q3)) {
+                    ?>
+                        <li><?= $d3['c_detail'] ?></li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+            <?php
+            }
+            ?>
         </div>
+
+        <?php
+        // jika ada note completeness
+        if ($note_com != '') {
+        ?>
+            <hr style="border-top: 3px solid black;">
+            <div style="font-size: 12px; padding-left: 0px; margin-left: 0px;">
+                <b>Completeness Note:</b>
+                <b>
+                    <pre><?= $note_com ?></pre>
+                </b>
+            </div>
+        <?php
+        }
+        ?>
+
+
+
+
+
         <hr style="border-top: 3px solid black; margin-bottom: 0px; margin-top:0px;">
         <div style="font-size: 12px; padding-left: 10px; margin-left: 0px; margin-top: 0px;">
-            pic repair: <span id="pic"><?= $d2['pic_repair'] ?></span>
+            pic repair: <span id="pic"><?= $pic_rep ?></span>
+            <input type="hidden" id="picsend" value="-">
+            <input type="hidden" id="process" value="<?= $process ?>">
         </div>
     </div>
 
@@ -234,7 +344,6 @@ session_start();
     </script>
     <script>
         $('#print').click(function() {
-            // ajax
             window.print()
         })
 
@@ -264,6 +373,13 @@ session_start();
                 }
             });
         })
+
+        $('.halodecktot').select2({
+            placeholder: " Pilih Nama",
+            language: "id",
+            allowClear: true,
+
+        });
     </script>
     <script src="../../source/js/bootstrap.bundle.min.js"></script>
 </body>
