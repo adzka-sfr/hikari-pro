@@ -20,7 +20,7 @@ if ($data4['total'] == 0) {
     $sql2 = mysqli_query($connect_pro, "SELECT DISTINCT a.c_number_ng, a.c_code_ng, b.c_name as ng_name FROM finalcheck_fetch_outside a  INNER JOIN finalcheck_list_ng b ON a.c_code_ng = b.c_code_ng WHERE a.c_serialnumber = '$serialnumber' ORDER BY a.c_number_ng ASC");
     while ($data2 = mysqli_fetch_array($sql2)) {
         $cabinet = array();
-        $sql3 = mysqli_query($connect_pro, "SELECT a.c_code_cabinet, b.c_name as cab_name FROM finalcheck_fetch_outside a INNER JOIN finalcheck_list_cabinet b ON a.c_code_cabinet = b.c_code_cabinet WHERE c_code_ng = '$data2[c_code_ng]'");
+        $sql3 = mysqli_query($connect_pro, "SELECT a.c_code_cabinet, b.c_name as cab_name FROM finalcheck_fetch_outside a INNER JOIN finalcheck_list_cabinet b ON a.c_code_cabinet = b.c_code_cabinet WHERE a.c_serialnumber = '$serialnumber' AND c_code_ng = '$data2[c_code_ng]'");
         while ($data3 = mysqli_fetch_array($sql3)) {
             array_push($cabinet, $data3['cab_name']);
         }

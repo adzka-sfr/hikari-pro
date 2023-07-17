@@ -169,7 +169,7 @@ $data = mysqli_fetch_array($sql);
             });
         })
 
-        $('#note').blur(function() {
+        $('#note1').blur(function() {
             var serialnumber = $('#serialnumber').val();
             var note = $('#note1').val();
             var stat = 'update';

@@ -80,7 +80,7 @@ if ($data2['c_repair_outsidetiga_o'] != '') {
 // untuk validation func tergantung bagian mana yang aktif
 if ($data2['c_outsidesatu_pic'] != '') {
     $repair1 = $data2['c_outsidesatu_pic'];
-    $validation_func = '';
+    $validation_func = 'disabled';
 }
 
 if ($data2['c_outsidedua_pic'] != '') {
@@ -148,7 +148,7 @@ if ($data3['total'] == 0) {
         </div>
         <div class="row">
             <div class="col-12">
-                <button <?= $btnfinishdis . " " . $finish_outside_func ?> class="btn btn-primary" id="sendfinisho" style="width: 100%;">Finish Outside Check <i class="fa fa-flag-checkered"></i></button>
+                <button <?= $btnfinishdis . " " . $finish_outside_func . " " . $validation_func ?> class="btn btn-primary" id="sendfinisho" style="width: 100%;">Finish Outside Check <i class="fa fa-flag-checkered"></i></button>
                 <script>
                     var serialnumber = $('#serialnumber').val();
                     $('#send').click(function() {
