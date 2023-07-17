@@ -31,7 +31,7 @@ $sql2 = mysqli_query($connect_pro, "SELECT a.c_repair_inside_o , b.c_inside, a.c
 $data2 = mysqli_fetch_array($sql2);
 $ok_date = '-';
 $pic = $data2['c_inside'];
-$repair = '';
+$repair = $data2['c_inside_pic'];
 $finish_inside_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 if ($data2['c_repair_inside_o'] != '') {
     // $ok_date = date('d-m-Y', strtotime($data2['c_repair_inside_o']));
@@ -158,10 +158,9 @@ if ($data2['c_repair_inside_o'] != '') {
                     <td rowspan="<?= $rowspan ?>" style="text-align: center;"><?= $no ?></td>
                     <td>
                         <?= $data['c_detail'] ?>
-                        <b><u> <?= $data['c_code_incheck'] ?></u></b> <i><?= $rowspan ?></i>
                     </td>
                     <td style="text-align: center; font-size: 15px;">NG</td>
-                    <td><?= $repair ?></td>
+                    <td style="text-align: center;"><?= $repair ?></td>
                 </tr>
                 <?php
                 // die();
