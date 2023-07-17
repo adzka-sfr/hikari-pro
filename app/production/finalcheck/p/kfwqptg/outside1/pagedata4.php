@@ -264,11 +264,80 @@ if ($data3['total'] == 0) {
                 <th style="width: 10%;">No</th>
                 <th>Detail NG</th>
             </thead>
-            <tbody id="detail_ng">
+            <tbody style="display: none;" id="detail_ng">
+            </tbody>
+            <tbody id="detail_ng_loading">
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        Loading...
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
-    <div class="col-6" id="image_ng" style="text-align: center;">
+    <div style="display: none;" class="col-6" id="image_ng">
+    </div>
+    <div class="col-6" id="image_ng_loading">
+        <!-- tbo image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/<?= $c_code_type ?>/tbo.<?= $format ?>" style="width:100%; opacity: 60%;">
+                </div>
+            </div>
+        </div>
+        <!-- tbo image -->
+        <br>
+        <hr>
+        <br>
+        <!-- tbi image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/<?= $c_code_type ?>/tbi.<?= $format ?>" style="width:100%; opacity: 60%;">
+                </div>
+            </div>
+        </div>
+        <!-- tbi image -->
+        <br>
+        <hr>
+        <br>
+        <!-- uk image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/<?= $c_code_type ?>/uk.<?= $format ?>" style="width:100%; opacity: 60%;">
+                </div>
+            </div>
+        </div>
+        <!-- uk image -->
+        <br>
+        <hr>
+        <br>
+        <!-- b image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/<?= $c_code_type ?>/b.<?= $format ?>" style="width:100%; opacity: 60%;">
+                </div>
+            </div>
+        </div>
+        <!-- b image -->
+        <br>
+        <hr>
+        <br>
+        <!-- bb image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/<?= $c_code_type ?>/bb.<?= $format ?>" style="width:100%; opacity: 60%;">
+                </div>
+            </div>
+        </div>
+        <!-- bb image -->
+        <br>
+        <hr>
+        <br>
     </div>
 </div>
 <!-- isi konten -->

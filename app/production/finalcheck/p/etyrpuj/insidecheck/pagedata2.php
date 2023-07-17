@@ -10,12 +10,18 @@ $pianoserial = isset($_POST['pianoserial']) ? $_POST['pianoserial'] : '';
 $pianogmc = isset($_POST['pianogmc']) ? $_POST['pianogmc'] : '';
 $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 
+// get tanggal register
+$q100 = mysqli_query($connect_pro, "SELECT c_register FROM finalcheck_timestamp WHERE c_serialnumber = '$pianoserial'");
+$d100 = mysqli_fetch_array($q100);
+$register_date = date('l, d M Y h:i A', strtotime($d100['c_register']));
+
 // [SELECT : finalcheck_fetch_inside] get tanggal NG -> maks (c_result_date) and c_result=ng || finalcheck_fetch_inside
 $sql1 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_fetch_inside WHERE c_serialnumber = '$pianoserial' AND c_result = 'NG'");
 $data1 = mysqli_fetch_array($sql1);
 $ng_date = '-';
 if ($data1['ng_date'] != '') {
-    $ng_date = date('d-m-Y', strtotime($data1['ng_date']));
+    // $ng_date = date('d-m-Y', strtotime($data1['ng_date']));
+    $ng_date = date('d-m-Y h:i A', strtotime($data1['ng_date']));
 }
 
 // [SELECT : finalcheck_repairtime, finalcheck_pic JOIN by c_serialnumber  ] 
@@ -84,7 +90,7 @@ if ($data2['c_inside_pic'] != '') {
             </div>
             <div class="row">
                 <div class="col-12" style="text-align: center;">
-                    <?= date('l, d M Y', strtotime($now)) ?>
+                    <?= $register_date ?>
                 </div>
             </div>
         </th>
@@ -160,7 +166,6 @@ if ($data2['c_inside_pic'] != '') {
                     <td rowspan="<?= $rowspan ?>" style="text-align: center;"><?= $no ?></td>
                     <td>
                         <?= $data['c_detail'] ?>
-                        <b><u> <?= $data['c_code_incheck'] ?></u></b> <i><?= $rowspan ?></i>
                     </td>
                     <td style="text-align: center; font-size: 15px;">NG</td>
                     <td><?= $repair ?></td>
@@ -240,7 +245,7 @@ if ($data2['c_inside_pic'] != '') {
 
 <div class="row">
     <div class="col-12 mb-5" style="text-align: center;">
-        <button class="btn btn-success" id="check">Send to Outside Check 1</button>
+        <button class="btn btn-success" id="check">Send to Outside Check 1 <i id="icon-spinner" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
         <button class="btn btn-success" id="send" style="display: none;">Send to Outside Check 1</button>
         <script>
             var checkbox = <?= json_encode($arr_ng) ?>;
@@ -277,6 +282,8 @@ if ($data2['c_inside_pic'] != '') {
             }
 
             $('#check').click(function() {
+                $('#check').attr('disabled', true);
+                $('#icon-spinner').show();
                 var status = 'all-repaired';
                 var data_ng_all = [];
                 for (let i = 0; i < checkbox.length; i++) {
@@ -310,6 +317,8 @@ if ($data2['c_inside_pic'] != '') {
                         cancelButtonColor: '#5D646B',
                         cancelButtonText: 'Oke',
                     })
+                    $('#check').attr('disabled', false);
+                    $('#icon-spinner').hide();
                 } else {
                     console.log('sudah repair semuanya');
                     $('#send').trigger('click');
@@ -357,6 +366,8 @@ if ($data2['c_inside_pic'] != '') {
                                     }).then((result) => {
                                         if (result.isConfirmed) {
                                             $('#clearacard').trigger('click');
+                                            $('#check').attr('disabled', false);
+                                            $('#icon-spinner').hide();
                                         }
                                     })
                                 } else {
@@ -370,7 +381,9 @@ if ($data2['c_inside_pic'] != '') {
                                         cancelButtonColor: '#d33',
                                         confirmButtonText: 'Oke',
                                         cancelButtonText: 'Tidak'
-                                    })
+                                    });
+                                    $('#check').attr('disabled', false);
+                                    $('#icon-spinner').hide();
                                 }
 
                             }

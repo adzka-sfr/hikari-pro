@@ -17,7 +17,6 @@ if ($c_code_type == 'f') {
     $format = 'jpg';
 }
 ?>
-
 <script src="../source/dropdown_search/jquery-3.4.1.js" crossorigin="anonymous"></script>
 <script src="../source/dropdown_search/select2.min.js"></script>
 <script src="../source/sweetalert2/dist/sweetalert2.all.min.js"></script>
@@ -257,7 +256,14 @@ if ($c_code_type == 'f') {
                 <th style="width: 10%;">No</th>
                 <th>Detail NG</th>
             </thead>
-            <tbody id="detail_ng">
+            <tbody style="display: none;" id="detail_ng">
+            </tbody>
+            <tbody id="detail_ng_loading">
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        Loading...
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -482,7 +488,69 @@ if ($c_code_type == 'f') {
         <!-- Modal Edit -->
 
     </div>
-    <div class="col-6" id="image_ng">
+    <div style="display: none;" class="col-6" id="image_ng">
+    </div>
+    <div class="col-6" id="image_ng_loading">
+        <!-- tbo image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/<?= $c_code_type ?>/tbo.<?= $format ?>" style="width:100%; opacity: 60%;">
+                </div>
+            </div>
+        </div>
+        <!-- tbo image -->
+        <br>
+        <hr>
+        <br>
+        <!-- tbi image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/<?= $c_code_type ?>/tbi.<?= $format ?>" style="width:100%; opacity: 60%;">
+                </div>
+            </div>
+        </div>
+        <!-- tbi image -->
+        <br>
+        <hr>
+        <br>
+        <!-- uk image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/<?= $c_code_type ?>/uk.<?= $format ?>" style="width:100%; opacity: 60%;">
+                </div>
+            </div>
+        </div>
+        <!-- uk image -->
+        <br>
+        <hr>
+        <br>
+        <!-- b image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/<?= $c_code_type ?>/b.<?= $format ?>" style="width:100%; opacity: 60%;">
+                </div>
+            </div>
+        </div>
+        <!-- b image -->
+        <br>
+        <hr>
+        <br>
+        <!-- bb image -->
+        <div class="row">
+            <div class="col-12">
+                <div class="containere">
+                    <img src="../art/<?= $c_code_type ?>/bb.<?= $format ?>" style="width:100%; opacity: 60%;">
+                </div>
+            </div>
+        </div>
+        <!-- bb image -->
+        <br>
+        <hr>
+        <br>
     </div>
 </div>
 <!-- isi konten -->
@@ -595,7 +663,7 @@ if ($c_code_type == 'f') {
 
 <div class="row">
     <div class="col-6 mb-5" style="text-align: left;">
-        <button class="btn btn-success" id="check" style="width: 80%;"><i class="fa fa-arrow-circle-left"></i> Kembali, Cek Completeness</button>
+        <button class="btn btn-success" id="check" style="width: 80%;"><i id="icon-spinner" style="display: none;" class="fa fa-spinner fa-spin"></i><i id="icon-spinner-main" class="fa fa-arrow-circle-left"></i> Kembali, Cek Completeness</button>
         <script>
             var serialnumber = $('#serialnumberaddng').val();
             var codetype = $('#codetypeaddng').val();
@@ -604,6 +672,9 @@ if ($c_code_type == 'f') {
                 load_image_ng(serialnumber, codetype);
             })
             $('#check').click(function() {
+                $('#check').attr('disabled', true);
+                $('#icon-spinner').show();
+                $('#icon-spinner-main').hide();
                 var dataString = {
                     serialnumber: $('#serialnumber').val(),
                 };

@@ -10,12 +10,17 @@ $pianoserial = isset($_POST['pianoserial']) ? $_POST['pianoserial'] : '';
 $pianogmc = isset($_POST['pianogmc']) ? $_POST['pianogmc'] : '';
 $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 
+// get tanggal register
+$q100 = mysqli_query($connect_pro, "SELECT c_register FROM finalcheck_timestamp WHERE c_serialnumber = '$pianoserial'");
+$d100 = mysqli_fetch_array($q100);
+$register_date = date('l, d M Y h:i A', strtotime($d100['c_register']));
+
 // [SELECT : finalcheck_inside] get tanggal NG -> maks (c_result_date) and c_result=ng || finalcheck_inside
 $sql1 = mysqli_query($connect_pro, "SELECT max(c_result_date) AS ng_date FROM finalcheck_inside WHERE c_serialnumber = '$pianoserial' AND c_result = 'NG'");
 $data1 = mysqli_fetch_array($sql1);
 $ng_date = '-';
 if ($data1['ng_date'] != '') {
-    $ng_date = date('d-m-Y', strtotime($data1['ng_date']));
+    $ng_date = date('d-m-Y h:i A', strtotime($data1['ng_date']));
 }
 
 // [SELECT : finalcheck_repairtime, finalcheck_pic JOIN by c_serialnumber  ] 
@@ -29,7 +34,8 @@ $pic = $data2['c_inside'];
 $repair = '';
 $finish_inside_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 if ($data2['c_repair_inside_o'] != '') {
-    $ok_date = date('d-m-Y', strtotime($data1['ng_date']));
+    // $ok_date = date('d-m-Y', strtotime($data2['c_repair_inside_o']));
+    $ok_date = date('d-m-Y h:i A', strtotime($data2['c_repair_inside_o']));
     $finish_inside_func = 'disabled';
 }
 ?>
@@ -79,7 +85,7 @@ if ($data2['c_repair_inside_o'] != '') {
             </div>
             <div class="row">
                 <div class="col-12" style="text-align: center;">
-                    <?= date('l, d M Y', strtotime($now)) ?>
+                    <?= $register_date ?>
                 </div>
             </div>
         </th>

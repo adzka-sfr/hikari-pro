@@ -243,9 +243,12 @@ $data = mysqli_fetch_array($sql);
 <div class="row">
     <div class="col-6"></div>
     <div class="col-6 mb-5" style="text-align: right;">
-        <button class="btn btn-success" id="check" style="width: 80%;">Lanjut, Cek Outside <i class="fa fa-arrow-circle-right"></i></button>
+        <button class="btn btn-success" id="check" style="width: 80%;">Lanjut, Cek Outside <i id="icon-spinner-main" class="fa fa-arrow-circle-right"></i><i id="icon-spinner" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
         <script>
             $('#check').click(function() {
+                $('#check').attr('disabled', true);
+                $('#icon-spinner').show();
+                $('#icon-spinner-main').hide();
                 var dataString = {
                     serialnumber: $('#serialnumber').val(),
                 };

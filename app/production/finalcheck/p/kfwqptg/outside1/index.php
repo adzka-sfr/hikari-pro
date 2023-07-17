@@ -270,6 +270,8 @@
             },
             success: function(response) {
                 // var response = JSON.parse(response);
+                $('#detail_ng_loading').hide();
+                $('#detail_ng').show();
                 $('#detail_ng').html(response);
             }
         });
@@ -284,6 +286,8 @@
             },
             success: function(response) {
                 // var response = JSON.parse(response);
+                $('#detail_ng_loading').hide();
+                $('#detail_ng').show();
                 $('#detail_ng').html(response);
             }
         });
@@ -299,6 +303,8 @@
             },
             success: function(response) {
                 // var response = JSON.parse(response);
+                $('#image_ng_loading').hide();
+                $('#image_ng').show();
                 $('#image_ng').html(response);
             }
         });

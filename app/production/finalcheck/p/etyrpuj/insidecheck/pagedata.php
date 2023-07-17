@@ -9,6 +9,11 @@ $plannumber = isset($_POST['plannumber']) ? $_POST['plannumber'] : '';
 $pianoserial = isset($_POST['pianoserial']) ? $_POST['pianoserial'] : '';
 $pianogmc = isset($_POST['pianogmc']) ? $_POST['pianogmc'] : '';
 $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
+
+// get tanggal register
+$q1 = mysqli_query($connect_pro, "SELECT c_register FROM finalcheck_timestamp WHERE c_serialnumber = '$pianoserial'");
+$d1 = mysqli_fetch_array($q1);
+$register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
 ?>
 
 <script src="../source/dropdown_search/jquery-3.4.1.js" crossorigin="anonymous"></script>
@@ -56,7 +61,7 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
             </div>
             <div class="row">
                 <div class="col-12" style="text-align: center;">
-                    <?= date('l, d M Y', strtotime($now)) ?>
+                    <?= $register_date ?>
                 </div>
             </div>
         </th>
@@ -254,10 +259,12 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 
 <div class="row">
     <div class="col-12 mb-5" style="text-align: center;">
-        <button class="btn btn-success" id="check">Send to Repair</button>
+        <button class="btn btn-success" id="check">Send to Repair <i id="icon-spinner" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
         <button class="btn btn-success" id="send" style="display: none;">Send to Repair official</button>
         <script>
             $('#check').click(function() {
+                $('#check').attr('disabled', true);
+                $('#icon-spinner').show();
                 var serialnumber = $('#serialnumber').val();
                 $.ajax({
                     url: 'insidecheck/data4.php',
@@ -277,6 +284,8 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
                                 cancelButtonColor: '#5D646B',
                                 cancelButtonText: 'Oke',
                             })
+                            $('#check').attr('disabled', false);
+                            $('#icon-spinner').hide();
                         } else {
                             $('#send').trigger('click');
                         }
@@ -320,6 +329,8 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
                                         cancelButtonText: 'Tidak'
                                     }).then((result) => {
                                         if (result.isConfirmed) {
+                                            $('#check').attr('disabled', false);
+                                            $('#icon-spinner').hide();
                                             $('#clearacard').trigger('click');
                                         }
                                     })
@@ -334,7 +345,9 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
                                         cancelButtonColor: '#d33',
                                         confirmButtonText: 'Oke',
                                         cancelButtonText: 'Tidak'
-                                    })
+                                    });
+                                    $('#check').attr('disabled', false);
+                                    $('#icon-spinner').hide();
                                 }
 
                             }
