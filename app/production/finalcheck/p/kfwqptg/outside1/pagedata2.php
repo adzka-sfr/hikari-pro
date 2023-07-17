@@ -6,6 +6,11 @@ require '../config.php';
 // get data lemparan
 $serialnumber = isset($_POST['serialnumber']) ? $_POST['serialnumber'] : '';
 
+// get tanggal register
+$q100 = mysqli_query($connect_pro, "SELECT c_outsidesatu_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
+$d100 = mysqli_fetch_array($q100);
+$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_outsidesatu_i']));
+
 // get informasi piano
 $sql = mysqli_query($connect_pro, "SELECT b.c_name, b.c_code_type FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber' ");
 $data = mysqli_fetch_array($sql);
@@ -64,7 +69,7 @@ if ($c_code_type == 'f') {
             </div>
             <div class="row">
                 <div class="col-12" style="text-align: center;">
-                    <?= date('l, d M Y', strtotime($now)) ?>
+                    <?= $inspection_date ?>
                 </div>
             </div>
         </th>
