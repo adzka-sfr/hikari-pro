@@ -41,10 +41,10 @@ if ($code_type == 'f') {
                 }
 
             ?>
-                <button class="btn ingpo" style="width: 25px; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
-                    <span style="color: red; padding: 0px;"><?php foreach ($label as $key) {
-                                                                echo $key;
-                                                            } ?></span>
+                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                    <span style="padding: 0px;"><?php foreach ($label as $key) {
+                                                    echo $key;
+                                                } ?></span>
                 </button>
             <?php
             }
@@ -87,10 +87,10 @@ if ($code_type == 'f') {
                     }
                 }
             ?>
-                <button class="btn ingpo" style="width: 25px; height: 25px; top: <?= $dtbi['c_top'] ?>%; left: <?= $dtbi['c_left'] ?>%;">
-                    <span style="color: red; padding: 0px;"><?php foreach ($label as $key) {
-                                                                echo $key;
-                                                            } ?></span>
+                <button class="btn ingpo" style="width: 25px;border-color: #000000; height: 25px; top: <?= $dtbi['c_top'] ?>%; left: <?= $dtbi['c_left'] ?>%;">
+                    <span style=" padding: 0px;"><?php foreach ($label as $key) {
+                                                        echo $key;
+                                                    } ?></span>
                 </button>
             <?php
             }
@@ -133,10 +133,10 @@ if ($code_type == 'f') {
                     }
                 }
             ?>
-                <button class="btn ingpo" style="width: 25px; height: 25px; top: <?= $duk['c_top'] ?>%; left: <?= $duk['c_left'] ?>%;">
-                    <span style="color: red; padding: 0px;"><?php foreach ($label as $key) {
-                                                                echo $key;
-                                                            } ?></span>
+                <button class="btn ingpo" style="width: 25px;border-color: #000000; height: 25px; top: <?= $duk['c_top'] ?>%; left: <?= $duk['c_left'] ?>%;">
+                    <span style=" padding: 0px;"><?php foreach ($label as $key) {
+                                                        echo $key;
+                                                    } ?></span>
                 </button>
             <?php
             }
@@ -179,10 +179,10 @@ if ($code_type == 'f') {
                     }
                 }
             ?>
-                <button class="btn ingpo" style="width: 25px; height: 25px; top: <?= $db['c_top'] ?>%; left: <?= $db['c_left'] ?>%;">
-                    <span style="color: red; padding: 0px;"><?php foreach ($label as $key) {
-                                                                echo $key;
-                                                            } ?></span>
+                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $db['c_top'] ?>%; left: <?= $db['c_left'] ?>%;">
+                    <span style=" padding: 0px;"><?php foreach ($label as $key) {
+                                                        echo $key;
+                                                    } ?></span>
                 </button>
             <?php
             }
@@ -225,10 +225,10 @@ if ($code_type == 'f') {
                     }
                 }
             ?>
-                <button class="btn ingpo" style="width: 25px; height: 25px; top: <?= $dbb['c_top'] ?>%; left: <?= $dbb['c_left'] ?>%;">
-                    <span style="color: red; padding: 0px;"><?php foreach ($label as $key) {
-                                                                echo $key;
-                                                            } ?></span>
+                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dbb['c_top'] ?>%; left: <?= $dbb['c_left'] ?>%;">
+                    <span style=" padding: 0px;"><?php foreach ($label as $key) {
+                                                        echo $key;
+                                                    } ?></span>
                 </button>
             <?php
             }

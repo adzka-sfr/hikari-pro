@@ -102,7 +102,7 @@ if ($c_code_type == 'f') {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah NG</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                     </div>
                     <div class="modal-body">
                         <form id="myform">
@@ -248,8 +248,8 @@ if ($c_code_type == 'f') {
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary close-mdl-ng" onclick="cancelbtnmdl()" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" onclick="tambahdatang()" class="btn btn-primary">Add NG</button>
+                        <button type="button" id="canceltambahngbtn" class="btn btn-secondary close-mdl-ng" onclick="cancelbtnmdl()" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" id="tambahngbtn" onclick="tambahdatang()" class="btn btn-primary">Add NG <i id="icon-spinner-add" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
                     </div>
                 </div>
             </div>
@@ -279,7 +279,7 @@ if ($c_code_type == 'f') {
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel"><b id="editjudul"></b>
                         </h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                     </div>
                     <div class="modal-body">
                         <form id="myformedit">
@@ -413,8 +413,8 @@ if ($c_code_type == 'f') {
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary close-mdl-ng" onclick="cancelbtnmdl()" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" onclick="editdatang()" class="btn btn-primary">Add NG</button>
+                        <button type="button" id="canceldatangbtn" class="btn btn-secondary close-mdl-ng" onclick="cancelbtnmdl()" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" id="editdatangbtn" onclick="editdatang()" class="btn btn-primary">Edit NG <i id="icon-spinner-edit" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
                     </div>
                 </div>
             </div>
