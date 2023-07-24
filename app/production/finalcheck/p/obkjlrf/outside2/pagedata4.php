@@ -71,11 +71,11 @@ $validation_func = 'disabled';
 $finish_outside_func = ''; // jika sudah dikirm maka akan disabled untuk button nya
 if ($data2['c_repair_outsidesatu_o'] != '') {
     $ok_date1 = date('d-m-Y', strtotime($data2['c_repair_outsidesatu_o']));
-    $finish_outside_func = 'disabled';
 }
 
 if ($data2['c_repair_outsidedua_o'] != '') {
     $ok_date2 = date('d-m-Y', strtotime($data2['c_repair_outsidedua_o']));
+    $finish_outside_func = 'disabled';
 }
 
 if ($data2['c_repair_outsidetiga_o'] != '') {
@@ -85,11 +85,11 @@ if ($data2['c_repair_outsidetiga_o'] != '') {
 // untuk validation func tergantung bagian mana yang aktif
 if ($data2['c_outsidesatu_pic'] != '') {
     $repair1 = $data2['c_outsidesatu_pic'];
-    $validation_func = '';
 }
 
 if ($data2['c_outsidedua_pic'] != '') {
     $repair2 = $data2['c_outsidedua_pic'];
+    $validation_func = '';
 }
 
 if ($data2['c_outsidetiga_pic'] != '') {

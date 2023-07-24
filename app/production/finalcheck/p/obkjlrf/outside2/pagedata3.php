@@ -58,6 +58,7 @@ $repair3 = '-';
 
 $validation_func = 'disabled';
 $finish_outsidesatu_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
+$finish_outsidedua_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 if ($data2['c_repair_outsidesatu_o'] != '') {
     $ok_date1 = date('d-m-Y', strtotime($data2['c_repair_outsidesatu_o']));
     $finish_outsidesatu_func = 'disabled';
@@ -65,6 +66,7 @@ if ($data2['c_repair_outsidesatu_o'] != '') {
 
 if ($data2['c_repair_outsidedua_o'] != '') {
     $ok_date2 = date('d-m-Y', strtotime($data2['c_repair_outsidedua_o']));
+    $finish_outsidedua_func = 'disabled';
 }
 
 if ($data2['c_repair_outsidetiga_o'] != '') {
@@ -228,11 +230,11 @@ if ($data2['c_outsidetiga_pic'] != '') {
         <tr>
             <th rowspan="2">No</th>
             <th rowspan="2">Item</th>
-            <th colspan="4">Validasi</th>
+            <th colspan="5">Validasi</th>
         </tr>
         <tr>
             <td colspan="2">R1<br>(<?= $repair1 ?>)</td>
-            <td>R2<br>(<?= $repair2 ?>)</td>
+            <td colspan="2">R2<br>(<?= $repair2 ?>)</td>
             <td>R3<br>(<?= $repair3 ?>)</td>
         </tr>
 
@@ -242,22 +244,28 @@ if ($data2['c_outsidetiga_pic'] != '') {
         $no = 0;
         $sql = mysqli_query($connect_pro, "SELECT a.c_code_completeness,a.c_resultsatu, a.c_repairsatu,a.c_resultdua, a.c_repairdua,a.c_resulttiga, a.c_repairtiga, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE c_serialnumber = '$serialnumber'");
         while ($data = mysqli_fetch_array($sql)) {
-            $status = '';
+            $status1 = '';
+            $status2 = '';
+            $status3 = '';
 
             if ($data['c_resultsatu'] == 'Y') {
-                $status = 'OK';
+                $status1 = 'OK';
             } else {
-                $status = 'NG';
-                $valcheck = '';
+                $status1 = 'NG';
+                $valcheck1 = '';
                 if ($data['c_repairsatu'] == 'Y') {
-                    $valcheck = 'checked';
+                    $valcheck1 = 'checked';
                 }
             }
 
             if ($data['c_resultdua'] == 'Y') {
-                $check2 = 'checked';
+                $status2 = 'OK';
             } else {
-                $check2 = '';
+                $status2 = 'NG';
+                $valcheck1 = '';
+                if ($data['c_repairdua'] == 'Y') {
+                    $valcheck2 = 'checked';
+                }
             }
 
             if ($data['c_resulttiga'] == 'Y') {
@@ -270,12 +278,12 @@ if ($data2['c_outsidetiga_pic'] != '') {
             <tr>
                 <td style="text-align: center;"><?= $no ?></td>
                 <td style="font-size: 15px;"><?= $data['c_detail'] ?></td>
-                <td style="font-size: 15px; text-align: center;"><?= $status ?></td>
+                <td style="font-size: 15px; text-align: center;"><?= $status1 ?></td>
                 <td style="font-size: 15px; text-align: center;">
                     <?php
-                    if ($status == 'NG') {
+                    if ($status1 == 'NG') {
                     ?>
-                        <input <?= $valcheck ?> <?= $finish_outsidesatu_func . " " . $validation_func ?> id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbokval1(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);">
+                        <input <?= $valcheck1 ?> <?= $finish_outsidesatu_func ?> id="cekbok1<?= $data['c_code_completeness'] ?>" onchange="cekbokval1(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);">
                     <?php
                     } else {
                     ?>
@@ -285,7 +293,21 @@ if ($data2['c_outsidetiga_pic'] != '') {
                     ?>
 
                 </td>
-                <td style="font-size: 15px; text-align: center;"><input disabled <?= $check2 ?> id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
+                <td style="font-size: 15px; text-align: center;"><?= $status2 ?></td>
+                <td style="font-size: 15px; text-align: center;">
+                    <?php
+                    if ($status2 == 'NG') {
+                    ?>
+                        <input <?= $valcheck2 ?> <?= $finish_outsidedua_func . " " . $validation_func ?> id="cekbok2<?= $data['c_code_completeness'] ?>" onchange="cekbokval2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);">
+                    <?php
+                    } else {
+                    ?>
+                        -
+                    <?php
+                    }
+                    ?>
+
+                </td>
                 <td style="font-size: 15px; text-align: center;"><input disabled <?= $check3 ?> id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok3(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
             </tr>
         <?php

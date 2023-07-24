@@ -37,8 +37,11 @@ if ($data4['total'] == 0) {
 } else {
     // get process pic
     $process = $publicprocess;
-
-    $sql2 = mysqli_query($connect_pro, "SELECT DISTINCT a.c_number_ng, a.c_code_ng, a.c_repair, b.c_name as ng_name FROM finalcheck_fetch_outside a  INNER JOIN finalcheck_list_ng b ON a.c_code_ng = b.c_code_ng WHERE a.c_serialnumber = '$serialnumber' ORDER BY a.c_number_ng ASC");
+    if ($finish_outside_func == 'disabled') {
+        $sql2 = mysqli_query($connect_pro, "SELECT DISTINCT a.c_number_ng, a.c_code_ng, a.c_repair, b.c_name as ng_name FROM finalcheck_fetch_outside a  INNER JOIN finalcheck_list_ng b ON a.c_code_ng = b.c_code_ng WHERE a.c_serialnumber = '$serialnumber' ORDER BY a.c_number_ng ASC");
+    } else {
+        $sql2 = mysqli_query($connect_pro, "SELECT DISTINCT a.c_number_ng, a.c_code_ng, a.c_repair, b.c_name as ng_name FROM finalcheck_fetch_outside a  INNER JOIN finalcheck_list_ng b ON a.c_code_ng = b.c_code_ng WHERE a.c_serialnumber = '$serialnumber' AND a.c_process = '$process' ORDER BY a.c_number_ng ASC");
+    }
     while ($data2 = mysqli_fetch_array($sql2)) {
         $validasio = '';
         if ($data2['c_repair'] == 'Y') {
