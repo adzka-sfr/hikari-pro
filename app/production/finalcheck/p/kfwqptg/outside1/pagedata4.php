@@ -63,7 +63,7 @@ $repair2 = '-';
 $repair3 = '-';
 
 $validation_func = 'disabled';
-$finish_outside_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
+$finish_outside_func = ''; // jika sudah dikirm maka akan disabled untuk button nya
 if ($data2['c_repair_outsidesatu_o'] != '') {
     $ok_date1 = date('d-m-Y', strtotime($data2['c_repair_outsidesatu_o']));
     $finish_outside_func = 'disabled';
@@ -80,7 +80,7 @@ if ($data2['c_repair_outsidetiga_o'] != '') {
 // untuk validation func tergantung bagian mana yang aktif
 if ($data2['c_outsidesatu_pic'] != '') {
     $repair1 = $data2['c_outsidesatu_pic'];
-    $validation_func = 'disabled';
+    $validation_func = '';
 }
 
 if ($data2['c_outsidedua_pic'] != '') {
@@ -151,7 +151,7 @@ if ($data3['total'] == 0) {
         </div>
         <div class="row">
             <div class="col-12">
-                <button <?= $btnfinishdis . " " . $finish_outside_func . " " . $validation_func ?> class="btn btn-primary" id="sendfinisho" style="width: 100%;">Finish Outside Check <i class="fa fa-flag-checkered"></i></button>
+                <button <?= $btnfinishdis . " " . $finish_outside_func . " " . $validation_func ?> class="btn btn-primary" id="sendfinisho" style="width: 100%;">Finish Outside Check <i id="icon-main-fin" class="fa fa-flag-checkered"></i><i id="icon-spinner-fin" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
                 <script>
                     var serialnumber = $('#serialnumber').val();
                     $('#send').click(function() {
@@ -495,6 +495,10 @@ if ($data3['total'] == 0) {
                         cancelButtonText: 'Tidak'
                     }).then((result) => {
                         if (result.isConfirmed) {
+                            $('#check').attr('disabled', true);
+                            $('#sendfinisho').attr('disabled', true);
+                            $('#icon-main-fin').hide();
+                            $('#icon-spinner-fin').show();
                             $.ajax({
                                 url: 'outside1/data15.php',
                                 type: 'POST',
