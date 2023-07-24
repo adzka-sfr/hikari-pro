@@ -426,7 +426,7 @@ if ($c_code_type == 'f') {
 
             function editng(id, codeng, nameng, numberng, serialnumber) {
                 // untuk membersihkan checklist
-                $('.chck').attr('checked', false);
+                $('.chck').prop('checked', false);
                 // untuk membuka modal
                 $('#editngmodal').modal('toggle');
                 // untuk menambah judul
@@ -484,7 +484,7 @@ if ($c_code_type == 'f') {
                         console.log(typeof data.coordinate);
                         data.coordinate.forEach(function(item) {
                             // do something with `item`
-                            $('#' + item).attr('checked', true);
+                            $('#' + item).prop('checked', true);
                         });
                     }
                 });
@@ -698,7 +698,7 @@ if ($c_code_type == 'f') {
         </script>
     </div>
     <div class="col-6 mb-5" style="text-align: right;">
-        <button class="btn btn-success" id="send" style="width: 80%;">Kirim, ke Repair Outside <i class="fa fa-shopping-cart"></i></button>
+        <button class="btn btn-success" id="send" style="width: 80%;">Kirim, ke Repair Outside <i id="icon-main-cart" class="fa fa-shopping-cart"></i><i id="icon-spinner-cart" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
         <script>
             var serialnumber = $('#serialnumber').val();
             $('#send').click(function() {
@@ -715,6 +715,10 @@ if ($c_code_type == 'f') {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // console.log('oke dikirm ke repair');
+                        $('#icon-main-cart').hide();
+                        $('#icon-spinner-cart').show();
+                        $('#send').attr('disabled', true);
+                        $('#check').attr('disabled', true);
                         $.ajax({
                             url: "outside1/data10.php",
                             type: "POST",
