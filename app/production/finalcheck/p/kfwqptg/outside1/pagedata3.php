@@ -94,9 +94,12 @@ if ($data2['c_outsidetiga_pic'] != '') {
         <h4><i class="fa fa-pencil-square-o"></i> <u>Check Card - Completeness Validation</u></h4>
     </div>
     <div class="col-4" style="text-align: right;">
-        <button class="btn btn-success" id="check" style="width: 100%;">Validasi, Outside <i class="fa fa-arrow-circle-right"></i></button>
+        <button class="btn btn-success" id="check" style="width: 100%;">Validasi, Outside <i id="icon-main" class="fa fa-arrow-circle-right"></i><i id="icon-spinner" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
         <script>
             $('#check').click(function() {
+                $('#check').attr('disabled', true);
+                $('#icon-main').hide();
+                $('#icon-spinner').show();
                 var dataString = {
                     serialnumber: $('#serialnumber').val(),
                 };

@@ -119,7 +119,7 @@ if ($data3['total'] == 0) {
     <div class="col-4" style="text-align: right;">
         <div class="row">
             <div class="col-12">
-                <button class="btn btn-success" id="check" style="width: 100%;"><i class="fa fa-arrow-circle-left"></i> Validasi, Completeness</button>
+                <button class="btn btn-success" id="check" style="width: 100%;"><i id="icon-spinner" style="display: none;" class="fa fa-spinner fa-spin"></i><i id="icon-main" class="fa fa-arrow-circle-left"></i> Validasi, Completeness</button>
                 <script>
                     var serialnumber = $('#serialnumberaddng').val();
                     var codetype = $('#codetypeaddng').val();
@@ -128,6 +128,9 @@ if ($data3['total'] == 0) {
                         load_image_ng(serialnumber, codetype);
                     })
                     $('#check').click(function() {
+                        $('#check').attr('disabled', true);
+                        $('#icon-main').hide();
+                        $('#icon-spinner').show();
                         var dataString = {
                             serialnumber: $('#serialnumber').val(),
                         };
