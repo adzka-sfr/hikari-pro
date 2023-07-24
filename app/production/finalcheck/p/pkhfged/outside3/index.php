@@ -80,11 +80,11 @@
 
         // Square QR box with edge size = 90% of the smaller edge of the viewfinder.
         let qrboxFunction = function(viewfinderWidth, viewfinderHeight) {
-            let minEdgePercentage = 0.9; // 90%
+            let minEdgePercentage = 0.6; // 60%
             let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
             let qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
             return {
-                width: 350,
+                width: 250,
                 height: qrboxSize
             };
         }

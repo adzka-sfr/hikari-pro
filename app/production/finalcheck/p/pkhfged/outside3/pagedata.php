@@ -207,7 +207,7 @@ $data = mysqli_fetch_array($sql);
 <!-- note completeness -->
 
 <!-- stamp -->
-<table class="table table-bordered" style="margin-top: 10px;">
+<!-- <table class="table table-bordered" style="margin-top: 10px;">
     <thead style="text-align:center;">
         <th>Cek1</th>
         <th>Cek2</th>
@@ -217,7 +217,6 @@ $data = mysqli_fetch_array($sql);
         <tr style="text-align: center;">
             <td style="padding-top: 15px; padding-bottom: 15px; width: 33%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC REJECT</h5>
-                <!-- <span class="stamp is-reject" style="font-size:1.2rem"><?= "Graham Bell" ?></span> -->
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 34%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC REJECT</h5>
@@ -234,7 +233,6 @@ $data = mysqli_fetch_array($sql);
         <tr style="text-align: center;">
             <td style="padding-top: 15px; padding-bottom: 15px; width: 33%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
-                <!-- <span class="stamp is-pass" style="font-size:1.2rem"><?= "Graham Bell" ?></span> -->
             </td>
             <td style="padding-top: 15px; padding-bottom: 15px; width: 34%; height: 80px;">
                 <h5 style="position: absolute; opacity: 30%;">QC PASS</h5>
@@ -249,7 +247,7 @@ $data = mysqli_fetch_array($sql);
             <td>Date: -</td>
         </tr>
     </tbody>
-</table>
+</table> -->
 <!-- stamp -->
 
 
