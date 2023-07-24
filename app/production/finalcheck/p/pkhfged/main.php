@@ -59,7 +59,7 @@ include('app_name.php');
                             <ul class="nav side-menu">
                                 <li <?php if ($_GET['page'] == "oach") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?page=oach"><i class="fa fa-search"></i> Outside Check 2</a>
+                                    } ?>><a href="main.php?page=oach"><i class="fa fa-search"></i> Outside Check 3</a>
                                 </li>
                             </ul>
                         </div>

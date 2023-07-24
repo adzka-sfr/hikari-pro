@@ -7,9 +7,9 @@ require '../config.php';
 $serialnumber = isset($_POST['serialnumber']) ? $_POST['serialnumber'] : '';
 
 // get tanggal register
-$q100 = mysqli_query($connect_pro, "SELECT c_completenessdua_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
+$q100 = mysqli_query($connect_pro, "SELECT c_completenesstiga_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
 $d100 = mysqli_fetch_array($q100);
-$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_completenessdua_i']));
+$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_completenesstiga_i']));
 
 // get informasi piano
 $sql = mysqli_query($connect_pro, "SELECT b.c_name FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber' ");
@@ -59,6 +59,7 @@ $repair3 = '-';
 $validation_func = 'disabled';
 $finish_outsidesatu_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 $finish_outsidedua_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
+$finish_outsidetiga_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 if ($data2['c_repair_outsidesatu_o'] != '') {
     $ok_date1 = date('d-m-Y', strtotime($data2['c_repair_outsidesatu_o']));
     $finish_outsidesatu_func = 'disabled';
@@ -71,6 +72,7 @@ if ($data2['c_repair_outsidedua_o'] != '') {
 
 if ($data2['c_repair_outsidetiga_o'] != '') {
     $ok_date3 = date('d-m-Y', strtotime($data2['c_repair_outsidetiga_o']));
+    $finish_outsidetiga_func = 'disabled';
 }
 
 
@@ -81,11 +83,11 @@ if ($data2['c_outsidesatu_pic'] != '') {
 
 if ($data2['c_outsidedua_pic'] != '') {
     $repair2 = $data2['c_outsidedua_pic'];
-    $validation_func = '';
 }
 
 if ($data2['c_outsidetiga_pic'] != '') {
-    $repair2 = $data2['c_outsidetiga_pic'];
+    $repair3 = $data2['c_outsidetiga_pic'];
+    $validation_func = '';
 }
 ?>
 
@@ -111,7 +113,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                     serialnumber: $('#serialnumber').val(),
                 };
                 $.ajax({
-                    url: "outside2/data12.php",
+                    url: "outside3/data12.php",
                     type: "POST",
                     data: {
                         "serialnumber": serialnumber
@@ -121,7 +123,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                         if (response.status == 'DONE') {
                             console.log("gas lur aman");
                             $.ajax({
-                                url: "outside2/pagedata4.php",
+                                url: "outside3/pagedata4.php",
                                 type: "POST",
                                 data: dataString,
                                 success: function(data) {
@@ -146,7 +148,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                                 if (result.isConfirmed) {
                                     console.log("gas lur aman");
                                     $.ajax({
-                                        url: "outside2/pagedata4.php",
+                                        url: "outside3/pagedata4.php",
                                         type: "POST",
                                         data: dataString,
                                         success: function(data) {
@@ -230,12 +232,12 @@ if ($data2['c_outsidetiga_pic'] != '') {
         <tr>
             <th rowspan="2">No</th>
             <th rowspan="2">Item</th>
-            <th colspan="5">Validasi</th>
+            <th colspan="6">Validasi</th>
         </tr>
         <tr>
             <td colspan="2">R1<br>(<?= $repair1 ?>)</td>
             <td colspan="2">R2<br>(<?= $repair2 ?>)</td>
-            <td>R3<br>(<?= $repair3 ?>)</td>
+            <td colspan="2">R3<br>(<?= $repair3 ?>)</td>
         </tr>
 
     </thead>
@@ -269,10 +271,15 @@ if ($data2['c_outsidetiga_pic'] != '') {
             }
 
             if ($data['c_resulttiga'] == 'Y') {
-                $check3 = 'checked';
+                $status3 = 'OK';
             } else {
-                $check3 = '';
+                $status3 = 'NG';
+                $valcheck3 = '';
+                if ($data['c_repairtiga'] == 'Y') {
+                    $valcheck3 = 'checked';
+                }
             }
+
             $no++;
         ?>
             <tr>
@@ -298,7 +305,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                     <?php
                     if ($status2 == 'NG') {
                     ?>
-                        <input <?= $valcheck2 ?> <?= $finish_outsidedua_func . " " . $validation_func ?> id="cekbok2<?= $data['c_code_completeness'] ?>" onchange="cekbokval2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);">
+                        <input <?= $valcheck2 ?> <?= $finish_outsidedua_func ?> id="cekbok2<?= $data['c_code_completeness'] ?>" onchange="cekbokval2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);">
                     <?php
                     } else {
                     ?>
@@ -308,7 +315,21 @@ if ($data2['c_outsidetiga_pic'] != '') {
                     ?>
 
                 </td>
-                <td style="font-size: 15px; text-align: center;"><input disabled <?= $check3 ?> id="cekbok<?= $data['c_code_completeness'] ?>" onchange="cekbok3(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
+                <td style="font-size: 15px; text-align: center;"><?= $status3 ?></td>
+                <td style="font-size: 15px; text-align: center;">
+                    <?php
+                    if ($status3 == 'NG') {
+                    ?>
+                        <input <?= $valcheck3 ?> <?= $finish_outsidetiga_func . " " . $validation_func ?> id="cekbok3<?= $data['c_code_completeness'] ?>" onchange="cekbokval3(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);">
+                    <?php
+                    } else {
+                    ?>
+                        -
+                    <?php
+                    }
+                    ?>
+
+                </td>
             </tr>
         <?php
         }
@@ -316,7 +337,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
         <script>
             var serialnumber = $('#serialnumber').val();
 
-            function cekbokval2(id) {
+            function cekbokval3(id) {
                 console.log($('#' + id).val())
                 var code = $('#' + id).val();
                 var result = 'N';
@@ -328,7 +349,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                     result = 'N';
                 }
                 $.ajax({
-                    url: 'outside2/data11.php',
+                    url: 'outside3/data11.php',
                     type: 'POST',
                     data: {
                         "serialnumber": serialnumber,
@@ -366,7 +387,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
             var serialnumber = $('#serialnumber').val();
             var stat = 'select';
             $.ajax({
-                url: 'outside2/data1.php',
+                url: 'outside3/data1.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,

@@ -26,7 +26,7 @@ require '../config.php';
                 $status = 'Cek3';
                 $checker = $data['c_outsidetiga'];
                 if ($data['c_outsidetiga_pic'] != '') {
-                    $pic_repair = $data['c_outsidesatu_pic'];
+                    $pic_repair = $data['c_outsidetiga_pic'];
                     $btn_act = 'btnPrint1';
                     if ($data['c_repair_outsidetiga_o'] != '') {
                         $btn_style = 'btn-success';
@@ -45,7 +45,7 @@ require '../config.php';
                     if ($data['c_outsidedua_pic'] != '') {
                         $pic_repair = $data['c_outsidedua_pic'];
                         $btn_act = 'btnPrint1';
-                        if ($data['c_repair_outsidetiga_o'] != '') {
+                        if ($data['c_repair_outsidedua_o'] != '') {
                             $btn_style = 'btn-success';
                             $btn_dis = '';
                             $btn_info = 'Waiting to Next Process';

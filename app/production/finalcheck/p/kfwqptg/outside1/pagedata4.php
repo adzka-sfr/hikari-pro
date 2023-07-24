@@ -114,7 +114,7 @@ if ($data3['total'] == 0) {
 <!-- judul pagedata -->
 <hr>
 <input type="hidden" id="serialnumber" value="<?= $serialnumber ?>">
-<input type="hidden" id="processaddng" name="process" value="oc1">
+<input type="hidden" id="processaddng" name="process" value="<?= $publicprocess ?>">
 <input type="hidden" id="codetypeaddng" name="codetype" value="<?= $c_code_type ?>">
 <div class="row">
     <div class="col-8" style="text-align: left;">

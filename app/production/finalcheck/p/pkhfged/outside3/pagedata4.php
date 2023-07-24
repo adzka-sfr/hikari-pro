@@ -7,9 +7,9 @@ require '../config.php';
 $serialnumber = isset($_POST['serialnumber']) ? $_POST['serialnumber'] : '';
 
 // get tanggal register
-$q100 = mysqli_query($connect_pro, "SELECT c_outsidedua_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
+$q100 = mysqli_query($connect_pro, "SELECT c_outsidetiga_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
 $d100 = mysqli_fetch_array($q100);
-$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_outsidedua_i']));
+$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_outsidetiga_i']));
 
 // get informasi piano
 $sql = mysqli_query($connect_pro, "SELECT b.c_name, b.c_code_type FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber' ");
@@ -75,11 +75,11 @@ if ($data2['c_repair_outsidesatu_o'] != '') {
 
 if ($data2['c_repair_outsidedua_o'] != '') {
     $ok_date2 = date('d-m-Y', strtotime($data2['c_repair_outsidedua_o']));
-    $finish_outside_func = 'disabled';
 }
 
 if ($data2['c_repair_outsidetiga_o'] != '') {
     $ok_date3 = date('d-m-Y', strtotime($data2['c_repair_outsidetiga_o']));
+    $finish_outside_func = 'disabled';
 }
 
 // untuk validation func tergantung bagian mana yang aktif
@@ -89,11 +89,11 @@ if ($data2['c_outsidesatu_pic'] != '') {
 
 if ($data2['c_outsidedua_pic'] != '') {
     $repair2 = $data2['c_outsidedua_pic'];
-    $validation_func = '';
 }
 
 if ($data2['c_outsidetiga_pic'] != '') {
-    $repair2 = $data2['c_outsidetiga_pic'];
+    $repair3 = $data2['c_outsidetiga_pic'];
+    $validation_func = '';
 }
 
 // get repair all and allow finish
@@ -140,7 +140,7 @@ if ($data3['total'] == 0) {
                             serialnumber: $('#serialnumber').val(),
                         };
                         $.ajax({
-                            url: "outside2/pagedata3.php",
+                            url: "outside3/pagedata3.php",
                             type: "POST",
                             data: dataString,
                             success: function(data) {
@@ -156,7 +156,7 @@ if ($data3['total'] == 0) {
         </div>
         <div class="row">
             <div class="col-12">
-                <button <?= $btnfinishdis . " " . $finish_outside_func . " " . $validation_func ?> class="btn btn-primary" id="sendfinisho" style="width: 100%;">Finish Outside Check <i id="icon-main-fin" class="fa fa-flag-checkered"></i><i id="icon-spinner-fin" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
+                <button <?= $btnfinishdis . " " . $finish_outside_func . " " . $validation_func ?> class="btn btn-primary" id="sendfinisho" style="width: 100%;">Close Check Card <i id="icon-main-fin" class="fa fa-flag-checkered"></i><i id="icon-spinner-fin" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
                 <script>
                     var serialnumber = $('#serialnumber').val();
                     $('#send').click(function() {
@@ -174,7 +174,7 @@ if ($data3['total'] == 0) {
                             if (result.isConfirmed) {
                                 // console.log('oke dikirm ke repair');
                                 $.ajax({
-                                    url: "outside2/data10.php",
+                                    url: "outside3/data10.php",
                                     type: "POST",
                                     data: {
                                         "serialnumber": serialnumber
@@ -370,7 +370,7 @@ if ($data3['total'] == 0) {
             var serialnumber = $('#serialnumber').val();
             var stat = 'select';
             $.ajax({
-                url: 'outside2/data2.php',
+                url: 'outside3/data2.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,
@@ -478,86 +478,121 @@ if ($data3['total'] == 0) {
 <script>
     $('#sendfinisho').click(function() {
         var serialnumber = $('#serialnumber').val();
+
         $.ajax({
             type: 'POST',
-            url: 'outside2/data14.php',
+            url: 'outside3/data16.php',
             data: {
                 "serialnumber": serialnumber,
             },
             success: function(response) {
                 var response = JSON.parse(response);
-                if (response.status == 'OK') {
+                if (response.status == 'NOT-YET') {
                     console.log(response.status);
                     Swal.fire({
-                        title: 'Apakah anda yakin hasil repair sesuai ?',
-                        icon: 'question',
-                        html: 'Data akan diteruskan ke proses berikutnya',
-                        showCancelButton: true,
+                        title: 'Masih terdapat NG pada Completeness!',
+                        icon: 'error',
+                        html: 'Pastikan semua data NG sudah dilakukan repair sebelum menutup check card',
+                        showCancelButton: false,
                         showConfirmButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Iya',
+                        confirmButtonText: 'Oke',
                         cancelButtonText: 'Tidak'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $('#check').attr('disabled', true);
-                            $('#sendfinisho').attr('disabled', true);
-                            $('#icon-main-fin').hide();
-                            $('#icon-spinner-fin').show();
-                            $.ajax({
-                                url: 'outside2/data15.php',
-                                type: 'POST',
-                                data: {
-                                    "serialnumber": serialnumber,
-                                },
-                                success: function(response) {
-                                    // load page data 5 -> 6 atau clear aja
-                                    // load_data_ng(serialnumber);
-                                    // load_image_ng(serialnumber, codetype);
-                                    var response = JSON.parse(response);
-                                    console.log('dikirim ke proses berikutnya');
-                                    if (response.status == 'berhasil') {
-                                        Swal.fire({
-                                            title: 'Berhasil!',
-                                            icon: 'success',
-                                            html: 'Data berhasil dikirim ke proses berikutnya',
-                                            showCancelButton: false,
-                                            showConfirmButton: true,
-                                            confirmButtonColor: '#3085d6',
-                                            cancelButtonColor: '#d33',
-                                            confirmButtonText: 'Oke',
-                                            cancelButtonText: 'Tidak'
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                $('#clearacard').trigger('click');
+                    });
+                } else if (response.status == 'DONE') {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'outside3/data14.php',
+                        data: {
+                            "serialnumber": serialnumber,
+                        },
+                        success: function(response) {
+                            var response = JSON.parse(response);
+                            if (response.status == 'OK') {
+                                console.log(response.status);
+                                Swal.fire({
+                                    title: 'Apakah anda yakin hasil repair sesuai ?',
+                                    icon: 'question',
+                                    html: 'Data Check Card akan di close',
+                                    showCancelButton: true,
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Iya',
+                                    cancelButtonText: 'Tidak'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $('#check').attr('disabled', true);
+                                        $('#sendfinisho').attr('disabled', true);
+                                        $('#icon-main-fin').hide();
+                                        $('#icon-spinner-fin').show();
+                                        $.ajax({
+                                            url: 'outside3/data15.php',
+                                            type: 'POST',
+                                            data: {
+                                                "serialnumber": serialnumber,
+                                            },
+                                            success: function(response) {
+                                                // load page data 5 -> 6 atau clear aja
+                                                // load_data_ng(serialnumber);
+                                                // load_image_ng(serialnumber, codetype);
+                                                var response = JSON.parse(response);
+                                                console.log('dikirim ke proses berikutnya');
+                                                if (response.status == 'berhasil') {
+                                                    Swal.fire({
+                                                        title: 'Berhasil!',
+                                                        icon: 'success',
+                                                        html: 'Data Check Card telah ditutup',
+                                                        showCancelButton: false,
+                                                        showConfirmButton: true,
+                                                        confirmButtonColor: '#3085d6',
+                                                        cancelButtonColor: '#d33',
+                                                        confirmButtonText: 'Oke',
+                                                        cancelButtonText: 'Tidak'
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            $('#clearacard').trigger('click');
+                                                        }
+                                                    });
+                                                } else {
+                                                    Swal.fire({
+                                                        title: 'Gagal!',
+                                                        icon: 'error',
+                                                        html: 'Data gagal dikirim, silahkan coba lagi',
+                                                        showCancelButton: false,
+                                                        showConfirmButton: true,
+                                                        confirmButtonColor: '#3085d6',
+                                                        cancelButtonColor: '#d33',
+                                                        confirmButtonText: 'Oke',
+                                                        cancelButtonText: 'Tidak'
+                                                    })
+                                                }
                                             }
                                         });
-                                    } else {
-                                        Swal.fire({
-                                            title: 'Gagal!',
-                                            icon: 'error',
-                                            html: 'Data gagal dikirim, silahkan coba lagi',
-                                            showCancelButton: false,
-                                            showConfirmButton: true,
-                                            confirmButtonColor: '#3085d6',
-                                            cancelButtonColor: '#d33',
-                                            confirmButtonText: 'Oke',
-                                            cancelButtonText: 'Tidak'
-                                        })
                                     }
-                                }
-                            });
+                                });
+                            } else if (response.status == 'BELUM-REPAIR') {
+                                console.log(response.status);
+                                Swal.fire({
+                                    title: 'Masih terdapat data yang belum direpair!',
+                                    text: 'Pastikan proses repair sudah selesai',
+                                    icon: 'error',
+                                    // timer: 3000,
+                                    showConfirmButton: true,
+                                    confirmButtonText: 'Oke',
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Server sibuk',
+                                    icon: 'error',
+                                    // timer: 3000,
+                                    showConfirmButton: true,
+                                    confirmButtonText: 'Oke',
+                                });
+                            }
                         }
-                    });
-                } else if (response.status == 'BELUM-REPAIR') {
-                    console.log(response.status);
-                    Swal.fire({
-                        title: 'Masih terdapat data yang belum direpair!',
-                        text: 'Pastikan proses repair sudah selesai',
-                        icon: 'error',
-                        // timer: 3000,
-                        showConfirmButton: true,
-                        confirmButtonText: 'Oke',
                     });
                 } else {
                     Swal.fire({
