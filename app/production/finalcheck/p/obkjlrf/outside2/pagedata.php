@@ -7,9 +7,9 @@ require '../config.php';
 $serialnumber = isset($_POST['serialnumber']) ? $_POST['serialnumber'] : '';
 
 // get tanggal register
-$q100 = mysqli_query($connect_pro, "SELECT c_completenesssatu_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
+$q100 = mysqli_query($connect_pro, "SELECT c_completenessdua_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
 $d100 = mysqli_fetch_array($q100);
-$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_completenesssatu_i']));
+$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_completenessdua_i']));
 
 // get informasi piano
 $sql = mysqli_query($connect_pro, "SELECT b.c_name FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber' ");
@@ -88,19 +88,24 @@ $data = mysqli_fetch_array($sql);
     <tbody>
         <?php
         $no = 0;
-        $sql = mysqli_query($connect_pro, "SELECT a.c_code_completeness,a.c_resultsatu,a.c_resultdua, a.c_resulttiga, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE c_serialnumber = '$serialnumber'");
+        $sql = mysqli_query($connect_pro, "SELECT a.c_code_completeness,a.c_resultsatu, a.c_resultdua, a.c_resulttiga, b.c_detail FROM finalcheck_fetch_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE c_serialnumber = '$serialnumber'");
         while ($data = mysqli_fetch_array($sql)) {
-            $checkcom = '';
+            $checkcom1 = '';
             if ($data['c_resultsatu'] == 'Y') {
-                $checkcom = 'checked';
+                $checkcom1 = 'checked';
+            }
+
+            $checkcom2 = '';
+            if ($data['c_resultdua'] == 'Y') {
+                $checkcom2 = 'checked';
             }
             $no++;
         ?>
             <tr>
                 <td style="text-align: center;"><?= $no ?></td>
                 <td style="font-size: 15px;"><?= $data['c_detail'] ?></td>
-                <td style="font-size: 15px; text-align: center;"><input id="cekbok1<?= $data['c_code_completeness'] ?>" onchange="cekbok1(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" <?= $checkcom ?> style="transform: scale(2);"></td>
-                <td style="font-size: 15px; text-align: center;"><input disabled id="cekbok2<?= $data['c_code_completeness'] ?>" onchange="cekbok2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
+                <td style="font-size: 15px; text-align: center;"><input disabled id="cekbok1<?= $data['c_code_completeness'] ?>" onchange="cekbok1(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" <?= $checkcom1 ?> style="transform: scale(2);"></td>
+                <td style="font-size: 15px; text-align: center;"><input id="cekbok2<?= $data['c_code_completeness'] ?>" onchange="cekbok2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" <?= $checkcom2 ?> style="transform: scale(2);"></td>
                 <td style="font-size: 15px; text-align: center;"><input disabled id="cekbok3<?= $data['c_code_completeness'] ?>" onchange="cekbok3(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" style="transform: scale(2);"></td>
             </tr>
         <?php
@@ -109,7 +114,7 @@ $data = mysqli_fetch_array($sql);
         <script>
             var serialnumber = $('#serialnumber').val();
 
-            function cekbok1(id) {
+            function cekbok2(id) {
                 console.log($('#' + id).val())
                 var code = $('#' + id).val();
                 var result = 'N';
@@ -121,7 +126,7 @@ $data = mysqli_fetch_array($sql);
                     result = 'N';
                 }
                 $.ajax({
-                    url: 'outside1/data.php',
+                    url: 'outside2/data.php',
                     type: 'POST',
                     data: {
                         "serialnumber": serialnumber,
@@ -143,11 +148,11 @@ $data = mysqli_fetch_array($sql);
 <div class="row">
     <div class="col-4">
         <h5>Note 1</h5>
-        <textarea name="note1" id="note1" rows="5" style="width: 100%;"></textarea>
+        <textarea disabled name="note1" id="note1" rows="5" style="width: 100%;"></textarea>
     </div>
     <div class="col-4">
         <h5>Note 2</h5>
-        <textarea disabled name="note2" id="note2" rows="5" style="width: 100%;"></textarea>
+        <textarea name="note2" id="note2" rows="5" style="width: 100%;"></textarea>
     </div>
     <div class="col-4">
         <h5>Note 3</h5>
@@ -157,10 +162,10 @@ $data = mysqli_fetch_array($sql);
     <script>
         $(document).ready(function() {
             var serialnumber = $('#serialnumber').val();
-            var note = $('#note1').val();
+            var note = $('#note2').val();
             var stat = 'select';
             $.ajax({
-                url: 'outside1/data1.php',
+                url: 'outside2/data1.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,
@@ -169,17 +174,17 @@ $data = mysqli_fetch_array($sql);
                 },
                 success: function(response) {
                     var response = JSON.parse(response);
-                    $('#note1').html(response.note1);
+                    $('#note2').html(response.note2);
                 }
             });
         })
 
-        $('#note1').blur(function() {
+        $('#note2').blur(function() {
             var serialnumber = $('#serialnumber').val();
-            var note = $('#note1').val();
+            var note = $('#note2').val();
             var stat = 'update';
             $.ajax({
-                url: 'outside1/data1.php',
+                url: 'outside2/data1.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,
@@ -188,7 +193,7 @@ $data = mysqli_fetch_array($sql);
                 },
                 success: function(response) {
                     var response = JSON.parse(response);
-                    $('#note1').html(response.note1);
+                    $('#note2').html(response.note2);
                 }
             });
         })
@@ -258,7 +263,7 @@ $data = mysqli_fetch_array($sql);
                     serialnumber: $('#serialnumber').val(),
                 };
                 $.ajax({
-                    url: "outside1/data9.php",
+                    url: "outside2/data9.php",
                     type: "POST",
                     data: {
                         "serialnumber": serialnumber
@@ -267,7 +272,7 @@ $data = mysqli_fetch_array($sql);
                         var response = JSON.parse(response);
                         if (response.status == 'DONE') {
                             $.ajax({
-                                url: "outside1/pagedata2.php",
+                                url: "outside2/pagedata2.php",
                                 type: "POST",
                                 data: dataString,
                                 success: function(data) {
@@ -292,12 +297,12 @@ $data = mysqli_fetch_array($sql);
                                 confirmButtonText: 'Iya',
                                 cancelButtonText: 'Tidak'
                             }).then((result) => {
+                                $('#check').attr('disabled', true);
+                                $('#icon-spinner').show();
+                                $('#icon-spinner-main').hide();
                                 if (result.isConfirmed) {
-                                    $('#check').attr('disabled', true);
-                                    $('#icon-spinner').show();
-                                    $('#icon-spinner-main').hide();
                                     $.ajax({
-                                        url: "outside1/pagedata2.php",
+                                        url: "outside2/pagedata2.php",
                                         type: "POST",
                                         data: dataString,
                                         success: function(data) {

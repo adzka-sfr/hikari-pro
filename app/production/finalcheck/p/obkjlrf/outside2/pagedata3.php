@@ -7,9 +7,9 @@ require '../config.php';
 $serialnumber = isset($_POST['serialnumber']) ? $_POST['serialnumber'] : '';
 
 // get tanggal register
-$q100 = mysqli_query($connect_pro, "SELECT c_completenesssatu_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
+$q100 = mysqli_query($connect_pro, "SELECT c_completenessdua_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
 $d100 = mysqli_fetch_array($q100);
-$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_completenesssatu_i']));
+$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_completenessdua_i']));
 
 // get informasi piano
 $sql = mysqli_query($connect_pro, "SELECT b.c_name FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber' ");
@@ -75,11 +75,11 @@ if ($data2['c_repair_outsidetiga_o'] != '') {
 // untuk validation func tergantung mana yang aktif
 if ($data2['c_outsidesatu_pic'] != '') {
     $repair1 = $data2['c_outsidesatu_pic'];
-    $validation_func = '';
 }
 
 if ($data2['c_outsidedua_pic'] != '') {
     $repair2 = $data2['c_outsidedua_pic'];
+    $validation_func = '';
 }
 
 if ($data2['c_outsidetiga_pic'] != '') {
@@ -109,7 +109,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                     serialnumber: $('#serialnumber').val(),
                 };
                 $.ajax({
-                    url: "outside1/data12.php",
+                    url: "outside2/data12.php",
                     type: "POST",
                     data: {
                         "serialnumber": serialnumber
@@ -119,7 +119,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                         if (response.status == 'DONE') {
                             console.log("gas lur aman");
                             $.ajax({
-                                url: "outside1/pagedata4.php",
+                                url: "outside2/pagedata4.php",
                                 type: "POST",
                                 data: dataString,
                                 success: function(data) {
@@ -144,7 +144,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                                 if (result.isConfirmed) {
                                     console.log("gas lur aman");
                                     $.ajax({
-                                        url: "outside1/pagedata4.php",
+                                        url: "outside2/pagedata4.php",
                                         type: "POST",
                                         data: dataString,
                                         success: function(data) {
@@ -306,7 +306,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                     result = 'N';
                 }
                 $.ajax({
-                    url: 'outside1/data11.php',
+                    url: 'outside2/data11.php',
                     type: 'POST',
                     data: {
                         "serialnumber": serialnumber,
@@ -344,7 +344,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
             var serialnumber = $('#serialnumber').val();
             var stat = 'select';
             $.ajax({
-                url: 'outside1/data1.php',
+                url: 'outside2/data1.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,

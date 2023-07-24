@@ -1,7 +1,7 @@
 <script src="barcode/html5-qrcode.min.js"></script>
 <div class="row">
     <div class="col-12">
-        <h5>Outside Check 1</h5>
+        <h5>Outside Check 2</h5>
         <hr>
     </div>
 </div>
@@ -159,7 +159,7 @@
             // jika sudah isi semua
             if (acard != '') {
                 $.ajax({
-                    url: 'outside1/check.php',
+                    url: 'outside2/check.php',
                     type: 'POST',
                     data: {
                         "acard": acard
@@ -170,7 +170,7 @@
                             // jika tidak ada data
                             Swal.fire({
                                 title: 'No Seri tidak dikenali!',
-                                text: 'Pastikan anda melakukan scan pada QR-Code yang diterbitkan oleh Inside Check',
+                                text: 'Pastikan anda melakukan scan pada QR-Code yang diterbitkan oleh Outside Check1',
                                 icon: 'error',
                                 // timer: 3000,
                                 showConfirmButton: true,
@@ -189,7 +189,7 @@
                                     serialnumber: response.serialnumber,
                                 };
                                 $.ajax({
-                                    url: "outside1/pagedata.php",
+                                    url: "outside2/pagedata.php",
                                     type: "POST",
                                     data: dataString,
                                     success: function(data) {
@@ -213,7 +213,7 @@
                                 serialnumber: response.serialnumber
                             };
                             $.ajax({
-                                url: "outside1/pagedata3.php",
+                                url: "outside2/pagedata3.php",
                                 type: "POST",
                                 data: dataString,
                                 success: function(data) {
@@ -264,7 +264,7 @@
     function load_data_ng(serialnumber) {
         $.ajax({
             type: 'POST',
-            url: 'outside1/detail_ng.php',
+            url: 'outside2/detail_ng.php',
             data: {
                 "serialnumber": serialnumber
             },
@@ -280,7 +280,7 @@
     function load_data_ngval(serialnumber) {
         $.ajax({
             type: 'POST',
-            url: 'outside1/detail_ngval.php',
+            url: 'outside2/detail_ngval.php',
             data: {
                 "serialnumber": serialnumber
             },
@@ -296,7 +296,7 @@
     function load_image_ng(serialnumber, codetype) {
         $.ajax({
             type: 'POST',
-            url: 'outside1/image_ng.php',
+            url: 'outside2/image_ng.php',
             data: {
                 "serialnumber": serialnumber,
                 "codetype": codetype
@@ -345,7 +345,7 @@
                 console.log(isi);
                 $.ajax({
                     type: 'POST',
-                    url: 'outside1/data3.php',
+                    url: 'outside2/data3.php',
                     data: isi,
                     success: function(response) {
                         var response = JSON.parse(response);
@@ -418,7 +418,7 @@
             console.log(isi);
             $.ajax({
                 type: 'POST',
-                url: 'outside1/data7.php',
+                url: 'outside2/data7.php',
                 data: isi,
                 success: function(response) {
                     var response = JSON.parse(response);
@@ -454,6 +454,7 @@
                 }
             });
         }
+
     }
 
     function deleteng(id, serialnumber, codeng, numberng, process) {
@@ -470,7 +471,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: 'outside1/data8.php',
+                    url: 'outside2/data8.php',
                     type: 'POST',
                     data: {
                         "serialnumber": serialnumber,
@@ -545,7 +546,7 @@
         console.log(process);
         $.ajax({
             type: 'POST',
-            url: 'outside1/data13.php',
+            url: 'outside2/data13.php',
             data: {
                 "serialnumber": serialnumber,
                 "codeng": codeng,

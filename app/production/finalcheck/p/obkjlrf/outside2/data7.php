@@ -9,7 +9,7 @@ $process = $_POST['process'];
 $numberng = $_POST['numberng'];
 $batasan_process = $publicprocess;
 
-// delete data number ng yang lama
+// delete data number ng yang lama untuk proses terkait sajacodetype
 $q1 = mysqli_query($connect_pro, "DELETE FROM finalcheck_fetch_outside WHERE c_serialnumber = '$serialnumber' AND c_code_ng = '$code_ng' AND c_process = '$batasan_process'");
 $q3 = mysqli_query($connect_pro, "DELETE FROM finalcheck_fetch_loc WHERE c_serialnumber = '$serialnumber' AND c_number_ng = $numberng  AND c_process = '$batasan_process'");
 

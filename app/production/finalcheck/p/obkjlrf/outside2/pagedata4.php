@@ -7,9 +7,9 @@ require '../config.php';
 $serialnumber = isset($_POST['serialnumber']) ? $_POST['serialnumber'] : '';
 
 // get tanggal register
-$q100 = mysqli_query($connect_pro, "SELECT c_outsidesatu_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
+$q100 = mysqli_query($connect_pro, "SELECT c_outsidedua_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
 $d100 = mysqli_fetch_array($q100);
-$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_outsidesatu_i']));
+$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_outsidedua_i']));
 
 // get informasi piano
 $sql = mysqli_query($connect_pro, "SELECT b.c_name, b.c_code_type FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber' ");
@@ -140,7 +140,7 @@ if ($data3['total'] == 0) {
                             serialnumber: $('#serialnumber').val(),
                         };
                         $.ajax({
-                            url: "outside1/pagedata3.php",
+                            url: "outside2/pagedata3.php",
                             type: "POST",
                             data: dataString,
                             success: function(data) {
@@ -174,7 +174,7 @@ if ($data3['total'] == 0) {
                             if (result.isConfirmed) {
                                 // console.log('oke dikirm ke repair');
                                 $.ajax({
-                                    url: "outside1/data10.php",
+                                    url: "outside2/data10.php",
                                     type: "POST",
                                     data: {
                                         "serialnumber": serialnumber
@@ -370,7 +370,7 @@ if ($data3['total'] == 0) {
             var serialnumber = $('#serialnumber').val();
             var stat = 'select';
             $.ajax({
-                url: 'outside1/data2.php',
+                url: 'outside2/data2.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,
@@ -480,7 +480,7 @@ if ($data3['total'] == 0) {
         var serialnumber = $('#serialnumber').val();
         $.ajax({
             type: 'POST',
-            url: 'outside1/data14.php',
+            url: 'outside2/data14.php',
             data: {
                 "serialnumber": serialnumber,
             },
@@ -505,7 +505,7 @@ if ($data3['total'] == 0) {
                             $('#icon-main-fin').hide();
                             $('#icon-spinner-fin').show();
                             $.ajax({
-                                url: 'outside1/data15.php',
+                                url: 'outside2/data15.php',
                                 type: 'POST',
                                 data: {
                                     "serialnumber": serialnumber,

@@ -7,9 +7,9 @@ require '../config.php';
 $serialnumber = isset($_POST['serialnumber']) ? $_POST['serialnumber'] : '';
 
 // get tanggal register
-$q100 = mysqli_query($connect_pro, "SELECT c_outsidesatu_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
+$q100 = mysqli_query($connect_pro, "SELECT c_outsidedua_i FROM finalcheck_timestamp WHERE c_serialnumber = '$serialnumber'");
 $d100 = mysqli_fetch_array($q100);
-$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_outsidesatu_i']));
+$inspection_date = date('l, d M Y h:i A', strtotime($d100['c_outsidedua_i']));
 
 // get informasi piano
 $sql = mysqli_query($connect_pro, "SELECT b.c_name, b.c_code_type FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber' ");
@@ -442,7 +442,7 @@ if ($c_code_type == 'f') {
                 $('#numbereditng').val(numberng);
                 // untuk mengisi value process dan code_type (SEPERTINYA GADIPAKE)
                 $.ajax({
-                    url: "outside1/data6.php",
+                    url: "outside2/data6.php",
                     type: "POST",
                     data: {
                         "serialnumber": serialnumber
@@ -455,7 +455,7 @@ if ($c_code_type == 'f') {
                 });
                 // untuk mengisi value select cabinet
                 $.ajax({
-                    url: "outside1/data4.php",
+                    url: "outside2/data4.php",
                     type: "POST",
                     data: {
                         "codeng": codeng,
@@ -474,7 +474,7 @@ if ($c_code_type == 'f') {
 
                 // untuk mengisi value checklist image
                 $.ajax({
-                    url: "outside1/data5.php",
+                    url: "outside2/data5.php",
                     type: "POST",
                     data: {
                         "numberng": numberng,
@@ -567,11 +567,11 @@ if ($c_code_type == 'f') {
 <div class="row">
     <div class="col-4">
         <h5>Note 1</h5>
-        <textarea name="note1" id="note1" rows="5" style="width: 100%;"></textarea>
+        <textarea disabled name="note1" id="note1" rows="5" style="width: 100%;"></textarea>
     </div>
     <div class="col-4">
         <h5>Note 2</h5>
-        <textarea disabled name="note2" id="note2" rows="5" style="width: 100%;"></textarea>
+        <textarea name="note2" id="note2" rows="5" style="width: 100%;"></textarea>
     </div>
     <div class="col-4">
         <h5>Note 3</h5>
@@ -581,10 +581,10 @@ if ($c_code_type == 'f') {
     <script>
         $(document).ready(function() {
             var serialnumber = $('#serialnumber').val();
-            var note = $('#note1').val();
+            var note = $('#note2').val();
             var stat = 'select';
             $.ajax({
-                url: 'outside1/data2.php',
+                url: 'outside2/data2.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,
@@ -593,18 +593,18 @@ if ($c_code_type == 'f') {
                 },
                 success: function(response) {
                     var response = JSON.parse(response);
-                    $('#note1').html(response.note1);
+                    $('#note2').html(response.note2);
                 }
             });
         })
 
-        $('#note1').blur(function() {
+        $('#note2').blur(function() {
             var serialnumber = $('#serialnumber').val();
-            var note = $('#note1').val();
+            var note = $('#note2').val();
             console.log(note);
             var stat = 'update';
             $.ajax({
-                url: 'outside1/data2.php',
+                url: 'outside2/data2.php',
                 type: 'POST',
                 data: {
                     "serialnumber": serialnumber,
@@ -613,7 +613,7 @@ if ($c_code_type == 'f') {
                 },
                 success: function(response) {
                     var response = JSON.parse(response);
-                    $('#note1').html(response.note1);
+                    $('#note2').html(response.note2);
                 }
             });
         })
@@ -687,7 +687,7 @@ if ($c_code_type == 'f') {
                     serialnumber: $('#serialnumber').val(),
                 };
                 $.ajax({
-                    url: "outside1/pagedata.php",
+                    url: "outside2/pagedata.php",
                     type: "POST",
                     data: dataString,
                     success: function(data) {
@@ -723,7 +723,7 @@ if ($c_code_type == 'f') {
                         $('#send').attr('disabled', true);
                         $('#check').attr('disabled', true);
                         $.ajax({
-                            url: "outside1/data10.php",
+                            url: "outside2/data10.php",
                             type: "POST",
                             data: {
                                 "serialnumber": serialnumber
