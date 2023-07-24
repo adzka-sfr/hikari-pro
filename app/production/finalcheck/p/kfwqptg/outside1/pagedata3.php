@@ -83,7 +83,7 @@ if ($data2['c_outsidedua_pic'] != '') {
 }
 
 if ($data2['c_outsidetiga_pic'] != '') {
-    $repair2 = $data2['c_outsidetiga_pic'];
+    $repair3 = $data2['c_outsidetiga_pic'];
 }
 ?>
 
