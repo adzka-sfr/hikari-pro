@@ -45,9 +45,11 @@ if ($data4['total'] == 0) {
             $validasio = 'checked';
         }
         $cabinet = array();
-        $sql3 = mysqli_query($connect_pro, "SELECT a.c_code_cabinet, b.c_name as cab_name FROM finalcheck_fetch_outside a INNER JOIN finalcheck_list_cabinet b ON a.c_code_cabinet = b.c_code_cabinet WHERE a.c_serialnumber = '$serialnumber' AND c_code_ng = '$data2[c_code_ng]'");
+        $processcab = array();
+        $sql3 = mysqli_query($connect_pro, "SELECT a.c_code_cabinet, a.c_process, b.c_name as cab_name FROM finalcheck_fetch_outside a INNER JOIN finalcheck_list_cabinet b ON a.c_code_cabinet = b.c_code_cabinet WHERE a.c_serialnumber = '$serialnumber' AND c_code_ng = '$data2[c_code_ng]'");
         while ($data3 = mysqli_fetch_array($sql3)) {
             array_push($cabinet, $data3['cab_name']);
+            array_push($processcab, $data3['c_process']);
         }
         $row = count($cabinet);
     ?>
@@ -67,10 +69,19 @@ if ($data4['total'] == 0) {
             </td>
         </tr>
         <?php
-        foreach ($cabinet as $cab) {
+        for ($eh = 0; $eh < $row; $eh++) {
+            if ($processcab[$eh] == 'oc1') {
+                $color_cab = '#DC4646';
+            } elseif ($processcab[$eh] == 'oc2') {
+                $color_cab  = '#5AA65A';
+            } elseif ($processcab[$eh] == 'oc3') {
+                $color_cab = '#1340FF';
+            } else {
+                $color_cab = '#000';
+            }
         ?>
             <tr>
-                <td><?= $cab ?></td>
+                <td style="color: <?= $color_cab ?>;"><?= $cabinet[$eh] ?></td>
             </tr>
         <?php
         }

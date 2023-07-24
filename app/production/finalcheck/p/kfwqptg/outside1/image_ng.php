@@ -22,10 +22,13 @@ if ($code_type == 'f') {
             while ($dtbo = mysqli_fetch_array($qtbo)) {
                 $label_get = array();
                 $label = array();
-                $qtbolab = mysqli_query($connect_pro, "SELECT c_number_ng FROM finalcheck_fetch_loc WHERE c_serialnumber = '$serialnumber' AND c_code_coordinate = '$dtbo[c_code_coordinate]'");
+                $process_get = array();
+                $process = array();
+                $qtbolab = mysqli_query($connect_pro, "SELECT c_number_ng, c_process FROM finalcheck_fetch_loc WHERE c_serialnumber = '$serialnumber' AND c_code_coordinate = '$dtbo[c_code_coordinate]'");
 
                 while ($dtbolab = mysqli_fetch_array($qtbolab)) {
                     array_push($label_get, $dtbolab['c_number_ng']);
+                    array_push($process_get, $dtbolab['c_process']);
                 }
                 $cnt = count($label_get);
                 foreach ($label_get as $key => $val) {
@@ -40,11 +43,50 @@ if ($code_type == 'f') {
                     }
                 }
 
+                $cnt2 = count($process_get);
+                foreach ($process_get as $key2 => $val2) {
+                    if (($key2 + 1) == $cnt2) {
+                        array_push($process, $val2);
+                    } else {
+                        array_push($process, $val2 . ', ');
+                    }
+
+                    if (($key2 + 1) % 2 == 0) {
+                        array_push($process, '<br>');
+                    }
+                }
+
             ?>
                 <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
-                    <span style="padding: 0px;"><?php foreach ($label as $key) {
-                                                    echo $key;
-                                                } ?></span>
+                    <?php
+                    $row = count($label);
+                    for ($s = 0; $s < $row; $s++) {
+                        if ($process[$s] == 'oc1') {
+                            $color_cab = '#DC4646';
+                        } elseif ($process[$s] == 'oc2') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc3') {
+                            $color_cab = '#1340FF';
+                        } elseif ($process[$s] == 'oc1, ') {
+                            $color_cab  = '#DC4646';
+                        } elseif ($process[$s] == 'oc1<br>') {
+                            $color_cab  = '#DC4646';
+                        } elseif ($process[$s] == 'oc2, ') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc2<br>') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc3, ') {
+                            $color_cab  = '#1340FF';
+                        } elseif ($process[$s] == 'oc3<br>') {
+                            $color_cab  = '#1340FF';
+                        } else {
+                            $color_cab = '#000';
+                        }
+                    ?>
+                        <span style="padding: 0px; color: <?= $color_cab ?>;"><?= $label[$s] ?></span>
+                    <?php
+                    }
+                    ?>
                 </button>
             <?php
             }
@@ -65,14 +107,17 @@ if ($code_type == 'f') {
             <?php
             $c_code_type = $code_type;
             $c_image = "tbi";
-            $qtbi = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
-            while ($dtbi = mysqli_fetch_array($qtbi)) {
+            $qtbo = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
+            while ($dtbo = mysqli_fetch_array($qtbo)) {
                 $label_get = array();
                 $label = array();
-                $qtbilab = mysqli_query($connect_pro, "SELECT c_number_ng FROM finalcheck_fetch_loc WHERE c_serialnumber = '$serialnumber' AND c_code_coordinate = '$dtbi[c_code_coordinate]'");
+                $process_get = array();
+                $process = array();
+                $qtbolab = mysqli_query($connect_pro, "SELECT c_number_ng, c_process FROM finalcheck_fetch_loc WHERE c_serialnumber = '$serialnumber' AND c_code_coordinate = '$dtbo[c_code_coordinate]'");
 
-                while ($dtbilab = mysqli_fetch_array($qtbilab)) {
-                    array_push($label_get, $dtbilab['c_number_ng']);
+                while ($dtbolab = mysqli_fetch_array($qtbolab)) {
+                    array_push($label_get, $dtbolab['c_number_ng']);
+                    array_push($process_get, $dtbolab['c_process']);
                 }
                 $cnt = count($label_get);
                 foreach ($label_get as $key => $val) {
@@ -86,16 +131,55 @@ if ($code_type == 'f') {
                         array_push($label, '<br>');
                     }
                 }
+
+                $cnt2 = count($process_get);
+                foreach ($process_get as $key2 => $val2) {
+                    if (($key2 + 1) == $cnt2) {
+                        array_push($process, $val2);
+                    } else {
+                        array_push($process, $val2 . ', ');
+                    }
+
+                    if (($key2 + 1) % 2 == 0) {
+                        array_push($process, '<br>');
+                    }
+                }
+
             ?>
-                <button class="btn ingpo" style="width: 25px;border-color: #000000; height: 25px; top: <?= $dtbi['c_top'] ?>%; left: <?= $dtbi['c_left'] ?>%;">
-                    <span style=" padding: 0px;"><?php foreach ($label as $key) {
-                                                        echo $key;
-                                                    } ?></span>
+                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                    <?php
+                    $row = count($label);
+                    for ($s = 0; $s < $row; $s++) {
+                        if ($process[$s] == 'oc1') {
+                            $color_cab = '#DC4646';
+                        } elseif ($process[$s] == 'oc2') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc3') {
+                            $color_cab = '#1340FF';
+                        } elseif ($process[$s] == 'oc1, ') {
+                            $color_cab  = '#DC4646';
+                        } elseif ($process[$s] == 'oc1<br>') {
+                            $color_cab  = '#DC4646';
+                        } elseif ($process[$s] == 'oc2, ') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc2<br>') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc3, ') {
+                            $color_cab  = '#1340FF';
+                        } elseif ($process[$s] == 'oc3<br>') {
+                            $color_cab  = '#1340FF';
+                        } else {
+                            $color_cab = '#000';
+                        }
+                    ?>
+                        <span style="padding: 0px; color: <?= $color_cab ?>;"><?= $label[$s] ?></span>
+                    <?php
+                    }
+                    ?>
                 </button>
             <?php
             }
             ?>
-
         </div>
     </div>
 </div>
@@ -111,14 +195,17 @@ if ($code_type == 'f') {
             <?php
             $c_code_type = $code_type;
             $c_image = "uk";
-            $quk = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
-            while ($duk = mysqli_fetch_array($quk)) {
+            $qtbo = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
+            while ($dtbo = mysqli_fetch_array($qtbo)) {
                 $label_get = array();
                 $label = array();
-                $quklab = mysqli_query($connect_pro, "SELECT c_number_ng FROM finalcheck_fetch_loc WHERE c_serialnumber = '$serialnumber' AND c_code_coordinate = '$duk[c_code_coordinate]'");
+                $process_get = array();
+                $process = array();
+                $qtbolab = mysqli_query($connect_pro, "SELECT c_number_ng, c_process FROM finalcheck_fetch_loc WHERE c_serialnumber = '$serialnumber' AND c_code_coordinate = '$dtbo[c_code_coordinate]'");
 
-                while ($duklab = mysqli_fetch_array($quklab)) {
-                    array_push($label_get, $duklab['c_number_ng']);
+                while ($dtbolab = mysqli_fetch_array($qtbolab)) {
+                    array_push($label_get, $dtbolab['c_number_ng']);
+                    array_push($process_get, $dtbolab['c_process']);
                 }
                 $cnt = count($label_get);
                 foreach ($label_get as $key => $val) {
@@ -132,16 +219,55 @@ if ($code_type == 'f') {
                         array_push($label, '<br>');
                     }
                 }
+
+                $cnt2 = count($process_get);
+                foreach ($process_get as $key2 => $val2) {
+                    if (($key2 + 1) == $cnt2) {
+                        array_push($process, $val2);
+                    } else {
+                        array_push($process, $val2 . ', ');
+                    }
+
+                    if (($key2 + 1) % 2 == 0) {
+                        array_push($process, '<br>');
+                    }
+                }
+
             ?>
-                <button class="btn ingpo" style="width: 25px;border-color: #000000; height: 25px; top: <?= $duk['c_top'] ?>%; left: <?= $duk['c_left'] ?>%;">
-                    <span style=" padding: 0px;"><?php foreach ($label as $key) {
-                                                        echo $key;
-                                                    } ?></span>
+                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                    <?php
+                    $row = count($label);
+                    for ($s = 0; $s < $row; $s++) {
+                        if ($process[$s] == 'oc1') {
+                            $color_cab = '#DC4646';
+                        } elseif ($process[$s] == 'oc2') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc3') {
+                            $color_cab = '#1340FF';
+                        } elseif ($process[$s] == 'oc1, ') {
+                            $color_cab  = '#DC4646';
+                        } elseif ($process[$s] == 'oc1<br>') {
+                            $color_cab  = '#DC4646';
+                        } elseif ($process[$s] == 'oc2, ') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc2<br>') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc3, ') {
+                            $color_cab  = '#1340FF';
+                        } elseif ($process[$s] == 'oc3<br>') {
+                            $color_cab  = '#1340FF';
+                        } else {
+                            $color_cab = '#000';
+                        }
+                    ?>
+                        <span style="padding: 0px; color: <?= $color_cab ?>;"><?= $label[$s] ?></span>
+                    <?php
+                    }
+                    ?>
                 </button>
             <?php
             }
             ?>
-
         </div>
     </div>
 </div>
@@ -157,14 +283,17 @@ if ($code_type == 'f') {
             <?php
             $c_code_type = $code_type;
             $c_image = "b";
-            $qb = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
-            while ($db = mysqli_fetch_array($qb)) {
+            $qtbo = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
+            while ($dtbo = mysqli_fetch_array($qtbo)) {
                 $label_get = array();
                 $label = array();
-                $qblab = mysqli_query($connect_pro, "SELECT c_number_ng FROM finalcheck_fetch_loc WHERE c_serialnumber = '$serialnumber' AND c_code_coordinate = '$db[c_code_coordinate]'");
+                $process_get = array();
+                $process = array();
+                $qtbolab = mysqli_query($connect_pro, "SELECT c_number_ng, c_process FROM finalcheck_fetch_loc WHERE c_serialnumber = '$serialnumber' AND c_code_coordinate = '$dtbo[c_code_coordinate]'");
 
-                while ($dblab = mysqli_fetch_array($qblab)) {
-                    array_push($label_get, $dblab['c_number_ng']);
+                while ($dtbolab = mysqli_fetch_array($qtbolab)) {
+                    array_push($label_get, $dtbolab['c_number_ng']);
+                    array_push($process_get, $dtbolab['c_process']);
                 }
                 $cnt = count($label_get);
                 foreach ($label_get as $key => $val) {
@@ -178,16 +307,55 @@ if ($code_type == 'f') {
                         array_push($label, '<br>');
                     }
                 }
+
+                $cnt2 = count($process_get);
+                foreach ($process_get as $key2 => $val2) {
+                    if (($key2 + 1) == $cnt2) {
+                        array_push($process, $val2);
+                    } else {
+                        array_push($process, $val2 . ', ');
+                    }
+
+                    if (($key2 + 1) % 2 == 0) {
+                        array_push($process, '<br>');
+                    }
+                }
+
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $db['c_top'] ?>%; left: <?= $db['c_left'] ?>%;">
-                    <span style=" padding: 0px;"><?php foreach ($label as $key) {
-                                                        echo $key;
-                                                    } ?></span>
+                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                    <?php
+                    $row = count($label);
+                    for ($s = 0; $s < $row; $s++) {
+                        if ($process[$s] == 'oc1') {
+                            $color_cab = '#DC4646';
+                        } elseif ($process[$s] == 'oc2') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc3') {
+                            $color_cab = '#1340FF';
+                        } elseif ($process[$s] == 'oc1, ') {
+                            $color_cab  = '#DC4646';
+                        } elseif ($process[$s] == 'oc1<br>') {
+                            $color_cab  = '#DC4646';
+                        } elseif ($process[$s] == 'oc2, ') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc2<br>') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc3, ') {
+                            $color_cab  = '#1340FF';
+                        } elseif ($process[$s] == 'oc3<br>') {
+                            $color_cab  = '#1340FF';
+                        } else {
+                            $color_cab = '#000';
+                        }
+                    ?>
+                        <span style="padding: 0px; color: <?= $color_cab ?>;"><?= $label[$s] ?></span>
+                    <?php
+                    }
+                    ?>
                 </button>
             <?php
             }
             ?>
-
         </div>
     </div>
 </div>
@@ -203,14 +371,17 @@ if ($code_type == 'f') {
             <?php
             $c_code_type = $code_type;
             $c_image = "bb";
-            $qbb = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
-            while ($dbb = mysqli_fetch_array($qbb)) {
+            $qtbo = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_fetch_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
+            while ($dtbo = mysqli_fetch_array($qtbo)) {
                 $label_get = array();
                 $label = array();
-                $qbblab = mysqli_query($connect_pro, "SELECT c_number_ng FROM finalcheck_fetch_loc WHERE c_serialnumber = '$serialnumber' AND c_code_coordinate = '$dbb[c_code_coordinate]'");
+                $process_get = array();
+                $process = array();
+                $qtbolab = mysqli_query($connect_pro, "SELECT c_number_ng, c_process FROM finalcheck_fetch_loc WHERE c_serialnumber = '$serialnumber' AND c_code_coordinate = '$dtbo[c_code_coordinate]'");
 
-                while ($dbblab = mysqli_fetch_array($qbblab)) {
-                    array_push($label_get, $dbblab['c_number_ng']);
+                while ($dtbolab = mysqli_fetch_array($qtbolab)) {
+                    array_push($label_get, $dtbolab['c_number_ng']);
+                    array_push($process_get, $dtbolab['c_process']);
                 }
                 $cnt = count($label_get);
                 foreach ($label_get as $key => $val) {
@@ -224,16 +395,55 @@ if ($code_type == 'f') {
                         array_push($label, '<br>');
                     }
                 }
+
+                $cnt2 = count($process_get);
+                foreach ($process_get as $key2 => $val2) {
+                    if (($key2 + 1) == $cnt2) {
+                        array_push($process, $val2);
+                    } else {
+                        array_push($process, $val2 . ', ');
+                    }
+
+                    if (($key2 + 1) % 2 == 0) {
+                        array_push($process, '<br>');
+                    }
+                }
+
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dbb['c_top'] ?>%; left: <?= $dbb['c_left'] ?>%;">
-                    <span style=" padding: 0px;"><?php foreach ($label as $key) {
-                                                        echo $key;
-                                                    } ?></span>
+                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                    <?php
+                    $row = count($label);
+                    for ($s = 0; $s < $row; $s++) {
+                        if ($process[$s] == 'oc1') {
+                            $color_cab = '#DC4646';
+                        } elseif ($process[$s] == 'oc2') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc3') {
+                            $color_cab = '#1340FF';
+                        } elseif ($process[$s] == 'oc1, ') {
+                            $color_cab  = '#DC4646';
+                        } elseif ($process[$s] == 'oc1<br>') {
+                            $color_cab  = '#DC4646';
+                        } elseif ($process[$s] == 'oc2, ') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc2<br>') {
+                            $color_cab  = '#5AA65A';
+                        } elseif ($process[$s] == 'oc3, ') {
+                            $color_cab  = '#1340FF';
+                        } elseif ($process[$s] == 'oc3<br>') {
+                            $color_cab  = '#1340FF';
+                        } else {
+                            $color_cab = '#000';
+                        }
+                    ?>
+                        <span style="padding: 0px; color: <?= $color_cab ?>;"><?= $label[$s] ?></span>
+                    <?php
+                    }
+                    ?>
                 </button>
             <?php
             }
             ?>
-
         </div>
     </div>
 </div>
