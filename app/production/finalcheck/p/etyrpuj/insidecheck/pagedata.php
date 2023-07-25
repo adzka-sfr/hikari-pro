@@ -98,7 +98,7 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
     <tbody>
         <?php
         $no = 0;
-        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_result, b.c_detail FROM finalcheck_fetch_inside a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial'");
+        $sql = mysqli_query($connect_pro, "SELECT a.c_code_incheck, a.c_result, b.c_detail FROM finalcheck_fetch_inside a INNER JOIN finalcheck_list_incheck b ON a.c_code_incheck = b.c_code_incheck WHERE a.c_serialnumber = '$pianoserial' ORDER BY b.c_seq ASC");
         while ($data = mysqli_fetch_array($sql)) {
             $no++;
             if ($data['c_result'] == 'OK') {
@@ -209,7 +209,13 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
         </script>
     </tbody>
 </table>
-
+<div class="row">
+    <div class="col-12">
+        <blink>
+            <h5 style="color: red;">Jangan lupa cek kembali untuk poin No. 23, 35, 36</h5>
+        </blink>
+    </div>
+</div>
 <!-- note inside -->
 <div class="row">
     <div class="col-12">
