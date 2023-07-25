@@ -114,7 +114,7 @@ if ($c_code_type == 'f') {
                             <div class="row">
                                 <div class="col-12 mb-1">
                                     <label>Nama NG :</label>
-                                    <select class="halodecktot" id="ngAdd" name="ng" style="width:100%; height: max-content;">
+                                    <select class="halodecktot-tambah" id="ngAdd" name="ng" style="width:100%; height: max-content;">
                                         <option value="" selected disabled>Select NG</option>
                                         <?php
                                         $sql1 = mysqli_query($connect_pro, "SELECT c_code_ng, c_name FROM finalcheck_list_ng WHERE c_status = 'enable' AND c_area = 'outside'");
@@ -758,6 +758,14 @@ if ($c_code_type == 'f') {
     $('#scanner').hide();
     $('#clearacard').show();
     $('#loadingacard').hide();
+
+    $('.halodecktot-tambah').select2({
+        placeholder: " Pilih NG",
+        language: "id",
+        allowClear: true,
+        dropdownParent: $('#tambahng'),
+
+    });
 
     $('.halodecktot').select2({
         placeholder: " Pilih NG",
