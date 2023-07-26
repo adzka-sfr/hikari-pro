@@ -20,7 +20,7 @@ $sql1 = mysqli_query($connect_pro, "SELECT MAX(c_resultsatu_date) as maks FROM f
 $data1 = mysqli_fetch_array($sql1);
 $ng_date1 = '-';
 if ($data1['maks'] != '') {
-    $ng_date1 = date('d-m-Y', strtotime($data1['maks']));
+    $ng_date1 = date('d-m-Y h:i A', strtotime($data1['maks']));
 }
 
 // get date ng2
@@ -28,7 +28,7 @@ $sql2 = mysqli_query($connect_pro, "SELECT MAX(c_resultdua_date) as maks FROM fi
 $data2 = mysqli_fetch_array($sql2);
 $ng_date2 = '-';
 if ($data2['maks'] != '') {
-    $ng_date2 = date('d-m-Y', strtotime($data2['maks']));
+    $ng_date2 = date('d-m-Y h:i A', strtotime($data2['maks']));
 }
 
 // get date ng3
@@ -36,7 +36,7 @@ $sql3 = mysqli_query($connect_pro, "SELECT MAX(c_resulttiga_date) as maks FROM f
 $data3 = mysqli_fetch_array($sql3);
 $ng_date3 = '-';
 if ($data3['maks'] != '') {
-    $ng_date3 = date('d-m-Y', strtotime($data3['maks']));
+    $ng_date3 = date('d-m-Y h:i A', strtotime($data3['maks']));
 }
 
 // [SELECT : finalcheck_repairtime, finalcheck_pic JOIN by c_serialnumber  ] 
@@ -59,16 +59,16 @@ $repair3 = '-';
 $validation_func = 'disabled';
 $finish_outsidesatu_func = ''; // jika sudah dikirm maka akan disabled untuk checkbox nya
 if ($data2['c_repair_outsidesatu_o'] != '') {
-    $ok_date1 = date('d-m-Y', strtotime($data2['c_repair_outsidesatu_o']));
+    $ok_date1 = date('d-m-Y h:i A', strtotime($data2['c_repair_outsidesatu_o']));
     $finish_outsidesatu_func = 'disabled';
 }
 
 if ($data2['c_repair_outsidedua_o'] != '') {
-    $ok_date2 = date('d-m-Y', strtotime($data2['c_repair_outsidedua_o']));
+    $ok_date2 = date('d-m-Y h:i A', strtotime($data2['c_repair_outsidedua_o']));
 }
 
 if ($data2['c_repair_outsidetiga_o'] != '') {
-    $ok_date3 = date('d-m-Y', strtotime($data2['c_repair_outsidetiga_o']));
+    $ok_date3 = date('d-m-Y h:i A', strtotime($data2['c_repair_outsidetiga_o']));
 }
 
 
