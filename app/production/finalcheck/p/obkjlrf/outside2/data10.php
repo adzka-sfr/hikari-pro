@@ -20,7 +20,7 @@ if ($d2['total'] != 0) {
 
 // jika ada yang ng untuk completeness langsung isi untuk repairnya sebagai default N
 $out_bypass = '';
-$q4 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_fetch_outside WHERE c_serialnumber = '$serialnumber'");
+$q4 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_fetch_outside WHERE c_serialnumber = '$serialnumber' AND c_process = '$publicprocess'");
 $d4 = mysqli_fetch_array($q4);
 if ($d4['total'] != 0) {
     mysqli_query($connect_pro, "UPDATE finalcheck_fetch_outside SET c_repair = 'N' , c_repair_date = '$now' WHERE c_serialnumber = '$serialnumber' AND c_process = '$publicprocess'");
