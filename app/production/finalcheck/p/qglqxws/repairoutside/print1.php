@@ -211,7 +211,7 @@ session_start();
                     $q3 = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_cabinet, b.c_name FROM finalcheck_fetch_outside a INNER JOIN finalcheck_list_cabinet b ON a.c_code_cabinet = b.c_code_cabinet WHERE a.c_process = '$process' AND a.c_serialnumber ='$serialnumber'");
                     while ($d3 = mysqli_fetch_array($q3)) {
                         $ng = array();
-                        $q3b = mysqli_query($connect_pro, "SELECT a.c_code_ng, a.c_number_ng, b.c_name FROM finalcheck_fetch_outside a INNER JOIN finalcheck_list_ng b ON a.c_code_ng = b.c_code_ng WHERE a.c_serialnumber ='$serialnumber' AND a.c_code_cabinet = '$d3[c_code_cabinet]'");
+                        $q3b = mysqli_query($connect_pro, "SELECT a.c_code_ng, a.c_number_ng, b.c_name FROM finalcheck_fetch_outside a INNER JOIN finalcheck_list_ng b ON a.c_code_ng = b.c_code_ng WHERE a.c_serialnumber ='$serialnumber' AND a.c_code_cabinet = '$d3[c_code_cabinet]' AND a.c_process = '$process'");
                         while ($d3b = mysqli_fetch_array($q3b)) {
                             $inject = "(" . $d3b['c_number_ng'] . ") " . $d3b['c_name'];
                             array_push($ng, $inject);
