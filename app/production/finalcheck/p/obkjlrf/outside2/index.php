@@ -221,6 +221,20 @@
                                     $('#pagedata').html(data);
                                 }
                             });
+                        } else if (response.status == 'closed') {
+                            // load data jika ada data dan sudah dicek
+                            var dataString = {
+                                serialnumber: response.serialnumber
+                            };
+                            $.ajax({
+                                url: "outside2/pagedata5.php",
+                                type: "POST",
+                                data: dataString,
+                                success: function(data) {
+                                    $('#pagedata').show();
+                                    $('#pagedata').html(data);
+                                }
+                            });
                         } else {
                             // jaringan error
                             Swal.fire({
@@ -293,10 +307,43 @@
         });
     }
 
+    function load_data_ngclose(serialnumber) {
+        $.ajax({
+            type: 'POST',
+            url: 'outside2/detail_ngclose.php',
+            data: {
+                "serialnumber": serialnumber
+            },
+            success: function(response) {
+                // var response = JSON.parse(response);
+                $('#detail_ng_loading').hide();
+                $('#detail_ng').show();
+                $('#detail_ng').html(response);
+            }
+        });
+    }
+
     function load_image_ng(serialnumber, codetype) {
         $.ajax({
             type: 'POST',
             url: 'outside2/image_ng.php',
+            data: {
+                "serialnumber": serialnumber,
+                "codetype": codetype
+            },
+            success: function(response) {
+                // var response = JSON.parse(response);
+                $('#image_ng_loading').hide();
+                $('#image_ng').show();
+                $('#image_ng').html(response);
+            }
+        });
+    }
+
+    function load_image_ngclose(serialnumber, codetype) {
+        $.ajax({
+            type: 'POST',
+            url: 'outside2/image_ngclose.php',
             data: {
                 "serialnumber": serialnumber,
                 "codetype": codetype
