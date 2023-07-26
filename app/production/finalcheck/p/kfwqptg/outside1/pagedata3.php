@@ -130,6 +130,9 @@ if ($data2['c_outsidetiga_pic'] != '') {
                                 }
                             });
                         } else if (response.status == 'NOT-YET') {
+                            $('#check').attr('disabled', false);
+                            $('#icon-main').show();
+                            $('#icon-spinner').hide();
                             Swal.fire({
                                 title: 'Apakah anda yakin ?',
                                 icon: 'warning',
@@ -142,6 +145,9 @@ if ($data2['c_outsidetiga_pic'] != '') {
                                 cancelButtonText: 'Tidak'
                             }).then((result) => {
                                 if (result.isConfirmed) {
+                                    $('#check').attr('disabled', true);
+                                    $('#icon-main').hide();
+                                    $('#icon-spinner').show();
                                     console.log("gas lur aman");
                                     $.ajax({
                                         url: "outside1/pagedata4.php",
