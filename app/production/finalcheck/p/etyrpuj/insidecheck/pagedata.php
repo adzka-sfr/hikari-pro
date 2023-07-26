@@ -19,6 +19,7 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
 <script src="../source/dropdown_search/jquery-3.4.1.js" crossorigin="anonymous"></script>
 <script src="../source/dropdown_search/select2.min.js"></script>
 <script src="../source/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<script src="<?= base_url('_bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 
 <!-- judul pagedata -->
 <hr>
@@ -89,6 +90,60 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
 <!-- stamp -->
 
 <!-- formulir cek inside -->
+<!-- modal untuk cek koneksi -->
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="lostmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="col-12 modal-title fs-5 text-center" id="staticBackdropLabel">Koneksi Terputus!</h1>
+            </div>
+            <div class="modal-body">
+                Yang harus dilakukan:
+                <ol>
+                    <li>Pastikan Wifi pada Tab menyala (berwana biru)</li>
+                    <li>Pastikan Wifi terhubung dengan jaringan Yijak-Prolt3a</li>
+                    <li>Tunggu hingga jaringan kembali stabil</li>
+                </ol>
+                Silahkan menghubungi ICTM jika poin 1-3 sudah dilakukan namun tidak kunjung tersambung
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" style="display: none;" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <span class="col-12 text-center">
+                    <button type="button" disabled class="btn btn-primary">Mencoba terubung kembali...</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function calltry() {
+        var check_con = "connect";
+        $.ajax({
+            url: 'insidecheck/connection_check.php',
+            type: 'POST',
+            data: {
+                "check_con": check_con
+            },
+            success: function(response) {
+                clearInterval();
+                successconnection();
+            },
+        });
+    }
+
+    function lostconnection() {
+        $('#lostmodal').modal('toggle');
+        setInterval(calltry, 1000);
+    }
+
+    function successconnection() {
+        $('#lostmodal').modal('hide');
+    }
+</script>
+<!-- modal untuk cek koneksi -->
 <table class="table table-bordered">
     <thead style="text-align: center;">
         <th>No</th>
@@ -158,6 +213,18 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
         }
         ?>
         <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
             function radiocek(id, ngcode, item) {
                 console.log(id)
                 if ($('#' + id).is(':checked')) {
@@ -172,6 +239,7 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
                 var serialnumber = $('#serialnumber').val();
                 var res = $('#' + id).val();
                 var code = $('#' + item).val();
+
                 $.ajax({
                     url: 'insidecheck/data.php',
                     type: 'POST',
@@ -182,7 +250,13 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
                     },
                     success: function(response) {
                         console.log(response);
-
+                    },
+                    error: function() {
+                        // Toast.fire({
+                        //     icon: 'error',
+                        //     title: 'Jaringan terputus!'
+                        // });
+                        lostconnection()
                     }
                 });
             }
@@ -203,6 +277,12 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
                     },
                     success: function(response) {
                         console.log(response);
+                    },
+                    error: function() {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Jaringan terputus!'
+                        });
                     }
                 });
             }
