@@ -89,23 +89,20 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
 </table>
 <!-- stamp -->
 
-<!-- formulir cek inside -->
 <!-- modal untuk cek koneksi -->
-<!-- Button trigger modal -->
-
-<!-- Modal -->
 <div class="modal fade" id="lostmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="col-12 modal-title fs-5 text-center" id="staticBackdropLabel">Koneksi Terputus!</h1>
+                <h1 class="col-12 modal-title fs-5 text-center" style="color: red;" id="staticBackdropLabel"><img src="<?= base_url('_assets/production/gif/heart.gif') ?>" width="100px"> Koneksi Terputus! <img src="<?= base_url('_assets/production/gif/heart.gif') ?>" width="100px"></h1>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="font-size: 15px; ">
                 Yang harus dilakukan:
                 <ol>
                     <li>Pastikan Wifi pada Tab menyala (berwana biru)</li>
                     <li>Pastikan Wifi terhubung dengan jaringan Yijak-Prolt3a</li>
                     <li>Tunggu hingga jaringan kembali stabil</li>
+                    <li>Jika sudah terhubung kembali, ulangi kegiatan terakhir anda pada sistem</li>
                 </ol>
                 Silahkan menghubungi ICTM jika poin 1-3 sudah dilakukan namun tidak kunjung tersambung
             </div>
@@ -128,7 +125,6 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
                 "check_con": check_con
             },
             success: function(response) {
-                clearInterval();
                 successconnection();
             },
         });
@@ -140,10 +136,13 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
     }
 
     function successconnection() {
+        clearInterval();
         $('#lostmodal').modal('hide');
     }
 </script>
 <!-- modal untuk cek koneksi -->
+
+<!-- formulir cek inside -->
 <table class="table table-bordered">
     <thead style="text-align: center;">
         <th>No</th>
@@ -213,18 +212,6 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
         }
         ?>
         <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
             function radiocek(id, ngcode, item) {
                 console.log(id)
                 if ($('#' + id).is(':checked')) {
@@ -252,10 +239,6 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
                         console.log(response);
                     },
                     error: function() {
-                        // Toast.fire({
-                        //     icon: 'error',
-                        //     title: 'Jaringan terputus!'
-                        // });
                         lostconnection()
                     }
                 });
@@ -279,10 +262,7 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
                         console.log(response);
                     },
                     error: function() {
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'Jaringan terputus!'
-                        });
+                        lostconnection()
                     }
                 });
             }

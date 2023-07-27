@@ -48,6 +48,7 @@ if ($data2['c_inside_pic'] != '') {
 <script src="../source/dropdown_search/jquery-3.4.1.js" crossorigin="anonymous"></script>
 <script src="../source/dropdown_search/select2.min.js"></script>
 <script src="../source/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<script src="<?= base_url('_bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 
 <!-- judul pagedata -->
 <hr>
@@ -129,6 +130,59 @@ if ($data2['c_inside_pic'] != '') {
 </table>
 <!-- stamp -->
 
+<!-- modal untuk cek koneksi -->
+<div class="modal fade" id="lostmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="col-12 modal-title fs-5 text-center" style="color: red;" id="staticBackdropLabel"><img src="<?= base_url('_assets/production/gif/heart.gif') ?>" width="100px"> Koneksi Terputus! <img src="<?= base_url('_assets/production/gif/heart.gif') ?>" width="100px"></h1>
+            </div>
+            <div class="modal-body">
+                Yang harus dilakukan:
+                <ol>
+                    <li>Pastikan Wifi pada Tab menyala (berwana biru)</li>
+                    <li>Pastikan Wifi terhubung dengan jaringan Yijak-Prolt3a</li>
+                    <li>Tunggu hingga jaringan kembali stabil</li>
+                    <li>Jika sudah terhubung kembali, ulangi kegiatan terakhir anda pada sistem</li>
+                </ol>
+                Silahkan menghubungi ICTM jika poin 1-3 sudah dilakukan namun tidak kunjung tersambung
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" style="display: none;" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <span class="col-12 text-center">
+                    <button type="button" disabled class="btn btn-primary">Mencoba terubung kembali...</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function calltry() {
+        var check_con = "connect";
+        $.ajax({
+            url: 'insidecheck/connection_check.php',
+            type: 'POST',
+            data: {
+                "check_con": check_con
+            },
+            success: function(response) {
+                successconnection();
+            },
+        });
+    }
+
+    function lostconnection() {
+        $('#lostmodal').modal('toggle');
+        setInterval(calltry, 1000);
+    }
+
+    function successconnection() {
+        clearInterval();
+        $('#lostmodal').modal('hide');
+    }
+</script>
+<!-- modal untuk cek koneksi -->
+
 <!-- formulir validasi inside -->
 <table class="table table-bordered" style="font-size: larger;">
     <thead style="text-align: center;">
@@ -188,7 +242,7 @@ if ($data2['c_inside_pic'] != '') {
                     }
                 ?>
                     <tr>
-                        <td style="font-size: 15px;">- <?= $data3['c_name'] ?> <?= $urutan ?></td>
+                        <td style="font-size: 15px;">- <?= $data3['c_name'] ?></td>
                         <td style="text-align: center;"><input id="cekbok<?= $value ?>" <?= $checklist . " " . $validation_func . " " . $finish_inside_func ?> onchange="cekbok(this.id, '<?= $data['c_code_incheck'] ?>')" value="<?= $value ?>" type="checkbox" style="transform: scale(2);">
 
                         </td>
@@ -235,6 +289,9 @@ if ($data2['c_inside_pic'] != '') {
                 },
                 success: function(response) {
                     $('#note').html(response);
+                },
+                error: function() {
+                    lostconnection()
                 }
             });
         })
@@ -263,7 +320,6 @@ if ($data2['c_inside_pic'] != '') {
                     } else {
                         var ngcode = 'kosong';
                     }
-
                     data_ng.push(ngcode);
                 }
 
@@ -277,6 +333,9 @@ if ($data2['c_inside_pic'] != '') {
                     },
                     success: function(response) {
                         console.log(response);
+                    },
+                    error: function() {
+                        lostconnection()
                     }
                 });
             }
@@ -386,6 +445,9 @@ if ($data2['c_inside_pic'] != '') {
                                     $('#icon-spinner').hide();
                                 }
 
+                            },
+                            error: function() {
+                                lostconnection()
                             }
                         });
                     }
