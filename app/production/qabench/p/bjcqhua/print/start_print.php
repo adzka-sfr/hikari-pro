@@ -104,7 +104,7 @@ for ($a = 0; $a < $qty; $a++) {
 
     // echo $no_urut . "</br>";
     $sqlprint = mysqli_query($connect_pro, "INSERT INTO qa_bench SET c_gmc = '$gmc', c_serialbench = '$c_serialbench', c_name = '$namabench', c_created = '$c_created'");
-
+    // $printer = 'smb://Adzka/POS801';
     try {
         $connector = new WindowsPrintConnector("smb://Adzka/POS801");
         $printer = new Printer($connector);

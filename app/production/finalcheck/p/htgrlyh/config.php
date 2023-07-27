@@ -36,4 +36,15 @@ $rolkar = $_SESSION['role'];
 $depkar = $_SESSION['dept'];
 $jabkar = $_SESSION['jabatan'];
 
+// $_SESSION['base_url'] = "https://172.17.192.131/hikari-pro";
+// function base_url($url = null)
+// {
+// 	$base_url = "https://172.17.192.131/hikari-pro";
+// 	// $base_url = "https://hikari.local/hikari";
+// 	if ($url != null) {
+// 		return $base_url . "/" . $url;
+// 	} else {
+// 		return $base_url;
+// 	}
+// }
 # =========================================================================== #

@@ -131,6 +131,15 @@
 <!-- untuk aksi setelah acard terisi -->
 <script>
     $(document).ready(function() {
+        // untuk mengambil data dashboard
+        $.ajax({
+            url: "insidecheck/dashboard.php",
+            success: function(data) {
+                $('#pagedashboard').show();
+                $('#pagedashboard').html(data);
+            }
+        });
+
         $('#acard').focus();
         $('#acard').keypress(function(e) {
             if (e.which == 13) {
@@ -192,6 +201,7 @@
                                     type: "POST",
                                     data: dataString,
                                     success: function(data) {
+                                        $('#pagedashboard').hide();
                                         $('#pagedata').show();
                                         $('#pagedata').html(data);
                                     }
@@ -214,6 +224,7 @@
                                     type: "POST",
                                     data: dataString,
                                     success: function(data) {
+                                        $('#pagedashboard').hide();
                                         $('#pagedata').show();
                                         $('#pagedata').html(data);
                                     }
@@ -236,6 +247,7 @@
                                     type: "POST",
                                     data: dataString,
                                     success: function(data) {
+                                        $('#pagedashboard').hide();
                                         $('#pagedata').show();
                                         $('#pagedata').html(data);
                                     }
@@ -278,6 +290,7 @@
             $('#clearacard').hide();
             $('#scanner').show();
             $('#pagedata').hide();
+            $('#pagedashboard').show();
             $('#acard').attr("readonly", false);
             $('#scanner').attr("disabled", false);
         })
@@ -290,6 +303,11 @@
         <div style="display: none;" id="pagedata"></div>
     </div>
 </div>
+<!-- <div class="row">
+    <div class="col-12">
+        <div style="display: none;" id="pagedashboard"></div>
+    </div>
+</div> -->
 
 <!-- untuk menampilkan page data -->
 <script>
