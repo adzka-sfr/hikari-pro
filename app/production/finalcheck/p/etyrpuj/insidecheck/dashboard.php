@@ -12,7 +12,13 @@ require('../config.php');
 </div>
 <div class="row">
     <div class="col-12">
-        <b>Total : 15 piano</b>
+        <?php
+        $hari_ini = date('Y-m-d', strtotime($now));
+        $q1 = mysqli_query($connect_pro, "SELECT COUNT(a.c_serialnumber) as total FROM finalcheck_pic a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber WHERE a.c_inside = '$_SESSION[nama]' AND b.c_inside_o LIKE '$hari_ini%' ");
+        $d1 = mysqli_fetch_array($q1);
+        $total_piano = $d1['total'];
+        ?>
+        <h6>Total : <?= $total_piano ?> piano</b>
     </div>
 </div>
 <div class="row">
@@ -21,22 +27,51 @@ require('../config.php');
             <thead style="text-align: center;">
                 <th style="width: 5%;">No</th>
                 <th>No Seri</th>
-                <th>NG</th>
-                <th>OK</th>
+                <th style="width: 35%;">NG</th>
+                <th style="width: 35%;">OK</th>
             </thead>
+            <?php
+            ?>
             <tbody style="text-align: center;">
-                <tr>
-                    <td>1</td>
-                    <td>J7638237</td>
-                    <td>23-09-2023 12:20 AM</td>
-                    <td>23-09-2023 12:50 AM</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>J7638237</td>
-                    <td>-</td>
-                    <td>23-09-2023 12:50 AM</td>
-                </tr>
+                <?php
+                if ($total_piano == 0) {
+                ?>
+                    <tr>
+                        <td colspan="4">No Data</td>
+                    </tr>
+                    <?php
+                } else {
+                    $no = 0;
+                    $q2 = mysqli_query($connect_pro, "SELECT a.c_serialnumber FROM finalcheck_pic a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber WHERE a.c_inside = '$_SESSION[nama]' AND b.c_inside_o LIKE '$hari_ini%'");
+                    while ($d2 = mysqli_fetch_array($q2)) {
+                        $no++;
+
+                        // get ng date
+                        $q3 = mysqli_query($connect_pro, "SELECT c_result_date FROM finalcheck_inside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_result = 'NG'");
+                        $d3 = mysqli_fetch_array($q3);
+
+                        // get ok date
+                        $q4 = mysqli_query($connect_pro, "SELECT c_repair_inside_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_serialnumber]'");
+                        $d4 = mysqli_fetch_array($q4);
+                        $ok_date = date('Y-m-d h:i A', strtotime($d4['c_repair_inside_o']));
+
+                        if (empty($d3['c_result_date'])) {
+                            $ng_date = '-';
+                        } else {
+                            $ng_date = $d3['c_result_date'];
+                            $ng_date = date('Y-m-d h:i A', strtotime($ng_date));
+                        }
+                    ?>
+                        <tr>
+                            <td><?= $no ?></td>
+                            <td><?= $d2['c_serialnumber'] ?></td>
+                            <td><?= $ng_date ?></td>
+                            <td><?= $ok_date ?></td>
+                        </tr>
+                <?php
+                    }
+                }
+                ?>
             </tbody>
         </table>
     </div>

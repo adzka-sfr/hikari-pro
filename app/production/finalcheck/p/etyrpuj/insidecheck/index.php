@@ -303,11 +303,11 @@
         <div style="display: none;" id="pagedata"></div>
     </div>
 </div>
-<!-- <div class="row">
+<div class="row">
     <div class="col-12">
         <div style="display: none;" id="pagedashboard"></div>
     </div>
-</div> -->
+</div>
 
 <!-- untuk menampilkan page data -->
 <script>
