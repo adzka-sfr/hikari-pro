@@ -12,7 +12,7 @@ require('../config.php');
 </div>
 <div class="row">
     <div class="col-12">
-        <b>Total : 20 piano</b>
+        <b>Total : 15 piano</b>
     </div>
 </div>
 <div class="row">
