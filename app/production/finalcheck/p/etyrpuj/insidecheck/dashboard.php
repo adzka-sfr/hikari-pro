@@ -14,6 +14,7 @@ require('../config.php');
     <div class="col-12">
         <?php
         $hari_ini = date('Y-m-d', strtotime($now));
+        // echo $hari_ini;
         $q1 = mysqli_query($connect_pro, "SELECT COUNT(a.c_serialnumber) as total FROM finalcheck_pic a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber WHERE a.c_inside = '$_SESSION[nama]' AND b.c_inside_o LIKE '$hari_ini%' ");
         $d1 = mysqli_fetch_array($q1);
         $total_piano = $d1['total'];
@@ -53,7 +54,11 @@ require('../config.php');
                         // get ok date
                         $q4 = mysqli_query($connect_pro, "SELECT c_repair_inside_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_serialnumber]'");
                         $d4 = mysqli_fetch_array($q4);
-                        $ok_date = date('Y-m-d h:i A', strtotime($d4['c_repair_inside_o']));
+                        if (empty($d4['c_repair_inside_o'])) {
+                            $ok_date = "Proses repair";
+                        } else {
+                            $ok_date = date('Y-m-d h:i A', strtotime($d4['c_repair_inside_o']));
+                        }
 
                         if (empty($d3['c_result_date'])) {
                             $ng_date = '-';

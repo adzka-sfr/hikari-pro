@@ -290,9 +290,15 @@
             $('#clearacard').hide();
             $('#scanner').show();
             $('#pagedata').hide();
-            $('#pagedashboard').show();
             $('#acard').attr("readonly", false);
             $('#scanner').attr("disabled", false);
+            $.ajax({
+                url: "insidecheck/dashboard.php",
+                success: function(data) {
+                    $('#pagedashboard').show();
+                    $('#pagedashboard').html(data);
+                }
+            });
         })
     });
 </script>
