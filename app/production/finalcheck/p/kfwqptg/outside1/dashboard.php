@@ -66,7 +66,7 @@ require('../config.php');
                             if (empty($d6['c_resultsatu_date'])) {
                                 $ng_completeness = '-';
                             } else {
-                                $ng_completeness = $d6['c_resultsatu_date'];
+                                $ng_completeness = date('h:i A', strtotime($d6['c_resultsatu_date']));
                             }
 
                             // get ng date outside
@@ -102,7 +102,7 @@ require('../config.php');
                                 $d8 = mysqli_fetch_array($q8);
                                 $ok_completeness = date('h:i A', strtotime($d8['c_completenesssatu_o']));
                             } else {
-                                $q8 = mysqli_query($connect_pro, "SELECT c_repair_outsidesatu_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_Serialnumber]'");
+                                $q8 = mysqli_query($connect_pro, "SELECT c_repair_outsidesatu_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_serialnumber]'");
                                 $d8 = mysqli_fetch_array($q8);
                                 if (empty($d8['c_repair_outsidesatu_o'])) {
                                     $ok_completeness = 'Proses repair';
@@ -128,7 +128,7 @@ require('../config.php');
                             if (empty($d6['c_resultsatu_date'])) {
                                 $ng_completeness = '-';
                             } else {
-                                $ng_completeness = $d6['c_resultsatu_date'];
+                                $ng_completeness = date('h:i A', strtotime($d6['c_resultsatu_date']));
                             }
 
                             // get ng date outside
