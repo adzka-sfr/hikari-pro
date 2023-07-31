@@ -7,7 +7,7 @@ require('../config.php');
 <script src="<?= base_url('_bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <div class="row">
     <div class="col-12 mt-3">
-        <h5>Hasil hari ini, <?= date('d M', strtotime($now)) ?> (<?= $_SESSION['nama'] ?>)</h5>
+        <h5>Hasil <b><?= $_SESSION['nama'] ?></b> hari ini, <b><?= date('d-m-Y', strtotime($now)) ?></b></h5>
     </div>
 </div>
 <div class="row">
@@ -56,14 +56,14 @@ require('../config.php');
                         if (empty($d4['c_repair_inside_o'])) {
                             $ok_date = "Proses repair";
                         } else {
-                            $ok_date = date('Y-m-d h:i A', strtotime($d4['c_repair_inside_o']));
+                            $ok_date = date('h:i A', strtotime($d4['c_repair_inside_o']));
                         }
 
                         if (empty($d3['c_result_date'])) {
                             $ng_date = '-';
                         } else {
                             $ng_date = $d3['c_result_date'];
-                            $ng_date = date('Y-m-d h:i A', strtotime($ng_date));
+                            $ng_date = date('h:i A', strtotime($ng_date));
                         }
                     ?>
                         <tr>
