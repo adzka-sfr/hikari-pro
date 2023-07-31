@@ -14,7 +14,6 @@ require('../config.php');
     <div class="col-12">
         <?php
         $hari_ini = date('Y-m-d', strtotime($now));
-        // echo $hari_ini;
         $q1 = mysqli_query($connect_pro, "SELECT COUNT(a.c_serialnumber) as total FROM finalcheck_pic a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber WHERE a.c_inside = '$_SESSION[nama]' AND b.c_inside_o LIKE '$hari_ini%' ");
         $d1 = mysqli_fetch_array($q1);
         $total_piano = $d1['total'];
