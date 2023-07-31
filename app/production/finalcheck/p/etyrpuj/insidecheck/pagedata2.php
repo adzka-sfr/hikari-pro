@@ -24,7 +24,7 @@ if ($data1['ng_date'] != '') {
     $ng_date = date('d-m-Y h:i A', strtotime($data1['ng_date']));
 }
 
-// [SELECT : finalcheck_repairtime, finalcheck_pic JOIN by c_serialnumber  ] 
+// [SELECT : finalcheck_repairtime, finalcheck_pic JOIN by c_serialnumber  ]
 // get tanggal OK -> c_repair_inside_o || finalcheck_repairtime
 // get pic inside check -> c_inside || finalcheck_pic
 // select a.c_repair_inside_o , b.c_inside  from finalcheck_repairtime a inner join finalcheck_pic b on a.c_serialnumber = b.c_serialnumber where b.c_serialnumber = 'J40505958'
@@ -137,7 +137,7 @@ if ($data2['c_inside_pic'] != '') {
             <div class="modal-header">
                 <h1 class="col-12 modal-title fs-5 text-center" style="color: red;" id="staticBackdropLabel"><img src="<?= base_url('_assets/production/gif/heart.gif') ?>" width="100px"> Koneksi Terputus! <img src="<?= base_url('_assets/production/gif/heart.gif') ?>" width="100px"></h1>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="font-size: 15px; ">
                 Yang harus dilakukan:
                 <ol>
                     <li>Pastikan Wifi pada Tab menyala (berwana biru)</li>
@@ -160,7 +160,7 @@ if ($data2['c_inside_pic'] != '') {
     function calltry() {
         var check_con = "connect";
         $.ajax({
-            url: 'insidecheck/connection_check.php',
+            url: '../source/connection_check.php',
             type: 'POST',
             data: {
                 "check_con": check_con

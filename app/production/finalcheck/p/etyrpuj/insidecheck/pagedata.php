@@ -13,7 +13,7 @@ $pianoname = isset($_POST['pianoname']) ? $_POST['pianoname'] : '';
 // get tanggal register
 $q1 = mysqli_query($connect_pro, "SELECT c_register FROM finalcheck_timestamp WHERE c_serialnumber = '$pianoserial'");
 $d1 = mysqli_fetch_array($q1);
-$register_date = date('l, d M Y  c', strtotime($d1['c_register']));
+$register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
 ?>
 
 <script src="../source/dropdown_search/jquery-3.4.1.js" crossorigin="anonymous"></script>
@@ -119,7 +119,7 @@ $register_date = date('l, d M Y  c', strtotime($d1['c_register']));
     function calltry() {
         var check_con = "connect";
         $.ajax({
-            url: 'insidecheck/connection_check.php',
+            url: '../source/connection_check.php',
             type: 'POST',
             data: {
                 "check_con": check_con
