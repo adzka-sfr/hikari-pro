@@ -12,7 +12,7 @@ $lock = 0;
 $sql = mysqli_query($connect_pro, "SELECT * FROM finalcheck_fetch_inside WHERE c_serialnumber = '$serialnumber'");
 while ($data = mysqli_fetch_array($sql)) {
     $lock++;
-    $sql1 = mysqli_query($connect_pro, "INSERT INTO finalcheck_inside SET 
+    $sql1 = mysqli_query($connect_pro, "INSERT INTO finalcheck_inside SET
     c_serialnumber = '$data[c_serialnumber]',
      c_code_incheck = '$data[c_code_incheck]',
      c_code_ng = '$data[c_code_ng]',
