@@ -14,7 +14,7 @@ require('../config.php');
     <div class="col-12">
         <?php
         $hari_ini = date('Y-m-d', strtotime($now));
-        $q1 = mysqli_query($connect_pro, "SELECT COUNT(a.c_serialnumber) as total FROM finalcheck_pic a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber WHERE a.c_outsidesatu = '$_SESSION[nama]' AND b.c_outsidesatu_o LIKE '$hari_ini%' ");
+        $q1 = mysqli_query($connect_pro, "SELECT COUNT(a.c_serialnumber) as total FROM finalcheck_pic a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber WHERE a.c_outsidedua = '$_SESSION[nama]' AND b.c_outsidedua_o LIKE '$hari_ini%' ");
         $d1 = mysqli_fetch_array($q1);
         $total_piano = $d1['total'];
         ?>
@@ -50,7 +50,7 @@ require('../config.php');
                     <?php
                 } else {
                     $no = 0;
-                    $q2 = mysqli_query($connect_pro, "SELECT a.c_serialnumber FROM finalcheck_pic a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber WHERE a.c_outsidesatu = '$_SESSION[nama]' AND b.c_outsidesatu_o LIKE '$hari_ini%'");
+                    $q2 = mysqli_query($connect_pro, "SELECT a.c_serialnumber FROM finalcheck_pic a INNER JOIN finalcheck_timestamp b ON a.c_serialnumber = b.c_serialnumber WHERE a.c_outsidedua = '$_SESSION[nama]' AND b.c_outsidedua_o LIKE '$hari_ini%'");
                     while ($d2 = mysqli_fetch_array($q2)) {
                         $no++;
                         // cek apakah kode yang di scan sudah di close statusnya alias sudah selesai sampai cek 3
@@ -60,34 +60,34 @@ require('../config.php');
                         if ($d5['total'] == 0) {
                             // get ng date from fetch table
                             // get ng date completeness
-                            $q6 = mysqli_query($connect_pro, "SELECT c_resultsatu_date FROM finalcheck_fetch_completeness WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_resultsatu = 'N'");
+                            $q6 = mysqli_query($connect_pro, "SELECT c_resultdua_date FROM finalcheck_fetch_completeness WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_resultdua = 'N'");
                             $d6 = mysqli_fetch_array($q6);
 
-                            if (empty($d6['c_resultsatu_date'])) {
+                            if (empty($d6['c_resultdua_date'])) {
                                 $ng_completeness = '-';
                             } else {
-                                $ng_completeness = date('h:i A', strtotime($d6['c_resultsatu_date']));
+                                $ng_completeness = date('h:i A', strtotime($d6['c_resultdua_date']));
                             }
 
                             // get ng date outside
                             // cek apakah ada ng
-                            $q9 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) AS total FROM finalcheck_fetch_outside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_process = 'oc1'");
+                            $q9 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) AS total FROM finalcheck_fetch_outside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_process = 'oc2'");
                             $d9 = mysqli_fetch_array($q9);
                             if ($d9['total'] == 0) {
-                                $q10 = mysqli_query($connect_pro, "SELECT c_outsidesatu_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
+                                $q10 = mysqli_query($connect_pro, "SELECT c_outsidedua_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
                                 $d10 = mysqli_fetch_array($q10);
-                                if (empty($d10['c_outsidesatu_o'])) {
+                                if (empty($d10['c_outsidedua_o'])) {
                                     $ng_outside = 'Masih check';
                                 } else {
                                     $ng_outside = '-';
                                 }
                             } else {
-                                $q10 = mysqli_query($connect_pro, "SELECT c_outsidesatu_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
+                                $q10 = mysqli_query($connect_pro, "SELECT c_outsidedua_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
                                 $d10 = mysqli_fetch_array($q10);
-                                if (empty($d10['c_outsidesatu_o'])) {
+                                if (empty($d10['c_outsidedua_o'])) {
                                     $ng_outside = 'Masih check';
                                 } else {
-                                    $q11 = mysqli_query($connect_pro, "SELECT MAX(c_result_date) as maks FROM finalcheck_fetch_outside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_process = 'oc1'");
+                                    $q11 = mysqli_query($connect_pro, "SELECT MAX(c_result_date) as maks FROM finalcheck_fetch_outside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_process = 'oc2'");
                                     $d11 = mysqli_fetch_array($q11);
                                     $ng_outside = date('h:i A', strtotime($d11['maks']));
                                 }
@@ -95,61 +95,61 @@ require('../config.php');
 
                             // get ok date completeness
                             // cek apakah terdapat ng pada completeness
-                            $q7 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_fetch_completeness WHERE c_Serialnumber = '$d2[c_serialnumber]' AND c_resultsatu = 'N'");
+                            $q7 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_fetch_completeness WHERE c_Serialnumber = '$d2[c_serialnumber]' AND c_resultdua = 'N'");
                             $d7 = mysqli_fetch_array($q7);
                             if ($d7['total'] == 0) {
-                                $q8 = mysqli_query($connect_pro, "SELECT c_completenesssatu_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
+                                $q8 = mysqli_query($connect_pro, "SELECT c_completenessdua_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
                                 $d8 = mysqli_fetch_array($q8);
-                                $ok_completeness = date('h:i A', strtotime($d8['c_completenesssatu_o']));
+                                $ok_completeness = date('h:i A', strtotime($d8['c_completenessdua_o']));
                             } else {
-                                $q8 = mysqli_query($connect_pro, "SELECT c_repair_outsidesatu_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_serialnumber]'");
+                                $q8 = mysqli_query($connect_pro, "SELECT c_repair_outsidedua_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_serialnumber]'");
                                 $d8 = mysqli_fetch_array($q8);
-                                if (empty($d8['c_repair_outsidesatu_o'])) {
+                                if (empty($d8['c_repair_outsidedua_o'])) {
                                     $ok_completeness = 'Proses repair';
                                 } else {
-                                    $ok_completeness = date('h:i A', strtotime($d8['c_repair_outsidesatu_o']));
+                                    $ok_completeness = date('h:i A', strtotime($d8['c_repair_outsidedua_o']));
                                 }
                             }
 
                             // get ok date outside
-                            $q12 = mysqli_query($connect_pro, "SELECT c_repair_outsidesatu_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_serialnumber]'");
+                            $q12 = mysqli_query($connect_pro, "SELECT c_repair_outsidedua_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_serialnumber]'");
                             $d12 = mysqli_fetch_array($q12);
-                            if (empty($d12['c_repair_outsidesatu_o'])) {
+                            if (empty($d12['c_repair_outsidedua_o'])) {
                                 $ok_outside = 'Proses repair';
                             } else {
-                                $ok_outside = date('h:i A', strtotime($d12['c_repair_outsidesatu_o']));
+                                $ok_outside = date('h:i A', strtotime($d12['c_repair_outsidedua_o']));
                             }
                         } else {
                             // get ng date from main table
                             // get ng date completeness
-                            $q6 = mysqli_query($connect_pro, "SELECT c_resultsatu_date FROM finalcheck_completeness WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_resultsatu = 'N'");
+                            $q6 = mysqli_query($connect_pro, "SELECT c_resultdua_date FROM finalcheck_completeness WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_resultdua = 'N'");
                             $d6 = mysqli_fetch_array($q6);
 
-                            if (empty($d6['c_resultsatu_date'])) {
+                            if (empty($d6['c_resultdua_date'])) {
                                 $ng_completeness = '-';
                             } else {
-                                $ng_completeness = date('h:i A', strtotime($d6['c_resultsatu_date']));
+                                $ng_completeness = date('h:i A', strtotime($d6['c_resultdua_date']));
                             }
 
                             // get ng date outside
                             // cek apakah ada ng
-                            $q9 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) AS total FROM finalcheck_outside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_process = 'oc1'");
+                            $q9 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) AS total FROM finalcheck_outside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_process = 'oc2'");
                             $d9 = mysqli_fetch_array($q9);
                             if ($d9['total'] == 0) {
-                                $q10 = mysqli_query($connect_pro, "SELECT c_outsidesatu_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
+                                $q10 = mysqli_query($connect_pro, "SELECT c_outsidedua_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
                                 $d10 = mysqli_fetch_array($q10);
-                                if (empty($d10['c_outsidesatu_o'])) {
+                                if (empty($d10['c_outsidedua_o'])) {
                                     $ng_outside = 'Masih check';
                                 } else {
                                     $ng_outside = '-';
                                 }
                             } else {
-                                $q10 = mysqli_query($connect_pro, "SELECT c_outsidesatu_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
+                                $q10 = mysqli_query($connect_pro, "SELECT c_outsidedua_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
                                 $d10 = mysqli_fetch_array($q10);
-                                if (empty($d10['c_outsidesatu_o'])) {
+                                if (empty($d10['c_outsidedua_o'])) {
                                     $ng_outside = 'Masih check';
                                 } else {
-                                    $q11 = mysqli_query($connect_pro, "SELECT MAX(c_result_date) as maks FROM finalcheck_outside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_process = 'oc1'");
+                                    $q11 = mysqli_query($connect_pro, "SELECT MAX(c_result_date) as maks FROM finalcheck_outside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_process = 'oc2'");
                                     $d11 = mysqli_fetch_array($q11);
                                     $ng_outside = date('h:i A', strtotime($d11['maks']));
                                 }
@@ -157,29 +157,29 @@ require('../config.php');
 
                             // get ok date completeness
                             // cek apakah terdapat ng pada completeness
-                            $q7 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_completeness WHERE c_Serialnumber = '$d2[c_serialnumber]' AND c_resultsatu = 'N'");
+                            $q7 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_completeness WHERE c_Serialnumber = '$d2[c_serialnumber]' AND c_resultdua = 'N'");
                             $d7 = mysqli_fetch_array($q7);
                             if ($d7['total'] == 0) {
-                                $q8 = mysqli_query($connect_pro, "SELECT c_completenesssatu_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
+                                $q8 = mysqli_query($connect_pro, "SELECT c_completenessdua_o FROM finalcheck_timestamp WHERE c_serialnumber = '$d2[c_serialnumber]'");
                                 $d8 = mysqli_fetch_array($q8);
-                                $ok_completeness = date('h:i A', strtotime($d8['c_completenesssatu_o']));
+                                $ok_completeness = date('h:i A', strtotime($d8['c_completenessdua_o']));
                             } else {
-                                $q8 = mysqli_query($connect_pro, "SELECT c_repair_outsidesatu_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_Serialnumber]'");
+                                $q8 = mysqli_query($connect_pro, "SELECT c_repair_outsidedua_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_Serialnumber]'");
                                 $d8 = mysqli_fetch_array($q8);
-                                if (empty($d8['c_repair_outsidesatu_o'])) {
+                                if (empty($d8['c_repair_outsidedua_o'])) {
                                     $ok_completeness = 'Proses repair';
                                 } else {
-                                    $ok_completeness = date('h:i A', strtotime($d8['c_repair_outsidesatu_o']));
+                                    $ok_completeness = date('h:i A', strtotime($d8['c_repair_outsidedua_o']));
                                 }
                             }
 
                             // get ok date outside
-                            $q12 = mysqli_query($connect_pro, "SELECT c_repair_outsidesatu_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_serialnumber]'");
+                            $q12 = mysqli_query($connect_pro, "SELECT c_repair_outsidedua_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_serialnumber]'");
                             $d12 = mysqli_fetch_array($q12);
-                            if (empty($d12['c_repair_outsidesatu_o'])) {
+                            if (empty($d12['c_repair_outsidedua_o'])) {
                                 $ok_outside = 'Proses repair';
                             } else {
-                                $ok_outside = date('h:i A', strtotime($d12['c_repair_outsidesatu_o']));
+                                $ok_outside = date('h:i A', strtotime($d12['c_repair_outsidedua_o']));
                             }
                         }
 
