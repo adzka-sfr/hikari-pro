@@ -1,4 +1,50 @@
+<?php require '../../../config.php'; ?>
 <div id="chsti" style="width: 100%;height:300px;"></div>
+
+<?php
+// $now = '2023-07-27';
+// array untuk menyimpan data hasil
+$total_piano = array();
+$total_temuan = array();
+$ratio_ng = array();
+
+$tanggal = date('Y-m-d', strtotime($now));
+$labelbar = date('d M', strtotime($now));
+
+//get jumlah piano
+$q1 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_repairtime WHERE c_repair_inside_o LIKE '$tanggal%'");
+$d1 = mysqli_fetch_array($q1);
+$piano = $d1['total'];
+
+// get jumlah temuan
+$q3 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_inside WHERE c_result = 'NG' AND c_result_date LIKE '$tanggal%'");
+$d3 = mysqli_fetch_array($q3);
+
+if ($d3['total'] == 0) {
+    $temuan = 0;
+    $total_temuan = 0;
+} else {
+    $temuan = 0;
+    $q2 = mysqli_query($connect_pro, "SELECT c_code_ng FROM finalcheck_inside WHERE c_result = 'NG' AND c_result_date LIKE '$tanggal%'");
+    while ($d2 = mysqli_fetch_array($q2)) {
+        $a = explode("/", $d2['c_code_ng']);
+        $b =  count($a);
+        $temuan = $temuan + $b;
+    }
+    $total_temuan = $temuan;
+}
+
+//get Rata-Rata NG
+if ($piano == 0) {
+    $ratio_nge = 0;
+} else {
+    $ratio_nge = $temuan / $piano;
+    $ratio_nge = number_format($ratio_nge, 2, '.', '');
+}
+
+$total_piano = $piano;
+$ratio_ng = $ratio_nge;
+?>
 <script type="text/javascript">
     var chartDom = document.getElementById('chsti');
     var myChart = echarts.init(chartDom);
@@ -6,9 +52,9 @@
 
     option = {
         color: ['#4A94CD', '#E95555', '#FF7400'],
-        title: {
-            text: 'Status Temuan Inside (23 Agustus)'
-        },
+        // title: {
+        //     text: 'Status Temuan Inside ()'
+        // },
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -48,7 +94,7 @@
         },
         xAxis: [{
             type: 'category',
-            data: ['23 agustus'],
+            data: ['<?= $labelbar ?>'],
             axisPointer: {
                 type: 'shadow'
             },
@@ -88,7 +134,7 @@
                     }
                 },
 
-                data: [23]
+                data: [<?= $total_piano ?>]
             },
             {
                 name: 'Jumlah Temuan',
@@ -102,7 +148,7 @@
                         return value + '';
                     }
                 },
-                data: [43]
+                data: [<?= $total_temuan ?>]
             },
             {
                 name: 'Rata-Rata NG',
@@ -116,7 +162,7 @@
                         return value + '';
                     }
                 },
-                data: [10]
+                data: [<?= $ratio_ng ?>]
             }
         ]
     };

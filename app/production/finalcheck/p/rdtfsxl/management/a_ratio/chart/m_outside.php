@@ -3,8 +3,7 @@
 
 <?php
 // untuk judul
-$now = '2023-07-01 00:00:00';
-$year = date('Y', strtotime($now));
+// $now = '2023-07-01';
 
 // untuk mendapatakan jumlah hari pada satu bulan
 $kalenderMasehi = CAL_GREGORIAN;
@@ -64,7 +63,7 @@ $count_ng = count($ratio_ng);
     option = {
         color: ['#4A94CD', '#E95555', '#FF7400'],
         // title: {
-        //     text: 'Status Temuan Inside (<?= $year ?>)'
+        //     text: 'Status Temuan Inside ()'
         // },
         tooltip: {
             trigger: 'axis',

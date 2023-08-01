@@ -3,7 +3,6 @@
 
 <?php
 // untuk judul
-$year = date('Y', strtotime($now));
 
 // array untuk menyimpan data hasil
 $total_piano = array();
@@ -71,7 +70,7 @@ $count_ng = count($ratio_ng);
     option = {
         color: ['#4A94CD', '#E95555', '#FF7400'],
         // title: {
-        //     text: 'Status Temuan Inside (<?= $year ?>)'
+        //     text: 'Status Temuan Inside ()'
         // },
         tooltip: {
             trigger: 'axis',
