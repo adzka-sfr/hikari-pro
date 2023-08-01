@@ -1,4 +1,69 @@
+<?php require '../../../config.php'; ?>
 <div id="chstc" style="width: 100%;height:300px;"></div>
+
+<?php
+// untuk judul
+$now = '2023-07-01 00:00:00';
+$year = date('Y', strtotime($now));
+
+// untuk mendapatakan jumlah hari pada satu bulan
+$kalenderMasehi = CAL_GREGORIAN;
+$bulanSutena = date('m', strtotime($now));
+$tahunGajah = date('Y', strtotime($now));
+$sumOfDay = cal_days_in_month($kalenderMasehi, $bulanSutena, $tahunGajah);
+
+// array untuk menyimpan data hasil
+$total_piano = array();
+$total_temuan = array();
+$ratio_ng = array();
+
+$z = 0;
+
+for ($tgl = 1; $tgl <= $sumOfDay; $tgl++) {
+    if ($tgl < 10) {
+        $tgl = "0" . $tgl;
+    }
+    $tanggal = date('Y-m', strtotime($now));
+    $tanggal = $tanggal . "-" . $tgl;
+
+    //get jumlah piano
+    $q1 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_repairtime WHERE c_repair_outsidetiga_o LIKE '$tanggal%'");
+    $d1 = mysqli_fetch_array($q1);
+    $piano = $d1['total'];
+
+    // get jumlah temuan cek 1
+    $q3 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_completeness WHERE c_resultsatu = 'N' AND c_resultsatu_date LIKE '$tanggal%'");
+    $d3 = mysqli_fetch_array($q3);
+
+    // get jumlah temuan cek 2
+    $q4 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_completeness WHERE c_resultdua = 'N' AND c_resultdua_date LIKE '$tanggal%'");
+    $d4 = mysqli_fetch_array($q4);
+
+    // get jumlah temuan cek 3
+    $q5 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_completeness WHERE c_resultdua = 'N' AND c_resulttiga_date LIKE '$tanggal%'");
+    $d5 = mysqli_fetch_array($q5);
+
+    $temuan = $d3['total'] + $d4['total'] + $d5['total'];
+    $total_temuan[$z] = $temuan;
+
+    //get Rata-Rata NG
+    if ($piano == 0) {
+        $ratio_nge = 0;
+    } else {
+        $ratio_nge = $temuan / $piano;
+        $ratio_nge = number_format($ratio_nge, 2, '.', '');
+    }
+
+    $total_piano[$z] = $piano;
+    $ratio_ng[$z] = $ratio_nge;
+
+    $z++;
+}
+
+$count_piano = count($total_piano);
+$count_temuan = count($total_temuan);
+$count_ng = count($ratio_ng);
+?>
 <script type="text/javascript">
     var chartDom = document.getElementById('chstc');
     var myChart = echarts.init(chartDom);
@@ -6,9 +71,9 @@
 
     option = {
         color: ['#4A94CD', '#E95555', '#FF7400'],
-        title: {
-            text: 'Status Temuan Completeness (Agustus)'
-        },
+        // title: {
+        //     text: 'Status Temuan Inside (<?= $year ?>)'
+        // },
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -48,7 +113,11 @@
         },
         xAxis: [{
             type: 'category',
-            data: ['23 agustus'],
+            data: [<?php
+                    for ($b = 1; $b <= $sumOfDay; $b++) {
+                        echo "'" . $b . "',";
+                    }
+                    ?>],
             axisPointer: {
                 type: 'shadow'
             },
@@ -88,7 +157,11 @@
                     }
                 },
 
-                data: [23]
+                data: [<?php
+                        for ($b = 0; $b < $count_piano; $b++) {
+                            echo $total_piano[$b] . ",";
+                        }
+                        ?>]
             },
             {
                 name: 'Jumlah Temuan',
@@ -102,7 +175,11 @@
                         return value + '';
                     }
                 },
-                data: [43]
+                data: [<?php
+                        for ($b = 0; $b < $count_temuan; $b++) {
+                            echo $total_temuan[$b] . ",";
+                        }
+                        ?>]
             },
             {
                 name: 'Rata-Rata NG',
@@ -116,7 +193,11 @@
                         return value + '';
                     }
                 },
-                data: [10]
+                data: [<?php
+                        for ($b = 0; $b < $count_ng; $b++) {
+                            echo $ratio_ng[$b] . ",";
+                        }
+                        ?>]
             }
         ]
     };
