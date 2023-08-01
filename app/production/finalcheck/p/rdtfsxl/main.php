@@ -1,6 +1,10 @@
-<?php include('../../../../../../_header.php');
-include('../../app_name.php');
+<?php include('../../../../../_header.php');
+include('app_name.php');
+// include('config.php');
 
+// if ($_SESSION['role'] != 'pic in check') {
+//     echo "<script>window.location='" . base_url('dashboard/') . "';</script>";
+// }
 ?>
 <script>
     var el = document.getElementById('overlayBtn');
@@ -9,8 +13,9 @@ include('../../app_name.php');
     }
 </script>
 
-<script src="<?= base_url('_assets/src/add/sweetalert2.all.min.js') ?>"></script>
-<!-- <title>Form NG</title> -->
+<!-- disini sudah menggunakan sweetalert terbaru / sesuai dengan yang ada pada web sweetalert2 -->
+<script src="<?= base_url('_assets/src/add/sweetalert2/dist/sweetalert2.all.min.js') ?>"></script>
+<title><?= $app_name ?></title>
 
 <body class="nav-md footer_fixed">
     <div class="loading" style="background-color:#263238 ;">
@@ -19,7 +24,7 @@ include('../../app_name.php');
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col menu_fixed">
-                <div class="left_col scroll-view" style="padding-bottom: 50px;">
+                <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
                         <a href="<?= base_url('dashboard') ?>" class="site_title" style="padding-left: 15px;"><img src="<?= base_url('_assets/production/images/emblem_hikari_white.png') ?>" alt="logo" style="width: 40px;"> <span><img src="<?= base_url('_assets/production/images/hikari_text_white.png') ?>" alt="piano" style="width: 110px;"></span></a>
                     </div>
@@ -46,17 +51,21 @@ include('../../app_name.php');
                         <div class="menu_section">
                             <h3>Dashboard</h3>
                             <ul class="nav side-menu">
-                                <li <?php if ($_GET['p'] == "dash") {
+                                <li <?php if ($_GET['page'] == "mnar") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=dash"><i class="fa fa-desktop"></i> Ratio</a>
+                                    } ?>><a href="main.php?page=mnar"><i class="fa fa-desktop"></i> Ratio</a>
                                 </li>
-                                <li <?php if ($_GET['p'] == "proc") {
+                            </ul>
+                            <ul class="nav side-menu">
+                                <li <?php if ($_GET['page'] == "mnbp") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=proc"><i class="fa fa-cubes"></i> Process</a>
+                                    } ?>><a href="main.php?page=mnbp"><i class="fa fa-cubes"></i> Process</a>
                                 </li>
-                                <li <?php if ($_GET['p'] == "ngtrend") {
+                            </ul>
+                            <ul class="nav side-menu">
+                                <li <?php if ($_GET['page'] == "mncn") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=ngtrend"><i class="fa fa-signal"></i> NG Trend</a>
+                                    } ?>><a href="main.php?page=mncn"><i class="fa fa-signal"></i> NG Trend</a>
                                 </li>
                             </ul>
                         </div>
@@ -64,23 +73,19 @@ include('../../app_name.php');
                         <div class="menu_section">
                             <h3>Data NG</h3>
                             <ul class="nav side-menu">
-                                <li <?php if ($_GET['p'] == "data") {
+                                <li <?php if ($_GET['page'] == "mnds") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=data"><i class="fa fa-file-text-o"></i> Summary of NG</a>
+                                    } ?>><a href="main.php?page=mnds"><i class="fa fa-file-text-o"></i> Summary of NG</a>
                                 </li>
-                                <!-- <li <?php if ($_GET['p'] == "data2") {
-                                                echo 'class="active"';
-                                            } ?>><a href="main.php?p=data2"><i class="fa fa-gears"></i> Summary by Process</a>
-                                </li> -->
                             </ul>
                         </div>
 
                         <div class="menu_section">
                             <h3>Manage PIC</h3>
                             <ul class="nav side-menu">
-                                <li <?php if ($_GET['p'] == "picp") {
+                                <li <?php if ($_GET['page'] == "mnep") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=picp"><i class="fa fa-unlock-alt"></i>PIC Previlege</a>
+                                    } ?>><a href="main.php?page=mnep"><i class="fa fa-unlock-alt"></i> PIC Previlege</a>
                                 </li>
                             </ul>
                         </div>
@@ -88,25 +93,33 @@ include('../../app_name.php');
                         <div class="menu_section">
                             <h3>Customize Data</h3>
                             <ul class="nav side-menu">
-                                <li <?php if ($_GET['p'] == "ng") {
+                                <li <?php if ($_GET['page'] == "mnfd") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=ng"><i class="fa fa-print"></i>Type of NG</a>
+                                    } ?>><a href="main.php?page=mnfd"><i class="fa fa-pencil-square"></i> Type of NG</a>
                                 </li>
-                                <li <?php if ($_GET['p'] == "cab") {
+                            </ul>
+                            <ul class="nav side-menu">
+                                <li <?php if ($_GET['page'] == "mngd") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=cab"><i class="fa fa-print"></i>List of Cabinet</a>
+                                    } ?>><a href="main.php?page=mngd"><i class="fa fa-pencil-square"></i> List of Cabinet</a>
                                 </li>
-                                <li <?php if ($_GET['p'] == "ip") {
+                            </ul>
+                            <ul class="nav side-menu">
+                                <li <?php if ($_GET['page'] == "mnhd") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=ip"><i class="fa fa-print"></i>Inside Process</a>
+                                    } ?>><a href="main.php?page=mnhd"><i class="fa fa-pencil-square"></i> Inside Process</a>
                                 </li>
-                                <li <?php if ($_GET['p'] == "cp") {
+                            </ul>
+                            <ul class="nav side-menu">
+                                <li <?php if ($_GET['page'] == "mnid") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=cp"><i class="fa fa-print"></i>Completeness Process</a>
+                                    } ?>><a href="main.php?page=mnid"><i class="fa fa-pencil-square"></i> Completeness Process</a>
                                 </li>
-                                <li <?php if ($_GET['p'] == "ap") {
+                            </ul>
+                            <ul class="nav side-menu">
+                                <li <?php if ($_GET['page'] == "mnjd") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=ap"><i class="fa fa-print"></i>Add Piano</a>
+                                    } ?>><a href="main.php?page=mnjd"><i class="fa fa-plus-square"></i> Add Piano</a>
                                 </li>
                             </ul>
                         </div>
@@ -114,9 +127,9 @@ include('../../app_name.php');
                         <div class="menu_section">
                             <h3>Danger Area</h3>
                             <ul class="nav side-menu">
-                                <li <?php if ($_GET['p'] == "reset") {
+                                <li <?php if ($_GET['page'] == "mnkr") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=reset"><i class="fa fa-exclamation-triangle"></i> Reset Serialnumber</a>
+                                    } ?>><a href="main.php?page=mnkr"><i class="fa fa-exclamation-triangle"></i> Reset Serialnumber</a>
                                 </li>
                             </ul>
                         </div>
@@ -124,12 +137,34 @@ include('../../app_name.php');
                         <div class="menu_section">
                             <h3>Print</h3>
                             <ul class="nav side-menu">
-                                <li <?php if ($_GET['p'] == "pdf" or $_GET['p'] == "wkejfgheukj" or $_GET['p'] == "leigjwiroeh") {
+                                <li <?php if ($_GET['page'] == "mnle") {
                                         echo 'class="active"';
-                                    } ?>><a href="main.php?p=pdf"><i class="fa fa-file-pdf-o"></i> Export Check Card</a>
+                                    } ?>><a href="main.php?page=mnle"><i class="fa fa-file-pdf-o"></i> Export Check Card</a>
                                 </li>
                             </ul>
                         </div>
+
+                        <div class="menu_section">
+                            <h3>Help</h3>
+                            <ul class="nav side-menu">
+                                <li <?php if ($_GET['page'] == "help") {
+                                        echo 'class="active"';
+                                    } ?>><a href="main.php?page=help"><i class="fa fa-question-circle"></i> Manual Guide</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- <div class="menu_section">
+                            <h3>Employee</h3>
+                            <ul class="nav side-menu">
+                                <li><a><i class="fa fa-gears"></i> Settings <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#">Setting 1</a></li>
+                                        <li><a href="#l">Setting 2</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div> -->
                     </div>
                     <!-- /sidebar menu -->
 
@@ -197,19 +232,25 @@ include('../../app_name.php');
                 </div>
 
                 <div class="dashboard_graph" style="padding-top: 10px;">
+                    <!-- bar loading -->
+                    <!-- <link rel="stylesheet" href="../source/css/style.css"> -->
                     <?php
 
-                    if (empty($_GET['p'])) {
-                        $_GET['p'] = "dash";
+                    if (empty($_GET['page'])) {
+                        $_GET['page'] = "dashboard";
                     } else {
                         include "content.php";
                     }
                     ?>
 
-                    <div class="separator" style="padding-bottom: 50px;"></div>
+                    <!-- bar loading -->
+                    <!-- <script src="../source/js/script.js"></script> -->
+
 
                 </div>
+
+
             </div>
             <!-- /page content -->
 
-            <?php include('../../../../../../_footer.php'); ?>
+            <?php include('../../../../../_footer.php'); ?>
