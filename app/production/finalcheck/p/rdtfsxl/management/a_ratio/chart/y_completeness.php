@@ -2,8 +2,6 @@
 <div id="chstc" style="width: 100%;height:300px;"></div>
 
 <?php
-// untuk judul
-
 // array untuk menyimpan data hasil
 $total_piano = array();
 $total_temuan = array();

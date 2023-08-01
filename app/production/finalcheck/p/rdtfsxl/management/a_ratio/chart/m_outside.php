@@ -2,9 +2,6 @@
 <div id="chsto" style="width: 100%;height:300px;"></div>
 
 <?php
-// untuk judul
-// $now = '2023-07-01';
-
 // untuk mendapatakan jumlah hari pada satu bulan
 $kalenderMasehi = CAL_GREGORIAN;
 $bulanSutena = date('m', strtotime($now));

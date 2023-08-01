@@ -2,9 +2,6 @@
 <div id="chsto" style="width: 100%;height:300px;"></div>
 
 <?php
-// untuk judul
-// $now = '2023-07-27';
-
 // array untuk menyimpan data hasil
 $total_piano = array();
 $total_temuan = array();
