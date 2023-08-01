@@ -66,6 +66,8 @@
 </script>
 <!-- modal untuk cek koneksi -->
 
+
+
 <!-- tombol untuk berpindah halaman + halaman-->
 <div class="row">
     <div class="col-12">
@@ -76,10 +78,11 @@
 </div>
 <hr style="margin-top: 0px; padding-top: 0px;">
 <div class="row">
-    <div class="col-12">
+    <div class="col-12 mb-3">
         <div id="showpage"></div>
     </div>
 </div>
+<hr>
 <!-- tombol untuk berpindah halaman + halaman -->
 
 <script>

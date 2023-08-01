@@ -2,7 +2,66 @@
 <div id="chsti" style="width: 100%;height:300px;"></div>
 
 <?php
+// untuk judul
 $year = date('Y', strtotime($now));
+
+// array untuk menyimpan data hasil
+$total_piano = array();
+$total_temuan = array();
+$ratio_ng = array();
+
+$z = 0;
+
+for ($bln = 1; $bln <= 12; $bln++) {
+    $total_pianoe = 0;
+    $total_temuane = 0;
+
+    if ($bln < 10) {
+        $bln = "0" . $bln;
+    }
+    $tanggal = date('Y', strtotime($now));
+    $tanggal = $tanggal . "-" . $bln;
+
+    //get jumlah piano
+    $q1 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_repairtime WHERE c_repair_inside_o LIKE '$tanggal%'");
+    $d1 = mysqli_fetch_array($q1);
+    $piano = $d1['total'];
+
+    // get jumlah temuan
+    $q3 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_inside WHERE c_result = 'NG' AND c_result_date LIKE '$tanggal%'");
+    $d3 = mysqli_fetch_array($q3);
+
+    if ($d3['total'] == 0) {
+        $temuan = 0;
+        $total_temuan[$z] = 0;
+    } else {
+        $temuan = 0;
+        $q2 = mysqli_query($connect_pro, "SELECT c_code_ng FROM finalcheck_inside WHERE c_result = 'NG' AND c_result_date LIKE '$tanggal%'");
+        while ($d2 = mysqli_fetch_array($q2)) {
+            $a = explode("/", $d2['c_code_ng']);
+            $b =  count($a);
+            $temuan = $temuan + $b;
+        }
+        $total_temuan[$z] = $temuan;
+    }
+
+    //get Rata-Rata NG
+    if ($piano == 0) {
+        $ratio_nge = 0;
+    } else {
+        $ratio_nge = $temuan / $piano;
+        $ratio_nge = number_format($ratio_nge, 2, '.', '');
+    }
+
+    $total_piano[$z] = $piano;
+    $ratio_ng[$z] = $ratio_nge;
+
+    $z++;
+}
+
+$count_piano = count($total_piano);
+$count_temuan = count($total_temuan);
+$count_ng = count($ratio_ng);
 ?>
 <script type="text/javascript">
     var chartDom = document.getElementById('chsti');
@@ -11,9 +70,9 @@ $year = date('Y', strtotime($now));
 
     option = {
         color: ['#4A94CD', '#E95555', '#FF7400'],
-        title: {
-            text: 'Status Temuan Inside (<?= $year ?>)'
-        },
+        // title: {
+        //     text: 'Status Temuan Inside (<?= $year ?>)'
+        // },
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -93,7 +152,11 @@ $year = date('Y', strtotime($now));
                     }
                 },
 
-                data: [23]
+                data: [<?php
+                        for ($b = 0; $b < $count_piano; $b++) {
+                            echo $total_piano[$b] . ",";
+                        }
+                        ?>]
             },
             {
                 name: 'Jumlah Temuan',
@@ -107,7 +170,11 @@ $year = date('Y', strtotime($now));
                         return value + '';
                     }
                 },
-                data: [43]
+                data: [<?php
+                        for ($b = 0; $b < $count_temuan; $b++) {
+                            echo $total_temuan[$b] . ",";
+                        }
+                        ?>]
             },
             {
                 name: 'Rata-Rata NG',
@@ -121,7 +188,11 @@ $year = date('Y', strtotime($now));
                         return value + '';
                     }
                 },
-                data: [10]
+                data: [<?php
+                        for ($b = 0; $b < $count_ng; $b++) {
+                            echo $ratio_ng[$b] . ",";
+                        }
+                        ?>]
             }
         ]
     };
