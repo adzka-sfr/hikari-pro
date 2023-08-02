@@ -94,6 +94,9 @@
             success: function(data) {
                 // $('#inside').show();
                 $('#showpage').html(data);
+                $('#daily').attr('disabled', true);
+                $('#monthly').attr('disabled', false);
+                $('#yearly').attr('disabled', false);
             },
             error: function() {
                 lostconnection()
@@ -108,6 +111,9 @@
                 success: function(data) {
                     // $('#inside').show();
                     $('#showpage').html(data);
+                    $('#daily').attr('disabled', true);
+                    $('#monthly').attr('disabled', false);
+                    $('#yearly').attr('disabled', false);
                 },
                 error: function() {
                     lostconnection()
@@ -123,6 +129,9 @@
                 success: function(data) {
                     // $('#inside').show();
                     $('#showpage').html(data);
+                    $('#daily').attr('disabled', false);
+                    $('#monthly').attr('disabled', true);
+                    $('#yearly').attr('disabled', false);
                 },
                 error: function() {
                     lostconnection()
@@ -138,6 +147,9 @@
                 success: function(data) {
                     // $('#inside').show();
                     $('#showpage').html(data);
+                    $('#daily').attr('disabled', false);
+                    $('#monthly').attr('disabled', false);
+                    $('#yearly').attr('disabled', true);
                 },
                 error: function() {
                     lostconnection()
