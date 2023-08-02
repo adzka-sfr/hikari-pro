@@ -1,9 +1,6 @@
-<div class="row">
-    <div class="col-12">
-        <h5>NG Trend</h5>
-        <hr>
-    </div>
-</div>
+<?php
+include '../../config.php';
+?>
 <script src="<?= base_url('_assets/src/add/jquery/jquery-3.4.1.js') ?>"></script>
 <script src="<?= base_url('_assets/src/add/datatables_bootstrap5/datatables.js') ?>"></script>
 <!-- <script src="../source/dropdown_search/jquery-3.4.1.js" crossorigin="anonymous"></script> -->
@@ -44,7 +41,7 @@
     function calltry() {
         var check_con = "connect";
         $.ajax({
-            url: '../source/connection_check.php',
+            url: '../../source/connection_check.php',
             type: 'POST',
             data: {
                 "check_con": check_con
@@ -72,9 +69,8 @@
 <!-- tombol untuk berpindah halaman + halaman-->
 <div class="row">
     <div class="col-12">
-        <button class="btn btn-secondary" id="byng" style="width: 150px; margin-bottom: 0px; border-top-left-radius: 10px; border-top-right-radius: 10px;">By NG</button>
-        <button class="btn btn-secondary" id="bycab" style="width: 150px; margin-bottom: 0px; border-top-left-radius: 10px; border-top-right-radius: 10px;">By Cabinet</button>
-        <button class="btn btn-secondary" id="bydept" style="width: 150px; margin-bottom: 0px; border-top-left-radius: 10px; border-top-right-radius: 10px;">By Dept</button>
+        <button class="btn btn-secondary" id="inside" style="width: 150px; margin-bottom: 0px; border-top-left-radius: 10px; border-top-right-radius: 10px;">Inside</button>
+        <button class="btn btn-secondary" id="outside" style="width: 150px; margin-bottom: 0px; border-top-left-radius: 10px; border-top-right-radius: 10px;">Outside</button>
     </div>
 </div>
 <hr style="margin-top: 0px; padding-top: 0px;">
@@ -90,13 +86,13 @@
     $(document).ready(function() {
         // show inside for first
         $.ajax({
-            url: "management/d_summaryng/byng.php",
+            url: "management/d_summaryng/byng/inside.php",
             type: "POST",
             success: function(data) {
                 $('#showpage').html(data);
-                $('#byng').attr('disabled', true);
-                $('#bycab').attr('disabled', false);
-                $('#bydept').attr('disabled', false);
+                // $('#byng').attr('disabled', true);
+                // $('#bycab').attr('disabled', false);
+                // $('#bydept').attr('disabled', false);
             },
             error: function() {
                 lostconnection()
@@ -104,15 +100,15 @@
         });
 
         // get data for inside by button
-        $('#byng').click(function() {
+        $('#inside').click(function() {
             $.ajax({
-                url: "management/d_summaryng/byng.php",
+                url: "management/d_summaryng/byng/inside.php",
                 type: "POST",
                 success: function(data) {
                     $('#showpage').html(data);
-                    $('#byng').attr('disabled', true);
-                    $('#bycab').attr('disabled', false);
-                    $('#bydept').attr('disabled', false);
+                    // $('#byng').attr('disabled', true);
+                    // $('#bycab').attr('disabled', false);
+                    // $('#bydept').attr('disabled', false);
                 },
                 error: function() {
                     lostconnection()
@@ -121,32 +117,15 @@
         })
 
         // get data for outside by button
-        $('#bycab').click(function() {
+        $('#outside').click(function() {
             $.ajax({
-                url: "management/d_summaryng/bycab.php",
+                url: "management/d_summaryng/byng/outside.php",
                 type: "POST",
                 success: function(data) {
                     $('#showpage').html(data);
-                    $('#byng').attr('disabled', false);
-                    $('#bycab').attr('disabled', true);
-                    $('#bydept').attr('disabled', false);
-                },
-                error: function() {
-                    lostconnection()
-                }
-            });
-        })
-
-        // get data for outside by button
-        $('#bydept').click(function() {
-            $.ajax({
-                url: "management/d_summaryng/bydept.php",
-                type: "POST",
-                success: function(data) {
-                    $('#showpage').html(data);
-                    $('#byng').attr('disabled', false);
-                    $('#bycab').attr('disabled', false);
-                    $('#bydept').attr('disabled', true);
+                    // $('#byng').attr('disabled', false);
+                    // $('#bycab').attr('disabled', true);
+                    // $('#bydept').attr('disabled', false);
                 },
                 error: function() {
                     lostconnection()
