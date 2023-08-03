@@ -77,7 +77,7 @@
         <button class="btn btn-secondary" id="bydept" style="width: 150px; margin-bottom: 0px; border-top-left-radius: 10px; border-top-right-radius: 10px;">By Dept</button>
     </div>
 </div>
-<hr style="margin-top: 0px; padding-top: 0px;">
+<hr style="margin-top: 0px; padding-top: 0px; margin-bottom: 2px; padding-bottom: 2px;">
 <div class="row">
     <div class="col-12 mb-3">
         <div id="showpage"></div>

@@ -51,7 +51,7 @@
                         $persen = ($total_ng11 / 1) * 100;
                         $ts = 'bulan lalu 0';
                     } else {
-                        $persen = (($total_ng11 - $total_ng22) / $total_ng22) * 100;
+                        // $persen = (($total_ng11 - $total_ng22) / $total_ng22) * 100;
                         $persen = number_format($persen, 2, '.', '');
                         $ts = 'bulan lalu 1';
                     }

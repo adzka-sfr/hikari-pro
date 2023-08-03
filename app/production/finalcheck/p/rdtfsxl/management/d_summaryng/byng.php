@@ -69,30 +69,48 @@ include '../../config.php';
 <!-- tombol untuk berpindah halaman + halaman-->
 <div class="row">
     <div class="col-12">
-        <button class="btn btn-secondary" id="inside" style="width: 150px; margin-bottom: 0px; border-top-left-radius: 10px; border-top-right-radius: 10px;">Inside</button>
-        <button class="btn btn-secondary" id="outside" style="width: 150px; margin-bottom: 0px; border-top-left-radius: 10px; border-top-right-radius: 10px;">Outside</button>
+        <button class="btn btn-sm btn-secondary" id="insidebyng" style="width: 120px; margin-bottom: 0px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            Inside <div id="loadin" style="display: none;" class="spinner-border spinner-border-sm" role="status"></div>
+        </button>
+        <button class="btn btn-sm btn-secondary" id="outsidebyng" style="width: 120px; margin-bottom: 0px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+        Outside <div id="loadou" style="display: none;" class="spinner-border spinner-border-sm" role="status"></div>
+        </button>
     </div>
 </div>
 <hr style="margin-top: 0px; padding-top: 0px;">
 <div class="row">
     <div class="col-12 mb-3">
-        <div id="showpage"></div>
+        <div id="showpagebyng">
+            <div id="loadingdatang" style="text-align: center; height: 300px; padding-top: 80px;">
+                <div class="row">
+                    <div class="col-12">
+                        <img src="<?= base_url('_assets/production/images/loading_greys.png') ?>" style="animation: rotation 2s infinite linear;  height:50px" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        Loading
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 <hr>
 <!-- tombol untuk berpindah halaman + halaman -->
 
 <script>
     $(document).ready(function() {
+        // $('#loadingdatang').show();
         // show inside for first
         $.ajax({
             url: "management/d_summaryng/byng/inside.php",
             type: "POST",
             success: function(data) {
-                $('#showpage').html(data);
-                // $('#byng').attr('disabled', true);
-                // $('#bycab').attr('disabled', false);
-                // $('#bydept').attr('disabled', false);
+                $('#showpagebyng').html(data);
+                $('#insidebyng').attr('disabled', true);
+                $('#outsidebyng').attr('disabled', false);
             },
             error: function() {
                 lostconnection()
@@ -100,15 +118,16 @@ include '../../config.php';
         });
 
         // get data for inside by button
-        $('#inside').click(function() {
+        $('#insidebyng').click(function() {
+            $('#insidebyng').attr('disabled', true);
+            $('#outsidebyng').attr('disabled', false);
+            $('#loadin').show();
             $.ajax({
                 url: "management/d_summaryng/byng/inside.php",
                 type: "POST",
                 success: function(data) {
-                    $('#showpage').html(data);
-                    // $('#byng').attr('disabled', true);
-                    // $('#bycab').attr('disabled', false);
-                    // $('#bydept').attr('disabled', false);
+                    $('#showpagebyng').html(data);
+                    $('#loadin').hide();
                 },
                 error: function() {
                     lostconnection()
@@ -117,15 +136,16 @@ include '../../config.php';
         })
 
         // get data for outside by button
-        $('#outside').click(function() {
+        $('#outsidebyng').click(function() {
+            $('#insidebyng').attr('disabled', false);
+            $('#outsidebyng').attr('disabled', true);
+            $('#loadou').show();
             $.ajax({
                 url: "management/d_summaryng/byng/outside.php",
                 type: "POST",
                 success: function(data) {
-                    $('#showpage').html(data);
-                    // $('#byng').attr('disabled', false);
-                    // $('#bycab').attr('disabled', true);
-                    // $('#bydept').attr('disabled', false);
+                    $('#showpagebyng').html(data);
+                    $('#loadou').hide();
                 },
                 error: function() {
                     lostconnection()
