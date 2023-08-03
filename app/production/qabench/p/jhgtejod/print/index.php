@@ -23,7 +23,7 @@ if ($bln == '01') {
     $monthcode = 'F';
 } elseif ($bln == '07') {
     $monthcode = 'G';
-} elseif ($bln == '03') {
+} elseif ($bln == '08') {
     $monthcode = 'H';
 } elseif ($bln == '09') {
     $monthcode = 'I';
@@ -121,6 +121,7 @@ if ($bln == '01') {
     <div class="col-4">
         <div class="row">
             <div class="col-12 text-center" style="padding: 0px;;">
+                <input type="hidden" value="<?= $_SESSION['role'] ?>" id="lokasiprint">
                 <button id="print" style="width: 90%; " class="btn btn-lg btn-success">Print <i id="spinner-print" class="fa fa-spin fa-spinner" style="display: none;"></i></button>
             </div>
         </div>
@@ -135,6 +136,7 @@ if ($bln == '01') {
         $('#print').click(function() {
             var bench = $('#gmc').val();
             var qty = $('#qty').val();
+            var lokasiprint = $('#lokasiprint').val();
 
             // cek untuk memastikan semua field terisi
             if (bench == '' && qty == '') {
@@ -172,7 +174,8 @@ if ($bln == '01') {
                             type: 'POST',
                             data: {
                                 "bench": bench,
-                                "qty": qty
+                                "qty": qty,
+                                "lokasiprint": lokasiprint
                             },
                             success: function(response) {
                                 if (response == 'print-berhasil') {
@@ -269,7 +272,7 @@ if (isset($_POST['print'])) {
     }
 
     // INSERT QALOG
-    $sql_qalog = mysqli_query($connect_pro, "INSERT INTO qa_log SET 
+    $sql_qalog = mysqli_query($connect_pro, "INSERT INTO qa_log SET
     c_action = 'print label',
     c_serialbench = '-',
     c_namebench = '$c_name',

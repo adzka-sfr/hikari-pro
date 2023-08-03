@@ -55,7 +55,7 @@ if ($bln == '01') {
     $monthcode = 'F';
 } elseif ($bln == '07') {
     $monthcode = 'G';
-} elseif ($bln == '03') {
+} elseif ($bln == '08') {
     $monthcode = 'H';
 } elseif ($bln == '09') {
     $monthcode = 'I';
@@ -70,6 +70,7 @@ if ($bln == '01') {
 // data lemparan
 $bench = $_POST['bench'];
 $qty = $_POST['qty'];
+$lokasiprint = $_POST['lokasiprint'];
 
 // pecah nama bench dengan gmc
 $gmc = substr($bench, 1, 7);
@@ -104,9 +105,19 @@ for ($a = 0; $a < $qty; $a++) {
 
     // echo $no_urut . "</br>";
     $sqlprint = mysqli_query($connect_pro, "INSERT INTO qa_bench SET c_gmc = '$gmc', c_serialbench = '$c_serialbench', c_name = '$namabench', c_created = '$c_created'");
-    // $printer = 'smb://Adzka/POS801';
+
+    // get user to know which connector to use
+    if ($lokasiprint == 'print label') {
+        $device = "smb://172.17.192.208/POS80rif";
+    } elseif ($lokasiprint == 'packing gp') {
+        $device = "smb://172.17.192.242/POS80";
+    } elseif ($lokasiprint == 'packing up') {
+        $device = "smb://172.17.192.242/POS80";
+    } else {
+        $device = "smb://konektortidakketemu";
+    }
     try {
-        $connector = new WindowsPrintConnector("smb://Adzka/POS801");
+        $connector = new WindowsPrintConnector($device);
         $printer = new Printer($connector);
         $printer->initialize();
         $printer->setJustification(Printer::JUSTIFY_CENTER);
@@ -132,7 +143,7 @@ for ($a = 0; $a < $qty; $a++) {
 }
 
 // insert qalog
-$sql_qalog = mysqli_query($connect_pro, "INSERT INTO qa_log SET 
+$sql_qalog = mysqli_query($connect_pro, "INSERT INTO qa_log SET
     c_action = 'print label',
     c_serialbench = '-',
     c_namebench = '$namabench',
