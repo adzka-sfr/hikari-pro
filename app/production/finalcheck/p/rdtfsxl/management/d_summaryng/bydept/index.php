@@ -23,50 +23,57 @@ include '../../../config.php';
         $bulan1 = date('Y-m', strtotime("-1month", strtotime($now)));
         $bulan2 = date('Y-m', strtotime($now));
 
-        // get data dept inside last month
-        $q2 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_inside WHERE c_code_incheck = '$d1[c_group]' AND c_code_ng LIKE '%$d1[c_code_ng]%' AND c_result_date LIKE '$bulan1%'");
-        $d2 = mysqli_fetch_array($q2);
+        // get data dept inside ga diambil karena masih satu departemen dengan qc
 
-        // get data this month
-        $q3 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_inside WHERE c_code_incheck = '$d1[c_group]' AND c_code_ng LIKE '%$d1[c_code_ng]%' AND c_result_date LIKE '$bulan2%'");
-        $d3 = mysqli_fetch_array($q3);
+        $q3 = mysqli_query($connect_pro, "SELECT DISTINCT c_dept FROM finalcheck_list_ng WHERE c_dept != 'inside'");
+        while ($d3 = mysqli_fetch_array($q3)) {
+            // get data last month
+            $q1 = mysqli_query($connect_pro, "SELECT COUNT(a.c_code_ng) as total FROM finalcheck_outside a INNER JOIN finalcheck_list_ng b ON a.c_code_ng = b.c_code_ng WHERE a.c_result_date LIKE '$bulan1%' AND b.c_dept = '$d3[c_dept]'");
+            $d1 = mysqli_fetch_array($q1);
 
-        // count percentage
-        $bulan_ini = $d3['total'];
-        $bulan_lalu = $d2['total'];
+            // get data this month
+            $q2 = mysqli_query($connect_pro, "SELECT COUNT(a.c_code_ng) as total FROM finalcheck_outside a INNER JOIN finalcheck_list_ng b ON a.c_code_ng = b.c_code_ng WHERE a.c_result_date LIKE '$bulan2%' AND b.c_dept = '$d3[c_dept]'");
+            $d2 = mysqli_fetch_array($q2);
 
-        // if ($bulan_lalu == 0) {
-        //     $persen = ($bulan_ini / 1) * 100;
-        // } else {
-        //     $persen = (($bulan_ini - $bulan_lalu) / $bulan_lalu) * 100;
-        //     $persen = number_format($persen, 2, '.', '');
-        // }
+            // count percentage
+            $bulan_lalu = $d1['total'];
+            $bulan_ini = $d2['total'];
+
+            if ($bulan_lalu == 0) {
+                $persen = ($bulan_ini / 1) * 100;
+            } else {
+                $persen = (($bulan_ini - $bulan_lalu) / $bulan_lalu) * 100;
+                $persen = number_format($persen, 2, '.', '');
+            }
         ?>
-        <tr>
-            <td><?= $d1['c_name'] ?></td>
-            <td style="text-align: center;"><?= $d2['total'] ?></td>
-            <td style="text-align: center;"><?= $d3['total'] ?></td>
-            <td style="text-align: right;">
-                <?= $persen ?>%
-                <sup>
-                    <?php
-                    if ($persen < 0) {
-                    ?>
-                        <img style="height: 10px;" src="<?= base_url('_assets/production/icons/parts/down-green.png') ?>" alt="UP">
-                    <?php
-                    } elseif ($persen > 0) {
-                    ?>
-                        <img style="height: 10px;" src="<?= base_url('_assets/production/icons/parts/up-red.png') ?>" alt="UP">
-                    <?php
-                    } else {
-                    ?>
-                        <img style="height: 10px;" src="<?= base_url('_assets/production/icons/parts/minus.png') ?>" alt="UP">
-                    <?php
-                    }
-                    ?>
-                </sup>
-            </td>
-        </tr>
+            <tr>
+                <td><?= $d3['c_dept'] ?></td>
+                <td style="text-align: center;"><?= $bulan_lalu ?></td>
+                <td style="text-align: center;"><?= $bulan_ini ?></td>
+                <td style="text-align: right;">
+                    <?= $persen ?>%
+                    <sup>
+                        <?php
+                        if ($persen < 0) {
+                        ?>
+                            <img style="height: 10px;" src="<?= base_url('_assets/production/icons/parts/down-green.png') ?>" alt="UP">
+                        <?php
+                        } elseif ($persen > 0) {
+                        ?>
+                            <img style="height: 10px;" src="<?= base_url('_assets/production/icons/parts/up-red.png') ?>" alt="UP">
+                        <?php
+                        } else {
+                        ?>
+                            <img style="height: 10px;" src="<?= base_url('_assets/production/icons/parts/minus.png') ?>" alt="UP">
+                        <?php
+                        }
+                        ?>
+                    </sup>
+                </td>
+            </tr>
+        <?php
+        }
+        ?>
     </tbody>
 </table>
 
