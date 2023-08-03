@@ -16,7 +16,7 @@ include '../../../config.php';
         <th>Jenis NG</th>
         <th style="width: 15%;">Bulan lalu</th>
         <th style="width: 15%;">Bulan ini</th>
-        <th>Status</th>
+        <th>Fluktuasi</th>
     </thead>
     <tbody>
         <?php
