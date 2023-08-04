@@ -1323,49 +1323,6 @@ $type = $data2['c_category'];
                             </td>
                         </tr>
                     </table>
-<<<<<<< HEAD
-                </div>
-            <?php
-            }
-            ?>
-
-
-
-
-
-
-            <div>
-                <label for="signature" class="label">Note:</label>
-                <br>
-                <div style="width: 40%; height: 50px; padding: 10px;" class="border signature">
-                    <ul>
-                        <!-- <li>Ganti Fallboard - Approved by Fatma</li> -->
-                        <?php
-                        $sqlnote = mysqli_query($connect_pro, "SELECT c_outcheck1by, c_outcheck2by, c_outcheck3by, c_notecheck1, c_notecheck2, c_notecheck3 FROM formng_register WHERE c_serialnumber = '$serial'");
-                        $data_n = mysqli_fetch_array($sqlnote);
-
-                        if (!empty($data_n['c_notecheck1'])) {
-                        ?>
-                            <li><?= $data_n['c_notecheck1'] ?> - Approved by <?= $data_n['c_outcheck1by'] ?></li>
-                        <?php
-                        }
-
-                        if (!empty($data_n['c_notecheck2'])) {
-                        ?>
-                            <li><?= $data_n['c_notecheck2'] ?> - Approved by <?= $data_n['c_outcheck2by'] ?></li>
-                        <?php
-                        }
-
-                        if (!empty($data_n['c_notecheck3'])) {
-                        ?>
-                            <li><?= $data_n['c_notecheck3'] ?> - Approved by <?= $data_n['c_outcheck3by'] ?></li>
-                        <?php
-                        }
-
-                        ?>
-                    </ul>
-=======
->>>>>>> fc3b16ce0012cb87b892a2827a0603bf7687efcc
                 </div>
             <?php
             }
