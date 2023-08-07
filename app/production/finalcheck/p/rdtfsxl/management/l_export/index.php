@@ -134,12 +134,16 @@
     </div>
 </div>
 
+<hr class="mt-5">
+
 <script>
     $('#serialnumber').change(function() {
         $('#showdata').hide();
         $('#nodata').hide();
         $('#showdata1').show();
         var serialnumber = $('#serialnumber').val();
+
+        // judul table
         $.ajax({
             url: 'management/l_export/data.php',
             type: 'POST',
@@ -153,9 +157,13 @@
             },
         });
 
+        // check card
         $.ajax({
             url: "management/l_export/export-content/show.php",
             type: "POST",
+            data: {
+                "serialnumber": serialnumber,
+            },
             success: function(data) {
                 $('#checkcard').html(data);
             },

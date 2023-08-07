@@ -965,6 +965,16 @@ if (!isset($_SESSION['id'])) {
       border-radius: 0;
     }
 
+    .checkcard {
+      color: #D23;
+      border: 0.5rem double #D23;
+      transform: rotate(-5deg);
+      font-size: 1rem;
+      -webkit-mask-position: 2rem 3rem;
+      font-family: "Open sans", Helvetica, Arial, sans-serif;
+      border-radius: 0;
+    }
+
     .is-pass {
       color: #0A9928;
       border: 0.5rem double #0A9928;
