@@ -2,6 +2,7 @@
 $connect = new mysqli("localhost", "root", "", "hikari");
 $connect_pro = new mysqli("localhost", "root", "", "hikari_project");
 $connect_log = new mysqli("localhost", "root", "", "hikari_log");
+$connect_add = new mysqli("localhost", "root", "", "db18silent");
 date_default_timezone_set('Asia/Jakarta');
 $now = date('Y-m-d H:i:s');
 session_start();
@@ -25,7 +26,7 @@ if (empty($d1)) {
 
         if ($d3['c_type'] == 'bench') {
             // INSERT QALOG
-            // $sql_qalog = mysqli_query($connect_pro, "INSERT INTO qa_log SET 
+            // $sql_qalog = mysqli_query($connect_pro, "INSERT INTO qa_log SET
             // c_action = 'register',
             // c_serialbench = '-',
             // c_namebench = '$d4[c_name]',
@@ -38,13 +39,13 @@ if (empty($d1)) {
             // c_date = '$now',
             // c_location = '$location'");
 
-            // UPDATE QA BENCH 
+            // UPDATE QA BENCH
             // $q2 = mysqli_query($connect_pro, "SELECT * FROM qa_preregister WHERE c_location = '$location' AND c_gmc = '$d4[c_gmc]'");
             // while ($d2 = mysqli_fetch_array($q2)) {
             $sql = mysqli_query($connect_pro, "UPDATE qa_bench SET c_used = '$now', c_location = '$location' WHERE c_serialbench = '$d3[c_serialnumber]'");
 
             // sql log
-            $sqllog = mysqli_query($connect_pro, "INSERT INTO qa_log SET 
+            $sqllog = mysqli_query($connect_pro, "INSERT INTO qa_log SET
             c_action = 'register',
             c_serialbench = '$d3[c_serialnumber]',
             c_namebench = '$d3[c_name]',
@@ -62,7 +63,7 @@ if (empty($d1)) {
             // }
         } else if ($d3['c_type'] == 'userpackage') {
             // INSERT QALOG
-            // $sql_qalog = mysqli_query($connect_pro, "INSERT INTO qa_log SET 
+            // $sql_qalog = mysqli_query($connect_pro, "INSERT INTO qa_log SET
             // c_action = 'register',
             // c_serialbench = '-',
             // c_namebench = '$d4[c_name]',
@@ -81,7 +82,7 @@ if (empty($d1)) {
             $sql = mysqli_query($connect_pro, "INSERT INTO qa_userp SET c_gmc = '$d3[c_gmc]', c_serialuserp = '$d3[c_serialnumber]', c_name = '$d3[c_name]', c_created = '$now', c_used = '$now', c_location = '$location'");
 
             // sql log
-            $sqllog = mysqli_query($connect_pro, "INSERT INTO qa_log SET 
+            $sqllog = mysqli_query($connect_pro, "INSERT INTO qa_log SET
             c_action = 'register',
             c_serialbench = '-',
             c_namebench = '-',
@@ -101,6 +102,11 @@ if (empty($d1)) {
     }
 
     if ($sql) {
+        $q_del = mysqli_query($connect_pro, "SELECT c_serialnumber FROM qa_preregister WHERE c_type = 'userpackage' AND c_location = '$location'");
+        while ($d_del = mysqli_fetch_array($q_del)) {
+            mysqli_query($connect_add, "DELETE FROM tb_reg_cklist WHERE no_ctrl = '$d_del[c_serialnumber]'");
+        }
+
         mysqli_query($connect_pro, "DELETE FROM qa_preregister WHERE c_location = '$location'");
         echo "register-berhasil";
     } else {

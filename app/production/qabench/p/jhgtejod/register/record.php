@@ -26,7 +26,14 @@ if ($d5['isi'] == 0) {
         $q6 = mysqli_query($connect_add, "SELECT * FROM tb_reg_cklist WHERE no_ctrl = '$serial'");
         $d6 = mysqli_fetch_array($q6);
         if (empty($d6['item_code'])) {
-            $gmc = 'icikiwir';
+            // khusus untuk user package karena kalo udah di resgister di hapus maka cek dulu pada tabel qa_userp
+            $q9 = mysqli_query($connect_pro, "SELECT c_gmc FROM qa_userp WHERE c_serialuserp = '$serial'");
+            $d9 = mysqli_fetch_array($q9);
+            if (empty($d9['c_gmc'])) {
+                $gmc = 'icikiwir';
+            } else {
+                $gmc = $d9['c_gmc'];
+            }
         } else {
             $gmc = $d6['item_code'];
         }
@@ -59,10 +66,27 @@ if ($d5['isi'] == 0) {
         $q6 = mysqli_query($connect_add, "SELECT * FROM tb_reg_cklist WHERE no_ctrl = '$serial'");
         $d6 = mysqli_fetch_array($q6);
 
-        if ($d5['c_gmc'] == $d6['item_code']) {
-            $gmc_set = "boleh";
+        if (empty($d6['no_ctrl'])) {
+            // khusus untuk user package karena kalo udah di resgister di hapus maka cek dulu pada tabel qa_userp
+            $q9 = mysqli_query($connect_pro, "SELECT c_gmc FROM qa_userp WHERE c_serialuserp = '$serial'");
+            $d9 = mysqli_fetch_array($q9);
+            if (empty($d9['c_gmc'])) {
+                $gmc = 'icikiwir';
+            } else {
+                $gmc = $d9['c_gmc'];
+            }
+
+            if ($d5['c_gmc'] == $gmc) {
+                $gmc_set = "boleh";
+            } else {
+                $gmc_set = "tidak-boleh";
+            }
         } else {
-            $gmc_set = "tidak-boleh";
+            if ($d5['c_gmc'] == $d6['item_code']) {
+                $gmc_set = "boleh";
+            } else {
+                $gmc_set = "tidak-boleh";
+            }
         }
     } elseif ($length == 14) {
         $q6 = mysqli_query($connect_pro, "SELECT * FROM qa_bench WHERE c_serialbench = '$serial'");
@@ -88,8 +112,15 @@ if ($length == 10) {
     $d3 = mysqli_fetch_array($q3);
 
     if (empty($d3['no_ctrl'])) {
-        $errlog = mysqli_query($connect_pro, "INSERT INTO qa_errorlog SET c_process = 'Register', c_error = 'Melakukan scan barcode yang tidak dikenali', c_pic = '$c_pic', c_datetime = '$now', c_location = '$location', c_serial = '$serial', c_type = 'Bench / User Package'");
-        echo json_encode(array("status" => "tidak-terdaftar"));
+        $q10 = mysqli_query($connect_pro, "SELECT COUNT(c_serialuserp) as total FROM qa_userp WHERE c_serialuserp = '$serial'");
+        $d10 = mysqli_fetch_array($q10);
+        if ($d10['total'] == 0) {
+            $errlog = mysqli_query($connect_pro, "INSERT INTO qa_errorlog SET c_process = 'Register', c_error = 'Melakukan scan barcode yang tidak dikenali', c_pic = '$c_pic', c_datetime = '$now', c_location = '$location', c_serial = '$serial', c_type = 'Bench / User Package'");
+            echo json_encode(array("status" => "tidak-terdaftar"));
+        } else {
+            $errlog = mysqli_query($connect_pro, "INSERT INTO qa_errorlog SET c_process = 'Register', c_error = 'Melakukan scan barcode yang sudah terdaftar', c_pic = '$c_pic', c_datetime = '$now', c_location = '$location', c_serial = '$serial', c_type = 'Bench / User Package'");
+            echo json_encode(array("status" => "sudah-terdaftar"));
+        }
     } else {
         // cek dulu apakah sudah pernah dipakai user packagenya alias sudah pernah didaftarkan
         $q4 = mysqli_query($connect_pro, "SELECT id, c_packed FROM qa_userp WHERE c_serialuserp = '$serial'");
