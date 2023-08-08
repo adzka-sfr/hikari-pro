@@ -223,16 +223,13 @@ $pianoname = $d0['c_name'];
 </div>
 
 <div id="invoice">
-    <?php
-    $hal = 1;
-    ?>
-    <!-- Halaman 1 -->
+    <!-- Halaman inside 1/2 start -->
     <div class="row pagercik">
         <div class="col-6">
             <img height="20px" src="management/l_export/export-content/image/logo_icon.png" alt="logo YI"> <span class="instansi-text">PT YAMAHA INDONESIA</span>
         </div>
         <div class="col-6" style="text-align: right;">
-            <span class="section-text">[INSIDE CHECK]</span><span class="halaman-text">(<?= $hal++ ?>)</span>
+            <span class="section-text">[INSIDE CHECK]</span><span class="halaman-text">(1/2)</span>
         </div>
     </div>
     <div class="row" style="page-break-after: always;">
@@ -286,14 +283,15 @@ $pianoname = $d0['c_name'];
             </table>
         </div>
     </div>
+    <!-- Halaman inside 1/2 end -->
 
-    <!-- Halaman 2 -->
+    <!-- Halaman inside 2/2 start -->
     <div class="row pagercik">
         <div class="col-6">
             <img height="20px" src="management/l_export/export-content/image/logo_icon.png" alt="logo YI"> <span class="instansi-text">PT YAMAHA INDONESIA</span>
         </div>
         <div class="col-6" style="text-align: right;">
-            <span class="section-text">[INSIDE CHECK]</span><span class="halaman-text">(<?= $hal++ ?>)</span>
+            <span class="section-text">[INSIDE CHECK]</span><span class="halaman-text">(2/2)</span>
         </div>
     </div>
     <div class="row">
@@ -349,7 +347,7 @@ $pianoname = $d0['c_name'];
     <div class="row" style="page-break-after: always;">
         <div class="col-6 pagercok">
             <span style="color: #000000;">Note:</span>
-            <div class="border-txt">
+            <div class="border-txt" style="font-size: 0.625rem; color: #000000;">
                 <?php
                 $qn1 = mysqli_query($connect_pro, "SELECT c_inside FROM finalcheck_note WHERE c_serialnumber = '$serialnumber'");
                 $dn1 = mysqli_fetch_array($qn1);
@@ -371,6 +369,188 @@ $pianoname = $d0['c_name'];
             <div class="border-date"><span style="font-size: 0.625rem; color: #000000;">Date : <?= $tanggal_kirim ?></span></div>
         </div>
     </div>
+    <!-- Halaman inside 2/2 end -->
+
+    <!-- Halaman completeness 1/1 start -->
+    <div class="row pagercik">
+        <div class="col-6">
+            <img height="20px" src="management/l_export/export-content/image/logo_icon.png" alt="logo YI"> <span class="instansi-text">PT YAMAHA INDONESIA</span>
+        </div>
+        <div class="col-6" style="text-align: right;">
+            <span class="section-text">[COMPLETENESS]</span><span class="halaman-text">(1/1)</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 pagercok">
+            <h2 class="judul-text"><?= $serialnumber ?> #<?= $pianoname ?></h2>
+            <table class="table table-contentne">
+                <thead>
+                    <th style="text-align: center; width: 5%;">No</th>
+                    <th style="width: 35%;">Item</th>
+                    <th style="width: 10%; text-align: center;">Check 1</th>
+                    <th style="width: 10%; text-align: center;">Repair</th>
+                    <th style="width: 10%; text-align: center;">Check 2</th>
+                    <th style="width: 10%; text-align: center;">Repair</th>
+                    <th style="width: 10%; text-align: center;">Check 3</th>
+                    <th style="width: 10%; text-align: center;">Repair</th>
+                </thead>
+                <tbody>
+                    <?php
+                    $a = 0;
+                    $q1 = mysqli_query($connect_pro, "SELECT b.c_detail, a.c_resultsatu, a.c_resultdua, a.c_resulttiga, a.c_repairsatu, a.c_repairdua, a.c_repairtiga FROM finalcheck_completeness a INNER JOIN finalcheck_list_completeness b ON a.c_code_completeness = b.c_code_completeness WHERE a.c_serialnumber = '$serialnumber'");
+                    while ($d1 = mysqli_fetch_array($q1)) {
+                        $a++;
+
+                        if ($d1['c_resultsatu'] == 'Y') {
+                            $res1 = 'PASS';
+                        } else {
+                            $res1 = 'NG';
+                        }
+
+                        if ($d1['c_resultdua'] == 'Y') {
+                            $res2 = 'PASS';
+                        } else {
+                            $res2 = 'NG';
+                        }
+
+                        if ($d1['c_resulttiga'] == 'Y') {
+                            $res3 = 'PASS';
+                        } else {
+                            $res3 = 'NG';
+                        }
+
+                        if ($d1['c_repairsatu'] != '') {
+                            $qn2a = mysqli_query($connect_pro, "SELECT c_outsidesatu_pic FROM finalcheck_repairtime WHERE c_serialnumber = '$serialnumber'");
+                            $dn2a = mysqli_fetch_array($qn2a);
+                            if ($dn2a['c_outsidesatu_pic'] != '') {
+                                $repair1 = $dn2a['c_outsidesatu_pic'];
+                            } else {
+                                $repair1 = '-';
+                            }
+                        } else {
+                            $repair1 = '-';
+                        }
+
+                        if ($d1['c_repairdua'] != '') {
+                            $qn2b = mysqli_query($connect_pro, "SELECT c_outsidedua_pic FROM finalcheck_repairtime WHERE c_serialnumber = '$serialnumber'");
+                            $dn2b = mysqli_fetch_array($qn2b);
+                            if ($dn2a['c_outsidedua_pic'] != '') {
+                                $repair2 = $dn2a['c_outsidedua_pic'];
+                            } else {
+                                $repair2 = '-';
+                            }
+                        } else {
+                            $repair2 = '-';
+                        }
+
+                        if ($d1['c_repairtiga'] != '') {
+                            $qn2c = mysqli_query($connect_pro, "SELECT c_outsidetiga_pic FROM finalcheck_repairtime WHERE c_serialnumber = '$serialnumber'");
+                            $dn2c = mysqli_fetch_array($qn2c);
+                            if ($dn2a['c_outsidetiga_pic'] != '') {
+                                $repair3 = $dn2a['c_outsidetiga_pic'];
+                            } else {
+                                $repair3 = '-';
+                            }
+                        } else {
+                            $repair3 = '-';
+                        }
+
+                    ?>
+                        <tr>
+                            <td style="text-align: center; padding-top: 2px; padding-bottom: 2px;"><?= $a ?></td>
+                            <td style="padding-top: 2px; padding-bottom: 2px;"><?= $d1['c_detail'] ?></td>
+                            <td style="text-align: center; padding-top: 2px; padding-bottom: 2px;"><?= $res1 ?></td>
+                            <td style="text-align: center; padding-top: 2px; padding-bottom: 2px;"><?= $repair1 ?></td>
+                            <td style="text-align: center; padding-top: 2px; padding-bottom: 2px;"><?= $res2 ?></td>
+                            <td style="text-align: center; padding-top: 2px; padding-bottom: 2px;"><?= $repair2 ?></td>
+                            <td style="text-align: center; padding-top: 2px; padding-bottom: 2px;"><?= $res3 ?></td>
+                            <td style="text-align: center; padding-top: 2px; padding-bottom: 2px;"><?= $repair3 ?></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <?php
+        $qn2 = mysqli_query($connect_pro, "SELECT c_completenesssatu, c_completenessdua, c_completenesstiga FROM finalcheck_note WHERE c_serialnumber = '$serialnumber'");
+        $dn2 = mysqli_fetch_array($qn2);
+
+        if ($dn2['c_completenesssatu'] != '') {
+            $completeness_note1 = $dn2['c_completenesssatu'];
+        } else {
+            $completeness_note1 = '';
+        }
+
+        if ($dn2['c_completenessdua'] != '') {
+            $completeness_note2 = $dn2['c_completenessdua'];
+        } else {
+            $completeness_note2 = '';
+        }
+
+        if ($dn2['c_completenesstiga'] != '') {
+            $completeness_note3 = $dn2['c_completenesstiga'];
+        } else {
+            $completeness_note3 = '';
+        }
+        ?>
+        <div class="col-12 pagercok">
+            <div class="row">
+                <div class="col-4">
+                    <span style="color: #000000;">Note 1:</span>
+                    <div class="border-txt" style="font-size: 0.625rem; color: #000000;">
+                        <?= $completeness_note1 ?>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <span style="color: #000000;">Note 2:</span>
+                    <div class="border-txt" style="font-size: 0.625rem; color: #000000;">
+                        <?= $completeness_note2 ?>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <span style="color: #000000;">Note 3:</span>
+                    <div class="border-txt" style="font-size: 0.625rem; color: #000000;">
+                        <?= $completeness_note3 ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="page-break-after: always;">
+        <div class="col-12 pagercok">
+            <?php
+            $q4 = mysqli_query($connect_pro, "SELECT a.c_outsidesatu,a.c_outsidedua,a.c_outsidetiga, b.c_repair_outsidesatu_o, b.c_repair_outsidedua_o, b.c_repair_outsidetiga_o FROM finalcheck_pic a INNER JOIN finalcheck_repairtime b ON a.c_serialnumber = b.c_serialnumber WHERE a.c_serialnumber = '$serialnumber'");
+            $d4 = mysqli_fetch_array($q4);
+            $outside_pic1 = $d4['c_outsidesatu'];
+            $tanggal_kirim1 = date('d-m-Y H:i A', strtotime($d4['c_repair_outsidesatu_o']));
+            $outside_pic2 = $d4['c_outsidedua'];
+            $tanggal_kirim2 = date('d-m-Y H:i A', strtotime($d4['c_repair_outsidedua_o']));
+            $outside_pic3 = $d4['c_outsidetiga'];
+            $tanggal_kirim3 = date('d-m-Y H:i A', strtotime($d4['c_repair_outsidetiga_o']));
+            ?>
+            <div class="row">
+                <div class="col-4">
+                    <span style="color: #000000;">Checked 1:</span>
+                    <div class="border-sign" style="text-align: center; padding-top: 10px;"><span class="stamp checkcard"><?= $outside_pic1 ?></span></div>
+                    <div class="border-date"><span style="font-size: 0.625rem; color: #000000;">Date : <?= $tanggal_kirim1 ?></span></div>
+                </div>
+                <div class="col-4">
+                    <span style="color: #000000;">Checked 2:</span>
+                    <div class="border-sign" style="text-align: center; padding-top: 10px;"><span class="stamp checkcard"><?= $outside_pic2 ?></span></div>
+                    <div class="border-date"><span style="font-size: 0.625rem; color: #000000;">Date : <?= $tanggal_kirim2 ?></span></div>
+                </div>
+                <div class="col-4">
+                    <span style="color: #000000;">Checked 3:</span>
+                    <div class="border-sign" style="text-align: center; padding-top: 10px;"><span class="stamp checkcard"><?= $outside_pic3 ?></span></div>
+                    <div class="border-date"><span style="font-size: 0.625rem; color: #000000;">Date : <?= $tanggal_kirim3 ?></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Halaman completeness 1/1 end -->
 </div>
 <script>
     const button = document.getElementById("download-button");

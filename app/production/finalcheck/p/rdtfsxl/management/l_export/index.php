@@ -89,7 +89,7 @@
     </div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-12 mt-4">
         <table class="table table-bordered">
             <thead style="text-align: center;">
@@ -126,11 +126,24 @@
             </tbody>
         </table>
     </div>
-</div>
-
+</div> -->
+<hr>
 <div class="row">
     <div class="col-12">
         <div id="checkcard"></div>
+        <p id="nodata" style="text-align: center;">No data, please select serial number from dropdown</p>
+        <div id="loadingdata" style="text-align: center; display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <img src="<?= base_url('_assets/production/images/loading_greys.png') ?>" style="animation: rotation 2s infinite linear;  height:35px" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    Loading
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -138,24 +151,24 @@
 
 <script>
     $('#serialnumber').change(function() {
-        $('#showdata').hide();
         $('#nodata').hide();
-        $('#showdata1').show();
+        $('#loadingdata').show();
+        $('#checkcard').hide();
         var serialnumber = $('#serialnumber').val();
 
         // judul table
-        $.ajax({
-            url: 'management/l_export/data.php',
-            type: 'POST',
-            data: {
-                "serialnumber": serialnumber
-            },
-            success: function(data) {
-                $('#showdata').show();
-                $('#showdata1').hide();
-                $('#showdata').html(data);
-            },
-        });
+        // $.ajax({
+        //     url: 'management/l_export/data.php',
+        //     type: 'POST',
+        //     data: {
+        //         "serialnumber": serialnumber
+        //     },
+        //     success: function(data) {
+        //         $('#showdata').show();
+        //         $('#showdata1').hide();
+        //         $('#showdata').html(data);
+        //     },
+        // });
 
         // check card
         $.ajax({
@@ -165,6 +178,8 @@
                 "serialnumber": serialnumber,
             },
             success: function(data) {
+                $('#loadingdata').hide();
+                $('#checkcard').show();
                 $('#checkcard').html(data);
             },
             error: function() {
