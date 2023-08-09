@@ -66,8 +66,8 @@
         <h5>PIC Previlege</h5>
     </div>
     <div class="col-6" style="text-align: right;">
-        <button id="lock" class="btn btn-danger" style="width: 100px;">Edit <i class="fa fa-lock"></i></button>
-        <button id="unlock" class="btn btn-primary" style="width: 100px; display: none;">Edit <i class="fa fa-unlock"></i></button>
+        <button id="lock" class="btn btn-danger btn-sm" style="width: 100px;">Edit <i class="fa fa-lock"></i></button>
+        <button id="unlock" class="btn btn-primary btn-sm" style="width: 100px; display: none;">Edit <i class="fa fa-unlock"></i></button>
     </div>
 </div>
 
