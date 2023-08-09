@@ -130,18 +130,24 @@
 <hr>
 <div class="row">
     <div class="col-12">
-        <div id="checkcard"></div>
-        <p id="nodata" style="text-align: center;">No data, please select serial number from dropdown</p>
-        <div id="loadingdata" style="text-align: center; display: none;">
-            <div class="row">
-                <div class="col-12">
-                    <img src="<?= base_url('_assets/production/images/loading_greys.png') ?>" style="animation: rotation 2s infinite linear;  height:35px" />
+        <div class="card">
+            <div class="card-body">
+
+                <div id="checkcard"></div>
+                <p id="nodata" style="text-align: center;">No data, please select serial number from dropdown</p>
+                <div id="loadingdata" style="text-align: center; display: none;">
+                    <div class="row">
+                        <div class="col-12">
+                            <img src="<?= base_url('_assets/production/images/loading_greys.png') ?>" style="animation: rotation 2s infinite linear;  height:35px" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            Loading
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    Loading
-                </div>
+
             </div>
         </div>
     </div>
@@ -151,6 +157,7 @@
 
 <script>
     $('#serialnumber').change(function() {
+        $('#serialnumber').prop('disabled', true);
         $('#nodata').hide();
         $('#loadingdata').show();
         $('#checkcard').hide();
@@ -178,6 +185,7 @@
                 "serialnumber": serialnumber,
             },
             success: function(data) {
+                $('#serialnumber').prop('disabled', false);
                 $('#loadingdata').hide();
                 $('#checkcard').show();
                 $('#checkcard').html(data);

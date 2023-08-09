@@ -3,9 +3,10 @@ require "../../../config.php";
 $serialnumber = $_POST['serialnumber'];
 
 // get informasi piano
-$q0 = mysqli_query($connect_pro, "SELECT b.c_name FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber'");
+$q0 = mysqli_query($connect_pro, "SELECT b.c_name, b.c_code_type FROM finalcheck_register a INNER JOIN finalcheck_list_piano b ON a.c_gmc = b.c_gmc WHERE a.c_serialnumber = '$serialnumber'");
 $d0 = mysqli_fetch_array($q0);
 $pianoname = $d0['c_name'];
+$type = $d0['c_code_type'];
 ?>
 
 <style>
@@ -260,11 +261,15 @@ $pianoname = $d0['c_name'];
                             }
                             $res_incheck = implode("<br>", $res);
 
-                            // nitip get nama tukang repair
-                            $q3 = mysqli_query($connect_pro, "SELECT c_inside_pic FROM finalcheck_repairtime WHERE c_serialnumber  ='$serialnumber'");
-                            $d3 = mysqli_fetch_array($q3);
+                            if ($d1['c_code_ng'] == 'ng145' or $d1['c_code_ng'] == 'ng146' or $d1['c_code_ng'] == '147') {
+                                $pic_repair = '-';
+                            } else {
+                                // nitip get nama tukang repair
+                                $q3 = mysqli_query($connect_pro, "SELECT c_inside_pic FROM finalcheck_repairtime WHERE c_serialnumber  ='$serialnumber'");
+                                $d3 = mysqli_fetch_array($q3);
 
-                            $pic_repair = $d3['c_inside_pic'];
+                                $pic_repair = $d3['c_inside_pic'];
+                            }
                         } else {
                             $res_incheck = "PASS";
                             $pic_repair = "-";
@@ -321,11 +326,15 @@ $pianoname = $d0['c_name'];
                             }
                             $res_incheck = implode("<br>", $res);
 
-                            // nitip get nama tukang repair
-                            $q3 = mysqli_query($connect_pro, "SELECT c_inside_pic FROM finalcheck_repairtime WHERE c_serialnumber  ='$serialnumber'");
-                            $d3 = mysqli_fetch_array($q3);
+                            if ($d1['c_code_ng'] == 'ng145' or $d1['c_code_ng'] == 'ng146' or $d1['c_code_ng'] == '147') {
+                                $pic_repair = '-';
+                            } else {
+                                // nitip get nama tukang repair
+                                $q3 = mysqli_query($connect_pro, "SELECT c_inside_pic FROM finalcheck_repairtime WHERE c_serialnumber  ='$serialnumber'");
+                                $d3 = mysqli_fetch_array($q3);
 
-                            $pic_repair = $d3['c_inside_pic'];
+                                $pic_repair = $d3['c_inside_pic'];
+                            }
                         } else {
                             $res_incheck = "PASS";
                             $pic_repair = "-";
@@ -500,19 +509,19 @@ $pianoname = $d0['c_name'];
             <div class="row">
                 <div class="col-4">
                     <span style="color: #000000;">Note 1:</span>
-                    <div class="border-txt" style="font-size: 0.625rem; color: #000000;">
+                    <div class="border-txt" style="font-size: 0.625rem; color: #000000; height: 50px;">
                         <?= $completeness_note1 ?>
                     </div>
                 </div>
                 <div class="col-4">
                     <span style="color: #000000;">Note 2:</span>
-                    <div class="border-txt" style="font-size: 0.625rem; color: #000000;">
+                    <div class="border-txt" style="font-size: 0.625rem; color: #000000; height: 50px;">
                         <?= $completeness_note2 ?>
                     </div>
                 </div>
                 <div class="col-4">
                     <span style="color: #000000;">Note 3:</span>
-                    <div class="border-txt" style="font-size: 0.625rem; color: #000000;">
+                    <div class="border-txt" style="font-size: 0.625rem; color: #000000; height: 50px;">
                         <?= $completeness_note3 ?>
                     </div>
                 </div>
@@ -551,6 +560,288 @@ $pianoname = $d0['c_name'];
         </div>
     </div>
     <!-- Halaman completeness 1/1 end -->
+
+    <!-- Halaman outside 1/? start -->
+    <div class="row pagercik">
+        <div class="col-6">
+            <img height="20px" src="management/l_export/export-content/image/logo_icon.png" alt="logo YI"> <span class="instansi-text">PT YAMAHA INDONESIA</span>
+        </div>
+        <div class="col-6" style="text-align: right;">
+            <span class="section-text">[OUTSIDE]</span><span class="halaman-text">(1/1)</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 pagercok">
+            <h2 class="judul-text"><?= $serialnumber ?> #<?= $pianoname ?></h2>
+            <div class="row">
+                <div class="col-6">
+                    <table class="table table-contentne">
+                        <thead>
+                            <th style="text-align: center; width: 5%;">No</th>
+                            <th style="width: 85%;">NG/CABINET</th>
+                            <th style="width: 10%; text-align: center;">Repaired</th>
+                        </thead>
+                        <tbody>
+                            <?php
+                            // hitung dullu ada ng outside atau tidak
+                            $q6 = mysqli_query($connect_pro, "SELECT COUNT(c_serialnumber) as total FROM finalcheck_outside WHERE c_serialnumber = '$serialnumber'");
+                            $d6 = mysqli_fetch_array($q6);
+                            if ($d6['total'] == 0) {
+                            ?>
+                                <tr>
+                                    <td colspan="3" style="text-align: center;">All is good!</td>
+                                </tr>
+                                <?php
+                            } else {
+                                $sql2 = mysqli_query($connect_pro, "SELECT DISTINCT a.c_number_ng, a.c_code_ng, a.c_repair, b.c_name as ng_name FROM finalcheck_outside a  INNER JOIN finalcheck_list_ng b ON a.c_code_ng = b.c_code_ng WHERE a.c_serialnumber = '$serialnumber' ORDER BY a.c_number_ng ASC");
+                                while ($data2 = mysqli_fetch_array($sql2)) {
+                                    $cabinet = array();
+                                    $processcab = array();
+                                    $statusrep = array();
+                                    $sql3 = mysqli_query($connect_pro, "SELECT a.c_code_cabinet, a.c_process, a.c_repair, b.c_name as cab_name FROM finalcheck_outside a INNER JOIN finalcheck_list_cabinet b ON a.c_code_cabinet = b.c_code_cabinet WHERE a.c_serialnumber = '$serialnumber' AND c_code_ng = '$data2[c_code_ng]'");
+                                    while ($data3 = mysqli_fetch_array($sql3)) {
+                                        $validasio = '';
+                                        if ($data3['c_repair'] == 'Y') {
+                                            $validasio = 'checked';
+                                        }
+                                        array_push($cabinet, $data3['cab_name']);
+                                        array_push($processcab, $data3['c_process']);
+                                        array_push($statusrep, $validasio);
+                                    }
+                                    $row = count($cabinet);
+                                ?>
+                                    <tr>
+                                        <td rowspan="<?= $row + 1 ?>" style="text-align: center; padding-top: 2px; padding-bottom: 2px;">
+                                            <?= $data2['c_number_ng'] ?><br>
+                                        </td>
+                                        <td colspan="2" style="padding-top: 2px; padding-bottom: 2px;">
+                                            <b><?= $data2['ng_name'] ?></b>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    for ($eh = 0; $eh < $row; $eh++) {
+                                        if ($processcab[$eh] == 'oc1') {
+                                            $color_cab = '#DC4646';
+                                            $proses = '(c1)';
+                                            // get tukang repair
+                                            $repq = mysqli_query($connect_pro, "SELECT c_outsidesatu_pic FROM finalcheck_repairtime WHERE c_serialnumber = '$serialnumber'");
+                                            $repd = mysqli_fetch_array($repq);
+                                            $outside_repair = $repd['c_outsidesatu_pic'];
+                                        } elseif ($processcab[$eh] == 'oc2') {
+                                            $color_cab  = '#5AA65A';
+                                            $proses = '(c2)';
+                                            // get tukang repair
+                                            $repq = mysqli_query($connect_pro, "SELECT c_outsidedua_pic FROM finalcheck_repairtime WHERE c_serialnumber = '$serialnumber'");
+                                            $repd = mysqli_fetch_array($repq);
+                                            $outside_repair = $repd['c_outsidedua_pic'];
+                                        } elseif ($processcab[$eh] == 'oc3') {
+                                            $color_cab = '#1340FF';
+                                            $proses = '(c3)';
+                                            // get tukang repair
+                                            $repq = mysqli_query($connect_pro, "SELECT c_outsidetiga_pic FROM finalcheck_repairtime WHERE c_serialnumber = '$serialnumber'");
+                                            $repd = mysqli_fetch_array($repq);
+                                            $outside_repair = $repd['c_outsidetiga_pic'];
+                                        } else {
+                                            $proses = '(?)';
+                                            $color_cab = '#000';
+                                            $outside_repair = '?';
+                                        }
+                                    ?>
+                                        <tr>
+                                            <td style="color: <?= $color_cab ?>; padding-top: 2px; padding-bottom: 2px;">
+                                                <?= $proses . " " . $cabinet[$eh] ?>
+                                            </td>
+                                            <td style="padding-top: 2px; padding-bottom: 2px;">
+                                                <?= $outside_repair ?>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <?php
+                    $qim = mysqli_query($connect_pro, "SELECT DISTINCT c_image FROM finalcheck_list_coordinate WHERE c_code_type = '$type' ORDER BY c_seq ASC");
+                    while ($dim = mysqli_fetch_array($qim)) {
+                    ?>
+                        <div class="containere" style="margin-bottom: 20px;">
+                            <?php
+                            if ($type == 'p') {
+                                $image_src = 'management/l_export/export-content/image/reguler/' . $dim['c_image'] . '.jpg';
+                            } else {
+                                $image_src = 'management/l_export/export-content/image/furniture/' . $dim['c_image'] . '.png';
+                            }
+                            ?>
+                            <img src="<?= $image_src ?>" alt="image1" style="opacity: 60%;">
+                            <?php
+                            $c_code_type = $type;
+                            $c_image = $dim['c_image'];
+                            $qtbo = mysqli_query($connect_pro, "SELECT DISTINCT a.c_code_coordinate, b.c_top, b.c_left FROM finalcheck_loc a INNER JOIN finalcheck_list_coordinate b ON a.c_code_coordinate = b.c_code_coordinate WHERE a.c_serialnumber = '$serialnumber' AND b.c_code_type = '$c_code_type' AND b.c_image = '$c_image'");
+                            while ($dtbo = mysqli_fetch_array($qtbo)) {
+                                $label_get = array();
+                                $label = array();
+                                $process_get = array();
+                                $process = array();
+                                $qtbolab = mysqli_query($connect_pro, "SELECT c_number_ng, c_process FROM finalcheck_loc WHERE c_serialnumber = '$serialnumber' AND c_code_coordinate = '$dtbo[c_code_coordinate]'");
+
+                                while ($dtbolab = mysqli_fetch_array($qtbolab)) {
+                                    array_push($label_get, $dtbolab['c_number_ng']);
+                                    array_push($process_get, $dtbolab['c_process']);
+                                }
+                                $cnt = count($label_get);
+                                foreach ($label_get as $key => $val) {
+                                    if (($key + 1) == $cnt) {
+                                        array_push($label, $val);
+                                    } else {
+                                        array_push($label, $val . ', ');
+                                    }
+
+                                    if (($key + 1) % 2 == 0) {
+                                        array_push($label, '<br>');
+                                    }
+                                }
+
+                                $cnt2 = count($process_get);
+                                foreach ($process_get as $key2 => $val2) {
+                                    if (($key2 + 1) == $cnt2) {
+                                        array_push($process, $val2);
+                                    } else {
+                                        array_push($process, $val2 . ', ');
+                                    }
+
+                                    if (($key2 + 1) % 2 == 0) {
+                                        array_push($process, '<br>');
+                                    }
+                                }
+
+                            ?>
+                                <button class="btn ingpo" style="width: 23px; border-color: #000000; height: 23px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                                    <?php
+                                    $row = count($label);
+                                    for ($s = 0; $s < $row; $s++) {
+                                        if ($process[$s] == 'oc1') {
+                                            $color_cab = '#DC4646';
+                                        } elseif ($process[$s] == 'oc2') {
+                                            $color_cab  = '#5AA65A';
+                                        } elseif ($process[$s] == 'oc3') {
+                                            $color_cab = '#1340FF';
+                                        } elseif ($process[$s] == 'oc1, ') {
+                                            $color_cab  = '#DC4646';
+                                        } elseif ($process[$s] == 'oc1<br>') {
+                                            $color_cab  = '#DC4646';
+                                        } elseif ($process[$s] == 'oc2, ') {
+                                            $color_cab  = '#5AA65A';
+                                        } elseif ($process[$s] == 'oc2<br>') {
+                                            $color_cab  = '#5AA65A';
+                                        } elseif ($process[$s] == 'oc3, ') {
+                                            $color_cab  = '#1340FF';
+                                        } elseif ($process[$s] == 'oc3<br>') {
+                                            $color_cab  = '#1340FF';
+                                        } else {
+                                            $color_cab = '#000';
+                                        }
+                                    ?>
+                                        <span style="padding: 0px; color: <?= $color_cab ?>;"><?= $label[$s] ?></span>
+                                    <?php
+                                    }
+                                    ?>
+                                </button>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <?php
+        $qn3 = mysqli_query($connect_pro, "SELECT c_outsidesatu, c_outsidedua, c_outsidetiga FROM finalcheck_note WHERE c_serialnumber = '$serialnumber'");
+        $dn3 = mysqli_fetch_array($qn3);
+
+        if ($dn3['c_outsidesatu'] != '') {
+            $outside_note1 = $dn3['c_outsidesatu'];
+        } else {
+            $outside_note1 = '';
+        }
+
+        if ($dn3['c_outsidedua'] != '') {
+            $outside_note2 = $dn3['c_outsidedua'];
+        } else {
+            $outside_note2 = '';
+        }
+
+        if ($dn3['c_outsidetiga'] != '') {
+            $outside_note3 = $dn3['c_outsidetiga'];
+        } else {
+            $outside_note3 = '';
+        }
+        ?>
+        <div class="col-12 pagercok">
+            <div class="row">
+                <div class="col-4">
+                    <span style="color: #000000;">Note 1:</span>
+                    <div class="border-txt" style="font-size: 0.625rem; color: #000000; height: 50px;">
+                        <?= $outside_note1 ?>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <span style="color: #000000;">Note 2:</span>
+                    <div class="border-txt" style="font-size: 0.625rem; color: #000000; height: 50px;">
+                        <?= $outside_note2 ?>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <span style="color: #000000;">Note 3:</span>
+                    <div class="border-txt" style="font-size: 0.625rem; color: #000000; height: 50px;">
+                        <?= $outside_note3 ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="page-break-after: always;">
+        <div class="col-12 pagercok">
+            <?php
+            $q5 = mysqli_query($connect_pro, "SELECT a.c_outsidesatu,a.c_outsidedua,a.c_outsidetiga, b.c_repair_outsidesatu_o, b.c_repair_outsidedua_o, b.c_repair_outsidetiga_o FROM finalcheck_pic a INNER JOIN finalcheck_repairtime b ON a.c_serialnumber = b.c_serialnumber WHERE a.c_serialnumber = '$serialnumber'");
+            $d5 = mysqli_fetch_array($q5);
+            $outside_pic1 = $d5['c_outsidesatu'];
+            $tanggal_kirim1 = date('d-m-Y H:i A', strtotime($d5['c_repair_outsidesatu_o']));
+            $outside_pic2 = $d5['c_outsidedua'];
+            $tanggal_kirim2 = date('d-m-Y H:i A', strtotime($d5['c_repair_outsidedua_o']));
+            $outside_pic3 = $d5['c_outsidetiga'];
+            $tanggal_kirim3 = date('d-m-Y H:i A', strtotime($d5['c_repair_outsidetiga_o']));
+            ?>
+            <div class="row">
+                <div class="col-4">
+                    <span style="color: #000000;">Checked 1:</span>
+                    <div class="border-sign" style="text-align: center; padding-top: 10px;"><span class="stamp checkcard"><?= $outside_pic1 ?></span></div>
+                    <div class="border-date"><span style="font-size: 0.625rem; color: #000000;">Date : <?= $tanggal_kirim1 ?></span></div>
+                </div>
+                <div class="col-4">
+                    <span style="color: #000000;">Checked 2:</span>
+                    <div class="border-sign" style="text-align: center; padding-top: 10px;"><span class="stamp checkcard"><?= $outside_pic2 ?></span></div>
+                    <div class="border-date"><span style="font-size: 0.625rem; color: #000000;">Date : <?= $tanggal_kirim2 ?></span></div>
+                </div>
+                <div class="col-4">
+                    <span style="color: #000000;">Checked 3:</span>
+                    <div class="border-sign" style="text-align: center; padding-top: 10px;"><span class="stamp checkcard"><?= $outside_pic3 ?></span></div>
+                    <div class="border-date"><span style="font-size: 0.625rem; color: #000000;">Date : <?= $tanggal_kirim3 ?></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Halaman outside 1/? end -->
 </div>
 <script>
     const button = document.getElementById("download-button");
