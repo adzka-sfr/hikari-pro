@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        <h5>Customize NG Data</h5>
+        <h5>Customize Cabinet Data</h5>
         <hr>
     </div>
 </div>
