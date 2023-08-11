@@ -62,9 +62,9 @@ require '../../config.php';
                                     <label>Tipe :</label>
                                     <select class="halodecktot-model" id="selecttype" style="width:100%; height: max-content;">
                                         <option value="" selected disabled>Select Type</option>
-                                        <option value="s">Silent</option>
                                         <option value="f">Furniture</option>
                                         <option value="p">Polyester</option>
+                                        <option value="s">Silent</option>
                                     </select>
                                     <div id="errortipe" class="col-12" style="text-align: center; color: red; padding-top: 5px; display: none;">Tipe tidak boleh kosong!</div>
                                 </div>

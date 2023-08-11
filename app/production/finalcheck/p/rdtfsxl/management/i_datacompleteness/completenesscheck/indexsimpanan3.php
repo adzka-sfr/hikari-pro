@@ -3,7 +3,7 @@
     <div class="col-12">
         <?php
         $model = array();
-        $q4 = mysqli_query($connect_pro, "SELECT c_code_model FROM finalcheck_list_specific_model WHERE c_code_model LIKE 'f-%' ORDER BY c_code_model ASC");
+        $q4 = mysqli_query($connect_pro, "SELECT c_code_model FROM finalcheck_list_specific_model WHERE c_code_model LIKE 's-%' ORDER BY c_code_model ASC");
         while ($d4 = mysqli_fetch_array($q4)) {
             array_push($model, $d4['c_code_model']);
         }
