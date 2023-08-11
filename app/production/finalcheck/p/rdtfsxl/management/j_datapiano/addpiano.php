@@ -156,11 +156,17 @@ require '../../config.php';
 
     // tombol tambah
     function tambahdatang() {
+        $('#icon-spinner-add').show();
+        $('#tambahngbtn').prop('disabled', true);
+        $('#canceltambahngbtn').prop('disabled', true);
         var gmc = $('#gmcpiano').val();
         var name = $('#namepiano').val();
         var completeness = $('#completeness').val();
         var outside = $('#outside').val();
         if (name == '-' || name == '') {
+            $('#icon-spinner-add').hide();
+            $('#tambahngbtn').prop('disabled', false);
+            $('#canceltambahngbtn').prop('disabled', false);
             // error nama
             // scoll dengan gaya
             document.getElementById('namepiano').scrollIntoView({
@@ -172,6 +178,9 @@ require '../../config.php';
             }, 3000);
         } else {
             if (completeness == null) {
+                $('#icon-spinner-add').hide();
+                $('#tambahngbtn').prop('disabled', false);
+                $('#canceltambahngbtn').prop('disabled', false);
                 // error completeness
                 // scoll dengan gaya
                 document.getElementById('completeness').scrollIntoView({
@@ -183,6 +192,9 @@ require '../../config.php';
                 }, 3000);
             } else {
                 if (outside == null) {
+                    $('#icon-spinner-add').hide();
+                    $('#tambahngbtn').prop('disabled', false);
+                    $('#canceltambahngbtn').prop('disabled', false);
                     // error outside
                     // scoll dengan gaya
                     document.getElementById('outside').scrollIntoView({
@@ -193,53 +205,77 @@ require '../../config.php';
                         $('#erroroutside').hide()
                     }, 3000);
                 } else {
-                    $.ajax({
-                        url: "management/j_datapiano/addpiano/dataadd.php",
-                        type: "POST",
-                        data: {
-                            "gmc": gmc,
-                            "name": name,
-                            "completeness": completeness,
-                            "outside": outside
-                        },
-                        success: function(data) {
-                            var data = JSON.parse(data);
-                            if (data.status == 'berhasil') {
-                                Swal.fire({
-                                    title: 'Berhasil!',
-                                    text: 'Piano baru berhasil ditambah',
-                                    icon: 'success',
-                                    // timer: 2000,
-                                    showCancelButton: false,
-                                    showConfirmButton: true,
-                                    confirmButtonText: 'Oke'
-                                }).then(function() {
-                                    $('.close-mdl-ng').trigger('click');
-                                    loaddata();
-                                });
-                            } else if (data.status == 'exist') {
-                                Swal.fire({
-                                    title: 'Piano sudah ada!',
-                                    text: 'Piano sudah pernah ditambahkan, silahkan cek kembali pada tabel',
-                                    icon: 'error',
-                                    // timer: 2000,
-                                    showCancelButton: false,
-                                    showConfirmButton: true,
-                                    confirmButtonText: 'Oke'
-                                })
-                            } else {
-                                Swal.fire({
-                                    title: 'Gagal!',
-                                    text: 'Data gagal ditambah',
-                                    icon: 'error',
-                                    showCancelButton: false,
-                                    showConfirmButton: true,
-                                    confirmButtonText: 'Oke'
-                                })
-                            }
-                        },
-                        error: function() {
-                            lostconnection()
+                    Swal.fire({
+                        title: 'Apakah anda yakin ?',
+                        icon: 'question',
+                        html: 'Anda akan menambah piano <b>' + name + '</b>',
+                        showCancelButton: true,
+                        showConfirmButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Iya',
+                        cancelButtonText: 'Tidak'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: "management/j_datapiano/addpiano/dataadd.php",
+                                type: "POST",
+                                data: {
+                                    "gmc": gmc,
+                                    "name": name,
+                                    "completeness": completeness,
+                                    "outside": outside
+                                },
+                                success: function(data) {
+                                    var data = JSON.parse(data);
+                                    if (data.status == 'berhasil') {
+                                        Swal.fire({
+                                            title: 'Berhasil!',
+                                            text: 'Piano baru berhasil ditambah',
+                                            icon: 'success',
+                                            // timer: 2000,
+                                            showCancelButton: false,
+                                            showConfirmButton: true,
+                                            confirmButtonText: 'Oke'
+                                        }).then(function() {
+                                            $('.close-mdl-ng').trigger('click');
+                                            loaddata();
+                                        });
+                                    } else if (data.status == 'exist') {
+                                        Swal.fire({
+                                            title: 'Piano sudah ada!',
+                                            text: 'Piano sudah pernah ditambahkan, silahkan cek kembali pada tabel',
+                                            icon: 'error',
+                                            // timer: 2000,
+                                            showCancelButton: false,
+                                            showConfirmButton: true,
+                                            confirmButtonText: 'Oke'
+                                        })
+                                    } else {
+                                        Swal.fire({
+                                            title: 'Gagal!',
+                                            text: 'Data gagal ditambah',
+                                            icon: 'error',
+                                            showCancelButton: false,
+                                            showConfirmButton: true,
+                                            confirmButtonText: 'Oke'
+                                        })
+                                    };
+                                    $('#icon-spinner-add').hide();
+                                    $('#tambahngbtn').prop('disabled', false);
+                                    $('#canceltambahngbtn').prop('disabled', false);
+                                },
+                                error: function() {
+                                    $('#icon-spinner-add').hide();
+                                    $('#tambahngbtn').prop('disabled', false);
+                                    $('#canceltambahngbtn').prop('disabled', false);
+                                    lostconnection();
+                                }
+                            });
+                        } else {
+                            $('#tambahngbtn').prop('disabled', false);
+                            $('#canceltambahngbtn').prop('disabled', false);
+                            $('#icon-spinner-add').hide();
                         }
                     });
                 }

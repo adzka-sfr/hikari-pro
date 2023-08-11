@@ -46,6 +46,7 @@ require '../../config.php';
         <button id="unlock" class="btn btn-primary btn-sm" style="width: 100px; display: none;">Edit <i class="fa fa-unlock"></i></button>
     </div>
 </div>
+<hr>
 <div class="row">
     <!-- <h5 style="color: #464646; font-weight: bold;">NG Trend of Inside Check</h5> -->
     <div class="col-12" id="insideshow" style="display: none;">
@@ -81,9 +82,14 @@ require '../../config.php';
 
     // tombol tambah
     function tambahdatang() {
+        $('#tambahngbtn').prop('disabled', true);
+        $('#canceltambahngbtn').prop('disabled', true);
+        $('#icon-spinner-add').show();
         var processname = $('#processname').val();
-        console.log(processname);
         if (processname == '') {
+            $('#tambahngbtn').prop('disabled', false);
+            $('#canceltambahngbtn').prop('disabled', false);
+            $('#icon-spinner-add').hide();
             // error nama
             // scoll dengan gaya
             document.getElementById('processname').scrollIntoView({
@@ -94,40 +100,64 @@ require '../../config.php';
                 $('#errornama').hide()
             }, 3000);
         } else {
-            $.ajax({
-                url: "management/h_datainside/insidecheck/dataadd.php",
-                type: "POST",
-                data: {
-                    "processname": processname
-                },
-                success: function(data) {
-                    var data = JSON.parse(data);
-                    if (data.status == 'berhasil') {
-                        Swal.fire({
-                            title: 'Berhasil!',
-                            text: 'Pengecekan incheck baru berhasil ditambah',
-                            icon: 'success',
-                            // timer: 2000,
-                            showCancelButton: false,
-                            showConfirmButton: true,
-                            confirmButtonText: 'Oke'
-                        }).then(function() {
-                            $('.close-mdl-ng').trigger('click');
-                            loaddata();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Gagal!',
-                            text: 'Data gagal ditambah',
-                            icon: 'error',
-                            showCancelButton: false,
-                            showConfirmButton: true,
-                            confirmButtonText: 'Oke'
-                        })
-                    }
-                },
-                error: function() {
-                    lostconnection()
+            Swal.fire({
+                title: 'Apakah anda yakin ?',
+                icon: 'question',
+                html: 'Anda akan menambah proses incheck <b>' + processname + '</b>',
+                showCancelButton: true,
+                showConfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "management/h_datainside/insidecheck/dataadd.php",
+                        type: "POST",
+                        data: {
+                            "processname": processname
+                        },
+                        success: function(data) {
+                            var data = JSON.parse(data);
+                            if (data.status == 'berhasil') {
+                                Swal.fire({
+                                    title: 'Berhasil!',
+                                    text: 'Pengecekan incheck baru berhasil ditambah',
+                                    icon: 'success',
+                                    // timer: 2000,
+                                    showCancelButton: false,
+                                    showConfirmButton: true,
+                                    confirmButtonText: 'Oke'
+                                }).then(function() {
+                                    $('.close-mdl-ng').trigger('click');
+                                    loaddata();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Gagal!',
+                                    text: 'Data gagal ditambah',
+                                    icon: 'error',
+                                    showCancelButton: false,
+                                    showConfirmButton: true,
+                                    confirmButtonText: 'Oke'
+                                })
+                            };
+                            $('#tambahngbtn').prop('disabled', false);
+                            $('#canceltambahngbtn').prop('disabled', false);
+                            $('#icon-spinner-add').hide();
+                        },
+                        error: function() {
+                            $('#tambahngbtn').prop('disabled', false);
+                            $('#canceltambahngbtn').prop('disabled', false);
+                            $('#icon-spinner-add').hide();
+                            lostconnection();
+                        }
+                    });
+                } else {
+                    $('#tambahngbtn').prop('disabled', false);
+                    $('#canceltambahngbtn').prop('disabled', false);
+                    $('#icon-spinner-add').hide();
                 }
             });
         }

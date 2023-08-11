@@ -17,7 +17,8 @@ require '../../config.php';
         <button id="addmodel" class="btn btn-success btn-sm" style="width: 150px; display: none;">Add model <i class="fa fa-plus-square"></i></button>
         <!-- Modal add ng start -->
         <div class="modal fade" id="tambahng" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <!-- kalau mau scrollable : modal-dialog-scrollable -->
+            <div class="modal-dialog modal-dialog-centered ">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Proses Cek Completeness</h1>
@@ -32,10 +33,10 @@ require '../../config.php';
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 ml-2 mr-2">
-                            <span style="font-size: 0.6rem; ">Note: Penambahan proses akan berdampak pada seluruh model dengan status '<u style="color:red;"><i>disable</i></u>', jika ingin mengaktifkan silahkan melakukan ceklis pada kolom model yang di inginkan</span>
+                        <div class="row">
+                            <div class="col-12">
+                                <span style="font-size: 0.7rem; ">Note: Penambahan proses akan berdampak pada seluruh model dengan status '<u style="color:red;"><i>disable</i></u>', jika ingin mengaktifkan silahkan melakukan ceklis pada kolom model yang di inginkan</span>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -48,7 +49,8 @@ require '../../config.php';
         <!-- Modal add ng end -->
         <!-- Modal add model start -->
         <div class="modal fade" id="tambahng2" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <!-- kalau mau scrollable : modal-dialog-scrollable -->
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Model</h1>
@@ -76,14 +78,14 @@ require '../../config.php';
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-12 ml-1 mr-1">
-                                    <span style="font-size: 0.6rem; ">Note: Setelah model baru berhasil ditambah, silahkan melakukan ceklis untuk menyesuaikan completeness terkait model baru tersebut</span>
+                                <div class="col-12">
+                                    <span style="font-size: 0.7rem; ">Note: Setelah model baru berhasil ditambah, silahkan melakukan ceklis untuk menyesuaikan completeness terkait model baru tersebut</span>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="canceltambahngbtn" class="btn btn-secondary close-mdl-ng" onclick="cancelbtnmdl()" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" id="canceltambahngbtn2" class="btn btn-secondary close-mdl-ng" onclick="cancelbtnmdl()" data-bs-dismiss="modal">Cancel</button>
                         <button type="button" id="tambahngbtn2" onclick="tambahdatang2()" class="btn btn-primary">Add Model <i id="icon-spinner-add2" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
                     </div>
                 </div>
@@ -141,11 +143,12 @@ require '../../config.php';
     function tambahdatang() {
         $('#icon-spinner-add').show();
         $('#tambahngbtn').prop('disabled', true);
+        $('#canceltambahngbtn').prop('disabled', true);
         var processname = $('#processname').val();
-        console.log(processname);
         if (processname == '') {
             $('#icon-spinner-add').hide();
             $('#tambahngbtn').prop('disabled', false);
+            $('#canceltambahngbtn').prop('disabled', false);
             // error nama
             // scoll dengan gaya
             document.getElementById('processname').scrollIntoView({
@@ -156,44 +159,64 @@ require '../../config.php';
                 $('#errornama').hide()
             }, 3000);
         } else {
-            $.ajax({
-                url: "management/i_datacompleteness/completenesscheck/dataaddcompleteness.php",
-                type: "POST",
-                data: {
-                    "processname": processname
-                },
-                success: function(data) {
-                    $('#icon-spinner-add').hide();
+            Swal.fire({
+                title: 'Apakah anda yakin ?',
+                icon: 'question',
+                html: 'Anda akan menambah proses completeness <b>' + processname + '</b>',
+                showCancelButton: true,
+                showConfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "management/i_datacompleteness/completenesscheck/dataaddcompleteness.php",
+                        type: "POST",
+                        data: {
+                            "processname": processname
+                        },
+                        success: function(data) {
+                            $('#icon-spinner-add').hide();
+                            $('#tambahngbtn').prop('disabled', false);
+                            $('#canceltambahngbtn').prop('disabled', false);
+                            var data = JSON.parse(data);
+                            if (data.status == 'berhasil') {
+                                Swal.fire({
+                                    title: 'Berhasil!',
+                                    text: 'Pengecekan completeness baru berhasil ditambah',
+                                    icon: 'success',
+                                    // timer: 2000,
+                                    showCancelButton: false,
+                                    showConfirmButton: true,
+                                    confirmButtonText: 'Oke'
+                                }).then(function() {
+                                    $('.close-mdl-ng').trigger('click');
+                                    loaddata();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Gagal!',
+                                    text: 'Data gagal ditambah',
+                                    icon: 'error',
+                                    showCancelButton: false,
+                                    showConfirmButton: true,
+                                    confirmButtonText: 'Oke'
+                                })
+                            }
+                        },
+                        error: function() {
+                            $('#icon-spinner-add').hide();
+                            $('#tambahngbtn').prop('disabled', false);
+                            $('#canceltambahngbtn').prop('disabled', false);
+                            lostconnection();
+                        }
+                    });
+                } else {
                     $('#tambahngbtn').prop('disabled', false);
-                    var data = JSON.parse(data);
-                    if (data.status == 'berhasil') {
-                        Swal.fire({
-                            title: 'Berhasil!',
-                            text: 'Pengecekan completeness baru berhasil ditambah',
-                            icon: 'success',
-                            // timer: 2000,
-                            showCancelButton: false,
-                            showConfirmButton: true,
-                            confirmButtonText: 'Oke'
-                        }).then(function() {
-                            $('.close-mdl-ng').trigger('click');
-                            loaddata();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Gagal!',
-                            text: 'Data gagal ditambah',
-                            icon: 'error',
-                            showCancelButton: false,
-                            showConfirmButton: true,
-                            confirmButtonText: 'Oke'
-                        })
-                    }
-                },
-                error: function() {
+                    $('#canceltambahngbtn').prop('disabled', false);
                     $('#icon-spinner-add').hide();
-                    $('#tambahngbtn').prop('disabled', false);
-                    lostconnection();
                 }
             });
         }
@@ -203,11 +226,13 @@ require '../../config.php';
     function tambahdatang2() {
         $('#icon-spinner-add2').show();
         $('#tambahngbtn2').prop('disabled', true);
+        $('#canceltambahngbtn2').prop('disabled', true);
         var type = $('#selecttype').val();
         var modelname = $('#modelname').val();
         if (type == null) {
             $('#icon-spinner-add2').hide();
             $('#tambahngbtn2').prop('disabled', false);
+            $('#canceltambahngbtn').prop('disabled', false);
             document.getElementById('selecttype').scrollIntoView({
                 behavior: 'smooth'
             });
@@ -219,6 +244,7 @@ require '../../config.php';
             if (modelname == '') {
                 $('#icon-spinner-add2').hide();
                 $('#tambahngbtn2').prop('disabled', false);
+                $('#canceltambahngbtn2').prop('disabled', false);
                 // error nama
                 // scoll dengan gaya
                 document.getElementById('modelname').scrollIntoView({
@@ -229,54 +255,74 @@ require '../../config.php';
                     $('#errormodel').hide()
                 }, 3000);
             } else {
-                $.ajax({
-                    url: "management/i_datacompleteness/completenesscheck/dataaddmodel.php",
-                    type: "POST",
-                    data: {
-                        "type": type,
-                        "modelname": modelname,
-                    },
-                    success: function(data) {
-                        $('#icon-spinner-add2').hide();
+                Swal.fire({
+                    title: 'Apakah anda yakin ?',
+                    icon: 'question',
+                    html: 'Anda akan menambah model <b>' + modelname + '</b>',
+                    showCancelButton: true,
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Iya',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "management/i_datacompleteness/completenesscheck/dataaddmodel.php",
+                            type: "POST",
+                            data: {
+                                "type": type,
+                                "modelname": modelname,
+                            },
+                            success: function(data) {
+                                $('#icon-spinner-add2').hide();
+                                $('#tambahngbtn2').prop('disabled', false);
+                                $('#canceltambahngbtn2').prop('disabled', false);
+                                var data = JSON.parse(data);
+                                if (data.status == 'berhasil') {
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: 'Model baru berhasil ditambah',
+                                        icon: 'success',
+                                        // timer: 2000,
+                                        showCancelButton: false,
+                                        showConfirmButton: true,
+                                        confirmButtonText: 'Oke'
+                                    }).then(function() {
+                                        $('.close-mdl-ng').trigger('click');
+                                        loaddata();
+                                    });
+                                } else if (data.status == 'sudah-ada') {
+                                    Swal.fire({
+                                        title: 'Data sudah ada!',
+                                        text: 'Data model sudah ada pada sistem',
+                                        icon: 'error',
+                                        showCancelButton: false,
+                                        showConfirmButton: true,
+                                        confirmButtonText: 'Oke'
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: 'Data gagal ditambah',
+                                        icon: 'error',
+                                        showCancelButton: false,
+                                        showConfirmButton: true,
+                                        confirmButtonText: 'Oke'
+                                    })
+                                }
+                            },
+                            error: function() {
+                                $('#icon-spinner-add2').hide();
+                                $('#tambahngbtn2').prop('disabled', false);
+                                $('#canceltambahngbtn2').prop('disabled', false);
+                                lostconnection();
+                            }
+                        });
+                    } else {
                         $('#tambahngbtn2').prop('disabled', false);
-                        var data = JSON.parse(data);
-                        if (data.status == 'berhasil') {
-                            Swal.fire({
-                                title: 'Berhasil!',
-                                text: 'Model baru berhasil ditambah',
-                                icon: 'success',
-                                // timer: 2000,
-                                showCancelButton: false,
-                                showConfirmButton: true,
-                                confirmButtonText: 'Oke'
-                            }).then(function() {
-                                $('.close-mdl-ng').trigger('click');
-                                loaddata();
-                            });
-                        } else if (data.status == 'sudah-ada') {
-                            Swal.fire({
-                                title: 'Data sudah ada!',
-                                text: 'Data model sudah ada pada sistem',
-                                icon: 'error',
-                                showCancelButton: false,
-                                showConfirmButton: true,
-                                confirmButtonText: 'Oke'
-                            })
-                        } else {
-                            Swal.fire({
-                                title: 'Gagal!',
-                                text: 'Data gagal ditambah',
-                                icon: 'error',
-                                showCancelButton: false,
-                                showConfirmButton: true,
-                                confirmButtonText: 'Oke'
-                            })
-                        }
-                    },
-                    error: function() {
+                        $('#canceltambahngbtn2').prop('disabled', false);
                         $('#icon-spinner-add2').hide();
-                        $('#tambahngbtn2').prop('disabled', false);
-                        lostconnection();
                     }
                 });
             }

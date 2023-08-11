@@ -79,6 +79,7 @@
                 // scrollY: '700px',
                 // scrollCollapse: true,
                 paging: false,
+                "dom": '<"wrapper"flipt>'
             });
         </script>
     </div>

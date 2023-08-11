@@ -16,7 +16,8 @@ require '../../config.php';
         <button id="add" class="btn btn-success btn-sm" style="width: 100px; display: none;">Add <i class="fa fa-plus-square"></i></button>
         <!-- Modal add ng start -->
         <div class="modal fade" id="tambahng" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <!-- kalau mau scroll : modal-dialog-scrollable -->
+            <div class="modal-dialog modal-dialog-centered ">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah NG Inside</h1>
@@ -67,7 +68,7 @@ require '../../config.php';
 </div>
 <div class="row">
     <!-- <h5 style="color: #464646; font-weight: bold;">NG Trend of Inside Check</h5> -->
-    <div class="col-12" id="insideshow" style="display: none;">
+    <div class="col-12 mt-3" id="insideshow" style="display: none;">
     </div>
     <div id="loadinginside" class="col-12" style="text-align: center; height: 300px; padding-top: 80px;">
         <div class="row">
@@ -103,10 +104,18 @@ require '../../config.php';
     function tambahdatang() {
         var processcode = $('#selectprocess').val();
         var ngname = $('#ngname').val();
+
+        $('#tambahngbtn').prop('disabled', true);
+        $('#canceltambahngbtn').prop('disabled', true);
+        $('#icon-spinner-add').show();
+
         // if(prosessname == null)
         console.log(processcode);
         console.log(ngname);
         if (processcode == null) {
+            $('#tambahngbtn').prop('disabled', false);
+            $('#canceltambahngbtn').prop('disabled', false);
+            $('#icon-spinner-add').hide();
             // error process
             // scoll dengan gaya
             document.getElementById('selectprocess').scrollIntoView({
@@ -118,6 +127,9 @@ require '../../config.php';
             }, 3000);
         } else {
             if (ngname == '') {
+                $('#tambahngbtn').prop('disabled', false);
+                $('#canceltambahngbtn').prop('disabled', false);
+                $('#icon-spinner-add').hide();
                 // error nama
                 // scoll dengan gaya
                 document.getElementById('ngname').scrollIntoView({
@@ -128,41 +140,65 @@ require '../../config.php';
                     $('#errornama').hide()
                 }, 3000);
             } else {
-                $.ajax({
-                    url: "management/f_datang/inside/dataadd.php",
-                    type: "POST",
-                    data: {
-                        "processcode": processcode,
-                        "ngname": ngname
-                    },
-                    success: function(data) {
-                        var data = JSON.parse(data);
-                        if (data.status == 'berhasil') {
-                            Swal.fire({
-                                title: 'Berhasil!',
-                                text: 'Data NG berhasil ditambah',
-                                icon: 'success',
-                                // timer: 2000,
-                                showCancelButton: false,
-                                showConfirmButton: true,
-                                confirmButtonText: 'Oke'
-                            }).then(function() {
-                                $('.close-mdl-ng').trigger('click');
-                                loaddata();
-                            });
-                        } else {
-                            Swal.fire({
-                                title: 'Gagal!',
-                                text: 'Data gagal ditambah',
-                                icon: 'error',
-                                showCancelButton: false,
-                                showConfirmButton: true,
-                                confirmButtonText: 'Oke'
-                            })
-                        }
-                    },
-                    error: function() {
-                        lostconnection()
+                Swal.fire({
+                    title: 'Apakah anda yakin ?',
+                    icon: 'question',
+                    html: 'Anda akan menambah NG <b>' + ngname + '</b>',
+                    showCancelButton: true,
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Iya',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "management/f_datang/inside/dataadd.php",
+                            type: "POST",
+                            data: {
+                                "processcode": processcode,
+                                "ngname": ngname
+                            },
+                            success: function(data) {
+                                var data = JSON.parse(data);
+                                if (data.status == 'berhasil') {
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: 'Data NG berhasil ditambah',
+                                        icon: 'success',
+                                        // timer: 2000,
+                                        showCancelButton: false,
+                                        showConfirmButton: true,
+                                        confirmButtonText: 'Oke'
+                                    }).then(function() {
+                                        $('.close-mdl-ng').trigger('click');
+                                        loaddata();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: 'Data gagal ditambah',
+                                        icon: 'error',
+                                        showCancelButton: false,
+                                        showConfirmButton: true,
+                                        confirmButtonText: 'Oke'
+                                    })
+                                }
+                                $('#tambahngbtn').prop('disabled', false);
+                                $('#canceltambahngbtn').prop('disabled', false);
+                                $('#icon-spinner-add').hide();
+                            },
+                            error: function() {
+                                $('#tambahngbtn').prop('disabled', false);
+                                $('#canceltambahngbtn').prop('disabled', false);
+                                $('#icon-spinner-add').hide();
+                                lostconnection();
+                            }
+                        });
+                    } else {
+                        $('#tambahngbtn').prop('disabled', false);
+                        $('#canceltambahngbtn').prop('disabled', false);
+                        $('#icon-spinner-add').hide();
                     }
                 });
             }
