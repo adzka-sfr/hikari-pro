@@ -108,13 +108,13 @@ for ($a = 0; $a < $qty; $a++) {
 
     // get user to know which connector to use
     if ($lokasiprint == 'print label') {
-        $device = "smb://172.17.192.208/POS80rif";
+        $device = "smb://172.17.193.47/POS80whc";
     } elseif ($lokasiprint == 'packing gp') {
-        $device = "smb://172.17.192.242/POS80";
+        $device = "smb://172.17.192.122/POS80packinggp";
     } elseif ($lokasiprint == 'packing up') {
-        $device = "smb://172.17.192.242/POS80";
+        $device = "smb://172.17.193.5/POS80packingup";
     } else {
-        $device = "smb://konektor_untuk_user_ini_tidak_ketemu";
+        $device = "smb://konektortidakketemu";
     }
     try {
         $connector = new WindowsPrintConnector($device);
