@@ -188,6 +188,16 @@ if ($bln == '01') {
                                     }).then(() => {
                                         window.location = "main.php?page=print";
                                     });
+                                } else if (response == 'tidak-terinstall') {
+                                    Swal.fire({
+                                        title: 'Print gagal!',
+                                        text: 'Komputer anda tidak memiliki printer thermal',
+                                        icon: 'error',
+                                        // timer: 3000,
+                                        showConfirmButton: true,
+                                    });
+                                    $("#print").attr("disabled", false);
+                                    $('#spinner-print').hide();
                                 } else {
                                     Swal.fire(
                                         'Error!',

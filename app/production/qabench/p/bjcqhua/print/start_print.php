@@ -72,78 +72,93 @@ $bench = $_POST['bench'];
 $qty = $_POST['qty'];
 $lokasiprint = $_POST['lokasiprint'];
 
-// pecah nama bench dengan gmc
-$gmc = substr($bench, 1, 7);
-$namabench = substr($bench, 10);
+// get ip computer
+if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    $ip = $_SERVER['HTTP_CLIENT_IP'];
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} else {
+    $ip = $_SERVER['REMOTE_ADDR'];
+}
 
-// cek no bench terakhir pada bulan ini
-$sql3 = mysqli_query($connect_pro, "SELECT id FROM qa_bench WHERE c_gmc = '$gmc' AND c_created LIKE '$thismonth%'");
-$data3 = mysqli_fetch_array($sql3);
+// get user to know which connector to use
+if ($ip == '172.17.193.47') {
+    $device = "smb://172.17.193.47/POS80whc";
+} elseif ($ip == '172.17.192.122') {
+    $device = "smb://172.17.192.122/POS80packinggp";
+} elseif ($ip == '172.17.193.5') {
+    $device = "smb://172.17.193.5/POS80packingup";
+} elseif ($ip == '172.17.192.242') {
+    $device = "smb://172.17.192.208/POS80rif";
+} else {
+    $device = "tidak-terinstall";
+}
 
-if (!empty($data3['id'])) {
-    $sql3 = mysqli_query($connect_pro, "SELECT MAX(c_serialbench) AS maks FROM qa_bench WHERE c_gmc = '$gmc' AND c_created LIKE '$thismonth%'");
+if ($device == "tidak-terinstall") {
+    echo "tidak-terinstall";
+}else{
+    // pecah nama bench dengan gmc
+    $gmc = substr($bench, 1, 7);
+    $namabench = substr($bench, 10);
+
+    // cek no bench terakhir pada bulan ini
+    $sql3 = mysqli_query($connect_pro, "SELECT id FROM qa_bench WHERE c_gmc = '$gmc' AND c_created LIKE '$thismonth%'");
     $data3 = mysqli_fetch_array($sql3);
 
-    $potong = substr($data3['maks'], 10);
-    $no_urut = $potong;
-} else {
-    $no_urut = 0;
-}
+    if (!empty($data3['id'])) {
+        $sql3 = mysqli_query($connect_pro, "SELECT MAX(c_serialbench) AS maks FROM qa_bench WHERE c_gmc = '$gmc' AND c_created LIKE '$thismonth%'");
+        $data3 = mysqli_fetch_array($sql3);
 
-$c_created = date('Y-m-d H:i:s', strtotime($now));
-for ($a = 0; $a < $qty; $a++) {
-    $no_urut = $no_urut + 1;
-    if ($no_urut < 10) {
-        $no_urut = "000" . $no_urut;
-    } elseif ($no_urut < 100) {
-        $no_urut = "00" . $no_urut;
-    } elseif ($no_urut < 1000) {
-        $no_urut = "0" . $no_urut;
-    }
-
-    $c_serialbench = $gmc . $thn . $monthcode . $no_urut; // qa_bench.c_serialbench
-
-    // echo $no_urut . "</br>";
-    $sqlprint = mysqli_query($connect_pro, "INSERT INTO qa_bench SET c_gmc = '$gmc', c_serialbench = '$c_serialbench', c_name = '$namabench', c_created = '$c_created'");
-
-    // get user to know which connector to use
-    if ($lokasiprint == 'print label') {
-        $device = "smb://172.17.193.47/POS80whc";
-    } elseif ($lokasiprint == 'packing gp') {
-        $device = "smb://172.17.192.122/POS80packinggp";
-    } elseif ($lokasiprint == 'packing up') {
-        $device = "smb://172.17.193.5/POS80packingup";
+        $potong = substr($data3['maks'], 10);
+        $no_urut = $potong;
     } else {
-        $device = "smb://konektortidakketemu";
+        $no_urut = 0;
     }
-    try {
-        $connector = new WindowsPrintConnector($device);
-        $printer = new Printer($connector);
-        $printer->initialize();
-        $printer->setJustification(Printer::JUSTIFY_CENTER);
-        $printer->selectPrintMode();
-        $printer->setEmphasis(true);
-        $printer->text($namabench . "\n");
-        $printer->text($c_serialbench . "\n");
-        $printer->setEmphasis(false);
-        $printer->setBarcodeHeight(60);
-        $printer->setBarcodeWidth(2);
-        // $printer->barcode($c_serialbench, Printer::BARCODE_CODE93);
-        $printer->qrCode($c_serialbench, Printer::QR_ECLEVEL_L, 7);
-        $printer->text("\n");
-        $printer->selectPrintMode();
 
-        //$printer->feed();
-        $printer->cut();
-        $printer->pulse();
-        $printer->close();
-    } catch (Exception $e) {
-        echo "Couldn't print to this printer: " . $e->getMessage() . "\n";
+    $c_created = date('Y-m-d H:i:s', strtotime($now));
+    for ($a = 0; $a < $qty; $a++) {
+        $no_urut = $no_urut + 1;
+        if ($no_urut < 10) {
+            $no_urut = "000" . $no_urut;
+        } elseif ($no_urut < 100) {
+            $no_urut = "00" . $no_urut;
+        } elseif ($no_urut < 1000) {
+            $no_urut = "0" . $no_urut;
+        }
+
+        $c_serialbench = $gmc . $thn . $monthcode . $no_urut; // qa_bench.c_serialbench
+
+        // echo $no_urut . "</br>";
+        $sqlprint = mysqli_query($connect_pro, "INSERT INTO qa_bench SET c_gmc = '$gmc', c_serialbench = '$c_serialbench', c_name = '$namabench', c_created = '$c_created'");
+
+        try {
+            $connector = new WindowsPrintConnector($device);
+            $printer = new Printer($connector);
+            $printer->initialize();
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->selectPrintMode();
+            $printer->setEmphasis(true);
+            $printer->text($namabench . "\n");
+            $printer->text($c_serialbench . "\n");
+            $printer->setEmphasis(false);
+            $printer->setBarcodeHeight(60);
+            $printer->setBarcodeWidth(2);
+            // $printer->barcode($c_serialbench, Printer::BARCODE_CODE93);
+            $printer->qrCode($c_serialbench, Printer::QR_ECLEVEL_L, 7);
+            $printer->text("\n");
+            $printer->selectPrintMode();
+
+            //$printer->feed();
+            $printer->cut();
+            $printer->pulse();
+            $printer->close();
+        } catch (Exception $e) {
+            echo "Couldn't print to this printer: " . $e->getMessage() . "\n";
+        }
     }
-}
 
-// insert qalog
-$sql_qalog = mysqli_query($connect_pro, "INSERT INTO qa_log SET
+    // insert qalog
+    $sql_qalog = mysqli_query($connect_pro, "INSERT INTO qa_log SET
     c_action = 'print label',
     c_serialbench = '-',
     c_namebench = '$namabench',
@@ -155,9 +170,12 @@ $sql_qalog = mysqli_query($connect_pro, "INSERT INTO qa_log SET
     c_pic = '$_SESSION[id]',
     c_date = '$c_created'");
 
-// untuk mengembalikan respon
-if ($sqlprint) {
-    echo "print-berhasil";
-} else {
-    echo "error";
+    // untuk mengembalikan respon
+    if ($sqlprint) {
+        echo "print-berhasil";
+    } else {
+        echo "error";
+    }
+
 }
+
