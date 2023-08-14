@@ -46,17 +46,23 @@ require('../config.php');
                     while ($d2 = mysqli_fetch_array($q2)) {
                         $no++;
 
-                        // get ng date
-                        $q3 = mysqli_query($connect_pro, "SELECT c_result_date FROM finalcheck_inside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_result = 'NG'");
-                        $d3 = mysqli_fetch_array($q3);
+
 
                         // get ok date
                         $q4 = mysqli_query($connect_pro, "SELECT c_repair_inside_o FROM finalcheck_repairtime WHERE c_serialnumber = '$d2[c_serialnumber]'");
                         $d4 = mysqli_fetch_array($q4);
                         if (empty($d4['c_repair_inside_o'])) {
                             $ok_date = "Proses repair";
+
+                            // get ng date
+                            $q3 = mysqli_query($connect_pro, "SELECT c_result_date FROM finalcheck_fetch_inside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_result = 'NG'");
+                            $d3 = mysqli_fetch_array($q3);
                         } else {
                             $ok_date = date('h:i A', strtotime($d4['c_repair_inside_o']));
+
+                            // get ng date
+                            $q3 = mysqli_query($connect_pro, "SELECT c_result_date FROM finalcheck_inside WHERE c_serialnumber = '$d2[c_serialnumber]' AND c_result = 'NG'");
+                            $d3 = mysqli_fetch_array($q3);
                         }
 
                         if (empty($d3['c_result_date'])) {
