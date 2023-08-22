@@ -1,1 +1,1 @@
-<?php header('location:main.php?page=aust');
+<?php header('location:main.php?page=dash');

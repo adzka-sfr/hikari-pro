@@ -79,6 +79,13 @@
 
     });
 
+    $('.pilihwc').select2({
+        placeholder: "Pilih Workcenter",
+        language: "id",
+        allowClear: false,
+
+    });
+
     $('.ngen').select2({
         placeholder: "Select Serial Number",
         language: "id"
@@ -116,7 +123,7 @@
             paging: false,
         });
 
-        
+
     });
 </script>
 
