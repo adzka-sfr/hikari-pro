@@ -31,11 +31,11 @@ if ($kode == 'U') {
     } else {
         // [f] belum terdaftar
         // (B) cek no A-Card terdaftar atau tidak pada K-staff
-        // run sql oracle 
+        // run sql oracle
         $sql1 =
-            "SELECT B_ACTY.D0610.PLNNO 
-                                , B_ACTY.D0610.ACARDNO 
-                                , B_ACTY.D0610.HMCD 
+            "SELECT B_ACTY.D0610.PLNNO
+                                , B_ACTY.D0610.ACARDNO
+                                , B_ACTY.D0610.HMCD
                                 , B_ACTY.D0130.SEIBAN
                                 , B_ACTY.M0010.HMNM
                                 , COUNT(B_ACTY.D0610.ACARDNO) AS QTY_ACARD
@@ -46,7 +46,7 @@ if ($kode == 'U') {
                                 AND B_ACTY.D0610.HMCD = B_ACTY.M0010.HMCD
                                 AND B_ACTY.D0610.ACARDNO = '$acard'
                                 AND B_ACTY.D0610.PLNNO LIKE 'UP%'
-                            GROUP BY B_ACTY.D0610.PLNNO, B_ACTY.D0610.ACARDNO 
+                            GROUP BY B_ACTY.D0610.PLNNO, B_ACTY.D0610.ACARDNO
                                 , B_ACTY.D0610.HMCD
                                 , B_ACTY.D0130.SEIBAN
                                 , B_ACTY.M0010.HMNM";

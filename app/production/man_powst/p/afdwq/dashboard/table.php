@@ -1,6 +1,19 @@
 <?php
 include '../config.php';
 $workcenter = $_POST['workcenter'];
+
+// koneksi kstaff
+$username = "B_ACTY";
+$password = "SYSTEM";
+$db = "(DESCRIPTION =
+			(ADDRESS_LIST =
+			  (ADDRESS = (PROTOCOL = TCP)(HOST = 172.17.192.6)(PORT = 1521))
+			)
+			(CONNECT_DATA =
+			  (SERVICE_NAME = YIKSTAFF)
+			)
+		)";
+$connection = oci_connect($username, $password, $db);
 ?>
 <script src="<?= base_url('_assets/src/add/jquery/jquery-3.4.1.js') ?>"></script>
 <script src="<?= base_url('_assets/src/add/datatables_bootstrap5/datatables.js') ?>"></script>
@@ -23,10 +36,16 @@ $workcenter = $_POST['workcenter'];
         <?php
         $q1 = mysqli_query($connect_pro, "SELECT c_gmc, c_stdval FROM manpow_st WHERE c_workcenter = '$workcenter'");
         while ($d1 = mysqli_fetch_array($q1)) {
+            $sql1 =
+                "SELECT B_ACTY.M0010.HMNM AS NAMA FROM B_ACTY.M0010 WHERE B_ACTY.M0010.HMCD = '$d1[c_gmc]'";
+
+            $statment1 = oci_parse($connection, $sql1);
+            oci_execute($statment1);
+            $data = oci_fetch_array($statment1);
         ?>
             <tr>
                 <td style="text-align: center;"><?= $d1['c_gmc'] ?></td>
-                <td>Nama item</td>
+                <td><?= $data['NAMA'] ?></td>
                 <td style="text-align: center;"><?= $d1['c_stdval'] ?></td>
             </tr>
         <?php
