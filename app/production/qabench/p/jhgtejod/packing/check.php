@@ -41,8 +41,8 @@ if ($acard !== "") {
     if ($check_class == "U") {
         if ($location == "packing up") {
             $qry_stock = " SELECT B_ACTY.D0610.PLNNO
-			, B_ACTY.D0610.ACARDNO 
-			, B_ACTY.D0610.HMCD 
+			, B_ACTY.D0610.ACARDNO
+			, B_ACTY.D0610.HMCD
 			, B_ACTY.D0130.SEIBAN
 			, B_ACTY.M0010.HMNM
 			, COUNT(B_ACTY.D0610.ACARDNO) AS QTY_ACARD
@@ -71,7 +71,7 @@ if ($acard !== "") {
                 } else {
                     // apakah menggunakan bench, jika iya dapatkan gmc bench!
                     $gmc =  $piano['HMCD'];
-                    $qry_bom_bench = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM 
+                    $qry_bom_bench = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM
                                             FROM M_ACTY.M0031
                                             JOIN M_ACTY.M0010 ON M_ACTY.M0031.KOHMCD = M_ACTY.M0010.HMCD
                                             WHERE M_ACTY.M0031.OYAHMCD = '$gmc'
@@ -96,7 +96,7 @@ if ($acard !== "") {
                     }
 
                     // apakah menggunakan user package, jika iya dapatkan gmc user package!
-                    $qry_bom_userp = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM 
+                    $qry_bom_userp = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM
                                             FROM M_ACTY.M0031
                                             JOIN M_ACTY.M0010 ON M_ACTY.M0031.KOHMCD = M_ACTY.M0010.HMCD
                                             WHERE M_ACTY.M0031.OYAHMCD = '$gmc'
@@ -150,8 +150,8 @@ if ($acard !== "") {
     } else if ($check_class == "G") {
         if ($location == "packing gp") {
             $qry_stock = " SELECT B_ACTY.D0780.PLNNO
-			, B_ACTY.D0780.ACARDNO 
-			, B_ACTY.D0780.HMCD 
+			, B_ACTY.D0780.ACARDNO
+			, B_ACTY.D0780.HMCD
 			, B_ACTY.D0130.SEIBAN
 			, B_ACTY.M0010.HMNM
 			, COUNT(B_ACTY.D0780.ACARDNO) AS QTY_ACARD
@@ -180,7 +180,7 @@ if ($acard !== "") {
                 } else {
                     // apakah menggunakan bench, jika iya dapatkan gmc bench!
                     $gmc =  $piano['HMCD'];
-                    $qry_bom_bench = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM 
+                    $qry_bom_bench = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM
                                             FROM M_ACTY.M0031
                                             JOIN M_ACTY.M0010 ON M_ACTY.M0031.KOHMCD = M_ACTY.M0010.HMCD
                                             WHERE M_ACTY.M0031.OYAHMCD = '$gmc'
@@ -205,7 +205,7 @@ if ($acard !== "") {
                     }
 
                     // apakah menggunakan user package, jika iya dapatkan gmc user package!
-                    $qry_bom_userp = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM 
+                    $qry_bom_userp = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM
                                             FROM M_ACTY.M0031
                                             JOIN M_ACTY.M0010 ON M_ACTY.M0031.KOHMCD = M_ACTY.M0010.HMCD
                                             WHERE M_ACTY.M0031.OYAHMCD = '$gmc'
@@ -262,8 +262,8 @@ if ($acard !== "") {
     }
 
     // $qry_stock = " SELECT B_ACTY.D0610.PLNNO
-    // 		, B_ACTY.D0610.ACARDNO 
-    // 		, B_ACTY.D0610.HMCD 
+    // 		, B_ACTY.D0610.ACARDNO
+    // 		, B_ACTY.D0610.HMCD
     // 		, B_ACTY.D0130.SEIBAN
     // 		, B_ACTY.M0010.HMNM
     // 		, COUNT(B_ACTY.D0610.ACARDNO) AS QTY_ACARD

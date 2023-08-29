@@ -36,8 +36,8 @@ $acard_post = isset($_POST['AcardNo']) ? $_POST['AcardNo'] : '';
 if ($acard_post !== "") {
     if ($location == 'packing up') {
         $qry_stock = " SELECT B_ACTY.D0610.PLNNO
-    		, B_ACTY.D0610.ACARDNO 
-    		, B_ACTY.D0610.HMCD 
+    		, B_ACTY.D0610.ACARDNO
+    		, B_ACTY.D0610.HMCD
     		, B_ACTY.D0130.SEIBAN
     		, B_ACTY.M0010.HMNM
     		, COUNT(B_ACTY.D0610.ACARDNO) AS QTY_ACARD
@@ -51,8 +51,8 @@ if ($acard_post !== "") {
     		GROUP BY B_ACTY.D0610.PLNNO, B_ACTY.D0610.ACARDNO , B_ACTY.D0610.HMCD, B_ACTY.D0130.SEIBAN, B_ACTY.M0010.HMNM";
     } elseif ($location == 'packing gp') {
         $qry_stock = " SELECT B_ACTY.D0780.PLNNO
-    		, B_ACTY.D0780.ACARDNO 
-    		, B_ACTY.D0780.HMCD 
+    		, B_ACTY.D0780.ACARDNO
+    		, B_ACTY.D0780.HMCD
     		, B_ACTY.D0130.SEIBAN
     		, B_ACTY.M0010.HMNM
     		, COUNT(B_ACTY.D0780.ACARDNO) AS QTY_ACARD
@@ -79,7 +79,7 @@ if ($acard_post !== "") {
         $serial = $piano['SEIBAN'];
 
         // apakah menggunakan bench ?
-        $qry_bom_bench = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM 
+        $qry_bom_bench = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM
 		FROM M_ACTY.M0031
 		JOIN M_ACTY.M0010 ON M_ACTY.M0031.KOHMCD = M_ACTY.M0010.HMCD
 		WHERE M_ACTY.M0031.OYAHMCD = '$gmc'
@@ -109,7 +109,7 @@ if ($acard_post !== "") {
         $parentname = $piano['HMNM'];
 
         // apakah menggunakan user package ?
-        $qry_bom_userp = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM 
+        $qry_bom_userp = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM
                 FROM M_ACTY.M0031
                 JOIN M_ACTY.M0010 ON M_ACTY.M0031.KOHMCD = M_ACTY.M0010.HMCD
                 WHERE M_ACTY.M0031.OYAHMCD = '$gmc'
@@ -133,7 +133,7 @@ if ($acard_post !== "") {
         }
 
         // menggunakan owner kit tipe apa ?
-        $qry_bom_owner = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM 
+        $qry_bom_owner = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM
                 FROM M_ACTY.M0031
                 JOIN M_ACTY.M0010 ON M_ACTY.M0031.KOHMCD = M_ACTY.M0010.HMCD
                 WHERE M_ACTY.M0031.OYAHMCD = '$gmc'
@@ -371,6 +371,7 @@ if ($acard_post !== "") {
                                     <input type="hidden" id="serialuserppacking" value="-" class="form-control" />
                                     <input type="hidden" id="statusbench" value="ok" class="form-control" />
                                     <input type="hidden" id="statususerp" value="ok" class="form-control" />
+                                    <input type="checkbox" checked id="owner" style="height: 30px; width: 30px; display: none;" name="owner" value="ok">
                                     <input id="qtybench" type="hidden" value="0">
                                     <input id="qtyuserp" type="hidden" value="0">
                                     <input id="namebench" type="hidden" value="-">

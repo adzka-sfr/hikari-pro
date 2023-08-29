@@ -318,7 +318,8 @@ if (isset($_POST['print'])) {
             <tbody>
                 <?php
                 $no = 0;
-                $sql = mysqli_query($connect_pro, "SELECT * FROM qa_bench ORDER BY c_created DESC");
+                $tudei = date('Y-m-d', strtotime($now));
+                $sql = mysqli_query($connect_pro, "SELECT * FROM qa_bench WHERE c_created LIKE '$tudei%' ORDER BY c_created DESC");
                 while ($data = mysqli_fetch_array($sql)) {
                     $no++;
 

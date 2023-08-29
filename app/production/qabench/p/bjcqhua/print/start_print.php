@@ -70,7 +70,6 @@ if ($bln == '01') {
 // data lemparan
 $bench = $_POST['bench'];
 $qty = $_POST['qty'];
-$lokasiprint = $_POST['lokasiprint'];
 
 // get ip computer
 if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -84,19 +83,20 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 // get user to know which connector to use
 if ($ip == '172.17.193.47') {
     $device = "smb://172.17.193.47/POS80whc";
-} elseif ($ip == '172.17.192.122') {
-    $device = "smb://172.17.192.122/POS80packinggp";
+} elseif ($ip == '172.17.193.6') {
+    $device = "smb://172.17.193.6/POS80packinggp";
 } elseif ($ip == '172.17.193.5') {
     $device = "smb://172.17.193.5/POS80packingup";
 } elseif ($ip == '172.17.192.242') {
-    $device = "smb://172.17.192.208/POS80rif";
+    $device = "smb://172.17.193.6/POS80packinggp";
+    // $device = "smb://172.17.192.208/POS80rif";
 } else {
     $device = "tidak-terinstall";
 }
 
 if ($device == "tidak-terinstall") {
     echo "tidak-terinstall";
-}else{
+} else {
     // pecah nama bench dengan gmc
     $gmc = substr($bench, 1, 7);
     $namabench = substr($bench, 10);
@@ -176,6 +176,4 @@ if ($device == "tidak-terinstall") {
     } else {
         echo "error";
     }
-
 }
-
