@@ -350,7 +350,7 @@ if ($c_code_type == 'f') {
                                     <label>Nama Kabinet :</label>
                                     <select class="halodecktot" id="cabedit" name="cabedit[]" multiple="multiple" style="width:100%; height: max-content;">
                                         <?php
-                                        $sql1 = mysqli_query($connect_pro, "SELECT c_code_cabinet, c_name FROM finalcheck_list_cabinet WHERE c_status = 'enable'");
+                                        $sql1 = mysqli_query($connect_pro, "SELECT c_code_cabinet, c_name FROM finalcheck_list_cabinet WHERE c_status = 'enable'  ORDER BY c_trend DESC");
                                         while ($data1 = mysqli_fetch_array($sql1)) {
                                         ?>
                                             <option value="<?= $data1['c_code_cabinet'] ?>"><?= $data1['c_name'] ?></option>

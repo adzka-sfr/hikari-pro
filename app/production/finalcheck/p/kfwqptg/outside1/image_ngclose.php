@@ -10,6 +10,47 @@ if ($code_type == 'f') {
     $format = 'jpg';
 }
 ?>
+
+<!-- pengaturan ukuran kotak untuk lokasi titik pada gambar -->
+<script>
+    var deviceitem = deviceinfo();
+    const style = document.createElement('style');
+    if (deviceitem == "Windows") {
+        style.innerHTML = `
+      .ingpo {
+        width: 27px;
+        height: 27px;
+      }
+    `;
+        document.head.appendChild(style);
+    } else if (deviceitem == "Macintosh") {
+        style.innerHTML = `
+      .ingpo {
+        width: 25px;
+        height: 25px;
+      }
+    `;
+        document.head.appendChild(style);
+    } else if (deviceitem == "Android") {
+        style.innerHTML = `
+      .ingpo {
+        width: 19px;
+        height: 19px;
+      }
+    `;
+        document.head.appendChild(style);
+    } else {
+        style.innerHTML = `
+      .ingpo {
+        width: 25px;
+        height: 25px;
+      }
+    `;
+        document.head.appendChild(style);
+    }
+</script>
+<!-- pengaturan ukuran kotak untuk lokasi titik pada gambar -->
+
 <!-- tbo image -->
 <div class="row">
     <div class="col-12">
@@ -57,7 +98,7 @@ if ($code_type == 'f') {
                 }
 
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                <button class="btn ingpo" style="border-color: #000000; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
                     <?php
                     $row = count($label);
                     for ($s = 0; $s < $row; $s++) {
@@ -146,7 +187,7 @@ if ($code_type == 'f') {
                 }
 
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                <button class="btn ingpo" style="border-color: #000000; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
                     <?php
                     $row = count($label);
                     for ($s = 0; $s < $row; $s++) {
@@ -234,7 +275,7 @@ if ($code_type == 'f') {
                 }
 
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                <button class="btn ingpo" style="border-color: #000000; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
                     <?php
                     $row = count($label);
                     for ($s = 0; $s < $row; $s++) {
@@ -322,7 +363,7 @@ if ($code_type == 'f') {
                 }
 
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                <button class="btn ingpo" style="border-color: #000000; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
                     <?php
                     $row = count($label);
                     for ($s = 0; $s < $row; $s++) {
@@ -410,7 +451,7 @@ if ($code_type == 'f') {
                 }
 
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                <button class="btn ingpo" style="border-color: #000000; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
                     <?php
                     $row = count($label);
                     for ($s = 0; $s < $row; $s++) {

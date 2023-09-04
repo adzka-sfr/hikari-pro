@@ -104,7 +104,7 @@ if (empty($d1)) {
     if ($sql) {
         $q_del = mysqli_query($connect_pro, "SELECT c_serialnumber FROM qa_preregister WHERE c_type = 'userpackage' AND c_location = '$location'");
         while ($d_del = mysqli_fetch_array($q_del)) {
-            mysqli_query($connect_add, "DELETE FROM tb_reg_cklist WHERE no_ctrl = '$d_del[c_serialnumber]'");
+            // mysqli_query($connect_add, "DELETE FROM tb_reg_cklist WHERE no_ctrl = '$d_del[c_serialnumber]'");
         }
 
         mysqli_query($connect_pro, "DELETE FROM qa_preregister WHERE c_location = '$location'");

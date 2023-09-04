@@ -88,8 +88,8 @@ if ($ip == '172.17.193.47') {
 } elseif ($ip == '172.17.193.5') {
     $device = "smb://172.17.193.5/POS80packingup";
 } elseif ($ip == '172.17.192.242') {
-    $device = "smb://172.17.193.6/POS80packinggp";
-    // $device = "smb://172.17.192.208/POS80rif";
+    // $device = "smb://172.17.193.6/POS80packinggp";
+    $device = "smb://172.17.192.208/POS80rif";
 } else {
     $device = "tidak-terinstall";
 }

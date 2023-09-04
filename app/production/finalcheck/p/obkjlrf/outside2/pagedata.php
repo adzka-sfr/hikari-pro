@@ -231,6 +231,7 @@ $data = mysqli_fetch_array($sql);
                 },
                 success: function(response) {
                     var response = JSON.parse(response);
+                    $('#note1').html(response.note1);
                     $('#note2').html(response.note2);
                 },
                 error: function() {
@@ -379,6 +380,10 @@ $data = mysqli_fetch_array($sql);
                                             lostconnection()
                                         }
                                     });
+                                } else {
+                                    $('#check').attr('disabled', false);
+                                    $('#icon-spinner').hide();
+                                    $('#icon-spinner-main').show();
                                 }
                             });
                         } else {

@@ -374,6 +374,10 @@ $data = mysqli_fetch_array($sql);
                                             lostconnection()
                                         }
                                     });
+                                } else {
+                                    $('#check').attr('disabled', false);
+                                    $('#icon-spinner').hide();
+                                    $('#icon-spinner-main').show();
                                 }
                             });
                         } else {

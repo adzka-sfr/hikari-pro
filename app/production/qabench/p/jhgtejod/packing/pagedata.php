@@ -133,10 +133,10 @@ if ($acard_post !== "") {
         }
 
         // menggunakan owner kit tipe apa ?
-        $qry_bom_owner = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM
-                FROM M_ACTY.M0031
-                JOIN M_ACTY.M0010 ON M_ACTY.M0031.KOHMCD = M_ACTY.M0010.HMCD
-                WHERE M_ACTY.M0031.OYAHMCD = '$gmc'
+        $qry_bom_owner = "SELECT M_ACTY.M0030.OYAHMCD, M_ACTY.M0030.KOHMCD, M_ACTY.M0010.HMSNM
+                FROM M_ACTY.M0030
+                JOIN M_ACTY.M0010 ON M_ACTY.M0030.KOHMCD = M_ACTY.M0010.HMCD
+                WHERE M_ACTY.M0030.OYAHMCD = '$gmc'
                 AND M_ACTY.M0010.HMSNM LIKE 'OWNERS KIT%'
                 AND M_ACTY.M0010.HMSNM NOT LIKE '%CQ%'
                 AND M_ACTY.M0010.HMSTATUS != 'CI'";
@@ -329,7 +329,7 @@ if ($acard_post !== "") {
                         }
                         ?>
 
-                        <!-- USER PACKAGE -->
+                        <!-- OWNER KIT -->
                         <?php
                         if ($gmc_owner != "") {
                         ?>

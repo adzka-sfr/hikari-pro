@@ -35,10 +35,10 @@ if ($data4['total'] == 0) {
             </td>
             <td>
                 <div class="row">
-                    <div class="col-10">
+                    <div class="col-9">
                         <b><?= $data2['ng_name'] ?></b>
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                         <button type="button" id="edit<?= $data2['c_code_ng'] ?>" class="btn btn-primary btn-sm" onclick="editng(this.id,'<?= $data2['c_code_ng'] ?>','<?= $data2['ng_name'] ?>','<?= $data2['c_number_ng'] ?>', '<?= $serialnumber ?>')" style="margin:0px; padding-top: 5px;">
                             <i class="fa fa-pencil"></i></button>
                         </button>

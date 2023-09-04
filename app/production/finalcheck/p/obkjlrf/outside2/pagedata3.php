@@ -474,7 +474,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                 <?php
                 if ($ng_date1 != '-') {
                 ?>
-                    <span class="stamp is-reject" style="font-size:1.2rem; width: 200px;"><?= $pic1 ?></span>
+                    <span class="stamp is-reject" style="font-size:1.2rem; width: 150px;"><?= $pic1 ?></span>
                 <?php
                 }
                 ?>
@@ -484,7 +484,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                 <?php
                 if ($ng_date2 != '-') {
                 ?>
-                    <span class="stamp is-reject" style="font-size:1.2rem; width: 200px;"><?= $pic2 ?></span>
+                    <span class="stamp is-reject" style="font-size:1.2rem; width: 150px;"><?= $pic2 ?></span>
                 <?php
                 }
                 ?>
@@ -494,7 +494,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                 <?php
                 if ($ng_date3 != '-') {
                 ?>
-                    <span class="stamp is-reject" style="font-size:1.2rem; width: 200px;"><?= $pic3 ?></span>
+                    <span class="stamp is-reject" style="font-size:1.2rem; width: 150px;"><?= $pic3 ?></span>
                 <?php
                 }
                 ?>
@@ -511,7 +511,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                 <?php
                 if ($ok_date1 != '-') {
                 ?>
-                    <span class="stamp is-pass" style="font-size:1.2rem; width: 200px;"><?= $pic1 ?></span>
+                    <span class="stamp is-pass" style="font-size:1.2rem; width: 150px;"><?= $pic1 ?></span>
                 <?php
                 }
                 ?>
@@ -521,7 +521,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                 <?php
                 if ($ok_date2 != '-') {
                 ?>
-                    <span class="stamp is-pass" style="font-size:1.2rem; width: 200px;"><?= $pic2 ?></span>
+                    <span class="stamp is-pass" style="font-size:1.2rem; width: 150px;"><?= $pic2 ?></span>
                 <?php
                 }
                 ?>
@@ -531,7 +531,7 @@ if ($data2['c_outsidetiga_pic'] != '') {
                 <?php
                 if ($ok_date3 != '-') {
                 ?>
-                    <span class="stamp is-pass" style="font-size:1.2rem; width: 200px;"><?= $pic3 ?></span>
+                    <span class="stamp is-pass" style="font-size:1.2rem; width: 150px;"><?= $pic3 ?></span>
                 <?php
                 }
                 ?>
