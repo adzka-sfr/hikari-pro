@@ -243,7 +243,7 @@ if ($data2['c_inside_pic'] != '') {
                 ?>
                     <tr>
                         <td style="font-size: 15px;">- <?= $data3['c_name'] ?></td>
-                        <td style="text-align: center;"><input id="cekbok<?= $value ?>" <?= $checklist . " " . $validation_func . " " . $finish_inside_func ?> onchange="cekbok(this.id, '<?= $data['c_code_incheck'] ?>')" value="<?= $value ?>" type="checkbox" style="transform: scale(2);">
+                        <td style="text-align: center;"><input type="checkbox" id="cekbok<?= $value ?>" <?= $checklist . " " . $validation_func . " " . $finish_inside_func ?> onchange="cekbok(this.id, '<?= $data['c_code_incheck'] ?>')" value="<?= $value ?>" style="transform: scale(2);">
 
                         </td>
                         <td style="text-align: center;"></td>
@@ -341,6 +341,7 @@ if ($data2['c_inside_pic'] != '') {
             }
 
             $('#check').click(function() {
+                $('input[type=checkbox]').prop('disabled', true);
                 $('#check').attr('disabled', true);
                 $('#icon-spinner').show();
                 var status = 'all-repaired';
@@ -376,6 +377,7 @@ if ($data2['c_inside_pic'] != '') {
                         cancelButtonColor: '#5D646B',
                         cancelButtonText: 'Oke',
                     })
+                    $('input[type=checkbox]').prop('disabled', false);
                     $('#check').attr('disabled', false);
                     $('#icon-spinner').hide();
                 } else {
@@ -442,6 +444,7 @@ if ($data2['c_inside_pic'] != '') {
                                         cancelButtonText: 'Tidak'
                                     });
                                     $('#check').attr('disabled', false);
+                                    $('input[type=checkbox]').prop('disabled', false);
                                     $('#icon-spinner').hide();
                                 }
 

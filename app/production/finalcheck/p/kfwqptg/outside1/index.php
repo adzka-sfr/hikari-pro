@@ -6,6 +6,46 @@
     </div>
 </div>
 
+<!-- pengaturan ukuran kotak untuk lokasi titik pada gambar -->
+<script>
+    var deviceitem = deviceinfo();
+    let style = document.createElement('style');
+    if (deviceitem == "Windows") {
+        style.innerHTML += `
+      .ingpo {
+        width: 27px;
+        height: 27px;
+      }
+    `;
+        document.head.appendChild(style);
+    } else if (deviceitem == "Macintosh") {
+        style.innerHTML = `
+      .ingpo {
+        width: 25px;
+        height: 25px;
+      }
+    `;
+        document.head.appendChild(style);
+    } else if (deviceitem == "Android") {
+        style.innerHTML = `
+      .ingpo {
+        width: 19px;
+        height: 19px;
+      }
+    `;
+        document.head.appendChild(style);
+    } else {
+        style.innerHTML = `
+      .ingpo {
+        width: 25px;
+        height: 25px;
+      }
+    `;
+        document.head.appendChild(style);
+    }
+</script>
+<!-- pengaturan ukuran kotak untuk lokasi titik pada gambar -->
+
 <!-- modal untuk cek koneksi -->
 <div class="modal fade" id="lostmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -495,6 +535,8 @@
                     $('#errorcab').hide()
                 }, 3000);
             } else {
+                $('.tambahngsu').attr('readonly', true);
+                // $('input[type=checkbox]').attr('readonly', true);
                 $('#tambahngbtn').attr('disabled', true);
                 $('#canceltambahngbtn').attr('disabled', true);
                 $('#icon-spinner-add').show();
@@ -517,6 +559,8 @@
                             }).then(function() {
                                 load_data_ng(serialnumber);
                                 load_image_ng(serialnumber, codetype);
+                                $('.tambahngsu').attr('readonly', false);
+                                // $('input[type=checkbox]').attr('readonly', false);
                                 $('#tambahngbtn').attr('disabled', false);
                                 $('#canceltambahngbtn').attr('disabled', false);
                                 $('#icon-spinner-add').hide();
@@ -535,6 +579,8 @@
                                 cancelButtonColor: '#5D646B',
                                 cancelButtonText: 'Oke',
                             })
+                            $('.tambahngsu').attr('readonly', false);
+                            // $('input[type=checkbox]').attr('readonly', false);
                             $('#tambahngbtn').attr('disabled', false);
                             $('#canceltambahngbtn').attr('disabled', false);
                             $('#icon-spinner-add').hide();
@@ -546,6 +592,8 @@
                                 showConfirmButton: false,
                                 timer: 2000
                             });
+                            $('.tambahngsu').attr('readonly', false);
+                            // $('input[type=checkbox]').attr('readonly', false);
                             $('#tambahngbtn').attr('disabled', false);
                             $('#canceltambahngbtn').attr('disabled', false);
                             $('#icon-spinner-add').hide();
@@ -571,6 +619,7 @@
                 $('#errorcabedit').hide()
             }, 3000);
         } else {
+            $('.tambahngsu').attr('readonly', true);
             $('#editdatangbtn').attr('disabled', true);
             $('#canceldatangbtn').attr('disabled', true);
             $('#icon-spinner-edit').show();
@@ -593,6 +642,7 @@
                         }).then(function() {
                             load_data_ng(serialnumber);
                             load_image_ng(serialnumber, codetype);
+                            $('.tambahngsu').attr('readonly', false);
                             $('#editdatangbtn').attr('disabled', false);
                             $('#canceldatangbtn').attr('disabled', false);
                             $('#icon-spinner-edit').hide();
@@ -607,6 +657,7 @@
                             showConfirmButton: false,
                             timer: 2000
                         });
+                        $('.tambahngsu').attr('readonly', false);
                         $('#editdatangbtn').attr('disabled', false);
                         $('#canceldatangbtn').attr('disabled', false);
                         $('#icon-spinner-edit').hide();

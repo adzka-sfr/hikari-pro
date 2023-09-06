@@ -57,7 +57,7 @@ if ($code_type == 'f') {
                 }
 
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                <button class="btn ingpo" style="border-color: #000000; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
                     <?php
                     $row = count($label);
                     for ($s = 0; $s < $row; $s++) {
@@ -146,7 +146,7 @@ if ($code_type == 'f') {
                 }
 
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                <button class="btn ingpo" style="border-color: #000000; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
                     <?php
                     $row = count($label);
                     for ($s = 0; $s < $row; $s++) {
@@ -234,7 +234,7 @@ if ($code_type == 'f') {
                 }
 
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                <button class="btn ingpo" style="border-color: #000000; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
                     <?php
                     $row = count($label);
                     for ($s = 0; $s < $row; $s++) {
@@ -322,7 +322,7 @@ if ($code_type == 'f') {
                 }
 
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                <button class="btn ingpo" style="border-color: #000000; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
                     <?php
                     $row = count($label);
                     for ($s = 0; $s < $row; $s++) {
@@ -410,7 +410,7 @@ if ($code_type == 'f') {
                 }
 
             ?>
-                <button class="btn ingpo" style="width: 25px; border-color: #000000; height: 25px; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
+                <button class="btn ingpo" style="border-color: #000000; top: <?= $dtbo['c_top'] ?>%; left: <?= $dtbo['c_left'] ?>%;">
                     <?php
                     $row = count($label);
                     for ($s = 0; $s < $row; $s++) {

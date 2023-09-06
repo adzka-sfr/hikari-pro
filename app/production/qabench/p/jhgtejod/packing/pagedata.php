@@ -128,8 +128,65 @@ if ($acard_post !== "") {
             $b_infouserp = "Yes";
             $b_coloruserp = "blue";
         } else {
-            $b_infouserp = "No";
-            $b_coloruserp = "red";
+            // cek apakah gmc yang di maksud adalah piano gp, karena kalau gp ambil dari tingkat yang berbeda
+            if ($location == 'packing gp') {
+                $temp_parent = $gmc;
+                $hasilcek = '';
+
+                do {
+                    $qry_bom_userp_gp = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM, M_ACTY.M0010.MAKEKTCD
+                FROM M_ACTY.M0031
+                JOIN M_ACTY.M0010 ON M_ACTY.M0031.KOHMCD = M_ACTY.M0010.HMCD
+                WHERE M_ACTY.M0031.OYAHMCD = '$temp_parent' AND M_ACTY.M0010.HMSNM LIKE 'PIANO %'";
+                    $querybom_userp_gp = oci_parse($connection, $qry_bom_userp_gp);
+                    oci_execute($querybom_userp_gp);
+                    $row_userp_gp = oci_fetch_array($querybom_userp_gp);
+
+                    $gmc_userp_gp = isset($row_userp_gp['KOHMCD']) ? $row_userp_gp['KOHMCD'] : "";
+                    $nm_userp_gp = isset($row_userp_gp['HMSNM']) ? $row_userp_gp['HMSNM'] : "";
+                    $MKTCD = isset($row_userp_gp['MAKEKTCD']) ? $row_userp_gp['MAKEKTCD'] : "";
+
+                    // jika yang terdeteksi adalah piano tanpa userpackage
+                    $temp_parent = $gmc_userp_gp;
+                    if ($MKTCD == "G200") {
+                        $hasilcek = 'gada';
+                        break;
+                    }
+
+                    // jaga-jaga jika yang terdeteksi adalah piano UP
+                    if ($MKTCD == "U400") {
+                        $hasilcek = 'gada';
+                        break;
+                    }
+                } while ($MKTCD != "G230");
+
+                if ($hasilcek == 'gada') {
+                    echo " gada";
+                    $b_infouserp = "No";
+                    $b_coloruserp = "red";
+                } else {
+                    $qry_bom_userp_gp1 = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM
+                FROM M_ACTY.M0031
+                JOIN M_ACTY.M0010 ON M_ACTY.M0031.KOHMCD = M_ACTY.M0010.HMCD
+                WHERE M_ACTY.M0031.OYAHMCD = '$gmc_userp_gp'
+                AND M_ACTY.M0010.HMSNM LIKE 'USER PACKAGE SET%'
+                AND M_ACTY.M0010.HMSNM NOT LIKE '%CQ%'
+                AND M_ACTY.M0010.HMSTATUS != 'CI'";
+
+                    $querybom_userp_gp1 = oci_parse($connection, $qry_bom_userp_gp1);
+                    oci_execute($querybom_userp_gp1);
+                    $row_userp_gp1 = oci_fetch_array($querybom_userp_gp1);
+
+                    $gmc_userp = isset($row_userp_gp1['KOHMCD']) ? $row_userp_gp1['KOHMCD'] : "";
+                    $nm_userp = isset($row_userp_gp1['HMSNM']) ? $row_userp_gp1['HMSNM'] : "";
+
+                    $b_infouserp = "Yes";
+                    $b_coloruserp = "blue";
+                }
+            } else {
+                $b_infouserp = "No";
+                $b_coloruserp = "red";
+            }
         }
 
         // menggunakan owner kit tipe apa ?

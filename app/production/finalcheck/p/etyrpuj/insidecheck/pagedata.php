@@ -159,14 +159,17 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
                 $ok = 'checked';
                 $ng = '';
                 $selectdis = 'disabled';
+                $pilihanku = '';
             } elseif ($data['c_result'] == 'NG') {
                 $ok = '';
                 $ng = 'checked';
                 $selectdis = '';
+                $pilihanku = 'pilihanku';
             } else {
                 $ok = '';
                 $ng = '';
                 $selectdis = 'disabled';
+                $pilihanku = '';
             }
         ?>
             <tr>
@@ -177,16 +180,16 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
 
                 <td style="text-align: center; font-size: 15px;">OK</td>
                 <td colspan="2">
-                    <input type="radio" <?= $ok ?> style=" transform: scale(2); margin: 10px;" id="pilok<?= $no ?>" name="pil<?= $no ?>" onchange="radiocek(this.id,'ngcode<?= $no ?>','item<?= $no ?>')" value="OK" />
+                    <input type="radio" <?= $ok ?> style=" transform: scale(2); margin: 10px;" id="pilok<?= $no ?>" name="pil<?= $no ?>" onchange="radiocek(this.id,'ngcode<?= $no ?>','item<?= $no ?>', '<?= $no ?>')" value="OK" />
                 </td>
             </tr>
             <tr>
                 <td style="text-align: center; font-size: 15px;">NG</td>
                 <td>
-                    <input type="radio" <?= $ng ?> style=" transform: scale(2); margin: 10px;" id="pilng<?= $no ?>" name="pil<?= $no ?>" onchange="radiocek(this.id,'ngcode<?= $no ?>','item<?= $no ?>')" value="NG" />
+                    <input type="radio" <?= $ng ?> style=" transform: scale(2); margin: 10px;" id="pilng<?= $no ?>" name="pil<?= $no ?>" onchange="radiocek(this.id,'ngcode<?= $no ?>','item<?= $no ?>', '<?= $no ?>')" value="NG" />
                 </td>
 
-                <td><select class="halodecktot" style="width: 95%;" id="ngcode<?= $no ?>" onchange="selectcek(this.id,'item<?= $no ?>')" multiple="multiple" required <?= $selectdis ?>>
+                <td><select class="halodecktot <?= $pilihanku ?>" style="width: 95%;" id="ngcode<?= $no ?>" onchange="selectcek(this.id,'item<?= $no ?>')" multiple="multiple" required <?= $selectdis ?>>
                         <?php
                         $sql1 = mysqli_query($connect_pro, "SELECT a.c_code_ng AS c_code_ng, a.c_name AS c_name, b.c_code_ng AS res FROM finalcheck_list_ng a LEFT JOIN finalcheck_fetch_inside b ON a.c_group = b.c_code_incheck  WHERE a.c_group = '$data[c_code_incheck]' AND b.c_serialnumber = '$pianoserial'");
 
@@ -212,15 +215,19 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
         }
         ?>
         <script>
-            function radiocek(id, ngcode, item) {
+            function radiocek(id, ngcode, item, nomor) {
                 console.log(id)
+                console.log('ngcode' + nomor);
                 if ($('#' + id).is(':checked')) {
                     if ($('#' + id).val() == 'NG') {
                         $('#' + ngcode).attr('disabled', false);
+                        $('#ngcode' + nomor).addClass('pilihanku');
                     }
                     if ($('#' + id).val() == 'OK') {
                         $('#' + ngcode).attr('disabled', true);
-                        $('#' + ngcode).val('').trigger('change');
+                        if ($('#ngcode' + nomor).hasClass('pilihanku')) {
+                            $('#ngcode' + nomor).removeClass('pilihanku');
+                        }
                     }
                 }
                 var serialnumber = $('#serialnumber').val();
@@ -329,7 +336,10 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
         <button class="btn btn-success" id="send" style="display: none;">Send to Repair official</button>
         <script>
             $('#check').click(function() {
+                $('input[type=radio]').prop('disabled', true);
+                $('.pilihanku').prop('disabled', true);
                 $('#check').attr('disabled', true);
+                $('#note').prop('disabled', true);
                 $('#icon-spinner').show();
                 var serialnumber = $('#serialnumber').val();
                 $.ajax({
@@ -350,7 +360,10 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
                                 cancelButtonColor: '#5D646B',
                                 cancelButtonText: 'Oke',
                             })
+                            $('input[type=radio]').prop('disabled', false);
+                            $('.pilihanku').prop('disabled', false);
                             $('#check').attr('disabled', false);
+                            $('#note').prop('disabled', false);
                             $('#icon-spinner').hide();
                         } else {
                             $('#send').trigger('click');
@@ -395,7 +408,10 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
                                         cancelButtonText: 'Tidak'
                                     }).then((result) => {
                                         if (result.isConfirmed) {
+                                            $('input[type=radio]').prop('disabled', false);
+                                            $('.pilihanku').prop('disabled', false);
                                             $('#check').attr('disabled', false);
+                                            $('#note').prop('disabled', false);
                                             $('#icon-spinner').hide();
                                             $('#clearacard').trigger('click');
                                         }
@@ -412,12 +428,21 @@ $register_date = date('l, d M Y h:i A', strtotime($d1['c_register']));
                                         confirmButtonText: 'Oke',
                                         cancelButtonText: 'Tidak'
                                     });
+                                    $('input[type=radio]').prop('disabled', false);
+                                    $('.pilihanku').prop('disabled', false);
                                     $('#check').attr('disabled', false);
+                                    $('#note').prop('disabled', false);
                                     $('#icon-spinner').hide();
                                 }
 
                             }
                         });
+                    } else {
+                        $('input[type=radio]').prop('disabled', false);
+                        $('.pilihanku').prop('disabled', false);
+                        $('#check').attr('disabled', false);
+                        $('#note').prop('disabled', false);
+                        $('#icon-spinner').hide();
                     }
                 });
             })

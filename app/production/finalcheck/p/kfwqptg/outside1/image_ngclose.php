@@ -11,46 +11,6 @@ if ($code_type == 'f') {
 }
 ?>
 
-<!-- pengaturan ukuran kotak untuk lokasi titik pada gambar -->
-<script>
-    var deviceitem = deviceinfo();
-    const style = document.createElement('style');
-    if (deviceitem == "Windows") {
-        style.innerHTML = `
-      .ingpo {
-        width: 27px;
-        height: 27px;
-      }
-    `;
-        document.head.appendChild(style);
-    } else if (deviceitem == "Macintosh") {
-        style.innerHTML = `
-      .ingpo {
-        width: 25px;
-        height: 25px;
-      }
-    `;
-        document.head.appendChild(style);
-    } else if (deviceitem == "Android") {
-        style.innerHTML = `
-      .ingpo {
-        width: 19px;
-        height: 19px;
-      }
-    `;
-        document.head.appendChild(style);
-    } else {
-        style.innerHTML = `
-      .ingpo {
-        width: 25px;
-        height: 25px;
-      }
-    `;
-        document.head.appendChild(style);
-    }
-</script>
-<!-- pengaturan ukuran kotak untuk lokasi titik pada gambar -->
-
 <!-- tbo image -->
 <div class="row">
     <div class="col-12">
