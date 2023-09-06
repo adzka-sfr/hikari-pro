@@ -208,7 +208,7 @@ $data = mysqli_fetch_array($sql);
     </div>
     <div class="col-4">
         <h5>Note 3</h5>
-        <textarea class="comnote2" disabled name="note3" id="note3" rows="5" style="width: 100%;"></textarea>
+        <textarea class="comnote3" disabled name="note3" id="note3" rows="5" style="width: 100%;"></textarea>
     </div>
 
     <script>

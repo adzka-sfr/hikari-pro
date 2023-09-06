@@ -495,6 +495,8 @@
                     $('#errorcab').hide()
                 }, 3000);
             } else {
+                $('.tambahngsu').attr('readonly', true);
+                // $('input[type=checkbox]').attr('readonly', true);
                 $('#tambahngbtn').attr('disabled', true);
                 $('#canceltambahngbtn').attr('disabled', true);
                 $('#icon-spinner-add').show();
@@ -517,6 +519,8 @@
                             }).then(function() {
                                 load_data_ng(serialnumber);
                                 load_image_ng(serialnumber, codetype);
+                                $('.tambahngsu').attr('readonly', false);
+                                // $('input[type=checkbox]').attr('readonly', false);
                                 $('#tambahngbtn').attr('disabled', false);
                                 $('#canceltambahngbtn').attr('disabled', false);
                                 $('#icon-spinner-add').hide();
@@ -535,6 +539,8 @@
                                 cancelButtonColor: '#5D646B',
                                 cancelButtonText: 'Oke',
                             })
+                            $('.tambahngsu').attr('readonly', false);
+                            // $('input[type=checkbox]').attr('readonly', false);
                             $('#tambahngbtn').attr('disabled', false);
                             $('#canceltambahngbtn').attr('disabled', false);
                             $('#icon-spinner-add').hide();
@@ -546,6 +552,8 @@
                                 showConfirmButton: false,
                                 timer: 2000
                             });
+                            $('.tambahngsu').attr('readonly', false);
+                            // $('input[type=checkbox]').attr('readonly', false);
                             $('#tambahngbtn').attr('disabled', false);
                             $('#canceltambahngbtn').attr('disabled', false);
                             $('#icon-spinner-add').hide();
@@ -571,6 +579,7 @@
                 $('#errorcabedit').hide()
             }, 3000);
         } else {
+            $('.tambahngsu').attr('readonly', true);
             $('#editdatangbtn').attr('disabled', true);
             $('#canceldatangbtn').attr('disabled', true);
             $('#icon-spinner-edit').show();
@@ -593,6 +602,7 @@
                         }).then(function() {
                             load_data_ng(serialnumber);
                             load_image_ng(serialnumber, codetype);
+                            $('.tambahngsu').attr('readonly', false);
                             $('#editdatangbtn').attr('disabled', false);
                             $('#canceldatangbtn').attr('disabled', false);
                             $('#icon-spinner-edit').hide();
@@ -607,6 +617,7 @@
                             showConfirmButton: false,
                             timer: 2000
                         });
+                        $('.tambahngsu').attr('readonly', false);
                         $('#editdatangbtn').attr('disabled', false);
                         $('#canceldatangbtn').attr('disabled', false);
                         $('#icon-spinner-edit').hide();

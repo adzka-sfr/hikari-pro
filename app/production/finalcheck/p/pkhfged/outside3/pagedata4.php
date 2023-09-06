@@ -539,6 +539,8 @@ if ($data3['total'] == 0) {
 <hr>
 <script>
     $('#sendfinisho').click(function() {
+        $('.btn').attr('disabled', true);
+        $('input[type=checkbox]').attr('disabled', true);
         var serialnumber = $('#serialnumber').val();
 
         $.ajax({
@@ -551,6 +553,8 @@ if ($data3['total'] == 0) {
                 var response = JSON.parse(response);
                 if (response.status == 'NOT-YET') {
                     console.log(response.status);
+                    $('.btn').attr('disabled', false);
+                    $('input[type=checkbox]').attr('disabled', false);
                     Swal.fire({
                         title: 'Masih terdapat NG pada Completeness!',
                         icon: 'error',
@@ -614,10 +618,14 @@ if ($data3['total'] == 0) {
                                                         cancelButtonText: 'Tidak'
                                                     }).then((result) => {
                                                         if (result.isConfirmed) {
+                                                            $('.btn').attr('disabled', false);
+                                                            // $('input[type=checkbox]').attr('disabled', false);
                                                             $('#clearacard').trigger('click');
                                                         }
                                                     });
                                                 } else {
+                                                    $('.btn').attr('disabled', false);
+                                                    $('input[type=checkbox]').attr('disabled', false);
                                                     Swal.fire({
                                                         title: 'Gagal!',
                                                         icon: 'error',
@@ -635,10 +643,15 @@ if ($data3['total'] == 0) {
                                                 lostconnection()
                                             }
                                         });
+                                    } else {
+                                        $('.btn').attr('disabled', false);
+                                        $('input[type=checkbox]').attr('disabled', false);
                                     }
                                 });
                             } else if (response.status == 'BELUM-REPAIR') {
                                 console.log(response.status);
+                                $('.btn').attr('disabled', false);
+                                $('input[type=checkbox]').attr('disabled', false);
                                 Swal.fire({
                                     title: 'Masih terdapat data yang belum direpair!',
                                     text: 'Pastikan proses repair sudah selesai',
@@ -648,6 +661,8 @@ if ($data3['total'] == 0) {
                                     confirmButtonText: 'Oke',
                                 });
                             } else {
+                                $('.btn').attr('disabled', false);
+                                $('input[type=checkbox]').attr('disabled', false);
                                 Swal.fire({
                                     title: 'Error!',
                                     text: 'Server sibuk',
@@ -663,6 +678,8 @@ if ($data3['total'] == 0) {
                         }
                     });
                 } else {
+                    $('.btn').attr('disabled', false);
+                    $('input[type=checkbox]').attr('disabled', false);
                     Swal.fire({
                         title: 'Error!',
                         text: 'Server sibuk',

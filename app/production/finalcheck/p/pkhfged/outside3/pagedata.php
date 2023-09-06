@@ -163,9 +163,9 @@ $data = mysqli_fetch_array($sql);
             <tr>
                 <td style="text-align: center;"><?= $no ?></td>
                 <td style="font-size: 15px;"><?= $data['c_detail'] ?></td>
-                <td style="font-size: 15px; text-align: center;"><input disabled id="cekbok1<?= $data['c_code_completeness'] ?>" onchange="cekbok1(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" <?= $checkcom1 ?> style="transform: scale(2);"></td>
-                <td style="font-size: 15px; text-align: center;"><input disabled id="cekbok2<?= $data['c_code_completeness'] ?>" onchange="cekbok2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" <?= $checkcom2 ?> style="transform: scale(2);"></td>
-                <td style="font-size: 15px; text-align: center;"><input id="cekbok3<?= $data['c_code_completeness'] ?>" onchange="cekbok3(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" <?= $checkcom3 ?> style="transform: scale(2);"></td>
+                <td style="font-size: 15px; text-align: center;"><input class="comcheck1" disabled id="cekbok1<?= $data['c_code_completeness'] ?>" onchange="cekbok1(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" <?= $checkcom1 ?> style="transform: scale(2);"></td>
+                <td style="font-size: 15px; text-align: center;"><input class="comcheck2" disabled id="cekbok2<?= $data['c_code_completeness'] ?>" onchange="cekbok2(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" <?= $checkcom2 ?> style="transform: scale(2);"></td>
+                <td style="font-size: 15px; text-align: center;"><input class="comcheck3" id="cekbok3<?= $data['c_code_completeness'] ?>" onchange="cekbok3(this.id)" value="<?= $data['c_code_completeness'] ?>" type="checkbox" <?= $checkcom3 ?> style="transform: scale(2);"></td>
             </tr>
         <?php
         }
@@ -210,15 +210,15 @@ $data = mysqli_fetch_array($sql);
 <div class="row">
     <div class="col-4">
         <h5>Note 1</h5>
-        <textarea disabled name="note1" id="note1" rows="5" style="width: 100%;"></textarea>
+        <textarea class="comnote1" disabled name="note1" id="note1" rows="5" style="width: 100%;"></textarea>
     </div>
     <div class="col-4">
         <h5>Note 2</h5>
-        <textarea disabled name="note2" id="note2" rows="5" style="width: 100%;"></textarea>
+        <textarea class="comnote2" disabled name="note2" id="note2" rows="5" style="width: 100%;"></textarea>
     </div>
     <div class="col-4">
         <h5>Note 3</h5>
-        <textarea name="note3" id="note3" rows="5" style="width: 100%;"></textarea>
+        <textarea class="comnote3" name="note3" id="note3" rows="5" style="width: 100%;"></textarea>
     </div>
 
     <script>
@@ -324,6 +324,8 @@ $data = mysqli_fetch_array($sql);
         <button class="btn btn-success" id="check" style="width: 80%;">Lanjut, Cek Outside <i id="icon-spinner-main" class="fa fa-arrow-circle-right"></i><i id="icon-spinner" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
         <script>
             $('#check').click(function() {
+                $('.comcheck3').prop('disabled', true);
+                $('.comnote3').prop('disabled', true);
                 $('#check').attr('disabled', true);
                 $('#icon-spinner').show();
                 $('#icon-spinner-main').hide();
@@ -354,6 +356,8 @@ $data = mysqli_fetch_array($sql);
                                 }
                             });
                         } else if (response.status == 'NOT-YET') {
+                            $('.comcheck3').prop('disabled', false);
+                            $('.comnote3').prop('disabled', false);
                             $('#check').attr('disabled', false);
                             $('#icon-spinner').hide();
                             $('#icon-spinner-main').show();
@@ -368,6 +372,8 @@ $data = mysqli_fetch_array($sql);
                                 confirmButtonText: 'Iya',
                                 cancelButtonText: 'Tidak'
                             }).then((result) => {
+                                $('.comcheck3').prop('disabled', false);
+                                $('.comnote3').prop('disabled', false);
                                 $('#check').attr('disabled', true);
                                 $('#icon-spinner').show();
                                 $('#icon-spinner-main').hide();
@@ -387,12 +393,19 @@ $data = mysqli_fetch_array($sql);
                                         }
                                     });
                                 } else {
+                                    $('.comcheck3').prop('disabled', false);
+                                    $('.comnote3').prop('disabled', false);
                                     $('#check').attr('disabled', false);
                                     $('#icon-spinner').hide();
                                     $('#icon-spinner-main').show();
                                 }
                             });
                         } else {
+                            $('.comcheck3').prop('disabled', false);
+                            $('.comnote3').prop('disabled', false);
+                            $('#check').attr('disabled', false);
+                            $('#icon-spinner').hide();
+                            $('#icon-spinner-main').show();
                             Swal.fire({
                                 position: 'center',
                                 icon: 'error',

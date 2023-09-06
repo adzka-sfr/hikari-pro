@@ -167,7 +167,7 @@ if ($c_code_type == 'f') {
                             <div class="row">
                                 <div class="col-12 mb-1">
                                     <label>Nama NG :</label>
-                                    <select class="halodecktot-tambah" id="ngAdd" name="ng" style="width:100%; height: max-content;">
+                                    <select class="halodecktot-tambah tambahngsu" id="ngAdd" name="ng" style="width:100%; height: max-content;">
                                         <option value="" selected disabled>Select NG</option>
                                         <?php
                                         $sql1 = mysqli_query($connect_pro, "SELECT c_code_ng, c_name FROM finalcheck_list_ng WHERE c_status = 'enable' AND c_area = 'outside' ORDER BY c_trend DESC, c_name ASC");
@@ -184,7 +184,7 @@ if ($c_code_type == 'f') {
                             <div class="row">
                                 <div class="col-12 mt-3 mb-1">
                                     <label>Nama Kabinet :</label>
-                                    <select class="halodecktot" id="cabAdd" name="cab[]" multiple="multiple" style="width:100%; height: max-content;">
+                                    <select class="halodecktot tambahngsu" id="cabAdd" name="cab[]" multiple="multiple" style="width:100%; height: max-content;">
                                         <?php
                                         $sql1 = mysqli_query($connect_pro, "SELECT c_code_cabinet, c_name FROM finalcheck_list_cabinet WHERE c_status = 'enable'  ORDER BY c_trend DESC");
                                         while ($data1 = mysqli_fetch_array($sql1)) {
@@ -348,7 +348,7 @@ if ($c_code_type == 'f') {
                             <div class="row">
                                 <div class="col-12 mt-3 mb-1">
                                     <label>Nama Kabinet :</label>
-                                    <select class="halodecktot" id="cabedit" name="cabedit[]" multiple="multiple" style="width:100%; height: max-content;">
+                                    <select class="halodecktot tambahngsu" id="cabedit" name="cabedit[]" multiple="multiple" style="width:100%; height: max-content;">
                                         <?php
                                         $sql1 = mysqli_query($connect_pro, "SELECT c_code_cabinet, c_name FROM finalcheck_list_cabinet WHERE c_status = 'enable' ORDER BY c_trend DESC");
                                         while ($data1 = mysqli_fetch_array($sql1)) {
@@ -776,6 +776,8 @@ if ($c_code_type == 'f') {
         <script>
             var serialnumber = $('#serialnumber').val();
             $('#send').click(function() {
+                $('.btn').attr('disabled', true);
+                $('#note3').attr('disabled', true);
                 Swal.fire({
                     title: 'Apakah anda yakin ?',
                     icon: 'question',
@@ -811,15 +813,23 @@ if ($c_code_type == 'f') {
                                         showConfirmButton: true,
                                         confirmButtonText: 'Oke'
                                     }).then(function() {
+                                        $('.btn').attr('disabled', false);
+                                        // $('#note3').attr('disabled', false);
                                         $('#clearacard').trigger('click');
 
                                     });
+                                } else {
+                                    $('.btn').attr('disabled', false);
+                                    $('#note3').attr('disabled', false);
                                 }
                             },
                             error: function() {
                                 lostconnection()
                             }
                         });
+                    } else {
+                        $('.btn').attr('disabled', false);
+                        $('#note3').attr('disabled', false);
                     }
                 });
             })
