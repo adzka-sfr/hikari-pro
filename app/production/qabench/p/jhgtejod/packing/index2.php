@@ -157,16 +157,6 @@
                 <div id="pagedata"></div>
                 <div id="packingtable" class="row" style="display: none;">
                     <!-- today packing feature -->
-                    <!-- <div class="col-12">
-                        <h6>
-                            <u>Today Packing</u>
-                        </h6>
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                Untuk mempercepat proses load halaman, sementara hasil packing hari ini bisa di lihat pada halaman History
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="col-12">
                         <h6><u>Today Packing</u></h6>
                         <script>
@@ -183,7 +173,13 @@
                                 <th>GMC Piano</th>
                                 <th>Model</th>
                                 <th>Serial</th>
-                                <th>More Info</th>
+                                <!-- jika butuh dalam satu tampilan -->
+                                <th>ID Bench</th>
+                                <th>Nama Bench</th>
+                                <th>ID User P</th>
+                                <th>Nama User P</th>
+                                <th>Waktu Packing</th>
+                                <!-- jika butuh dalam satu tampilan -->
                             </thead>
                             <tbody>
                                 <?php
@@ -196,77 +192,15 @@
                                         <td style="text-align: center;"><?= $data['c_gmcpiano'] ?></td>
                                         <td><?= $data['c_namepiano'] ?></td>
                                         <td style="text-align: center;"><?= $data['c_serialpiano'] ?>
-                                            <span style="display: none;"><?= $data['c_serialbench'] ?></span>
+                                            <span style="display: none;"></span>
                                             <span style="display: none;"><?= $data['c_serialuserp'] ?></span>
                                             <span style="display: none;"><?= $data['c_date'] ?></span>
                                         </td>
-                                        <td style="text-align: center;">
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<?= $data['c_serialpiano'] ?>"><i class="fa fa-search-plus"></i></button>
-
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="<?= $data['c_serialpiano'] ?>" tabindex="-1" aria-labelledby="<?= $data['c_serialpiano'] ?>Label" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="<?= $data['c_serialpiano'] ?>Label"><?= $data['c_serialpiano'] ?></h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <table style="text-align: left; border: 0; width: 100%;">
-                                                                <tr>
-                                                                    <td style="width: 40%;">Piano Name</td>
-                                                                    <td style="text-align: center;">:</td>
-                                                                    <td><b><?= $data['c_namepiano'] ?></b></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Serial-Piano</td>
-                                                                    <td style="text-align: center;">:</td>
-                                                                    <td><?= $data['c_serialpiano'] ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Bench Name</td>
-                                                                    <td style="text-align: center;">:</td>
-                                                                    <td><?= $data['c_namebench'] ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Serial-Bench</td>
-                                                                    <td style="text-align: center;">:</td>
-                                                                    <td><?= $data['c_serialbench'] ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>User Package</td>
-                                                                    <td style="text-align: center;">:</td>
-                                                                    <td><?= $data['c_nameuserp'] ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Serial-User Package</td>
-                                                                    <td style="text-align: center;">:</td>
-                                                                    <td><?= $data['c_serialuserp'] ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Packing Time</td>
-                                                                    <td style="text-align: center;">:</td>
-                                                                    <td><?= $data['c_date'] ?></td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Modal -->
-                                        </td>
-
-
-                                        <!-- jika butuh dalam satu tampilan -->
-                                        <!-- <td style="text-align: center;"><?= $data['c_serialbench'] ?></td>
-                                <td><?= $data['c_namebench'] ?></td>
-                                <td style="text-align: center;"><?= $data['c_serialuserp'] ?></td>
-                                <td><?= $data['c_nameuserp'] ?></td>
-                                <td style="text-align: center;"><?= $data['c_date'] ?></td> -->
-                                        <!-- jika butuh dalam satu tampilan -->
+                                        <td style="text-align: center;"><?= $data['c_serialbench'] ?></td>
+                                        <td><?= $data['c_namebench'] ?></td>
+                                        <td style="text-align: center;"><?= $data['c_serialuserp'] ?></td>
+                                        <td><?= $data['c_nameuserp'] ?></td>
+                                        <td style="text-align: center;"><?= $data['c_date'] ?></td>
                                     </tr>
                                 <?php
                                 }

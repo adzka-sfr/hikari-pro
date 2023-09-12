@@ -12,7 +12,7 @@ $location = $_SESSION['role'];
 $hasil = array();
 
 # A) Check bench
-// A.1) Distinct gmc pada system
+// A.1) Distinct gmc pada system (karena pada produksi tidak mengetahui no serinya, makannya di distinct)
 $q1 = mysqli_query($connect_pro, "SELECT DISTINCT c_gmc, c_name FROM qa_bench WHERE c_location = '$location' AND c_used IS NOT NULL AND c_packed IS NULL");
 while ($d1 = mysqli_fetch_array($q1)) {
     // A.1.a) Hitung pada data system

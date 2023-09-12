@@ -132,12 +132,13 @@ if ($acard_post !== "") {
             if ($location == 'packing gp') {
                 $temp_parent = $gmc;
                 $hasilcek = '';
-
+                $perulangan_ke = 0;
                 do {
+                    $perulangan_ke++;
                     $qry_bom_userp_gp = "SELECT M_ACTY.M0031.OYAHMCD, M_ACTY.M0031.KOHMCD, M_ACTY.M0010.HMSNM, M_ACTY.M0010.MAKEKTCD
                 FROM M_ACTY.M0031
                 JOIN M_ACTY.M0010 ON M_ACTY.M0031.KOHMCD = M_ACTY.M0010.HMCD
-                WHERE M_ACTY.M0031.OYAHMCD = '$temp_parent' AND M_ACTY.M0010.HMSNM LIKE 'PIANO %'";
+                WHERE M_ACTY.M0031.OYAHMCD = '$temp_parent' AND M_ACTY.M0010.HMSNM LIKE 'PIANO %' AND M_ACTY.M0010.MAKEKTCD != '3010'";
                     $querybom_userp_gp = oci_parse($connection, $qry_bom_userp_gp);
                     oci_execute($querybom_userp_gp);
                     $row_userp_gp = oci_fetch_array($querybom_userp_gp);
@@ -155,6 +156,12 @@ if ($acard_post !== "") {
 
                     // jaga-jaga jika yang terdeteksi adalah piano UP
                     if ($MKTCD == "U400") {
+                        $hasilcek = 'gada';
+                        break;
+                    }
+
+                    // jaga-jaga jika tidak kunjung ditemukan juga
+                    if ($perulangan_ke == 7) {
                         $hasilcek = 'gada';
                         break;
                     }

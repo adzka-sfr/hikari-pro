@@ -90,6 +90,7 @@ if ($ip == '172.17.193.47') {
 } elseif ($ip == '172.17.192.242') {
     // $device = "smb://172.17.193.6/POS80packinggp";
     $device = "smb://172.17.192.208/POS80rif";
+    // $device = "smb://172.17.193.47/POS80whc";
 } else {
     $device = "tidak-terinstall";
 }
@@ -144,7 +145,7 @@ if ($device == "tidak-terinstall") {
             $printer->setBarcodeHeight(60);
             $printer->setBarcodeWidth(2);
             // $printer->barcode($c_serialbench, Printer::BARCODE_CODE93);
-            $printer->qrCode($c_serialbench, Printer::QR_ECLEVEL_L, 7);
+            $printer->qrCode($c_serialbench, Printer::QR_ECLEVEL_L, 4);
             $printer->text("\n");
             $printer->selectPrintMode();
 
